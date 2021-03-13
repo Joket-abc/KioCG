@@ -5,7 +5,7 @@ import com.kiocg.java.Commands.LinkgetCommand;
 import com.kiocg.java.GroupAdminMessage.GroupAdminMessage;
 import com.kiocg.java.GroupMessage.CommandsPublic;
 import com.kiocg.java.GroupMessage.GMUtils;
-import com.kiocg.java.OtherEvent.UserJoinGroup;
+import com.kiocg.java.OtherEvent.OtherEvent;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -67,7 +67,7 @@ public class BotExtend extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new CommandsPublic(), this);
         getServer().getPluginManager().registerEvents(new GroupAdminMessage(), this);
-        getServer().getPluginManager().registerEvents(new UserJoinGroup(), this);
+        getServer().getPluginManager().registerEvents(new OtherEvent(), this);
         Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new LinkCommand());
         Objects.requireNonNull(getServer().getPluginCommand("linkget")).setExecutor(new LinkgetCommand());
     }

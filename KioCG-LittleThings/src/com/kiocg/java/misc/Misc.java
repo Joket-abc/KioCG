@@ -92,7 +92,7 @@ public class Misc implements Listener {
 
         final Player player = (Player) e.getWhoClicked();
         if (player.hasPermission("kiocg.littlethings.fastworkbench")) {
-            LittleThings.getInstance().getServer().getScheduler().runTask(LittleThings.getInstance(), () -> player.openWorkbench(player.getLocation(), true));
+            Bukkit.getServer().getScheduler().runTask(LittleThings.getInstance(), () -> player.openWorkbench(player.getLocation(), true));
         }
     }
 }

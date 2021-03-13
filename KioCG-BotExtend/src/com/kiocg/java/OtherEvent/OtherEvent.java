@@ -1,15 +1,28 @@
 package com.kiocg.java.OtherEvent;
 
+import com.kiocg.java.BotExtend;
+import com.kiocg.java.GroupMessage.GMUtils;
 import com.kiocg.java.events.ABEvent;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class UserJoinGroup implements Listener {
+public class OtherEvent implements Listener {
+    @EventHandler
+    public void onPlayerJoin(final PlayerJoinEvent e) {
+        final Player player = e.getPlayer();
+        if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
+            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
+        }
+    }
+
     @EventHandler
     public void onUserJoinGroup(final ABEvent event) {
         if (!(event.getEvent() instanceof MemberJoinEvent)) {
