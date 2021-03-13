@@ -41,7 +41,7 @@ public class ConsoleSender implements ConsoleCommandSender {
                 output.append(string).append("\n");
             }
             final String message = output.toString().trim();
-            event.getGroup().sendMessage(message.equals("") ? "指令已发送" : message);
+            event.getGroup().sendMessage(message.isEmpty() ? "指令已发送" : message);
             this.output.clear();
         }, 4L);
     }
