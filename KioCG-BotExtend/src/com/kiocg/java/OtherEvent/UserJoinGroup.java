@@ -20,11 +20,12 @@ public class UserJoinGroup implements Listener {
         final Group group = e.getGroup();
         if (group.getId() == 569696336L) {
             final MessageChain chain = new MessageChainBuilder()
-                    .append(new At(e.getMember().getId()))
-                    .append("\n欢迎萌新(๑˃̵ᴗ˂̵)و ")
-                    .append("\n查看客户端下载地址请输入 .client")
-                    .append("\n查看白名单申请方法请输入 .whitelist")
-                    .append("\n这里不欢迎熊孩子，请友好相处。 呐。")
+                    .append(new At(e.getMember().getId())).append("欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                    .append("\n！请先仔细查看群公告！")
+                    .append("\n申请白名单请输入 .whitelist")
+                    .append("\n下载客户端请输入 .client")
+                    .append("\n连接游戏ID请输入 .link")
+                    .append("\n这里不欢迎熊孩子，请友好相处。呐。")
                     .build();
             group.sendMessage(chain);
         }
