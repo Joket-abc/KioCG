@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="KioCG-AntiCheatingClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_AntiCheatingClient_jar</output-path>
+    <root id="archive" name="KioCG-AntiCheatingClient.jar">
+      <element id="module-output" name="KioCG-AntiCheatingClient" />
+      <element id="module-source" name="KioCG-AntiCheatingClient" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-AntiCheatingClient/plugin.yml" />
+    </root>
+  </artifact>
+</component>

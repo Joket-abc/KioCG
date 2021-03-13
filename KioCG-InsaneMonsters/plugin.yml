@@ -1,0 +1,12 @@
+name: InsaneMonsters
+main: com.kiocg.java.InsaneMonsters
+version: 2021
+api-version: 1.16
+
+commands:
+  InsaneMonsters:
+    description: "查看<疯狂怪物>的指令帮助."
+    aliases: [ im ]
+    permission: kiocg.command.insanemonsters
+    permission-message: "§7[§b豆渣子§7] §c这个指令不可以喔 qaq"
+    usage: "用法: /<command> 查看<疯狂怪物>的指令帮助."

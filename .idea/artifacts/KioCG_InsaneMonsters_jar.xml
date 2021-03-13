@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="KioCG-InsaneMonsters:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_InsaneMonsters_jar</output-path>
+    <root id="archive" name="KioCG-InsaneMonsters.jar">
+      <element id="module-output" name="KioCG-InsaneMonsters" />
+      <element id="module-source" name="KioCG-InsaneMonsters" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-InsaneMonsters/plugin.yml" />
+    </root>
+  </artifact>
+</component>

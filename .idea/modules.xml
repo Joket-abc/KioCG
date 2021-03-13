@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/KioCG.iml" filepath="$PROJECT_DIR$/KioCG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-AntiCheatingClient/KioCG-AntiCheatingClient.iml" filepath="$PROJECT_DIR$/KioCG-AntiCheatingClient/KioCG-AntiCheatingClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-BlockRecall/KioCG-BlockRecall.iml" filepath="$PROJECT_DIR$/KioCG-BlockRecall/KioCG-BlockRecall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-BotExtend/KioCG-BotExtend.iml" filepath="$PROJECT_DIR$/KioCG-BotExtend/KioCG-BotExtend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-BottleExp/KioCG-BottleExp.iml" filepath="$PROJECT_DIR$/KioCG-BottleExp/KioCG-BottleExp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-FoodFlight/KioCG-FoodFlight.iml" filepath="$PROJECT_DIR$/KioCG-FoodFlight/KioCG-FoodFlight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-InfiniteEnchant/KioCG-InfiniteEnchant.iml" filepath="$PROJECT_DIR$/KioCG-InfiniteEnchant/KioCG-InfiniteEnchant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-InsaneMonsters/KioCG-InsaneMonsters.iml" filepath="$PROJECT_DIR$/KioCG-InsaneMonsters/KioCG-InsaneMonsters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-LittleThings/KioCG-LittleThings.iml" filepath="$PROJECT_DIR$/KioCG-LittleThings/KioCG-LittleThings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-ProtectSpawn/KioCG-ProtectSpawn.iml" filepath="$PROJECT_DIR$/KioCG-ProtectSpawn/KioCG-ProtectSpawn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-qqBot/KioCG-qqBot.iml" filepath="$PROJECT_DIR$/KioCG-qqBot/KioCG-qqBot.iml" />
+    </modules>
+  </component>
+</project>

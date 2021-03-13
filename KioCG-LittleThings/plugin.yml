@@ -1,0 +1,14 @@
+name: LittleThings
+main: com.kiocg.java.LittleThings
+version: 2021
+api-version: 1.16
+
+softdepend: [ "qqBot" ]
+
+permissions:
+  kiocg.littlethings.at:
+    description: "@玩家"
+    default: true
+  kiocg.littlethings.fastworkbench:
+    description: "使用随身工作台"
+    default: op

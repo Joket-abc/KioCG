@@ -1,0 +1,4 @@
+name: ProtectSpawn
+main: com.kiocg.java.ProtectSpawn
+version: 2021
+api-version: 1.16

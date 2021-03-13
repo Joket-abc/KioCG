@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="KioCG-qqBot">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../KioCG-qqBot.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../KioCG-qqBot.jar!/" />
+    </SOURCES>
+  </library>
+</component>
