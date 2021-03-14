@@ -25,17 +25,17 @@ public class At {
         // 如果输入的是UUID
         if (playerName.length() == 36) {
             try {
-                uuid = UUID.fromString(msg);
+                uuid = UUID.fromString(playerName);
             } catch (final IllegalArgumentException ignore) {
-                e.getGroup().sendMessage("非法的UUID：" + msg);
+                e.getGroup().sendMessage("非法的UUID：" + playerName);
                 return;
             }
             player = Bukkit.getPlayer(uuid);
-        } else if (GMUtils.isLegalPlayerName(msg)) {
+        } else if (GMUtils.isLegalPlayerName(playerName)) {
             // 输入的可能是玩家名
-            player = Bukkit.getPlayer(msg);
+            player = Bukkit.getPlayer(playerName);
         } else {
-            e.getGroup().sendMessage("非法的玩家名：" + msg);
+            e.getGroup().sendMessage("非法的玩家名：" + playerName);
             return;
         }
 
