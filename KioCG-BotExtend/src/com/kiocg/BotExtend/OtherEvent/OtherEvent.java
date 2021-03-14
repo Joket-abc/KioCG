@@ -2,7 +2,7 @@ package com.kiocg.BotExtend.OtherEvent;
 
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
-import com.kiocg.java.events.ABEvent;
+import com.kiocg.qqBot.events.ABEvent;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.message.data.At;

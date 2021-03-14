@@ -1,7 +1,7 @@
 package com.kiocg.BotExtend.GroupMessage;
 
 import com.kiocg.BotExtend.GroupMessage.Realize.Link;
-import com.kiocg.java.events.GroupMessageEvent;
+import com.kiocg.qqBot.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

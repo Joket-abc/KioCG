@@ -1,8 +1,8 @@
 package com.kiocg.BotExtend.GroupAdminMessage;
 
 import com.kiocg.BotExtend.BotExtend;
-import com.kiocg.java.events.GroupMessageEvent;
-import com.kiocg.java.qqBot;
+import com.kiocg.qqBot.events.GroupMessageEvent;
+import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

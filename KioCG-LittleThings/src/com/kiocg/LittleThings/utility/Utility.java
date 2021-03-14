@@ -3,7 +3,7 @@ package com.kiocg.LittleThings.utility;
 import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.LittleThings.LittleThings;
-import com.kiocg.java.bot.KioCGBot;
+import com.kiocg.qqBot.bot.KioCGBot;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
