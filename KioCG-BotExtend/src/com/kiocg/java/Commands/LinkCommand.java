@@ -21,7 +21,7 @@ public class LinkCommand implements CommandExecutor {
         final UUID uuid = player.getUniqueId();
         final Long qq = GMUtils.getPlayerLink(uuid);
         if (qq != null) {
-            player.sendMessage("§7[§b豆渣子§7] §6你已经连接了QQ账号 " + qq + ".");
+            player.sendMessage("§a[§b豆渣子§a] §6你已经连接了QQ账号 " + qq + ".");
             return true;
         }
         final GMUtils gmUtils = new GMUtils();
@@ -40,7 +40,7 @@ public class LinkCommand implements CommandExecutor {
             if (args[0].equals(String.valueOf(waitLinkQQ))) {
                 gmUtils.addPlayerLink(uuid, waitLinkQQ);
                 gmUtils.removeWaitLinkQQ(uuid);
-                player.sendMessage("§a[§b豆渣子§a] §6成功连接了QQ账号 " + waitLinkQQ + ".");
+                player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ账号 " + waitLinkQQ + ".");
             } else {
                 player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ账号有误, 请检查后再试或重新连接.");
             }

@@ -29,7 +29,7 @@ public class LinkgetCommand implements CommandExecutor {
                 if (qq == null) {
                     sender.sendMessage("§7[§b豆渣子§7] §c此UUID未绑定QQ账号.");
                 } else {
-                    sender.sendMessage("§7[§b豆渣子§7] §6玩家 " + Bukkit.getOfflinePlayer(uuid).getName() + " 绑定的QQ账号: " + qq);
+                    sender.sendMessage("§7[§b豆渣子§7] §2玩家 " + Bukkit.getOfflinePlayer(uuid).getName() + " 绑定的QQ账号: " + qq);
                 }
                 return true;
             }
@@ -41,7 +41,7 @@ public class LinkgetCommand implements CommandExecutor {
                 if (playerName == null) {
                     sender.sendMessage("§7[§b豆渣子§7] §cQQ账号 " + qq + " 未绑定游戏账号.");
                 } else {
-                    sender.sendMessage("§7[§b豆渣子§7] §6QQ账号 " + qq + " 绑定的游戏账号: " + playerName);
+                    sender.sendMessage("§7[§b豆渣子§7] §2QQ账号 " + qq + " 绑定的游戏账号: " + playerName);
                 }
                 // 此处不需要返回, 纯数字也可能是玩家名
             }
@@ -62,7 +62,7 @@ public class LinkgetCommand implements CommandExecutor {
             if (qq == null) {
                 sender.sendMessage("§7[§b豆渣子§7] §c此UUID未绑定QQ账号.");
             } else {
-                sender.sendMessage("§7[§b豆渣子§7] §6玩家 " + offlinePlayer.getName() + " 绑定的QQ账号: " + qq);
+                sender.sendMessage("§7[§b豆渣子§7] §2玩家 " + offlinePlayer.getName() + " 绑定的QQ账号: " + qq);
             }
             return true;
         }

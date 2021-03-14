@@ -69,7 +69,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
         if (message.equals(playerVerifyCode.get(player))) {
             playerVerifyCode.remove(player);
             playerVerifyMessage.remove(player);
-            player.sendMessage("§7[§b豆渣子§7] §2你好像很健康呐, 可以开始异世界的探险了~");
+            player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
         } else if (message.equals(playerVerifyCode.get(player).substring(5))) {
             // 临时封禁玩家1小时
             final Date date = new Date();
@@ -78,7 +78,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
             // 提醒全体玩家和群
             final String playerName = player.getName();
             for (final Player toPlayer : getServer().getOnlinePlayers()) {
-                toPlayer.sendMessage("§a[§b豆渣子§a] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
+                toPlayer.sendMessage("§7[§b豆渣子§7] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
             }
             getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
             try {
