@@ -1,5 +1,5 @@
 name: AntiCheatingClient
-main: com.kiocg.java.AntiCheatingClient
+main: com.kiocg.AntiCheatingClient.AntiCheatingClient
 version: 2021
 api-version: 1.16
 

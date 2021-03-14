@@ -1,5 +1,5 @@
 name: LittleThings
-main: com.kiocg.java.LittleThings
+main: com.kiocg.LittleThings.LittleThings
 version: 2021
 api-version: 1.16
 

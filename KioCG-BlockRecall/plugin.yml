@@ -1,4 +1,4 @@
 name: BlockRecall
-main: com.kiocg.java.BlockRecall
+main: com.kiocg.BlockRecall.BlockRecall
 version: 2021
 api-version: 1.16
