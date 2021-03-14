@@ -14,7 +14,7 @@ public class At {
         final String messageExpand;
         if (msg.contains(" ")) {
             playerName = msg.substring(0, msg.indexOf(' '));
-            messageExpand = ": §r" + msg.substring(msg.indexOf(' ') + 1);
+            messageExpand = ": §r" + msg.substring(msg.indexOf(' ') + 1).trim();
         } else {
             playerName = msg;
             messageExpand = "";

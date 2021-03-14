@@ -61,19 +61,19 @@ public class Misc implements Listener {
         if (!message.contains("@")) {
             return;
         }
-        if (!e.getPlayer().hasPermission("kiocg.at.use")) {
+        if (!e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
         }
 
         // 获取在线玩家名列表，从长到短排序
         final List<String> playersName = new ArrayList<>();
         for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
-            playersName.add(player.getName().toLowerCase());
+            playersName.add(player.getName());
         }
         playersName.sort((a, b) -> (b.length() - a.length()));
 
         for (final String playerName : playersName) {
-            if (message.toLowerCase().contains("@" + playerName) || message.toLowerCase().contains("@ " + playerName)) {
+            if (message.toLowerCase().contains("@" + playerName.toLowerCase()) || message.toLowerCase().contains("@ " + playerName.toLowerCase())) {
                 final Player thePlayer = Bukkit.getServer().getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
                 message = message.replaceAll("(?i)@" + playerName, "§9§o@§9§o" + playerName + "§r").replaceAll("(?i)@ " + playerName, "§9§o@§9§o" + playerName + "§r");
