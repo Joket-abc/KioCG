@@ -6,6 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class CommandsPublic implements Listener {
     @EventHandler
     public void onCommandsPublic(final GroupMessageEvent event) {
@@ -58,7 +61,13 @@ public class CommandsPublic implements Listener {
                         + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、经济插件、多世界插件(地皮资源世界)。");
                 break;
             case ("ip"):
-                e.getGroup().sendMessage("正版限定，IP地址：play.kiocg.com");
+                String spareAddress = "NULL";
+                try {
+                    spareAddress = InetAddress.getByName("play.kiocg.com").getHostAddress();
+                } catch (final UnknownHostException ignore) {
+                }
+                e.getGroup().sendMessage("正版限定，IP地址：play.kiocg.com"
+                        + "\n备用地址：" + spareAddress + ":20205");
                 break;
             case ("client"):
                 e.getGroup().sendMessage("正版限定，客户端下载：群文件或百度网盘https://pan.baidu.com/s/1lq0o1Ma2ox2maLA2B3DqpQ");
