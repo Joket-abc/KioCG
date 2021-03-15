@@ -24,7 +24,7 @@ public class GMUtils {
         final ConfigurationSection configurationSection = BotExtend.getInstance()
                 .getPlayersFileConfiguration().getConfigurationSection("links");
         for (final Map.Entry<String, Object> entry : Objects.requireNonNull(configurationSection).getValues(false).entrySet()) {
-            playerLinks.put(UUID.fromString(entry.getKey()), (Long) entry.getValue());
+            playerLinks.put(UUID.fromString(entry.getKey()), Long.valueOf(entry.getValue().toString()));
         }
     }
 
