@@ -19,169 +19,166 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class ConsoleSender implements ConsoleCommandSender {
-    private final Server server;
+    private final ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
     private final List<String> output = new ArrayList<>();
     private BukkitTask task;
 
     public ConsoleSender(final GroupMessageEvent event) {
-        this.server = Bukkit.getServer();
+        this.consoleCommandSender = Bukkit.getServer().getConsoleSender();
         this.event = event;
-        send();
+        task = task();
     }
 
-    private void send() {
-        if (task != null) {
-            task.cancel();
-        }
-
-        task = Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> {
-            final StringBuilder output = new StringBuilder();
-            for (final String string : this.output) {
-                output.append(string).append("\n");
+    private BukkitTask task() {
+        return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> {
+            final StringBuilder stringBuilder = new StringBuilder();
+            for (final String string : output) {
+                stringBuilder.append(ChatColor.stripColor(string)).append("\n");
             }
-            final String message = output.toString().trim();
+            output.clear();
+
+            final String message = stringBuilder.toString().trim();
             event.getGroup().sendMessage(message.isEmpty() ? "指令已发送" : message);
-            this.output.clear();
         }, 4L);
     }
 
-    private Optional<ConsoleCommandSender> get() {
-        return Optional.of(server.getConsoleSender());
-    }
-
     @Override
-    public void sendMessage(@NotNull final String s) {
-        output.add(ChatColor.stripColor(s));
-        send();
+    public void sendMessage(final @NotNull String s) {
+        output.add(s);
+        task.cancel();
+        task = task();
     }
 
     @Override
     public void sendMessage(final @NotNull String[] strings) {
-        for (final String s : strings) {
-            sendMessage(s);
-        }
+        output.addAll(Arrays.asList(strings));
+        task.cancel();
+        task = task();
     }
 
     @Override
-    public void sendMessage(@Nullable final UUID uuid, @NotNull final String s) {
-        server.getConsoleSender().sendMessage(uuid, s);
+    public void sendMessage(final @Nullable UUID uuid, final @NotNull String s) {
+        consoleCommandSender.sendMessage(uuid, s);
     }
 
     @Override
-    public void sendMessage(@Nullable final UUID uuid, final @NotNull String[] strings) {
-        server.getConsoleSender().sendMessage(uuid, strings);
+    public void sendMessage(final @Nullable UUID uuid, final @NotNull String[] strings) {
+        consoleCommandSender.sendMessage(uuid, strings);
     }
 
     @Override
     public @NotNull Server getServer() {
-        return server;
+        return consoleCommandSender.getServer();
     }
 
     @Override
     public @NotNull String getName() {
-        return "CONSOLE";
+        return consoleCommandSender.getName();
     }
 
     @Override
     public @NotNull Spigot spigot() {
-        throw new UnsupportedOperationException();
+        return consoleCommandSender.spigot();
     }
 
     @Override
     public boolean isConversing() {
-        throw new UnsupportedOperationException();
+        return consoleCommandSender.isConversing();
     }
 
     @Override
-    public void acceptConversationInput(@NotNull final String s) {
+    public void acceptConversationInput(final @NotNull String s) {
+        consoleCommandSender.acceptConversationInput(s);
     }
 
     @Override
-    public boolean beginConversation(@NotNull final Conversation conversation) {
-        throw new UnsupportedOperationException();
+    public boolean beginConversation(final @NotNull Conversation conversation) {
+        return consoleCommandSender.beginConversation(conversation);
     }
 
     @Override
-    public void abandonConversation(@NotNull final Conversation conversation) {
-        throw new UnsupportedOperationException();
+    public void abandonConversation(final @NotNull Conversation conversation) {
+        consoleCommandSender.abandonConversation(conversation);
     }
 
     @Override
-    public void abandonConversation(@NotNull final Conversation conversation, @NotNull final ConversationAbandonedEvent conversationAbandonedEvent) {
-        throw new UnsupportedOperationException();
+    public void abandonConversation(final @NotNull Conversation conversation, final @NotNull ConversationAbandonedEvent conversationAbandonedEvent) {
+        consoleCommandSender.abandonConversation(conversation, conversationAbandonedEvent);
     }
 
     @Override
-    public void sendRawMessage(@NotNull final String s) {
+    public void sendRawMessage(final @NotNull String s) {
+        consoleCommandSender.sendRawMessage(s);
     }
 
     @Override
-    public void sendRawMessage(@Nullable final UUID uuid, @NotNull final String s) {
+    public void sendRawMessage(final @Nullable UUID uuid, final @NotNull String s) {
+        consoleCommandSender.sendRawMessage(uuid, s);
     }
 
     @Override
-    public boolean isPermissionSet(@NotNull final String s) {
-        return get().map(c -> c.isPermissionSet(s)).orElse(true);
+    public boolean isPermissionSet(final @NotNull String s) {
+        return consoleCommandSender.isPermissionSet(s);
     }
 
     @Override
-    public boolean isPermissionSet(@NotNull final Permission permission) {
-        return get().map(c -> c.isPermissionSet(permission)).orElse(true);
+    public boolean isPermissionSet(final @NotNull Permission permission) {
+        return consoleCommandSender.isPermissionSet(permission);
     }
 
     @Override
-    public boolean hasPermission(@NotNull final String s) {
-        return get().map(c -> c.hasPermission(s)).orElse(true);
+    public boolean hasPermission(final @NotNull String s) {
+        return consoleCommandSender.hasPermission(s);
     }
 
     @Override
-    public boolean hasPermission(@NotNull final Permission permission) {
-        return get().map(c -> c.hasPermission(permission)).orElse(true);
+    public boolean hasPermission(final @NotNull Permission permission) {
+        return consoleCommandSender.hasPermission(permission);
     }
 
     @Override
-    public @NotNull PermissionAttachment addAttachment(@NotNull final Plugin plugin, @NotNull final String s, final boolean b) {
-        throw new UnsupportedOperationException();
+    public @NotNull PermissionAttachment addAttachment(final @NotNull Plugin plugin, final @NotNull String s, final boolean b) {
+        return consoleCommandSender.addAttachment(plugin, s, b);
     }
 
     @Override
-    public @NotNull PermissionAttachment addAttachment(@NotNull final Plugin plugin) {
-        throw new UnsupportedOperationException();
+    public @NotNull PermissionAttachment addAttachment(final @NotNull Plugin plugin) {
+        return consoleCommandSender.addAttachment(plugin);
     }
 
     @Override
-    public @Nullable PermissionAttachment addAttachment(@NotNull final Plugin plugin, @NotNull final String s, final boolean b, final int i) {
-        throw new UnsupportedOperationException();
+    public @Nullable PermissionAttachment addAttachment(final @NotNull Plugin plugin, final @NotNull String s, final boolean b, final int i) {
+        return consoleCommandSender.addAttachment(plugin, s, b, i);
     }
 
     @Override
-    public @Nullable PermissionAttachment addAttachment(@NotNull final Plugin plugin, final int i) {
-        throw new UnsupportedOperationException();
+    public @Nullable PermissionAttachment addAttachment(final @NotNull Plugin plugin, final int i) {
+        return consoleCommandSender.addAttachment(plugin, i);
     }
 
     @Override
-    public void removeAttachment(@NotNull final PermissionAttachment permissionAttachment) {
-        throw new UnsupportedOperationException();
+    public void removeAttachment(final @NotNull PermissionAttachment permissionAttachment) {
+        consoleCommandSender.removeAttachment(permissionAttachment);
     }
 
     @Override
     public void recalculatePermissions() {
-        throw new UnsupportedOperationException();
+        consoleCommandSender.recalculatePermissions();
     }
 
     @Override
     public @NotNull Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw new UnsupportedOperationException();
+        return consoleCommandSender.getEffectivePermissions();
     }
 
     @Override
     public boolean isOp() {
-        return true;
+        return consoleCommandSender.isOp();
     }
 
     @Override
     public void setOp(final boolean b) {
-        throw new UnsupportedOperationException();
+        consoleCommandSender.setOp(b);
     }
 }

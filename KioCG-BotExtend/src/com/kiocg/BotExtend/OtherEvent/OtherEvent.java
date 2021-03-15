@@ -6,7 +6,6 @@ import com.kiocg.qqBot.events.ABEvent;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,7 +18,8 @@ public class OtherEvent implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
-            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
+            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
+                    () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
         }
     }
 
@@ -32,15 +32,14 @@ public class OtherEvent implements Listener {
 
         final Group group = e.getGroup();
         if (group.getId() == 569696336L) {
-            final MessageChain chain = new MessageChainBuilder()
+            group.sendMessage(new MessageChainBuilder()
                     .append(new At(e.getMember().getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
                     .append("\n！请先仔细查看群公告！")
                     .append("\n申请白名单请输入 .whitelist")
                     .append("\n下载客户端请输入 .client")
                     .append("\n连接游戏ID请输入 .link")
                     .append("\n这里不欢迎熊孩子，请友好相处。呐。")
-                    .build();
-            group.sendMessage(chain);
+                    .build());
         }
     }
 }

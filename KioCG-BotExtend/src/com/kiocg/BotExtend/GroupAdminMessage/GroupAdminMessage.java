@@ -1,6 +1,5 @@
 package com.kiocg.BotExtend.GroupAdminMessage;
 
-import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.qqBot.events.GroupMessageEvent;
 import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
@@ -15,27 +14,36 @@ public class GroupAdminMessage implements Listener {
     public void onGroupAdminMessage(final GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
-        final String message = e.getMessage().contentToString();
         final long groupID = e.getGroup().getId();
-        final String groupLabel = GAMUtils.getGroupLabel(groupID);
-        if (!message.startsWith(groupLabel)) {
-            return;
-        }
-
         final long senderID = e.getSender().getId();
-        if (!new GAMUtils().isGroupAdmin(groupID, senderID)) {
+        if (!GAMUtils.isGroupAdmin(groupID, senderID)) {
             return;
         }
 
+        final String message = e.getMessage().contentToString().trim();
+        String groupLabel = null;
+        try {
+            for (final String label : Objects.requireNonNull(GAMUtils.getGroupLabels(groupID))) {
+                if (message.startsWith(label)) {
+                    groupLabel = label;
+                    break;
+                }
+            }
+        } catch (final NullPointerException ignore) {
+            return;
+        }
+        if (groupLabel == null) {
+            return;
+        }
+
+        final String cmd = message.substring(groupLabel.length());
         new BukkitRunnable() {
             @Override
             public void run() {
-                final String cmd = message.substring(groupLabel.length());
                 final ConsoleSender sender = new ConsoleSender(e);
                 Bukkit.getScheduler().runTask(qqBot.getInstance(), () -> Bukkit.dispatchCommand(sender, cmd));
-                final String log = Objects.requireNonNull(BotExtend.getInstance().getConfig().getString("messages.log_command"))
-                        .replace("&", "§").replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd);
-                Bukkit.getLogger().info(log);
+                Bukkit.getLogger().info(new GAMUtils().getLogMessage().replace("&", "§")
+                        .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
             }
         }.runTaskAsynchronously(qqBot.getInstance());
     }

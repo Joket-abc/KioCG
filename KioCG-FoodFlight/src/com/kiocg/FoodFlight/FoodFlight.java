@@ -1,31 +1,34 @@
 package com.kiocg.FoodFlight;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class FoodFlight extends JavaPlugin implements Listener {
-    // 存储开启消耗饱食度飞行的玩家、扣除饱食度任务
-    public static final Map<Player, BukkitTask> flightPlayers = new HashMap<>();
+    private static FoodFlight instance;
+
+    public static FoodFlight getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
+        instance = this;
         getServer().getPluginManager().registerEvents(this, this);
-        Objects.requireNonNull(getServer().getPluginCommand("fly")).setExecutor(new Command(this));
+        Objects.requireNonNull(getServer().getPluginCommand("fly")).setExecutor(new FlyCommand());
     }
 
     @Override
     public void onDisable() {
-        getServer().getScheduler().cancelTasks(this);
-        for (final Player player : flightPlayers.keySet()) {
+        Bukkit.getServer().getScheduler().cancelTasks(this);
+        for (final Player player : Utils.flightPlayers) {
             player.setAllowFlight(false);
             player.setFlying(false);
             player.sendMessage("§7[§b豆渣子§7] §c插件重载迫使你关闭了飞行模式.");
@@ -35,49 +38,80 @@ public class FoodFlight extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent e) {
         final Player player = e.getPlayer();
-        if (flightPlayers.containsKey(player)) {
-            try {
-                flightPlayers.get(player).cancel();
-            } catch (final NullPointerException ignore) {
+        if (Utils.inFlightList(player)) {
+            new Utils().removeFlightList(player);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerToggleFlight(final PlayerToggleFlightEvent e) {
+        final Player player = e.getPlayer();
+        if (!Utils.isFoodFlight(player)) {
+            return;
+        }
+
+        if (e.isFlying()) {
+            if (player.getFoodLevel() <= 6) {
+                e.setCancelled(true);
+                return;
             }
-            flightPlayers.remove(player);
-            player.setAllowFlight(false);
-            player.setFlying(false);
+
+            Utils.startFoodFlightTask(player);
+        } else {
+            Utils.stopFoodFlightTask(player);
         }
     }
 
     @EventHandler
     public void onPlayerChangedWorld(final PlayerChangedWorldEvent e) {
         final Player player = e.getPlayer();
-        if (!flightPlayers.containsKey(player)) {
+        if (!Utils.inFlightList(player)) {
             return;
         }
 
         switch (player.getWorld().getEnvironment()) {
             case NORMAL:
-                if (player.hasPermission("kiocg.foodflight.normal") || player.hasPermission("kiocg.foodflight.normal.free")) {
+                if (player.hasPermission("kiocg.foodflight.normal.free")) {
+                    if (Utils.isFoodFlight(player)) {
+                        new Utils().removeFoodFlight(player);
+                    }
+                    return;
+                } else if (player.hasPermission("kiocg.foodflight.normal")) {
+                    if (!Utils.isFoodFlight(player)) {
+                        Utils.startFoodFlightTask(player);
+                    }
                     return;
                 }
                 break;
             case NETHER:
-                if (player.hasPermission("kiocg.foodflight.nether") || player.hasPermission("kiocg.foodflight.nether.free")) {
+                if (player.hasPermission("kiocg.foodflight.nether.free")) {
+                    if (Utils.isFoodFlight(player)) {
+                        new Utils().removeFoodFlight(player);
+                    }
+                    return;
+                } else if (player.hasPermission("kiocg.foodflight.nether")) {
+                    if (!Utils.isFoodFlight(player)) {
+                        Utils.startFoodFlightTask(player);
+                    }
                     return;
                 }
                 break;
             case THE_END:
-                if (player.hasPermission("kiocg.foodflight.end") || player.hasPermission("kiocg.foodflight.end.free")) {
+                if (player.hasPermission("kiocg.foodflight.end.free")) {
+                    if (Utils.isFoodFlight(player)) {
+                        new Utils().removeFoodFlight(player);
+                    }
+                    return;
+                } else if (player.hasPermission("kiocg.foodflight.end")) {
+                    if (!Utils.isFoodFlight(player)) {
+                        Utils.startFoodFlightTask(player);
+                    }
                     return;
                 }
                 break;
         }
 
-        try {
-            flightPlayers.get(player).cancel();
-        } catch (final NullPointerException ignore) {
-        }
-        flightPlayers.remove(player);
-        player.setAllowFlight(false);
-        player.setFlying(false);
+        new Utils().removeFlightList(player);
         player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
     }
 }

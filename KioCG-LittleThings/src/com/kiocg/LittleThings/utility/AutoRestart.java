@@ -15,16 +15,17 @@ import java.util.Map;
 public class AutoRestart {
     public AutoRestart() {
         // 存储自动重启的消息
-        final Map<String, String> autoRestartMessage = new HashMap<>();
-        autoRestartMessage.put("05:00:00", "1小时");
-        autoRestartMessage.put("05:50:00", "10分钟");
-        autoRestartMessage.put("05:59:00", "1分钟");
-        autoRestartMessage.put("05:59:50", "10秒");
-        autoRestartMessage.put("05:59:55", "5秒");
-        autoRestartMessage.put("05:59:56", "4秒");
-        autoRestartMessage.put("05:59:57", "3秒");
-        autoRestartMessage.put("05:59:58", "2秒");
-        autoRestartMessage.put("05:59:59", "1秒");
+        final Map<String, String> autoRestartMessage = new HashMap<>() {{
+            put("05:00:00", "1小时");
+            put("05:50:00", "10分钟");
+            put("05:59:00", "1分钟");
+            put("05:59:50", "10秒");
+            put("05:59:55", "5秒");
+            put("05:59:56", "4秒");
+            put("05:59:57", "3秒");
+            put("05:59:58", "2秒");
+            put("05:59:59", "1秒");
+        }};
         autoRestart(autoRestartMessage);
     }
 
@@ -57,6 +58,7 @@ public class AutoRestart {
                     autoRestartMessage.remove(date);
                 }
             }
+            // 每19tick循环防止tps小于20时导致错过时间
         }.runTaskTimerAsynchronously(LittleThings.getInstance(), 19L, 19L);
     }
 }

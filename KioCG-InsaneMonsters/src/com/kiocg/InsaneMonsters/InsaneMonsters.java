@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -28,40 +29,40 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onCreatureSpawn(final CreatureSpawnEvent e) {
         if (!e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
             return;
         }
 
-        LivingEntity entity = e.getEntity();
+        LivingEntity livingEntity = e.getEntity();
         final Random random = new Random();
-        switch (entity.getType()) {
+        switch (livingEntity.getType()) {
             case ZOMBIE:
                 if (random.nextInt(100) < 95) {
                     return;
                 }
 
-                entity = zombieWarrior.spawn(entity.getLocation());
+                livingEntity = zombieWarrior.spawn(livingEntity.getLocation());
                 break;
             case SKELETON:
                 if (random.nextInt(100) < 95) {
                     return;
                 }
 
-                entity = skeletonArcher.spawn(entity.getLocation());
+                livingEntity = skeletonArcher.spawn(livingEntity.getLocation());
                 break;
             case WITHER_SKELETON:
                 if (random.nextInt(100) < 95) {
                     return;
                 }
 
-                entity = darkKnight.spawn(entity.getLocation());
+                livingEntity = darkKnight.spawn(livingEntity.getLocation());
                 break;
             default:
                 return;
         }
-        entity.setCustomName("§cSCP-" + String.format("%03d", random.nextInt(6000)));
+        livingEntity.setCustomName("§cSCP-" + String.format("%03d", random.nextInt(6000)));
         e.setCancelled(true);
     }
 

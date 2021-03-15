@@ -2,6 +2,7 @@ package com.kiocg.BotExtend;
 
 import com.kiocg.BotExtend.Commands.LinkCommand;
 import com.kiocg.BotExtend.Commands.LinkgetCommand;
+import com.kiocg.BotExtend.GroupAdminMessage.GAMUtils;
 import com.kiocg.BotExtend.GroupAdminMessage.GroupAdminMessage;
 import com.kiocg.BotExtend.GroupMessage.CommandsPublic;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
@@ -9,31 +10,38 @@ import com.kiocg.BotExtend.OtherEvent.OtherEvent;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BotExtend extends JavaPlugin {
+    // 本类
     private static BotExtend instance;
+    // Vault消息模块
     private Chat chat;
+    // 玩家绑定QQ数据的文件
     private File playersFile;
+    // 玩家绑定QQ数据的配置文件
     private FileConfiguration playersFileConfiguration;
 
-    public static BotExtend getInstance() {
+    public static @NotNull BotExtend getInstance() {
         return instance;
     }
 
-    public Chat getChat() {
+    public @Nullable Chat getChat() {
         return chat;
     }
 
-    public File getPlayersFile() {
+    public @NotNull File getPlayersFile() {
         return playersFile;
     }
 
-    public FileConfiguration getPlayersFileConfiguration() {
+    public @NotNull FileConfiguration getPlayersFileConfiguration() {
         return playersFileConfiguration;
     }
 
@@ -48,6 +56,7 @@ public class BotExtend extends JavaPlugin {
         }
 
         saveDefaultConfig();
+        new GAMUtils().loadConfig();
 
         // 加载玩家绑定数据文件
         try {
@@ -65,9 +74,10 @@ public class BotExtend extends JavaPlugin {
         // 加载玩家绑定数据
         new GMUtils().loadPlayers();
 
-        getServer().getPluginManager().registerEvents(new CommandsPublic(), this);
-        getServer().getPluginManager().registerEvents(new GroupAdminMessage(), this);
-        getServer().getPluginManager().registerEvents(new OtherEvent(), this);
+        final PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new CommandsPublic(), this);
+        pluginManager.registerEvents(new GroupAdminMessage(), this);
+        pluginManager.registerEvents(new OtherEvent(), this);
         Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new LinkCommand());
         Objects.requireNonNull(getServer().getPluginCommand("linkget")).setExecutor(new LinkgetCommand());
     }

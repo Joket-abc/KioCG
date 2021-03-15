@@ -1,6 +1,7 @@
 package com.kiocg.BotExtend.GroupMessage;
 
 import com.kiocg.BotExtend.BotExtend;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -23,7 +24,7 @@ public class GMUtils {
         final ConfigurationSection configurationSection = BotExtend.getInstance()
                 .getPlayersFileConfiguration().getConfigurationSection("links");
         for (final Map.Entry<String, Object> entry : Objects.requireNonNull(configurationSection).getValues(false).entrySet()) {
-            playerLinks.put(UUID.fromString(entry.getKey()), Long.valueOf(entry.getValue().toString()));
+            playerLinks.put(UUID.fromString(entry.getKey()), (Long) entry.getValue());
         }
     }
 
@@ -82,10 +83,11 @@ public class GMUtils {
     // 返回玩家带前后缀的名称
     public @Nullable String getPlayerDisplayName(final @NotNull OfflinePlayer offlinePlayer) {
         try {
-            return BotExtend.getInstance().getChat().getPlayerPrefix(null, offlinePlayer)
+            final Chat chat = BotExtend.getInstance().getChat();
+            return Objects.requireNonNull(chat).getPlayerPrefix(null, offlinePlayer)
                     + offlinePlayer.getName()
-                    + BotExtend.getInstance().getChat().getPlayerSuffix(null, offlinePlayer);
-        } catch (final NullPointerException ex) {
+                    + chat.getPlayerSuffix(null, offlinePlayer);
+        } catch (final NullPointerException ignore) {
             return offlinePlayer.getName();
         }
     }

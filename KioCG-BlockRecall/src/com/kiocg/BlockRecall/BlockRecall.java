@@ -44,10 +44,12 @@ public class BlockRecall extends JavaPlugin implements Listener {
     public void onBlockPlace(final BlockPlaceEvent e) {
         final Block block = e.getBlock();
         final BlockState blockState = block.getState();
+        // 容器容易出事情
         if (blockState instanceof TileState) {
             return;
         }
         final ItemStack itemStack = e.getItemInHand().clone();
+        // 防止放下的方块类型和手中物品类型不一致 (eg.打火石点火)
         if (!itemStack.getType().equals(block.getType())) {
             return;
         }
@@ -72,6 +74,7 @@ public class BlockRecall extends JavaPlugin implements Listener {
         }
         final Block block = e.getClickedBlock();
         final BlockState blockState = Objects.requireNonNull(block).getState();
+        // 防止最后放置的方块一直被记录, 优化体验
         if (!lastBlockState.get(player).equals(blockState)) {
             lastBlockState.remove(player);
             lastBlockItemStack.remove(player);
@@ -81,8 +84,10 @@ public class BlockRecall extends JavaPlugin implements Listener {
         // 判断玩家能否破坏方块, 并且能让Coreprotect记录数据
         final BlockBreakEvent event = new BlockBreakEvent(block, player);
         getServer().getPluginManager().callEvent(event);
-        // 再次判断, 其他插件可能会修改方块
+        // 如果事件被取消则玩家没有权限撤回方块; 并且其他插件可能会修改方块, 需要再次判断
         if (event.isCancelled() || !lastBlockState.get(player).equals(blockState)) {
+            lastBlockState.remove(player);
+            lastBlockItemStack.remove(player);
             return;
         }
 

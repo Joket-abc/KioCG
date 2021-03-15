@@ -4,9 +4,14 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Utils {
-    // copy PlaceholderAPI/Player-Expansion
-    // https://github.com/PlaceholderAPI/Player-Expansion/blob/master/src/main/java/com/extendedclip/papi/expansion/player/PlayerUtil.java#L200
-    private int getExperienceAtLevel(final int level) {
+    public int getCurrentTotalExperience(final @NotNull Player player) {
+        final int currentLevel = player.getLevel();
+        @SuppressWarnings("ImplicitNumericConversion") final int currentExperienceAtLevel
+                = Math.round(getCurrentExperienceAtLevel(currentLevel) * player.getExp());
+        return getTotalExperienceReachedLevel(currentLevel) + currentExperienceAtLevel;
+    }
+
+    private int getCurrentExperienceAtLevel(final int level) {
         if (level <= 15) {
             return (level << 1) + 7;
         }
@@ -16,17 +21,14 @@ public class Utils {
         return (level * 9) - 158;
     }
 
-    public int getTotalExperience(final @NotNull Player player) {
-        @SuppressWarnings("ImplicitNumericConversion") int experience = Math.round(getExperienceAtLevel(player.getLevel()) * player.getExp());
-        int currentLevel = player.getLevel();
-        while (currentLevel > 0) {
-            currentLevel--;
-            experience += getExperienceAtLevel(currentLevel);
+    @SuppressWarnings("ImplicitNumericConversion")
+    private int getTotalExperienceReachedLevel(final int level) {
+        if (level <= 16) {
+            return (level * level) + level * 6;
         }
-        if (experience < 0) {
-            experience = 0;
+        if (level <= 31) {
+            return (int) ((level * level * 2.5) - level * 40.5 + 360D);
         }
-        return experience;
+        return (int) ((level * level * 4.5) - level * 162.5 + 2220D);
     }
-    // copy end
 }

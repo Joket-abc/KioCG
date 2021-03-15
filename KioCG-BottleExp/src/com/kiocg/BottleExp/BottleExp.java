@@ -1,7 +1,9 @@
 package com.kiocg.BottleExp;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,7 +14,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -24,40 +25,43 @@ public class BottleExp extends JavaPlugin implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final PlayerInteractEvent e) {
-        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.equals(e.getHand(), EquipmentSlot.HAND)) {
+        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.requireNonNull(e.getHand()).equals(EquipmentSlot.HAND)) {
             return;
         }
         if (!Objects.requireNonNull(e.getClickedBlock()).getType().equals(Material.ENCHANTING_TABLE)) {
             return;
         }
-        final Player player = e.getPlayer();
-        final ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (!itemStack.getType().equals(Material.GLASS_BOTTLE)) {
+        final ItemStack itemStack = e.getItem();
+        if (!Objects.requireNonNull(itemStack).getType().equals(Material.GLASS_BOTTLE)) {
             return;
         }
-        final int totalExperience = new Utils().getTotalExperience(player);
-        if (totalExperience < 10) {
+        final Player player = e.getPlayer();
+        final int currentTotalExperience = new Utils().getCurrentTotalExperience(player);
+        if (currentTotalExperience < 10) {
             return;
         }
 
+        final World world = player.getWorld();
+        final Location location = player.getLocation();
         if (player.isSneaking()) {
-            if (totalExperience >= itemStack.getAmount() * 10) {
-                player.giveExp(-itemStack.getAmount() * 10);
-                player.getWorld().dropItem(player.getLocation(), new ItemStack(Material.EXPERIENCE_BOTTLE, itemStack.getAmount()));
+            final int amount = itemStack.getAmount();
+            if (currentTotalExperience >= amount * 10) {
+                player.giveExp(-amount * 10);
+                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, amount));
                 itemStack.setAmount(0);
             } else {
-                final int enough = totalExperience / 10;
+                final int enough = currentTotalExperience / 10;
                 player.giveExp(-enough * 10);
-                player.getWorld().dropItem(player.getLocation(), new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
-                itemStack.setAmount(itemStack.getAmount() - enough);
+                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
+                itemStack.setAmount(amount - enough);
             }
-            getServer().getScheduler().runTask(this, (@NotNull Runnable) player::closeInventory);
+            getServer().getScheduler().runTask(this, (Runnable) player::closeInventory);
         } else {
             player.giveExp(-10);
-            player.getWorld().dropItem(player.getLocation(), new ItemStack(Material.EXPERIENCE_BOTTLE));
+            world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE));
             itemStack.setAmount(itemStack.getAmount() - 1);
         }
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
+        world.playSound(location, Sound.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
         e.setCancelled(true);
     }
 

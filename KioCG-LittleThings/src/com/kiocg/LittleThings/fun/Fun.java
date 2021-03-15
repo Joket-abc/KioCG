@@ -21,11 +21,11 @@ public class Fun implements Listener {
     // 苦力怕爆炸产生烟花
     @EventHandler(ignoreCancelled = true)
     public void onEntityExplode(final EntityExplodeEvent e) {
-        if (new Random().nextInt(100) < 97) {
-            return;
-        }
         final Entity entity = e.getEntity();
         if (!(entity instanceof Creeper)) {
+            return;
+        }
+        if (new Random().nextInt(100) < 97) {
             return;
         }
 
@@ -57,7 +57,6 @@ public class Fun implements Listener {
         final Location loc = entityClicked.getLocation();
         loc.setY(loc.getY() + 1.0);
         entityClicked.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 9, 1.0, 1.0, 1.0);
-        e.setCancelled(true);
     }
 
     // 生物出生粒子效果

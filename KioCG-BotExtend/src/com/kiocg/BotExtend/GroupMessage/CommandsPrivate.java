@@ -30,7 +30,8 @@ public class CommandsPrivate {
                 for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
                     stringBuilder.append(player.getName()).append(", ");
                 }
-                e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + ")：" + stringBuilder);
+                e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + ")："
+                        + stringBuilder.substring(0, stringBuilder.length() - 3));
                 break;
             case ("tps"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
@@ -39,7 +40,8 @@ public class CommandsPrivate {
                 }
 
                 final double[] tps = Bukkit.getServer().getTPS();
-                e.getGroup().sendMessage("TPS(1m, 5m, 15m)：" + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
+                e.getGroup().sendMessage("TPS(1m, 5m, 15m)："
+                        + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
                 break;
 
             // 功能信息
@@ -60,7 +62,7 @@ public class CommandsPrivate {
                 e.getGroup().sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
                 break;
             default:
-                if (msg.toLowerCase().startsWith("seen ")) {
+                if (msg.startsWith("seen ")) {
                     if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                         e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                         break;
@@ -70,7 +72,7 @@ public class CommandsPrivate {
                     new Seen().seen(e, msg);
                     break;
                 }
-                if (msg.toLowerCase().startsWith("at ")) {
+                if (msg.startsWith("at ")) {
                     if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                         e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                         break;

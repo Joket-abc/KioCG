@@ -57,7 +57,7 @@ public class ProtectSpawn extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerInteract(final PlayerInteractEvent e) {
         if (e.getAction().equals(Action.PHYSICAL)) {
             final Block block = e.getClickedBlock();

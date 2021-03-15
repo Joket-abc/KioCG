@@ -14,16 +14,16 @@ public class At {
         final String messageExpand;
         if (msg.contains(" ")) {
             playerName = msg.substring(0, msg.indexOf(' '));
-            messageExpand = ": §r" + msg.substring(msg.indexOf(' ') + 1).trim();
+            messageExpand = ": §r" + msg.substring(msg.indexOf(' ') + 1);
         } else {
             playerName = msg;
             messageExpand = "";
         }
 
-        final UUID uuid;
         final Player player;
         // 如果输入的是UUID
         if (playerName.length() == 36) {
+            final UUID uuid;
             try {
                 uuid = UUID.fromString(playerName);
             } catch (final IllegalArgumentException ignore) {
@@ -44,7 +44,7 @@ public class At {
             return;
         }
 
-        player.sendMessage("§7[§b豆渣子§7] §6群成员 §e" + GMUtils.getPlayerLinkAsName(e.getSender().getId()) + " §6提醒你" + messageExpand);
+        player.sendMessage("§7[§b豆渣子§7] §6群成员 §e" + GMUtils.getPlayerLinkAsName(e.getSender().getId()) + " §6提醒你" + messageExpand.trim());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
         e.getGroup().sendMessage("已提醒玩家 " + player.getName());
     }

@@ -1,20 +1,15 @@
 package com.kiocg.FoodFlight;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class Command implements @Nullable CommandExecutor {
-    final FoodFlight foodFlight;
-
-    public Command(final @NotNull FoodFlight foodFlight) {
-        this.foodFlight = foodFlight;
-    }
-
+public class FlyCommand implements @Nullable CommandExecutor {
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull org.bukkit.command.Command cmd, final @NotNull String label, final String[] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;
@@ -26,14 +21,8 @@ public class Command implements @Nullable CommandExecutor {
 
         final Player player = (Player) sender;
         // 玩家尝试关闭飞行
-        if (FoodFlight.flightPlayers.containsKey(player)) {
-            try {
-                FoodFlight.flightPlayers.get(player).cancel();
-            } catch (final NullPointerException ignore) {
-            }
-            FoodFlight.flightPlayers.remove(player);
-            player.setAllowFlight(false);
-            player.setFlying(false);
+        if (Utils.inFlightList(player)) {
+            new Utils().removeFlightList(player);
             player.sendMessage("§a[§b豆渣子§a] §c➷ 关掉关掉一定要关掉 ➷");
             return true;
         }
@@ -42,9 +31,9 @@ public class Command implements @Nullable CommandExecutor {
         switch (player.getWorld().getEnvironment()) {
             case NORMAL:
                 if (player.hasPermission("kiocg.foodflight.normal.free")) {
-                    FoodFlight.flightPlayers.put(player, null);
+                    new Utils().addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.normal")) {
-                    FoodFlight.flightPlayers.put(player, new BukkitTask().flightBukkitTask(foodFlight, player));
+                    new Utils().addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;
@@ -52,9 +41,9 @@ public class Command implements @Nullable CommandExecutor {
                 break;
             case NETHER:
                 if (player.hasPermission("kiocg.foodflight.nether.free")) {
-                    FoodFlight.flightPlayers.put(player, null);
+                    new Utils().addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.nether")) {
-                    FoodFlight.flightPlayers.put(player, new BukkitTask().flightBukkitTask(foodFlight, player));
+                    new Utils().addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;
@@ -62,9 +51,9 @@ public class Command implements @Nullable CommandExecutor {
                 break;
             case THE_END:
                 if (player.hasPermission("kiocg.foodflight.end.free")) {
-                    FoodFlight.flightPlayers.put(player, null);
+                    new Utils().addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.end")) {
-                    FoodFlight.flightPlayers.put(player, new BukkitTask().flightBukkitTask(foodFlight, player));
+                    new Utils().addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;

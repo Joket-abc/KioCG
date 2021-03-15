@@ -1,11 +1,14 @@
 owners:
-  - '456'
+  - 456
 
 groups:
   '123456789':
-    command: "/"
+    command:
+      - "/"
+      - ","
+      - "，"
     admins:
-      - '789'
+      - 789
 
 messages:
   log_command: "&cQQ用户 %user% 执行了 %cmd% 指令."

@@ -28,7 +28,7 @@ public class Link {
             // 输入的可能是玩家名
             offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
             if (offlinePlayer == null) {
-                e.getGroup().sendMessage("无法找到玩家 " + msg + ", 请尝试使用UUID进行查询.");
+                e.getGroup().sendMessage("无法找到玩家 " + msg + "，请尝试使用UUID进行查询.");
                 return;
             }
             uuid = offlinePlayer.getUniqueId();

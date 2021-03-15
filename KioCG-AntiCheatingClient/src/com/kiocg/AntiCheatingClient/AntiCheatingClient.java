@@ -93,7 +93,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerCommandPreprocess(final PlayerCommandPreprocessEvent e) {
         final Player player = e.getPlayer();
-        if (playerVerifyMessage.containsKey(player)) {
+        if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
             e.setCancelled(true);
         }
@@ -101,14 +101,15 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerMove(final PlayerMoveEvent e) {
-        final Location from = e.getFrom();
-        final Location to = e.getTo();
-        if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
-            return;
-        }
-
         final Player player = e.getPlayer();
-        if (playerVerifyMessage.containsKey(player)) {
+        if (playerVerifyCode.containsKey(player)) {
+            // 转动视角也会触发PlayerMoveEvent, 防止卡视角和卡空中
+            final Location from = e.getFrom();
+            final Location to = e.getTo();
+            if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
+                return;
+            }
+
             player.sendMessage(playerVerifyMessage.get(player));
             e.setCancelled(true);
         }
@@ -117,7 +118,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerInteract(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
-        if (playerVerifyMessage.containsKey(player)) {
+        if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
             e.setCancelled(true);
         }
@@ -126,14 +127,14 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerDropItem(final PlayerDropItemEvent e) {
         final Player player = e.getPlayer();
-        if (playerVerifyMessage.containsKey(player)) {
+        if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
             e.setCancelled(true);
         }
     }
 
     // 防止玩家在反作弊验证过程中被攻击
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelPlayerDamageByEntity(final EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
         if (entity instanceof Player && playerVerifyCode.containsKey(entity)) {

@@ -2,9 +2,10 @@ package com.kiocg.LittleThings.fix;
 
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,9 +21,11 @@ public class Fix implements Listener {
     public void fixVanishingCurse(final PlayerDeathEvent e) {
         for (final ItemStack itemStack : e.getEntity().getInventory().getContents()) {
             // 存储了此物品栏所有物品的数组. 个别条目可能为null
-            //noinspection ConstantConditions
-            if (itemStack != null && itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) {
-                itemStack.setAmount(0);
+            try {
+                if (itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) {
+                    itemStack.setAmount(0);
+                }
+            } catch (final NullPointerException ignore) {
             }
         }
     }
@@ -50,11 +53,12 @@ public class Fix implements Listener {
     // 实体不破坏盔甲架
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelArmorStandDamageByEntity(final EntityDamageByEntityEvent e) {
-        if (!e.getEntity().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+        final Entity entity = e.getEntity();
+        if (!entity.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
             return;
         }
 
-        if (e.getEntityType().equals(EntityType.ARMOR_STAND) && !e.getDamager().getType().equals(EntityType.PLAYER)) {
+        if (entity instanceof ArmorStand && !(e.getDamager() instanceof Player)) {
             e.setCancelled(true);
         }
     }
@@ -66,7 +70,8 @@ public class Fix implements Listener {
             return;
         }
 
-        if (e.getRemover() == null || !e.getRemover().getType().equals(EntityType.PLAYER)) {
+        final Entity remover = e.getRemover();
+        if (!(remover instanceof Player)) {
             e.setCancelled(true);
         }
     }

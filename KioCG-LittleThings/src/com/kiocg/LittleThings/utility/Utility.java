@@ -12,7 +12,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class Utility implements Listener {
     // 广播被白名单拦截的玩家
     @EventHandler
     public void onProfileWhitelistVerify(final ProfileWhitelistVerifyEvent e) {
-        if (!e.isWhitelistEnabled() || e.isWhitelisted()) {
+        if (e.isWhitelisted() || !e.isWhitelistEnabled()) {
             return;
         }
         final PlayerProfile player = e.getPlayerProfile();
@@ -52,11 +51,7 @@ public class Utility implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEntityToggleGlide(final EntityToggleGlideEvent e) {
         final Player player = (Player) e.getEntity();
-        if (!e.isGliding()) {
-            return;
-        }
-
-        if (!player.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
+        if (e.isGliding() && !player.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
             player.sendMessage("§7[§b豆渣子§7] §c鞘翅只可以在末地飞行, 不听话可是要打屁屁的哦!");
             e.setCancelled(true);
         }
@@ -65,9 +60,11 @@ public class Utility implements Listener {
     // 无法放置
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPlace(final BlockPlaceEvent e) {
-        final ItemStack itemStack = e.getItemInHand();
-        if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore() && Objects.requireNonNull(itemStack.getLore()).contains("§9无法放置")) {
-            e.setCancelled(true);
+        try {
+            if (Objects.requireNonNull(e.getItemInHand().getLore()).contains("§9无法放置")) {
+                e.setCancelled(true);
+            }
+        } catch (final NullPointerException ignore) {
         }
     }
 }
