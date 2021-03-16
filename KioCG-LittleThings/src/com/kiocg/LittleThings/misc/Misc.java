@@ -95,7 +95,7 @@ public class Misc implements Listener {
         } catch (final NullPointerException ignore) {
             return;
         }
-        if (!e.getSlotType().equals(InventoryType.SlotType.RESULT) || e.getCurrentItem() != null) {
+        if (!e.getSlotType().equals(InventoryType.SlotType.RESULT) || !Objects.requireNonNull(e.getCurrentItem()).getType().equals(Material.AIR)) {
             return;
         }
 
