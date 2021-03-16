@@ -82,7 +82,7 @@ public class CommandsPrivate {
                     new At().at(e, msg);
                     break;
                 }
-                e.getGroup().sendMessage("未知指令，输入 .help 来查看帮助");
+                // e.getGroup().sendMessage("未知指令，输入 .help 来查看帮助");
         }
     }
 }
