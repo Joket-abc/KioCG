@@ -29,7 +29,7 @@ public class Utils {
                 }
 
                 // 播放烟雾动画来区分可能作弊的玩家
-                player.getWorld().spawnParticle(Particle.SMOKE_LARGE, player.getLocation(), 9);
+                player.getWorld().spawnParticle(Particle.ASH, player.getLocation(), 9);
 
                 if (player.getFoodLevel() <= 6) {
                     player.setFlying(false);
