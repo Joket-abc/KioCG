@@ -26,7 +26,8 @@ public class CommandsPublic implements Listener {
 
         // 公共的指令
         switch (msg.toLowerCase()) {
-            case ("help"):
+            // 取消了.help指令
+            case ("HELP"):
                 e.getGroup().sendMessage(".help - 帮助"
                         // 外部信息
                         + "\n.info - 服务器介绍"

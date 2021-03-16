@@ -37,7 +37,7 @@ public class OtherEvent implements Listener {
                     .append("\n！请先仔细查看群公告！")
                     .append("\n申请白名单请输入 .whitelist")
                     .append("\n下载客户端请输入 .client")
-                    .append("\n连接游戏ID请输入 .link")
+                    .append("\n查看备用IP请输入 .ip")
                     .append("\n这里不欢迎熊孩子，请友好相处。呐。")
                     .build());
         }

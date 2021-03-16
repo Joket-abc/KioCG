@@ -31,7 +31,7 @@ public class CommandsPrivate {
                     stringBuilder.append(player.getName()).append(", ");
                 }
                 e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + ")："
-                        + stringBuilder.substring(0, stringBuilder.length() - 3));
+                        + stringBuilder.substring(0, stringBuilder.length() - 2));
                 break;
             case ("tps"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {

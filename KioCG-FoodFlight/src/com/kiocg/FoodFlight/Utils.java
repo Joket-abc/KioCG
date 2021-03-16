@@ -32,6 +32,7 @@ public class Utils {
                 player.getWorld().spawnParticle(Particle.SMOKE_LARGE, player.getLocation(), 9);
 
                 if (player.getFoodLevel() <= 6) {
+                    player.setFlying(false);
                     // 不使用stopFoodFlightTask, 以免任务在意外情况下无法被取消
                     cancel();
                     foodFlightTasks.put(player, null);
