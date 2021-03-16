@@ -32,7 +32,11 @@ public class BottleExp extends JavaPlugin implements Listener {
             return;
         }
         final ItemStack itemStack = e.getItem();
-        if (!Objects.requireNonNull(itemStack).getType().equals(Material.GLASS_BOTTLE)) {
+        try {
+            if (!Objects.requireNonNull(itemStack).getType().equals(Material.GLASS_BOTTLE)) {
+                return;
+            }
+        } catch (final NullPointerException ignore) {
             return;
         }
         final Player player = e.getPlayer();
