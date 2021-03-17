@@ -157,11 +157,10 @@ public class ItemCompress extends JavaPlugin implements Listener {
                     if (itemMeta.hasDisplayName()) {
                         final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
                         if (displayName.startsWith("§1§2§6")) {
-                            itemStackResult = itemStack.clone();
+                            itemStackResult = new ItemStack(itemStack.getType(), 9);
                             multipleText = new Utils().downMultiple(displayName.substring(6, 7));
                             // 解压成原版物品
                             if (multipleText.isEmpty()) {
-                                itemStackResult.setAmount(9);
                                 craftingInventory.setResult(itemStackResult);
                                 return;
                             }
@@ -173,7 +172,6 @@ public class ItemCompress extends JavaPlugin implements Listener {
                 }
             }
 
-            Objects.requireNonNull(itemStackResult).setAmount(9);
             final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
             itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
                     .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
