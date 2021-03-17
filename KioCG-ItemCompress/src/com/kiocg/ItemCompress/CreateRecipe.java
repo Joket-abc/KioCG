@@ -12,11 +12,14 @@ import java.util.*;
 
 public class CreateRecipe {
     public CreateRecipe(final ItemCompress itemCompress) {
+        // 存储所有物品
         final List<Material> allMaterial = new ArrayList<>(Arrays.asList(Material.values()));
+        // 存储合成配方中有且仅有单个物品的此物品、所对应的成品
+        final Map<Material, ItemStack> oneItemMaterial = new EnumMap<>(Material.class);
         // 移除空气
         allMaterial.remove(0);
 
-        // 防止替换已有的配方
+        // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while (iterator.hasNext()) {
             final Object object = iterator.next();
@@ -39,7 +42,9 @@ public class CreateRecipe {
                 final List<ItemStack> ingredientList = ((ShapelessRecipe) object).getIngredientList();
                 // 如果配方是由1个物品合成
                 if (ingredientList.size() == 1) {
-                    allMaterial.remove(ingredientList.get(0).getType());
+                    final Material material = ingredientList.get(0).getType();
+                    allMaterial.remove(material);
+                    oneItemMaterial.put(material, ((ShapelessRecipe) object).getResult());
                 }
             }
         }
@@ -50,6 +55,14 @@ public class CreateRecipe {
                         .addIngredient(9, material));
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompress_" + material), new ItemStack(material, 9))
                         .addIngredient(1, material));
+            }
+        }
+        for (final Map.Entry<Material, ItemStack> entry : oneItemMaterial.entrySet()) {
+            if (entry.getKey().getMaxStackSize() != 1) {
+                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + entry.getKey()), new ItemStack(entry.getKey()))
+                        .addIngredient(9, entry.getKey()));
+                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompressCover_" + entry.getKey()), entry.getValue())
+                        .addIngredient(1, entry.getKey()));
             }
         }
     }

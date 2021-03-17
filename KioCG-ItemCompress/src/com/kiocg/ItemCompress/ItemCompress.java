@@ -27,6 +27,12 @@ public class ItemCompress extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
     }
 
+    @Override
+    public void onDisable() {
+        getServer().resetRecipes();
+    }
+
+    // 冗余检查, 防止意料外的情况
     @EventHandler(ignoreCancelled = true)
     public void onCraftItem(final CraftItemEvent e) {
         final Recipe recipe = e.getRecipe();
@@ -41,6 +47,10 @@ public class ItemCompress extends JavaPlugin implements Listener {
                 final ItemMeta itemMeta = itemStack.getItemMeta();
                 if (!itemMeta.hasDisplayName() || !PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName())).startsWith("§1§2§6")) {
                     e.setCancelled(true);
+                    getLogger().warning("发生意料外的情况: " + ((ShapelessRecipe) recipe).getKey().getKey());
+                    getLogger().warning("玩家: " + e.getWhoClicked().getName());
+                    getLogger().warning("材料I18N: " + itemStack.getI18NDisplayName());
+                    getLogger().warning("成品I18N: " + Objects.requireNonNull(e.getInventory().getResult()).getI18NDisplayName());
                     return;
                 }
             }
@@ -92,10 +102,14 @@ public class ItemCompress extends JavaPlugin implements Listener {
                         .decoration(TextDecoration.ITALIC, false));
                 itemStackResult.setItemMeta(itemMetaResult);
                 craftingInventory.setResult(itemStackResult);
+            } else {
+                craftingInventory.setResult(null);
             }
+            return;
+        }
 
-            // 解压物品
-        } else if (key.startsWith("itemdecompress_")) {
+        // 解压物品
+        if (key.startsWith("itemdecompress_")) {
             final CraftingInventory craftingInventory = e.getInventory();
             // 获取压缩次数
             String multipleText = "";
@@ -107,7 +121,7 @@ public class ItemCompress extends JavaPlugin implements Listener {
                         final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
                         if (displayName.startsWith("§1§2§6")) {
                             multipleText = new Utils().downMultiple(displayName.substring(6, 7));
-                            // 压缩成原版物品
+                            // 解压成原版物品
                             if (multipleText.isEmpty()) {
                                 return;
                             }
@@ -121,6 +135,45 @@ public class ItemCompress extends JavaPlugin implements Listener {
             }
 
             final ItemStack itemStackResult = craftingInventory.getResult();
+            final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
+            itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
+                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
+                    .decoration(TextDecoration.ITALIC, false));
+            itemStackResult.setItemMeta(itemMetaResult);
+            craftingInventory.setResult(itemStackResult);
+            return;
+        }
+
+        // 解压覆盖物品
+        if (key.startsWith("itemdecompresscover_")) {
+            final CraftingInventory craftingInventory = e.getInventory();
+            ItemStack itemStackResult = null;
+            // 获取压缩次数
+            String multipleText = "";
+            for (final ItemStack itemStack : craftingInventory.getMatrix()) {
+                //noinspection ConstantConditions
+                if (itemStack != null) {
+                    final ItemMeta itemMeta = itemStack.getItemMeta();
+                    if (itemMeta.hasDisplayName()) {
+                        final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
+                        if (displayName.startsWith("§1§2§6")) {
+                            itemStackResult = itemStack.clone();
+                            multipleText = new Utils().downMultiple(displayName.substring(6, 7));
+                            // 解压成原版物品
+                            if (multipleText.isEmpty()) {
+                                itemStackResult.setAmount(9);
+                                craftingInventory.setResult(itemStackResult);
+                                return;
+                            }
+                            break;
+                        }
+                    }
+                    // 物品使用原版配方
+                    return;
+                }
+            }
+
+            Objects.requireNonNull(itemStackResult).setAmount(9);
             final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
             itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
                     .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
