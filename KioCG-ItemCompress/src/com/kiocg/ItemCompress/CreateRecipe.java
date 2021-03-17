@@ -16,15 +16,22 @@ public class CreateRecipe {
         final List<Material> allMaterial = new ArrayList<>(Arrays.asList(Material.values()));
         // 存储合成配方中有且仅有单个物品的此物品、所对应的成品
         final Map<Material, ItemStack> oneItemMaterial = new EnumMap<>(Material.class);
+
         // 移除空气
         allMaterial.remove(0);
 
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while (iterator.hasNext()) {
-            final Object object = iterator.next();
-            if (object instanceof ShapedRecipe) {
-                final Map<Character, ItemStack> ingredientMap = ((ShapedRecipe) object).getIngredientMap();
+            final Object recipe = iterator.next();
+            if (recipe instanceof ShapelessRecipe) {
+                final List<ItemStack> ingredientList = ((ShapelessRecipe) recipe).getIngredientList();
+                // 如果配方是由1个物品合成
+                if (ingredientList.size() == 1) {
+                    oneItemMaterial.put(ingredientList.get(0).getType(), ((ShapelessRecipe) recipe).getResult());
+                }
+            } else if (recipe instanceof ShapedRecipe) {
+                final Map<Character, ItemStack> ingredientMap = ((ShapedRecipe) recipe).getIngredientMap();
                 // 如果配方是由9个物品合成
                 if (ingredientMap.size() == 9) {
                     final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
@@ -34,17 +41,11 @@ public class CreateRecipe {
                     // 如果这9个物品相同
                     if (ingredientEquals.size() == 1) {
                         for (final ItemStack itemStack : ingredientEquals.keySet()) {
-                            allMaterial.remove(itemStack.getType());
+                            final Material material = itemStack.getType();
+                            allMaterial.remove(material);
+                            oneItemMaterial.remove(material);
                         }
                     }
-                }
-            } else if (object instanceof ShapelessRecipe) {
-                final List<ItemStack> ingredientList = ((ShapelessRecipe) object).getIngredientList();
-                // 如果配方是由1个物品合成
-                if (ingredientList.size() == 1) {
-                    final Material material = ingredientList.get(0).getType();
-                    allMaterial.remove(material);
-                    oneItemMaterial.put(material, ((ShapelessRecipe) object).getResult());
                 }
             }
         }
@@ -59,8 +60,6 @@ public class CreateRecipe {
         }
         for (final Map.Entry<Material, ItemStack> entry : oneItemMaterial.entrySet()) {
             if (entry.getKey().getMaxStackSize() != 1) {
-                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + entry.getKey()), new ItemStack(entry.getKey()))
-                        .addIngredient(9, entry.getKey()));
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompressCover_" + entry.getKey()), entry.getValue())
                         .addIngredient(1, entry.getKey()));
             }
