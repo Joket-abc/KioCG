@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KioCG-ItemCompress:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_ItemCompress_jar</output-path>
+    <root id="archive" name="KioCG-ItemCompress.jar">
+      <element id="module-output" name="KioCG-ItemCompress" />
+      <element id="module-source" name="KioCG-ItemCompress" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-ItemCompress/plugin.yml" />
+    </root>
+  </artifact>
+</component>
