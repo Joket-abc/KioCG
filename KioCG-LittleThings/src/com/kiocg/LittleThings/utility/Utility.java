@@ -34,7 +34,7 @@ public class Utility implements Listener {
 
         // 提醒全体玩家和群
         final String playerName = player.getName();
-        for (final Player toPlayer : Bukkit.getServer().getOnlinePlayers()) {
+        for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
             toPlayer.sendMessage("§7[§b豆渣子§7] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
         }
         LittleThings.getInstance().getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");

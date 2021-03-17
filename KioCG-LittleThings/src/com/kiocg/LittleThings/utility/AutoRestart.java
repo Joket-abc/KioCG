@@ -5,7 +5,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,34 +30,27 @@ public class AutoRestart {
 
     // 自动重启
     private void autoRestart(final Map<String, String> autoRestartMessage) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                final String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
-                if ("06:00:00".equals(date)) {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
-                                player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
-                            }
-                            Bukkit.getServer().shutdown();
-                        }
-                    }.runTask(LittleThings.getInstance());
-                    cancel();
-                    return;
-                }
-
-                if (autoRestartMessage.containsKey(date)) {
-                    for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
-                        player.sendTitle("§c世界正在破裂...", "§6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!", 10, 70, 20);
-                        player.sendMessage("§7[§9豆渣子§7] §c世界正在破裂... §6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!");
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1.0F, 1.0F);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.getInstance(), () -> {
+            final String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
+            if ("06:00:00".equals(date)) {
+                Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+                    for (final Player player : Bukkit.getOnlinePlayers()) {
+                        player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
                     }
-                    autoRestartMessage.remove(date);
+                    Bukkit.shutdown();
+                });
+                return;
+            }
+
+            if (autoRestartMessage.containsKey(date)) {
+                for (final Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendTitle("§c世界正在破裂...", "§6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!", 10, 70, 20);
+                    player.sendMessage("§7[§9豆渣子§7] §c世界正在破裂... §6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!");
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1.0F, 1.0F);
                 }
+                autoRestartMessage.remove(date);
             }
             // 每19tick循环防止tps小于20时导致错过时间
-        }.runTaskTimerAsynchronously(LittleThings.getInstance(), 19L, 19L);
+        }, 19L, 19L);
     }
 }

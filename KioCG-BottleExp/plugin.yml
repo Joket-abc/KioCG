@@ -5,5 +5,5 @@ api-version: 1.16
 
 permissions:
   kiocg.bottleexp.use:
-    description: 可以瓶装经验
+    description: 允许瓶装经验
     default: true

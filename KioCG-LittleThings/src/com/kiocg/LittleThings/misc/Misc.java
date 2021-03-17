@@ -14,7 +14,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,45 +38,38 @@ public class Misc implements Listener {
         }
 
         e.setRespawnLocation(loc);
-        new BukkitRunnable() {
-            final int foodLevel = player.getFoodLevel();
-            final float saturation = player.getSaturation();
-            final float exhaustion = player.getExhaustion();
-
-            @Override
-            public void run() {
-                player.setFoodLevel(foodLevel);
-                player.setSaturation(saturation);
-                player.setExhaustion(exhaustion);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 9, 9));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 9, 9));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 9, 9));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20 * 9, 9));
-            }
-        }.runTask(LittleThings.getInstance());
+        final int foodLevel = player.getFoodLevel();
+        final float saturation = player.getSaturation();
+        final float exhaustion = player.getExhaustion();
+        Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+            player.setFoodLevel(foodLevel);
+            player.setSaturation(saturation);
+            player.setExhaustion(exhaustion);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 9, 9));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 9, 9));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 9, 9));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20 * 9, 9));
+        });
     }
 
     // @玩家
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(final AsyncChatEvent e) {
         String message = PlainComponentSerializer.plain().serialize(e.message());
-        if (!message.contains("@")) {
-            return;
-        }
-        if (!e.getPlayer().hasPermission("kiocg.littlethings.at")) {
+        if (!message.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
         }
 
         // 获取在线玩家名列表，从长到短排序
         final List<String> onlinePlayersName = new ArrayList<>();
-        for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             onlinePlayersName.add(player.getName());
         }
         onlinePlayersName.sort((a, b) -> (b.length() - a.length()));
 
         for (final String playerName : onlinePlayersName) {
             if (message.toLowerCase().contains("@" + playerName.toLowerCase()) || message.toLowerCase().contains("@ " + playerName.toLowerCase())) {
-                final Player thePlayer = Bukkit.getServer().getPlayer(playerName);
+                final Player thePlayer = Bukkit.getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
                 message = message.replaceAll("(?i)@" + playerName, "§9§o@§9§o" + playerName + "§r").replaceAll("(?i)@ " + playerName, "§9§o@§9§o" + playerName + "§r");
             }
@@ -101,7 +93,11 @@ public class Misc implements Listener {
 
         final Player player = (Player) e.getWhoClicked();
         if (player.hasPermission("kiocg.littlethings.fastworkbench")) {
-            Bukkit.getServer().getScheduler().runTask(LittleThings.getInstance(), () -> player.openWorkbench(player.getLocation(), true));
+            Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+                player.closeInventory();
+                player.openWorkbench(player.getLocation(), true);
+            });
+            e.setCancelled(true);
         }
     }
 }

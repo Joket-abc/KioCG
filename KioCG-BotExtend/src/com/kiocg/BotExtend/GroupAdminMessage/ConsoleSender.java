@@ -25,7 +25,7 @@ public class ConsoleSender implements ConsoleCommandSender {
     private BukkitTask task;
 
     public ConsoleSender(final GroupMessageEvent event) {
-        this.consoleCommandSender = Bukkit.getServer().getConsoleSender();
+        this.consoleCommandSender = Bukkit.getConsoleSender();
         this.event = event;
         task = task();
     }

@@ -5,7 +5,6 @@ import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
@@ -37,14 +36,11 @@ public class GroupAdminMessage implements Listener {
         }
 
         final String cmd = message.substring(groupLabel.length());
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                final ConsoleSender sender = new ConsoleSender(e);
-                Bukkit.getScheduler().runTask(qqBot.getInstance(), () -> Bukkit.dispatchCommand(sender, cmd));
-                Bukkit.getLogger().info(new GAMUtils().getLogMessage().replace("&", "§")
-                        .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
-            }
-        }.runTaskAsynchronously(qqBot.getInstance());
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> {
+            final ConsoleSender sender = new ConsoleSender(e);
+            Bukkit.getScheduler().runTask(qqBot.getInstance(), () -> Bukkit.dispatchCommand(sender, cmd));
+            Bukkit.getLogger().info(new GAMUtils().getLogMessage().replace("&", "§")
+                    .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
+        });
     }
 }

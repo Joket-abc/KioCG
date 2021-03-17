@@ -21,9 +21,8 @@ public class InfiniteEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPrepareAnvilBook(final PrepareAnvilEvent e) {
-        //TODO 权限判断 kiocg.infiniteenchant.use
         final ItemStack item3 = e.getResult();
         if (item3 == null) {
             return;
@@ -108,4 +107,6 @@ public class InfiniteEnchant extends JavaPlugin implements Listener {
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
     }
+
+    //TODO 权限判断 kiocg.infiniteenchant.use
 }

@@ -18,7 +18,7 @@ public class OtherEvent implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
-            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
                     () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
         }
     }

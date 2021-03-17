@@ -8,7 +8,6 @@ import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
@@ -35,16 +34,13 @@ public class KioCGBot {
             }
         };
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                bot = BotFactory.INSTANCE.newBot(qq, Objects.requireNonNull(password), configuration);
-                bot.login();
-                api = new BotAPI(bot);
-                bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.Event.class, event -> Bukkit.getPluginManager().callEvent(new ABEvent(event)));
-                bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupMessageEvent(event)));
-            }
-        }.runTaskAsynchronously(qqBot.getInstance());
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> {
+            bot = BotFactory.INSTANCE.newBot(qq, Objects.requireNonNull(password), configuration);
+            bot.login();
+            api = new BotAPI(bot);
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.Event.class, event -> Bukkit.getPluginManager().callEvent(new ABEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupMessageEvent(event)));
+        });
     }
 
     public void close() {

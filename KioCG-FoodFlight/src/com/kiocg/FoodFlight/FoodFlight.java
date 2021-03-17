@@ -1,6 +1,5 @@
 package com.kiocg.FoodFlight;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +26,8 @@ public class FoodFlight extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        Bukkit.getServer().getScheduler().cancelTasks(this);
         for (final Player player : Utils.flightPlayers) {
+            new Utils().removeFoodFlight(player);
             player.setAllowFlight(false);
             player.setFlying(false);
             player.sendMessage("§7[§b豆渣子§7] §c插件重载迫使你关闭了飞行模式.");

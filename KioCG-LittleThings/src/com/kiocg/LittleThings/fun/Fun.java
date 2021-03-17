@@ -22,10 +22,7 @@ public class Fun implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEntityExplode(final EntityExplodeEvent e) {
         final Entity entity = e.getEntity();
-        if (!(entity instanceof Creeper)) {
-            return;
-        }
-        if (new Random().nextInt(100) < 97) {
+        if (!(entity instanceof Creeper) || new Random().nextInt(100) < 97) {
             return;
         }
 

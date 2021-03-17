@@ -7,8 +7,8 @@ softdepend: [ "qqBot" ]
 
 permissions:
   kiocg.littlethings.at:
-    description: "@玩家"
+    description: "允许@玩家"
     default: true
   kiocg.littlethings.fastworkbench:
-    description: "使用随身工作台"
+    description: "允许使用随身工作台"
     default: op

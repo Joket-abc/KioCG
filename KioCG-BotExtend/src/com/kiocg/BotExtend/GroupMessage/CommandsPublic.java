@@ -56,7 +56,7 @@ public class CommandsPublic implements Listener {
 
             // 外部信息
             case ("info"):
-                e.getGroup().sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getServer().getMinecraftVersion() + ")"
+                e.getGroup().sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
                         + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
                         + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
                         + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、经济插件、多世界插件(地皮资源世界)。");

@@ -27,10 +27,10 @@ public class CommandsPrivate {
                 }
 
                 final StringBuilder stringBuilder = new StringBuilder();
-                for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
+                for (final Player player : Bukkit.getOnlinePlayers()) {
                     stringBuilder.append(player.getName()).append(", ");
                 }
-                e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + ")："
+                e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
                         + stringBuilder.substring(0, stringBuilder.length() - 2));
                 break;
             case ("tps"):
@@ -39,7 +39,7 @@ public class CommandsPrivate {
                     break;
                 }
 
-                final double[] tps = Bukkit.getServer().getTPS();
+                final double[] tps = Bukkit.getTPS();
                 e.getGroup().sendMessage("TPS(1m, 5m, 15m)："
                         + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
                 break;
