@@ -2,3 +2,8 @@ name: BottleExp
 main: com.kiocg.BottleExp.BottleExp
 version: 2021
 api-version: 1.16
+
+permissions:
+  kiocg.bottleexp.use:
+    description: 可以瓶装经验
+    default: true

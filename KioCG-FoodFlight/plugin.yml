@@ -20,7 +20,7 @@ permissions:
     default: true
   kiocg.foodflight.nether:
     description: 允许在下届飞行
-    default: true
+    default: false
   kiocg.foodflight.end:
     description: 允许在末地飞行
     default: false

@@ -5,13 +5,11 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.LittleThings.LittleThings;
 import com.kiocg.qqBot.bot.KioCGBot;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityToggleGlideEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +43,6 @@ public class Utility implements Listener {
         } catch (final Exception ignored) {
         }
         kickWhitelistPlayer.add(uuid);
-    }
-
-    // 鞘翅仅限末地飞行
-    @EventHandler(ignoreCancelled = true)
-    public void onEntityToggleGlide(final EntityToggleGlideEvent e) {
-        final Player player = (Player) e.getEntity();
-        if (e.isGliding() && !player.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
-            player.sendMessage("§7[§b豆渣子§7] §c鞘翅只可以在末地飞行, 不听话可是要打屁屁的哦!");
-            e.setCancelled(true);
-        }
     }
 
     // 无法放置

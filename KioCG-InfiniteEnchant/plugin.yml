@@ -2,3 +2,8 @@ name: InfiniteEnchant
 main: com.kiocg.InfiniteEnchant.InfiniteEnchant
 version: 2021
 api-version: 1.16
+
+permissions:
+  kiocg.infiniteenchant.use:
+    description: 允许超过原版等级的附魔
+    default: true

@@ -10,6 +10,8 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
@@ -28,12 +30,16 @@ public class SkeletonArcher {
         Objects.requireNonNull(livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(60.0);
         livingEntity.setHealth(60.0);
 
+        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0));
+        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 0));
+
         final ItemStack bow = new ItemStack(Material.BOW);
         bow.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
         bow.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
         bow.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
         final EntityEquipment equipment = livingEntity.getEquipment();
         Objects.requireNonNull(equipment).setItemInMainHand(bow);
+        equipment.setItemInOffHand(new ItemStack(Material.TOTEM_OF_UNDYING));
 
         equipment.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
         equipment.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));

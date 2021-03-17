@@ -40,6 +40,9 @@ public class BottleExp extends JavaPlugin implements Listener {
             return;
         }
         final Player player = e.getPlayer();
+        if (!player.hasPermission("kiocg.bottleexp.use")) {
+            return;
+        }
         final int currentTotalExperience = new Utils().getCurrentTotalExperience(player);
         if (currentTotalExperience < 10) {
             return;

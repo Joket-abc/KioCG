@@ -23,6 +23,7 @@ public class InfiniteEnchant extends JavaPlugin implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPrepareAnvilBook(final PrepareAnvilEvent e) {
+        //TODO 权限判断 kiocg.infiniteenchant.use
         final ItemStack item3 = e.getResult();
         if (item3 == null) {
             return;
