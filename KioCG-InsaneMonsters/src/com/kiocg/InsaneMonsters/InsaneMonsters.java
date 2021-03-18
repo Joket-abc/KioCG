@@ -36,7 +36,7 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onCreatureSpawn(final CreatureSpawnEvent e) {
+    public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         if (!e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
             return;
         }
@@ -73,7 +73,7 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onEntityDeath(final EntityDeathEvent e) {
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
         final String persistentData = e.getEntity().getPersistentDataContainer().get(namespacedKey, PersistentDataType.STRING);
         if (persistentData == null) {
             return;
@@ -103,7 +103,7 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
     }
 
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;

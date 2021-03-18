@@ -5,13 +5,14 @@ import com.kiocg.qqBot.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class CommandsPublic implements Listener {
     @EventHandler
-    public void onCommandsPublic(final GroupMessageEvent event) {
+    public void onCommandsPublic(final @NotNull GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         String msg = e.getMessage().contentToString().trim();
@@ -19,7 +20,7 @@ public class CommandsPublic implements Listener {
             if ((msg.charAt(0) != '.' && msg.charAt(0) != '。') || msg.charAt(1) == '.' || msg.charAt(1) == '。') {
                 return;
             }
-        } catch (final IndexOutOfBoundsException ignore) {
+        } catch (final @NotNull IndexOutOfBoundsException ignore) {
             return;
         }
         msg = msg.substring(1);
@@ -65,7 +66,7 @@ public class CommandsPublic implements Listener {
                 String spareAddress = "NULL";
                 try {
                     spareAddress = InetAddress.getByName("play.kiocg.com").getHostAddress();
-                } catch (final UnknownHostException ignore) {
+                } catch (final @NotNull UnknownHostException ignore) {
                 }
                 e.getGroup().sendMessage("正版限定，IP地址：play.kiocg.com"
                         + "\n备用地址：" + spareAddress + ":20205");

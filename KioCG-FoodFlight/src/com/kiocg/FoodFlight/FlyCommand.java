@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class FlyCommand implements @Nullable CommandExecutor {
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;

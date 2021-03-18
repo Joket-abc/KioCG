@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class FoodFlight extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(final PlayerQuitEvent e) {
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         if (Utils.inFlightList(player)) {
             new Utils().removeFlightList(player);
@@ -43,7 +44,7 @@ public class FoodFlight extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerToggleFlight(final PlayerToggleFlightEvent e) {
+    public void onPlayerToggleFlight(final @NotNull PlayerToggleFlightEvent e) {
         final Player player = e.getPlayer();
         if (!Utils.isFoodFlight(player)) {
             return;
@@ -62,7 +63,7 @@ public class FoodFlight extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerChangedWorld(final PlayerChangedWorldEvent e) {
+    public void onPlayerChangedWorld(final @NotNull PlayerChangedWorldEvent e) {
         final Player player = e.getPlayer();
         if (!Utils.inFlightList(player)) {
             return;

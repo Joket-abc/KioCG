@@ -13,12 +13,12 @@ public class GAMUtils {
     // 存储所有群指令前缀的缓存
     private static final Map<Long, ArrayList<String>> groupLabel = new HashMap<>();
     // 存储log_command消息
-    static String logMessage = null;
+    static @Nullable String logMessage = null;
 
     public static boolean isGroupAdmin(final long groupID, final long senderID) {
         try {
             return groupAdmin.get(groupID).contains(senderID);
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return false;
         }
     }
@@ -28,7 +28,7 @@ public class GAMUtils {
     }
 
     public @NotNull String getLogMessage() {
-        return logMessage;
+        return Objects.requireNonNull(logMessage);
     }
 
     public void loadConfig() {

@@ -5,9 +5,10 @@ import com.kiocg.BotExtend.GroupMessage.Realize.Seen;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandsPrivate {
-    public void onCommandsPrivate(final GroupMessageEvent e, String msg) {
+    public void onCommandsPrivate(final @NotNull GroupMessageEvent e, @NotNull String msg) {
         // 私有的指令
         switch (msg) {
             case ("qaq"):

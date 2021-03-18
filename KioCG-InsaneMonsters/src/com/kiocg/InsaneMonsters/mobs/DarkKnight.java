@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class DarkKnight {
         this.namespacedKey = namespacedKey;
     }
 
-    public LivingEntity spawn(final Location location) {
+    public @NotNull LivingEntity spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, WitherSkeleton.class);
         livingEntity.getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, "DarkKnight");
         livingEntity.setRemoveWhenFarAway(true);

@@ -52,7 +52,7 @@ public class GMUtils {
     public static @Nullable String getPlayerLinkAsName(final @NotNull Long qq) {
         try {
             return Bukkit.getOfflinePlayer(Objects.requireNonNull(getPlayerLink(qq))).getName();
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return null;
         }
     }
@@ -87,7 +87,7 @@ public class GMUtils {
             return Objects.requireNonNull(chat).getPlayerPrefix(null, offlinePlayer)
                     + offlinePlayer.getName()
                     + chat.getPlayerSuffix(null, offlinePlayer);
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return offlinePlayer.getName();
         }
     }

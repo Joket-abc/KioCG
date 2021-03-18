@@ -23,7 +23,7 @@ public class BotExtend extends JavaPlugin {
     // 本类
     private static BotExtend instance;
     // Vault消息模块
-    private Chat chat;
+    private @Nullable Chat chat;
     // 玩家绑定QQ数据的文件
     private File playersFile;
     // 玩家绑定QQ数据的配置文件
@@ -51,7 +51,7 @@ public class BotExtend extends JavaPlugin {
         // 注册Vault消息模块
         try {
             chat = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Chat.class)).getProvider();
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             chat = null;
         }
 
@@ -65,7 +65,7 @@ public class BotExtend extends JavaPlugin {
                 saveResource("players.yml", false);
                 playersFile = new File(getDataFolder(), "players.yml");
             }
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             saveResource("players.yml", false);
             playersFile = new File(getDataFolder(), "players.yml");
         }
@@ -85,7 +85,7 @@ public class BotExtend extends JavaPlugin {
     public void savePlayersFile() {
         try {
             playersFileConfiguration.save(playersFile);
-        } catch (final IOException e) {
+        } catch (final @NotNull IOException e) {
             e.printStackTrace();
         }
     }

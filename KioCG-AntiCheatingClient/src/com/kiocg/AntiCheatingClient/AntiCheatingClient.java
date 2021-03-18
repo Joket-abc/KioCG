@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void startPlayerVerify(final PlayerJoinEvent e) {
+    public void startPlayerVerify(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (player.hasPermission("kiocg.anticheatingclient.bypass")) {
             return;
@@ -45,14 +46,14 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void cancelPlayerVerify(final PlayerQuitEvent e) {
+    public void cancelPlayerVerify(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         playerVerifyCode.remove(player);
         playerVerifyMessage.remove(player);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerVerify(final AsyncChatEvent e) {
+    public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
         final String message = PlainComponentSerializer.plain().serialize(e.message());
         if (message.length() < 192) {
             return;
@@ -83,7 +84,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
             getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
             try {
                 KioCGBot.getApi().sendGroupMsg(569696336L, "邪恶生物 " + playerName + " 被安全检查拦截了.");
-            } catch (final Exception ignored) {
+            } catch (final @NotNull Exception ignored) {
             }
         } else {
             player.sendMessage("§7[§b豆渣子§7] §6不要修改文本内容呢.");
@@ -91,7 +92,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void cancelPlayerCommandPreprocess(final PlayerCommandPreprocessEvent e) {
+    public void cancelPlayerCommandPreprocess(final @NotNull PlayerCommandPreprocessEvent e) {
         final Player player = e.getPlayer();
         if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
@@ -100,7 +101,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void cancelPlayerMove(final PlayerMoveEvent e) {
+    public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
         final Player player = e.getPlayer();
         if (playerVerifyCode.containsKey(player)) {
             // 转动视角也会触发PlayerMoveEvent, 防止卡视角和卡空中
@@ -116,7 +117,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void cancelPlayerInteract(final PlayerInteractEvent e) {
+    public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
         final Player player = e.getPlayer();
         if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
@@ -125,7 +126,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void cancelPlayerDropItem(final PlayerDropItemEvent e) {
+    public void cancelPlayerDropItem(final @NotNull PlayerDropItemEvent e) {
         final Player player = e.getPlayer();
         if (playerVerifyCode.containsKey(player)) {
             player.sendMessage(playerVerifyMessage.get(player));
@@ -135,7 +136,7 @@ public class AntiCheatingClient extends JavaPlugin implements Listener {
 
     // 防止玩家在反作弊验证过程中被攻击
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelPlayerDamageByEntity(final EntityDamageByEntityEvent e) {
+    public void cancelPlayerDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
         if (entity instanceof Player && playerVerifyCode.containsKey(entity)) {
             e.setCancelled(true);

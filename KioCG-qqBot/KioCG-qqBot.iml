@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mirai-core-all-2.4.2-all" level="project" />
-    <orderEntry type="library" name="paper-1.16.5-534" level="project" />
+    <orderEntry type="library" name="paper-1.16.5-553" level="project" />
   </component>
 </module>

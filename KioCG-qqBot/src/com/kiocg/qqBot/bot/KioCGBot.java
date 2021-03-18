@@ -8,6 +8,7 @@ import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class KioCGBot {
     public void close() {
         try {
             bot.close(new Throwable());
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
         }
     }
 

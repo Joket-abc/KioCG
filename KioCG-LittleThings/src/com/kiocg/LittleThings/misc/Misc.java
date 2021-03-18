@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Objects;
 public class Misc implements Listener {
     // 死亡原地复活
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerRespawn(final PlayerRespawnEvent e) {
+    public void onPlayerRespawn(final @NotNull PlayerRespawnEvent e) {
         final Player player = e.getPlayer();
         final Location loc = player.getLocation();
         //TODO 1.17 Y坐标更改!
@@ -54,7 +55,7 @@ public class Misc implements Listener {
 
     // @玩家
     @EventHandler(ignoreCancelled = true)
-    public void onAsyncPlayerChat(final AsyncChatEvent e) {
+    public void onAsyncPlayerChat(final @NotNull AsyncChatEvent e) {
         String message = PlainComponentSerializer.plain().serialize(e.message());
         if (!message.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
@@ -79,12 +80,12 @@ public class Misc implements Listener {
 
     // 随身工作台
     @EventHandler(ignoreCancelled = true)
-    public void onInventoryClick(final InventoryClickEvent e) {
+    public void onInventoryClick(final @NotNull InventoryClickEvent e) {
         try {
             if (!Objects.requireNonNull(e.getClickedInventory()).getType().equals(InventoryType.CRAFTING)) {
                 return;
             }
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
         if (!e.getSlotType().equals(InventoryType.SlotType.RESULT) || !Objects.requireNonNull(e.getCurrentItem()).getType().equals(Material.AIR)) {

@@ -12,10 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class OtherEvent implements Listener {
     @EventHandler
-    public void onPlayerJoin(final PlayerJoinEvent e) {
+    public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
@@ -24,7 +25,7 @@ public class OtherEvent implements Listener {
     }
 
     @EventHandler
-    public void onUserJoinGroup(final ABEvent event) {
+    public void onUserJoinGroup(final @NotNull ABEvent event) {
         if (!(event.getEvent() instanceof MemberJoinEvent)) {
             return;
         }

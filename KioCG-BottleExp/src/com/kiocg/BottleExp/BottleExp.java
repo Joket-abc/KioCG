@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class BottleExp extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteract(final PlayerInteractEvent e) {
+    public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.requireNonNull(e.getHand()).equals(EquipmentSlot.HAND)) {
             return;
         }
@@ -36,7 +37,7 @@ public class BottleExp extends JavaPlugin implements Listener {
             if (!Objects.requireNonNull(itemStack).getType().equals(Material.GLASS_BOTTLE)) {
                 return;
             }
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
         final Player player = e.getPlayer();
@@ -73,7 +74,7 @@ public class BottleExp extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onExpBottle(final ExpBottleEvent e) {
+    public void onExpBottle(final @NotNull ExpBottleEvent e) {
         e.setExperience(10);
     }
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class LinkgetCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (args.length == 1) {
             return false;
         }
@@ -24,7 +24,7 @@ public class LinkgetCommand implements CommandExecutor {
             final UUID uuid;
             try {
                 uuid = UUID.fromString(args[0]);
-            } catch (final IllegalArgumentException ignore) {
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 sender.sendMessage("§7[§b豆渣子§7] §c非法的UUID：" + args[0]);
                 break labelUUID;
             }

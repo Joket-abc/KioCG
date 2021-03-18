@@ -14,25 +14,26 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class Fix implements Listener {
     // 死亡移除消失诅咒的物品
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void fixVanishingCurse(final PlayerDeathEvent e) {
+    public void fixVanishingCurse(final @NotNull PlayerDeathEvent e) {
         for (final ItemStack itemStack : e.getEntity().getInventory().getContents()) {
             // 存储了此物品栏所有物品的数组. 个别条目可能为null
             try {
                 if (itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) {
                     itemStack.setAmount(0);
                 }
-            } catch (final NullPointerException ignore) {
+            } catch (final @NotNull NullPointerException ignore) {
             }
         }
     }
 
     // 修复没有AI的生物
     @EventHandler(ignoreCancelled = true)
-    public void fixAI(final PlayerInteractEntityEvent e) {
+    public void fixAI(final @NotNull PlayerInteractEntityEvent e) {
         final Entity entityClicked = e.getRightClicked();
         if (!(entityClicked instanceof Mob)) {
             return;
@@ -52,7 +53,7 @@ public class Fix implements Listener {
 
     // 实体不破坏盔甲架
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelArmorStandDamageByEntity(final EntityDamageByEntityEvent e) {
+    public void cancelArmorStandDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
         if (!entity.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
             return;
@@ -65,7 +66,7 @@ public class Fix implements Listener {
 
     // 实体和爆炸不破坏悬挂实体
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelHangingBreakByEntity(final HangingBreakByEntityEvent e) {
+    public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
         if (!e.getEntity().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
             return;
         }

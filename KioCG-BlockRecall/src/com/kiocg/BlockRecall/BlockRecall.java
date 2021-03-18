@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,14 +35,14 @@ public class BlockRecall extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(final PlayerQuitEvent e) {
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         lastBlockState.remove(player);
         lastBlockItemStack.remove(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onBlockPlace(final BlockPlaceEvent e) {
+    public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final Block block = e.getBlock();
         final BlockState blockState = block.getState();
         // 容器容易出事情
@@ -64,7 +65,7 @@ public class BlockRecall extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteract(final PlayerInteractEvent e) {
+    public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
         }

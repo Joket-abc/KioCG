@@ -63,7 +63,7 @@ public class Utils {
     public static void stopFoodFlightTask(final @NotNull Player player) {
         try {
             foodFlightTasks.get(player).cancel();
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
         }
         foodFlightTasks.put(player, null);
     }
@@ -71,7 +71,7 @@ public class Utils {
     public void removeFoodFlight(final @NotNull Player player) {
         try {
             foodFlightTasks.get(player).cancel();
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
         }
         foodFlightTasks.remove(player);
     }

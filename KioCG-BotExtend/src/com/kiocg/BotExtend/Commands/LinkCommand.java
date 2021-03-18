@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class LinkCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;

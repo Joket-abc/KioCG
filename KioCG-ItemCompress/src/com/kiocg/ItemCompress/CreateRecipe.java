@@ -7,11 +7,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class CreateRecipe {
-    public CreateRecipe(final ItemCompress itemCompress) {
+    public CreateRecipe(final @NotNull ItemCompress itemCompress) {
         // 存储所有物品
         final List<Material> allMaterial = new ArrayList<>(Arrays.asList(Material.values()));
         // 存储合成配方中有且仅有单个物品的此物品、所对应的成品

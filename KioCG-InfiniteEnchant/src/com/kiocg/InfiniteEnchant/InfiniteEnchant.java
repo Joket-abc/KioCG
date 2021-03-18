@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class InfiniteEnchant extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPrepareAnvilBook(final PrepareAnvilEvent e) {
+    public void onPrepareAnvilBook(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();
         if (item3 == null) {
             return;

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class ConsoleSender implements ConsoleCommandSender {
-    private final ConsoleCommandSender consoleCommandSender;
+    private final @NotNull ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
     private final List<String> output = new ArrayList<>();
     private BukkitTask task;
@@ -30,7 +30,7 @@ public class ConsoleSender implements ConsoleCommandSender {
         task = task();
     }
 
-    private BukkitTask task() {
+    private @NotNull BukkitTask task() {
         return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> {
             final StringBuilder stringBuilder = new StringBuilder();
             for (final String string : output) {

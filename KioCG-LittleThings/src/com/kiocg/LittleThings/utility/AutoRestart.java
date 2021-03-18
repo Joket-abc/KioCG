@@ -5,6 +5,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class AutoRestart {
     }
 
     // 自动重启
-    private void autoRestart(final Map<String, String> autoRestartMessage) {
+    private void autoRestart(final @NotNull Map<String, String> autoRestartMessage) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.getInstance(), () -> {
             final String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
             if ("06:00:00".equals(date)) {

@@ -5,12 +5,13 @@ import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class GroupAdminMessage implements Listener {
     @EventHandler
-    public void onGroupAdminMessage(final GroupMessageEvent event) {
+    public void onGroupAdminMessage(final @NotNull GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         final long groupID = e.getGroup().getId();
@@ -28,7 +29,7 @@ public class GroupAdminMessage implements Listener {
                     break;
                 }
             }
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
         if (groupLabel == null) {

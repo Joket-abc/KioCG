@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +30,11 @@ public class ItemCompress extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPrepareItemCraft(final PrepareItemCraftEvent e) {
+    public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
         final Recipe recipe;
         try {
             recipe = e.getRecipe();
-        } catch (final IllegalArgumentException ignore) {
+        } catch (final @NotNull IllegalArgumentException ignore) {
             return;
         }
 

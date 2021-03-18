@@ -7,20 +7,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Seen {
-    public void seen(final GroupMessageEvent e, final String msg) {
+    public void seen(final @NotNull GroupMessageEvent e, final @NotNull String msg) {
         final UUID uuid;
         final OfflinePlayer offlinePlayer;
         // 如果输入的是UUID
         if (msg.length() == 36) {
             try {
                 uuid = UUID.fromString(msg);
-            } catch (final IllegalArgumentException ignore) {
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 e.getGroup().sendMessage("非法的UUID：" + msg);
                 return;
             }
@@ -54,7 +55,7 @@ public class Seen {
                 .append("\n累计在线时间：").append(gmUtils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.PLAY_ONE_MINUTE)));
         try {
             stringBuilder.append("   元気值：").append(ExperienceAPI.getPowerLevelOffline(uuid));
-        } catch (final Exception ignore) {
+        } catch (final @NotNull Exception ignore) {
             stringBuilder.append("   元気值：NULL");
         }
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次")

@@ -22,7 +22,7 @@ public class Utils {
     public @NotNull String upMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) + 1);
-        } catch (final IndexOutOfBoundsException ignore) {
+        } catch (final @NotNull IndexOutOfBoundsException ignore) {
             return "";
         }
     }
@@ -30,7 +30,7 @@ public class Utils {
     public @NotNull String downMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) - 1);
-        } catch (final IndexOutOfBoundsException ignore) {
+        } catch (final @NotNull IndexOutOfBoundsException ignore) {
             return "";
         }
     }

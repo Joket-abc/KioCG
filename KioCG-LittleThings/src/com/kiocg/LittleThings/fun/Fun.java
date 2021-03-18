@@ -14,13 +14,14 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
 public class Fun implements Listener {
     // 苦力怕爆炸产生烟花
     @EventHandler(ignoreCancelled = true)
-    public void onEntityExplode(final EntityExplodeEvent e) {
+    public void onEntityExplode(final @NotNull EntityExplodeEvent e) {
         final Entity entity = e.getEntity();
         if (!(entity instanceof Creeper) || new Random().nextInt(100) < 97) {
             return;
@@ -36,7 +37,7 @@ public class Fun implements Listener {
 
     // 骨粉催熟玩家
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteractEntity(final PlayerInteractEntityEvent e) {
+    public void onPlayerInteractEntity(final @NotNull PlayerInteractEntityEvent e) {
         if (!e.getHand().equals(EquipmentSlot.HAND)) {
             return;
         }
@@ -58,7 +59,7 @@ public class Fun implements Listener {
 
     // 生物出生粒子效果
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onCreatureSpawn(final CreatureSpawnEvent e) {
+    public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final Entity entity = e.getEntity();
         entity.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, entity.getLocation(), 1);
     }

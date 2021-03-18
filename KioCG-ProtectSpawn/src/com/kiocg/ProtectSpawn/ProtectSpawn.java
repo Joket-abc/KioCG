@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ProtectSpawn extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelBlockBreak(final BlockBreakEvent e) {
+    public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
         final Player player = e.getPlayer();
         if (player.isOp()) {
             return;
@@ -45,7 +46,7 @@ public class ProtectSpawn extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelBlockPlace(final BlockPlaceEvent e) {
+    public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
         final Player player = e.getPlayer();
         if (player.isOp()) {
             return;
@@ -58,7 +59,7 @@ public class ProtectSpawn extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerInteract(final PlayerInteractEvent e) {
+    public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (e.getAction().equals(Action.PHYSICAL)) {
             final Block block = e.getClickedBlock();
             if (Objects.requireNonNull(block).getType().equals(Material.FARMLAND) && inSpawn(block.getLocation())) {
@@ -80,7 +81,7 @@ public class ProtectSpawn extends JavaPlugin implements Listener {
         }
     }
 
-    private boolean inSpawn(final Location loc) {
+    private boolean inSpawn(final @NotNull Location loc) {
         if (!"KioCG_world".equals(loc.getWorld().getName())) {
             return false;
         }

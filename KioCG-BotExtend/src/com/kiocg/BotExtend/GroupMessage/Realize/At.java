@@ -5,11 +5,12 @@ import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 public class At {
-    public void at(final GroupMessageEvent e, final String msg) {
+    public void at(final @NotNull GroupMessageEvent e, final @NotNull String msg) {
         final String playerName;
         final String messageExpand;
         if (msg.contains(" ")) {
@@ -26,7 +27,7 @@ public class At {
             final UUID uuid;
             try {
                 uuid = UUID.fromString(playerName);
-            } catch (final IllegalArgumentException ignore) {
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 e.getGroup().sendMessage("非法的UUID：" + playerName);
                 return;
             }

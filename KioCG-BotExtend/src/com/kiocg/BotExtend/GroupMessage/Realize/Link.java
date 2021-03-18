@@ -4,18 +4,19 @@ import com.kiocg.BotExtend.GroupMessage.GMUtils;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 public class Link {
-    public void link(final GroupMessageEvent e, final String msg) {
+    public void link(final @NotNull GroupMessageEvent e, final @NotNull String msg) {
         final UUID uuid;
         final OfflinePlayer offlinePlayer;
         // 如果输入的是UUID
         if (msg.length() == 36) {
             try {
                 uuid = UUID.fromString(msg);
-            } catch (final IllegalArgumentException ignore) {
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 e.getGroup().sendMessage("非法的UUID：" + msg);
                 return;
             }
