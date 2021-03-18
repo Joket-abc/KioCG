@@ -3,9 +3,14 @@ package com.kiocg.InsaneMonsters;
 import com.kiocg.InsaneMonsters.mobs.DarkKnight;
 import com.kiocg.InsaneMonsters.mobs.SkeletonArcher;
 import com.kiocg.InsaneMonsters.mobs.ZombieWarrior;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,6 +19,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Random;
@@ -94,5 +100,57 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("此指令仅限玩家使用.");
+            return true;
+        }
+
+        final Player player = (Player) sender;
+        if (args.length == 0) {
+            //noinspection SpellCheckingInspection
+            player.sendMessage("§4Z§combie§4W§carrior §6| 僵尸战士");
+            //noinspection SpellCheckingInspection
+            player.sendMessage("§4S§ckeleton§4A§crcher §6| 骷髅弓箭手");
+            //noinspection SpellCheckingInspection
+            player.sendMessage("§4D§cark§4K§cnight §6| 黑暗骑士");
+            player.sendMessage("§7/insanemonsters <mob> 来生成指定的疯狂怪物.");
+            return true;
+        }
+
+        if (args.length == 1) {
+            final Block block = player.getTargetBlock(64);
+            if (block == null) {
+                player.sendMessage("§a[§b豆渣子§a] §c所指向的方块距离太远了.");
+                return true;
+            }
+
+            final Location loc = block.getLocation();
+            loc.setY(loc.getY() + 1.0);
+            switch (args[0].toLowerCase()) {
+                case "zombiewarrior":
+                case "zw":
+                    zombieWarrior.spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成僵尸战士.");
+                    break;
+                case "skeletonarcher":
+                case "sa":
+                    skeletonArcher.spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成骷髅弓箭手.");
+                    break;
+                case "darkknight":
+                case "dk":
+                    darkKnight.spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成黑暗骑士.");
+                    break;
+                default:
+                    player.sendMessage("§7[§b豆渣子§7] §c无效的疯狂怪物种类.");
+            }
+            return true;
+        }
+        return false;
     }
 }
