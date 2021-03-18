@@ -30,7 +30,7 @@ public class CreateRecipe {
                 // 如果配方是由1个物品合成
                 if (ingredientList.size() == 1) {
                     oneItemMaterial.put(ingredientList.get(0).getType(), ((ShapelessRecipe) recipe).getResult());
-                    Bukkit.getLogger().info("覆盖无序配方: " + ((ShapelessRecipe) recipe).getResult().getType());
+                    // Bukkit.getLogger().info("覆盖无序配方: " + ((ShapelessRecipe) recipe).getResult().getType());
                     continue;
                 }
 
@@ -46,7 +46,7 @@ public class CreateRecipe {
                             final Material material = itemStack.getType();
                             allMaterial.remove(material);
                             oneItemMaterial.remove(material);
-                            Bukkit.getLogger().info("忽略无序配方: " + material);
+                            // Bukkit.getLogger().info("忽略无序配方: " + material);
                         }
                     }
                 }
@@ -56,7 +56,7 @@ public class CreateRecipe {
                 if (ingredientMap.size() == 1) {
                     for (final ItemStack itemStack : ingredientMap.values()) {
                         oneItemMaterial.put(itemStack.getType(), ((ShapedRecipe) recipe).getResult());
-                        Bukkit.getLogger().info("覆盖有序配方: " + ((ShapedRecipe) recipe).getResult().getType());
+                        // Bukkit.getLogger().info("覆盖有序配方: " + ((ShapedRecipe) recipe).getResult().getType());
                         continue recipeWhile;
                     }
                 }
@@ -73,7 +73,7 @@ public class CreateRecipe {
                             final Material material = itemStack.getType();
                             allMaterial.remove(material);
                             oneItemMaterial.remove(material);
-                            Bukkit.getLogger().info("忽略有序配方: " + material);
+                            // Bukkit.getLogger().info("忽略有序配方: " + material);
                         }
                     }
                 }
