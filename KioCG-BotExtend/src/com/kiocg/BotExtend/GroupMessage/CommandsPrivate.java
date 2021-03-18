@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class CommandsPrivate {
     public void onCommandsPrivate(final @NotNull GroupMessageEvent e, @NotNull String msg) {
         // 私有的指令
@@ -22,6 +24,7 @@ public class CommandsPrivate {
 
             // 查询信息
             case ("list"):
+            case ("在线"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                     e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                     break;
@@ -34,7 +37,17 @@ public class CommandsPrivate {
                 e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
                         + stringBuilder.substring(0, stringBuilder.length() - 2));
                 break;
+            case ("plugin"):
+            case ("插件"):
+                if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
+                    e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
+                    break;
+                }
+
+                e.getGroup().sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
+                break;
             case ("tps"):
+            case ("状态"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                     e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                     break;
@@ -47,6 +60,7 @@ public class CommandsPrivate {
 
             // 功能信息
             case ("seen"):
+            case ("查询"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                     e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                     break;
@@ -55,6 +69,7 @@ public class CommandsPrivate {
                 e.getGroup().sendMessage(".seen <玩家> - 查询玩家");
                 break;
             case ("at"):
+            case ("@"):
                 if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                     e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                     break;
@@ -63,7 +78,7 @@ public class CommandsPrivate {
                 e.getGroup().sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
                 break;
             default:
-                if (msg.startsWith("seen ")) {
+                if (msg.startsWith("seen ") || msg.startsWith("查询 ")) {
                     if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                         e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                         break;
@@ -73,7 +88,7 @@ public class CommandsPrivate {
                     new Seen().seen(e, msg);
                     break;
                 }
-                if (msg.startsWith("at ")) {
+                if (msg.startsWith("at ") || msg.startsWith("@ ")) {
                     if (!GMUtils.hasPlayerLink(e.getSender().getId())) {
                         e.getGroup().sendMessage("请在连接游戏账号后使用此指令\n.link <mcID> - 连接账号");
                         break;
