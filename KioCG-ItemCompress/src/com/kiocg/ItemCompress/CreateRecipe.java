@@ -51,9 +51,9 @@ public class CreateRecipe {
         }
 
         for (final Material material : allMaterial) {
-            if (material.getMaxStackSize() != 1) {
-                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + material), new ItemStack(material))
-                        .addIngredient(9, material));
+            if (material.isItem() && material.getMaxStackSize() != 1) {
+                Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + material), new ItemStack(material))
+                        .shape("aaa", "aaa", "aaa").setIngredient('a', material));
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompress_" + material), new ItemStack(material, 9))
                         .addIngredient(1, material));
             }
