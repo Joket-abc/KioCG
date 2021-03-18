@@ -22,6 +22,7 @@ public class CreateRecipe {
 
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
+        recipeWhile:
         while (iterator.hasNext()) {
             final Object recipe = iterator.next();
             if (recipe instanceof ShapelessRecipe) {
@@ -29,9 +30,37 @@ public class CreateRecipe {
                 // 如果配方是由1个物品合成
                 if (ingredientList.size() == 1) {
                     oneItemMaterial.put(ingredientList.get(0).getType(), ((ShapelessRecipe) recipe).getResult());
+                    Bukkit.getLogger().info("覆盖无序配方: " + ((ShapelessRecipe) recipe).getResult().getType());
+                    continue;
+                }
+
+                // 如果配方是由9个物品合成
+                if (ingredientList.size() == 9) {
+                    final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
+                    for (final ItemStack itemStack : ingredientList) {
+                        ingredientEquals.put(itemStack, true);
+                    }
+                    // 如果这9个物品相同
+                    if (ingredientEquals.size() == 1) {
+                        for (final ItemStack itemStack : ingredientEquals.keySet()) {
+                            final Material material = itemStack.getType();
+                            allMaterial.remove(material);
+                            oneItemMaterial.remove(material);
+                            Bukkit.getLogger().info("忽略无序配方: " + material);
+                        }
+                    }
                 }
             } else if (recipe instanceof ShapedRecipe) {
                 final Map<Character, ItemStack> ingredientMap = ((ShapedRecipe) recipe).getIngredientMap();
+                // 如果配方是由1个物品合成
+                if (ingredientMap.size() == 1) {
+                    for (final ItemStack itemStack : ingredientMap.values()) {
+                        oneItemMaterial.put(itemStack.getType(), ((ShapedRecipe) recipe).getResult());
+                        Bukkit.getLogger().info("覆盖有序配方: " + ((ShapedRecipe) recipe).getResult().getType());
+                        continue recipeWhile;
+                    }
+                }
+
                 // 如果配方是由9个物品合成
                 if (ingredientMap.size() == 9) {
                     final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
@@ -44,6 +73,7 @@ public class CreateRecipe {
                             final Material material = itemStack.getType();
                             allMaterial.remove(material);
                             oneItemMaterial.remove(material);
+                            Bukkit.getLogger().info("忽略有序配方: " + material);
                         }
                     }
                 }
