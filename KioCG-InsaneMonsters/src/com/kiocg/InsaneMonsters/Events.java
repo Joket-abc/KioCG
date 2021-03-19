@@ -4,6 +4,7 @@ import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Giant;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -51,15 +52,24 @@ public class Events implements @NotNull Listener {
         final Random random = new Random();
         switch (livingEntity.getType()) {
             case ZOMBIE:
-                switch (random.nextInt(3)) {
+                switch (random.nextInt(4)) {
                     case 0:
+                        // 巨人
+                        if (random.nextInt(1000) < 997) {
+                            return;
+                        }
+
+                        final Location location = livingEntity.getLocation();
+                        location.getWorld().spawn(location, Giant.class);
+                        break;
+                    case 1:
                         if (random.nextInt(100) < 95) {
                             return;
                         }
 
                         zombieWarrior.spawn(livingEntity.getLocation());
                         break;
-                    case 1:
+                    case 2:
                         final Location loc = livingEntity.getLocation();
                         if (!loc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 70) {
                             return;
@@ -67,7 +77,7 @@ public class Events implements @NotNull Listener {
 
                         oreZombie.spawn(loc);
                         break;
-                    case 2:
+                    case 3:
                         if (random.nextInt(100) < 70) {
                             return;
                         }
