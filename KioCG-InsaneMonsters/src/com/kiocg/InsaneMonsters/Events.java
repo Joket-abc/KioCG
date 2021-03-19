@@ -64,7 +64,7 @@ public class Events implements @NotNull Listener {
                         giant.spawn(livingEntity.getLocation());
                         break;
                     case 1:
-                        if (random.nextInt(100) < 95) {
+                        if (random.nextInt(100) < 97) {
                             return;
                         }
 
@@ -72,14 +72,14 @@ public class Events implements @NotNull Listener {
                         break;
                     case 2:
                         final Location loc = livingEntity.getLocation();
-                        if (!loc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 70) {
+                        if (!loc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 90) {
                             return;
                         }
 
                         oreZombie.spawn(loc);
                         break;
                     case 3:
-                        if (random.nextInt(100) < 70) {
+                        if (random.nextInt(100) < 90) {
                             return;
                         }
 
@@ -88,14 +88,14 @@ public class Events implements @NotNull Listener {
                 }
                 break;
             case SKELETON:
-                if (random.nextInt(100) < 95) {
+                if (random.nextInt(100) < 97) {
                     return;
                 }
 
                 skeletonArcher.spawn(livingEntity.getLocation());
                 break;
             case WITHER_SKELETON:
-                if (random.nextInt(100) < 95) {
+                if (random.nextInt(100) < 97) {
                     return;
                 }
 
