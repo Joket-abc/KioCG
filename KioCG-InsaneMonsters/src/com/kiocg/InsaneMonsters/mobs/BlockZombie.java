@@ -33,6 +33,6 @@ public class BlockZombie {
         } else {
             Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
         }
-        equipment.setHelmetDropChance(1F);
+        equipment.setHelmetDropChance(0F);
     }
 }
