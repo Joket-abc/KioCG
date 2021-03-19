@@ -4,7 +4,7 @@ import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Giant;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,6 +24,7 @@ public class Events implements @NotNull Listener {
     private final InsaneMonsters plugin;
 
     private final NamespacedKey namespacedKey;
+    private final @NotNull Giant giant;
     private final @NotNull ZombieWarrior zombieWarrior;
     private final @NotNull SkeletonArcher skeletonArcher;
     private final @NotNull DarkKnight darkKnight;
@@ -34,6 +36,7 @@ public class Events implements @NotNull Listener {
         plugin = insaneMonsters;
 
         this.namespacedKey = namespacedKey;
+        giant = new Giant(namespacedKey);
         zombieWarrior = new ZombieWarrior(namespacedKey);
         skeletonArcher = new SkeletonArcher(namespacedKey);
         darkKnight = new DarkKnight(namespacedKey);
@@ -54,13 +57,11 @@ public class Events implements @NotNull Listener {
             case ZOMBIE:
                 switch (random.nextInt(4)) {
                     case 0:
-                        // 巨人
                         if (random.nextInt(1000) < 997) {
                             return;
                         }
 
-                        final Location location = livingEntity.getLocation();
-                        location.getWorld().spawn(location, Giant.class);
+                        giant.spawn(livingEntity.getLocation());
                         break;
                     case 1:
                         if (random.nextInt(100) < 95) {
@@ -117,6 +118,15 @@ public class Events implements @NotNull Listener {
         final List<ItemStack> drops = e.getDrops();
         final Random random = new Random();
         switch (persistentData) {
+            case "Giant":
+                final ItemStack itemStack = new ItemStack(Material.ENCHANTED_BOOK);
+                final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStack.getItemMeta();
+                final Enchantment[] enchantments = Enchantment.values();
+                final Enchantment randomEnchantment = enchantments[random.nextInt(enchantments.length)];
+                enchantmentStorageMeta.addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
+                itemStack.setItemMeta(enchantmentStorageMeta);
+                drops.add(new ItemStack(itemStack));
+                break;
             case "ZombieWarrior":
                 drops.clear();
                 drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));

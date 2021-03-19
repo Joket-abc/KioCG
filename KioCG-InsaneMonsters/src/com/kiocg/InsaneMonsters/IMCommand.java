@@ -29,6 +29,8 @@ public class IMCommand implements @Nullable CommandExecutor {
         final Player player = (Player) sender;
         if (args.length == 0) {
             //noinspection SpellCheckingInspection
+            player.sendMessage("§4G§ciant §6| 巨人");
+            //noinspection SpellCheckingInspection
             player.sendMessage("§4Z§combie§4W§carrior §6| 僵尸战士");
             //noinspection SpellCheckingInspection
             player.sendMessage("§4S§ckeleton§4A§crcher §6| 骷髅弓箭手");
@@ -52,6 +54,11 @@ public class IMCommand implements @Nullable CommandExecutor {
             final Location loc = block.getLocation().toCenterLocation();
             loc.setY(loc.getY() + 1.0);
             switch (args[0].toLowerCase()) {
+                case "giant":
+                case "g":
+                    new Giant(namespacedKey).spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成巨人.");
+                    break;
                 case "zombiewarrior":
                 case "zw":
                     new ZombieWarrior(namespacedKey).spawn(loc);
