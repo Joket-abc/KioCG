@@ -8,6 +8,7 @@ import com.kiocg.BotExtend.GroupMessage.CommandsPublic;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
 import com.kiocg.BotExtend.OtherEvent.OtherEvent;
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -22,6 +23,8 @@ import java.util.Objects;
 public class BotExtend extends @NotNull JavaPlugin {
     // 本类
     private static BotExtend instance;
+    // Vault经济模块
+    private @Nullable Economy economy;
     // Vault消息模块
     private @Nullable Chat chat;
     // 玩家绑定QQ数据的文件
@@ -31,6 +34,10 @@ public class BotExtend extends @NotNull JavaPlugin {
 
     public static @NotNull BotExtend getInstance() {
         return instance;
+    }
+
+    public @Nullable Economy getEconomy() {
+        return economy;
     }
 
     public @Nullable Chat getChat() {
@@ -48,6 +55,12 @@ public class BotExtend extends @NotNull JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        // 注册Vault经济模块
+        try {
+            economy = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Economy.class)).getProvider();
+        } catch (final @NotNull NullPointerException ignore) {
+            economy = null;
+        }
         // 注册Vault消息模块
         try {
             chat = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Chat.class)).getProvider();

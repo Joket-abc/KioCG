@@ -1,6 +1,7 @@
 package com.kiocg.BotExtend.GroupMessage.Realize;
 
 import com.gmail.nossr50.api.ExperienceAPI;
+import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.bukkit.Bukkit;
@@ -54,12 +55,17 @@ public class Seen {
                 .append("\n最后存在时间：").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(offlinePlayer.getLastSeen()))
                 .append("\n累计在线时间：").append(gmUtils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.PLAY_ONE_MINUTE)));
         try {
-            stringBuilder.append("   元気值：").append(ExperienceAPI.getPowerLevelOffline(uuid));
+            stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.getInstance().getEconomy()).getBalance(offlinePlayer));
         } catch (final @NotNull Exception ignore) {
-            stringBuilder.append("   元気值：NULL");
+            stringBuilder.append("   胖次币：NULL");
         }
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次")
                      .append("   距上次死亡：").append(gmUtils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.TIME_SINCE_DEATH)));
+        try {
+            stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
+        } catch (final @NotNull Exception ignore) {
+            stringBuilder.append("   元気：NULL");
+        }
         e.getGroup().sendMessage(stringBuilder.toString());
     }
 }

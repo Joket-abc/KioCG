@@ -102,7 +102,7 @@ public class CommandsPublic implements @NotNull Listener {
             // 功能信息
             case ("prefix"):
             case ("称号"):
-                e.getGroup().sendMessage("元気值达到1000即可申请4字及以内的自定义称号，查看元気值请在游戏内输入/mcstats");
+                e.getGroup().sendMessage("元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");
                 break;
             case ("color"):
             case ("rgb"):
