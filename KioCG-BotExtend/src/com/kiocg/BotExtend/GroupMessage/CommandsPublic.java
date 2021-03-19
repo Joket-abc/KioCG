@@ -23,7 +23,7 @@ public class CommandsPublic implements Listener {
         } catch (final @NotNull IndexOutOfBoundsException ignore) {
             return;
         }
-        msg = msg.substring(1);
+        msg = msg.substring(1).trim();
 
         // 公共的指令
         switch (msg.toLowerCase()) {
@@ -126,7 +126,7 @@ public class CommandsPublic implements Listener {
                         return;
                     }
 
-                    msg = msg.substring(msg.indexOf(' ') + 1);
+                    msg = msg.substring(msg.indexOf(' ') + 1).trim();
                     new Link().link(e, msg);
                     break;
                 }

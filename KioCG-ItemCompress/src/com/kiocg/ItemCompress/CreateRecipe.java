@@ -18,9 +18,6 @@ public class CreateRecipe {
         // 存储合成配方中有且仅有单个物品的此物品、所对应的成品
         final Map<Material, ItemStack> oneItemMaterial = new EnumMap<>(Material.class);
 
-        // 移除空气
-        allMaterial.remove(0);
-
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
         recipeWhile:
@@ -82,7 +79,7 @@ public class CreateRecipe {
         }
 
         for (final Material material : allMaterial) {
-            if (material.isItem() && material.getMaxStackSize() != 1) {
+            if (material.isItem() && !material.isAir() && material.getMaxStackSize() != 1) {
                 Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + material), new ItemStack(material))
                         .shape("aaa", "aaa", "aaa").setIngredient('a', material));
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompress_" + material), new ItemStack(material, 9))

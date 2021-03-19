@@ -1,6 +1,7 @@
 package com.kiocg.InsaneMonsters;
 
 import com.kiocg.InsaneMonsters.mobs.DarkKnight;
+import com.kiocg.InsaneMonsters.mobs.OreZombie;
 import com.kiocg.InsaneMonsters.mobs.SkeletonArcher;
 import com.kiocg.InsaneMonsters.mobs.ZombieWarrior;
 import org.bukkit.Location;
@@ -30,6 +31,8 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
     private final SkeletonArcher skeletonArcher = new SkeletonArcher(namespacedKey);
     private final DarkKnight darkKnight = new DarkKnight(namespacedKey);
 
+    private final OreZombie oreZombie = new OreZombie(namespacedKey);
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -41,34 +44,45 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
             return;
         }
 
-        LivingEntity livingEntity = e.getEntity();
+        final LivingEntity livingEntity = e.getEntity();
         final Random random = new Random();
         switch (livingEntity.getType()) {
             case ZOMBIE:
-                if (random.nextInt(100) < 95) {
-                    return;
-                }
+                switch (random.nextInt(2)) {
+                    case 0:
+                        if (random.nextInt(100) < 95) {
+                            return;
+                        }
 
-                livingEntity = zombieWarrior.spawn(livingEntity.getLocation());
+                        zombieWarrior.spawn(livingEntity.getLocation());
+                        break;
+                    case 1:
+                        final Location loc = livingEntity.getLocation();
+                        if (!loc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 70) {
+                            return;
+                        }
+
+                        oreZombie.spawn(loc);
+                        break;
+                }
                 break;
             case SKELETON:
                 if (random.nextInt(100) < 95) {
                     return;
                 }
 
-                livingEntity = skeletonArcher.spawn(livingEntity.getLocation());
+                skeletonArcher.spawn(livingEntity.getLocation());
                 break;
             case WITHER_SKELETON:
                 if (random.nextInt(100) < 95) {
                     return;
                 }
 
-                livingEntity = darkKnight.spawn(livingEntity.getLocation());
+                darkKnight.spawn(livingEntity.getLocation());
                 break;
             default:
                 return;
         }
-        livingEntity.setCustomName("§cSCP-" + String.format("%03d", random.nextInt(6000)));
         e.setCancelled(true);
     }
 
@@ -99,6 +113,8 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                     drops.add(new ItemStack(Material.NETHERITE_SCRAP));
                 }
                 break;
+            case "OreZombie":
+                break;
         }
     }
 
@@ -117,6 +133,8 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
             player.sendMessage("§4S§ckeleton§4A§crcher §6| 骷髅弓箭手");
             //noinspection SpellCheckingInspection
             player.sendMessage("§4D§cark§4K§cnight §6| 黑暗骑士");
+            //noinspection SpellCheckingInspection
+            player.sendMessage("§4O§cre§4Z§combie §6| 矿石僵尸");
             player.sendMessage("§7/insanemonsters <mob> 来生成指定的疯狂怪物.");
             return true;
         }
@@ -145,6 +163,11 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                 case "dk":
                     darkKnight.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成黑暗骑士.");
+                    break;
+                case "orezombie":
+                case "oz":
+                    oreZombie.spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
                     break;
                 default:
                     player.sendMessage("§7[§b豆渣子§7] §c无效的疯狂怪物种类.");

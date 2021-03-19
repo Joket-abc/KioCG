@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class ZombieWarrior {
     private final NamespacedKey namespacedKey;
@@ -23,9 +24,10 @@ public class ZombieWarrior {
         this.namespacedKey = namespacedKey;
     }
 
-    public @NotNull LivingEntity spawn(final @NotNull Location location) {
+    public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
         livingEntity.getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, "ZombieWarrior");
+        livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));
         livingEntity.setRemoveWhenFarAway(true);
 
         Objects.requireNonNull(livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(60.0);
@@ -53,7 +55,5 @@ public class ZombieWarrior {
         equipment.setChestplateDropChance(0F);
         equipment.setLeggingsDropChance(0F);
         equipment.setBootsDropChance(0F);
-
-        return livingEntity;
     }
 }

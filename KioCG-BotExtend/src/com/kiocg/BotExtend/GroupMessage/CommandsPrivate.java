@@ -34,8 +34,12 @@ public class CommandsPrivate {
                 for (final Player player : Bukkit.getOnlinePlayers()) {
                     stringBuilder.append(player.getName()).append(", ");
                 }
-                e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
-                        + stringBuilder.substring(0, stringBuilder.length() - 2));
+                if (stringBuilder.length() == 0) {
+                    e.getGroup().sendMessage("当前没有玩家在线qaq");
+                } else {
+                    e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
+                            + stringBuilder.substring(0, stringBuilder.length() - 2));
+                }
                 break;
             case ("plugin"):
             case ("插件"):
@@ -84,7 +88,7 @@ public class CommandsPrivate {
                         break;
                     }
 
-                    msg = msg.substring(msg.indexOf(' ') + 1);
+                    msg = msg.substring(msg.indexOf(' ') + 1).trim();
                     new Seen().seen(e, msg);
                     break;
                 }
@@ -94,7 +98,7 @@ public class CommandsPrivate {
                         break;
                     }
 
-                    msg = msg.substring(msg.indexOf(' ') + 1);
+                    msg = msg.substring(msg.indexOf(' ') + 1).trim();
                     new At().at(e, msg);
                     break;
                 }
