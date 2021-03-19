@@ -1,9 +1,6 @@
 package com.kiocg.InsaneMonsters;
 
-import com.kiocg.InsaneMonsters.mobs.DarkKnight;
-import com.kiocg.InsaneMonsters.mobs.OreZombie;
-import com.kiocg.InsaneMonsters.mobs.SkeletonArcher;
-import com.kiocg.InsaneMonsters.mobs.ZombieWarrior;
+import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -32,6 +29,7 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
     private final DarkKnight darkKnight = new DarkKnight(namespacedKey);
 
     private final OreZombie oreZombie = new OreZombie(namespacedKey);
+    private final BlockZombie blockZombie = new BlockZombie(namespacedKey);
 
     @Override
     public void onEnable() {
@@ -48,7 +46,7 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
         final Random random = new Random();
         switch (livingEntity.getType()) {
             case ZOMBIE:
-                switch (random.nextInt(2)) {
+                switch (random.nextInt(3)) {
                     case 0:
                         if (random.nextInt(100) < 95) {
                             return;
@@ -63,6 +61,13 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                         }
 
                         oreZombie.spawn(loc);
+                        break;
+                    case 2:
+                        if (random.nextInt(100) < 70) {
+                            return;
+                        }
+
+                        blockZombie.spawn(livingEntity.getLocation());
                         break;
                 }
                 break;
@@ -115,6 +120,8 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                 break;
             case "OreZombie":
                 break;
+            case "BlockZombie":
+                break;
         }
     }
 
@@ -135,6 +142,8 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
             player.sendMessage("§4D§cark§4K§cnight §6| 黑暗骑士");
             //noinspection SpellCheckingInspection
             player.sendMessage("§4O§cre§4Z§combie §6| 矿石僵尸");
+            //noinspection SpellCheckingInspection
+            player.sendMessage("§4B§clock§4Z§combie §6| 方块僵尸");
             player.sendMessage("§7/insanemonsters <mob> 来生成指定的疯狂怪物.");
             return true;
         }
@@ -168,6 +177,11 @@ public class InsaneMonsters extends JavaPlugin implements Listener {
                 case "oz":
                     oreZombie.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
+                    break;
+                case "blockzombie":
+                case "bz":
+                    blockZombie.spawn(loc);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成方块僵尸.");
                     break;
                 default:
                     player.sendMessage("§7[§b豆渣子§7] §c无效的疯狂怪物种类.");
