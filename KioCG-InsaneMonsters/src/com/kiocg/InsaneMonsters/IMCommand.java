@@ -49,7 +49,7 @@ public class IMCommand implements @Nullable CommandExecutor {
                 return true;
             }
 
-            final Location loc = block.getLocation();
+            final Location loc = block.getLocation().toCenterLocation();
             loc.setY(loc.getY() + 1.0);
             switch (args[0].toLowerCase()) {
                 case "zombiewarrior":

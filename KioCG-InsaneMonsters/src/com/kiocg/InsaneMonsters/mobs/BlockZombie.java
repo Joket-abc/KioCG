@@ -26,12 +26,17 @@ public class BlockZombie {
         livingEntity.setRemoveWhenFarAway(true);
 
         final EntityEquipment equipment = livingEntity.getEquipment();
-        location.setY(location.getY() - 1.0);
-        final Material material = location.getBlock().getType();
-        if (material.isItem() && !material.isAir()) {
+        Material material = location.getBlock().getType();
+        if (!material.isAir() && material.isItem()) {
             Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
         } else {
-            Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
+            location.setY(location.getY() - 1.0);
+            material = location.getBlock().getType();
+            if (material.isItem() && !material.isAir()) {
+                Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
+            } else {
+                Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
+            }
         }
         equipment.setHelmetDropChance(0F);
     }

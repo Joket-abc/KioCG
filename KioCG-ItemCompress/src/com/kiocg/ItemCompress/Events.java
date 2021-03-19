@@ -149,4 +149,6 @@ public class Events implements @NotNull Listener {
             }
         }
     }
+
+    //TODO 权限判断 kiocg.itemcompress.use
 }

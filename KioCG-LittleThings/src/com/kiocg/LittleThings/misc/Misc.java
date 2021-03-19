@@ -89,7 +89,9 @@ public class Misc implements @NotNull Listener {
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
-        if (!e.getSlotType().equals(InventoryType.SlotType.RESULT) || !Objects.requireNonNull(e.getCurrentItem()).getType().equals(Material.AIR)) {
+        if (!e.getSlotType().equals(InventoryType.SlotType.RESULT)
+            || !Objects.requireNonNull(e.getCurrentItem()).getType().equals(Material.AIR)
+            || !Objects.requireNonNull(e.getCursor()).getType().equals(Material.AIR)) {
             return;
         }
 
