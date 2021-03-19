@@ -59,7 +59,7 @@ public class Seen {
             stringBuilder.append("   元気值：NULL");
         }
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次")
-                .append("   距上次死亡：").append(gmUtils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.TIME_SINCE_DEATH)));
+                     .append("   距上次死亡：").append(gmUtils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.TIME_SINCE_DEATH)));
         e.getGroup().sendMessage(stringBuilder.toString());
     }
 }

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class Fun implements Listener {
+public class Fun implements @NotNull Listener {
     // 苦力怕爆炸产生烟花
     @EventHandler(ignoreCancelled = true)
     public void onEntityExplode(final @NotNull EntityExplodeEvent e) {
@@ -30,7 +30,7 @@ public class Fun implements Listener {
         final Firework firework = entity.getWorld().spawn(e.getLocation(), Firework.class);
         final FireworkMeta fwMeta = firework.getFireworkMeta();
         final FireworkEffect fwEffect = FireworkEffect.builder().with(FireworkEffect.Type.CREEPER).flicker(true).trail(true)
-                .withColor(Color.GREEN, Color.LIME).withFade(Color.YELLOW, Color.ORANGE).build();
+                                                      .withColor(Color.GREEN, Color.LIME).withFade(Color.YELLOW, Color.ORANGE).build();
         fwMeta.addEffect(fwEffect);
         firework.setFireworkMeta(fwMeta);
     }

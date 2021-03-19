@@ -14,13 +14,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class OtherEvent implements Listener {
+public class OtherEvent implements @NotNull Listener {
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
-                    () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
+                                                             () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
         }
     }
 
@@ -34,13 +34,13 @@ public class OtherEvent implements Listener {
         final Group group = e.getGroup();
         if (group.getId() == 569696336L) {
             group.sendMessage(new MessageChainBuilder()
-                    .append(new At(e.getMember().getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
-                    .append("\n！请先仔细查看群公告！")
-                    .append("\n申请白名单请输入 .whitelist")
-                    .append("\n下载客户端请输入 .client")
-                    .append("\n查看备用IP请输入 .ip")
-                    .append("\n这里不欢迎熊孩子，请友好相处。呐。")
-                    .build());
+                                      .append(new At(e.getMember().getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                      .append("\n！请先仔细查看群公告！")
+                                      .append("\n申请白名单请输入 .whitelist")
+                                      .append("\n下载客户端请输入 .client")
+                                      .append("\n查看备用IP请输入 .ip")
+                                      .append("\n这里不欢迎熊孩子，请友好相处。呐。")
+                                      .build());
         }
     }
 }

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
+@SuppressWarnings("RedundantSuppression")
 public class CommandsPrivate {
     public void onCommandsPrivate(final @NotNull GroupMessageEvent e, @NotNull String msg) {
         // 私有的指令
@@ -38,7 +39,7 @@ public class CommandsPrivate {
                     e.getGroup().sendMessage("当前没有玩家在线qaq");
                 } else {
                     e.getGroup().sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
-                            + stringBuilder.substring(0, stringBuilder.length() - 2));
+                                             + stringBuilder.substring(0, stringBuilder.length() - 2));
                 }
                 break;
             case ("plugin"):
@@ -59,7 +60,7 @@ public class CommandsPrivate {
 
                 final double[] tps = Bukkit.getTPS();
                 e.getGroup().sendMessage("TPS(1m, 5m, 15m)："
-                        + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
+                                         + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
                 break;
 
             // 功能信息
@@ -88,6 +89,7 @@ public class CommandsPrivate {
                         break;
                     }
 
+                    //noinspection DuplicateExpressions
                     msg = msg.substring(msg.indexOf(' ') + 1).trim();
                     new Seen().seen(e, msg);
                     break;
@@ -98,6 +100,7 @@ public class CommandsPrivate {
                         break;
                     }
 
+                    //noinspection DuplicateExpressions
                     msg = msg.substring(msg.indexOf(' ') + 1).trim();
                     new At().at(e, msg);
                     break;

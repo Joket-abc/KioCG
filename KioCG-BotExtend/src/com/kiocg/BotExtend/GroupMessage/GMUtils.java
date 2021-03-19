@@ -22,7 +22,7 @@ public class GMUtils {
 
     public void loadPlayers() {
         final ConfigurationSection configurationSection = BotExtend.getInstance()
-                .getPlayersFileConfiguration().getConfigurationSection("links");
+                                                                   .getPlayersFileConfiguration().getConfigurationSection("links");
         for (final Map.Entry<String, Object> entry : Objects.requireNonNull(configurationSection).getValues(false).entrySet()) {
             playerLinks.put(UUID.fromString(entry.getKey()), Long.valueOf(entry.getValue().toString()));
         }
@@ -85,8 +85,8 @@ public class GMUtils {
         try {
             final Chat chat = BotExtend.getInstance().getChat();
             return Objects.requireNonNull(chat).getPlayerPrefix(null, offlinePlayer)
-                    + offlinePlayer.getName()
-                    + chat.getPlayerSuffix(null, offlinePlayer);
+                   + offlinePlayer.getName()
+                   + chat.getPlayerSuffix(null, offlinePlayer);
         } catch (final @NotNull NullPointerException ignore) {
             return offlinePlayer.getName();
         }

@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class Fix implements Listener {
+public class Fix implements @NotNull Listener {
     // 死亡移除消失诅咒的物品
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fixVanishingCurse(final @NotNull PlayerDeathEvent e) {

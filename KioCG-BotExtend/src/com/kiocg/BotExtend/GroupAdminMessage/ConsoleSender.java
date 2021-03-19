@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ConsoleSender implements ConsoleCommandSender {
+public class ConsoleSender implements @NotNull ConsoleCommandSender {
     private final @NotNull ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
     private final List<String> output = new ArrayList<>();

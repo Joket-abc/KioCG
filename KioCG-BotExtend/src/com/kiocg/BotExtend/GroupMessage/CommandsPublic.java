@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class CommandsPublic implements Listener {
+public class CommandsPublic implements @NotNull Listener {
     @EventHandler
     public void onCommandsPublic(final @NotNull GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
@@ -30,39 +30,39 @@ public class CommandsPublic implements Listener {
             // 取消了.help指令
             case ("HELP"):
                 e.getGroup().sendMessage(".help - 帮助"
-                        // 外部信息
-                        + "\n.info - 服务器介绍"
-                        + "\n.ip - 服务器IP地址"
-                        + "\n.client - 客户端下载地址"
-                        + "\n.poster - 服务器宣传贴"
-                        + "\n.github - 插件项目开源"
-                        // 内部信息
-                        + "\n.whitelist - 白名单申请方法"
-                        + "\n.support - 赞助服务器说明"
-                        // 功能信息
-                        + "\n.prefix - 自定义称号说明"
-                        + "\n.color - RGB颜色对照表"
-                        + "\n.uuid - 正版UUID查询网站"
-                        // 功能信息
-                        + "\n.link <mcID> - 连接账号"
-                        // 私有的指令
-                        + "\n(以下指令限定连接账号后)"
-                        // 查询信息
-                        + "\n.list - 当前在线玩家"
-                        + "\n.plugin - 服务端插件"
-                        + "\n.tps - 服务端TPS"
-                        // 功能信息
-                        + "\n.seen <玩家> - 查询玩家"
-                        + "\n.at <玩家> [内容] - 提醒游戏内的玩家");
+                                         // 外部信息
+                                         + "\n.info - 服务器介绍"
+                                         + "\n.ip - 服务器IP地址"
+                                         + "\n.client - 客户端下载地址"
+                                         + "\n.poster - 服务器宣传贴"
+                                         + "\n.github - 插件项目开源"
+                                         // 内部信息
+                                         + "\n.whitelist - 白名单申请方法"
+                                         + "\n.support - 赞助服务器说明"
+                                         // 功能信息
+                                         + "\n.prefix - 自定义称号说明"
+                                         + "\n.color - RGB颜色对照表"
+                                         + "\n.uuid - 正版UUID查询网站"
+                                         // 功能信息
+                                         + "\n.link <mcID> - 连接账号"
+                                         // 私有的指令
+                                         + "\n(以下指令限定连接账号后)"
+                                         // 查询信息
+                                         + "\n.list - 当前在线玩家"
+                                         + "\n.plugin - 服务端插件"
+                                         + "\n.tps - 服务端TPS"
+                                         // 功能信息
+                                         + "\n.seen <玩家> - 查询玩家"
+                                         + "\n.at <玩家> [内容] - 提醒游戏内的玩家");
                 break;
 
             // 外部信息
             case ("info"):
             case ("介绍"):
                 e.getGroup().sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
-                        + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
-                        + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
-                        + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、经济插件、多世界插件(地皮资源世界)。");
+                                         + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
+                                         + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
+                                         + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、经济插件、多世界插件(地皮资源世界)。");
                 break;
             case ("ip"):
             case ("地址"):
@@ -72,7 +72,7 @@ public class CommandsPublic implements Listener {
                 } catch (final @NotNull UnknownHostException ignore) {
                 }
                 e.getGroup().sendMessage("正版限定，IP地址：play.kiocg.com"
-                        + "\n备用地址：" + spareAddress + ":20205");
+                                         + "\n备用地址：" + spareAddress + ":20205");
                 break;
             case ("client"):
             case ("客户端"):
@@ -91,12 +91,12 @@ public class CommandsPublic implements Listener {
             case ("whitelist"):
             case ("白名单"):
                 e.getGroup().sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki或者@saplingX"
-                        + "\n非正版号不能申请！非正版号不能申请！非正版号不能申请！");
+                                         + "\n非正版号不能申请！非正版号不能申请！非正版号不能申请！");
                 break;
             case ("support"):
             case ("赞助"):
                 e.getGroup().sendMessage("请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。"
-                        + "\n如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。");
+                                         + "\n如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。");
                 break;
 
             // 功能信息

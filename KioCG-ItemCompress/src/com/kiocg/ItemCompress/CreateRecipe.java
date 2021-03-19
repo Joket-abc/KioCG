@@ -48,7 +48,10 @@ public class CreateRecipe {
                         }
                     }
                 }
-            } else if (recipe instanceof ShapedRecipe) {
+                continue;
+            }
+
+            if (recipe instanceof ShapedRecipe) {
                 final Map<Character, ItemStack> ingredientMap = ((ShapedRecipe) recipe).getIngredientMap();
                 // 如果配方是由1个物品合成
                 if (ingredientMap.size() == 1) {
@@ -81,15 +84,15 @@ public class CreateRecipe {
         for (final Material material : allMaterial) {
             if (material.isItem() && !material.isAir() && material.getMaxStackSize() != 1) {
                 Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + material), new ItemStack(material))
-                        .shape("aaa", "aaa", "aaa").setIngredient('a', material));
+                                         .shape("aaa", "aaa", "aaa").setIngredient('a', material));
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompress_" + material), new ItemStack(material, 9))
-                        .addIngredient(1, material));
+                                         .addIngredient(1, material));
             }
         }
         for (final Map.Entry<Material, ItemStack> entry : oneItemMaterial.entrySet()) {
             if (entry.getKey().getMaxStackSize() != 1) {
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompressCover_" + entry.getKey()), entry.getValue())
-                        .addIngredient(1, entry.getKey()));
+                                         .addIngredient(1, entry.getKey()));
             }
         }
     }

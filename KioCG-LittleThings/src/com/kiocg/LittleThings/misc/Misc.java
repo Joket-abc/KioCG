@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Misc implements Listener {
+public class Misc implements @NotNull Listener {
     // 死亡原地复活
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(final @NotNull PlayerRespawnEvent e) {
@@ -72,7 +72,8 @@ public class Misc implements Listener {
             if (message.toLowerCase().contains("@" + playerName.toLowerCase()) || message.toLowerCase().contains("@ " + playerName.toLowerCase())) {
                 final Player thePlayer = Bukkit.getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
-                message = message.replaceAll("(?i)@" + playerName, "§9§o@§9§o" + playerName + "§r").replaceAll("(?i)@ " + playerName, "§9§o@§9§o" + playerName + "§r");
+                message = message.replaceAll("(?i)@" + playerName, "§9§o@§9§o" + playerName + "§r")
+                                 .replaceAll("(?i)@ " + playerName, "§9§o@§9§o" + playerName + "§r");
             }
         }
         e.message(LegacyComponentSerializer.legacyAmpersand().deserialize(message));

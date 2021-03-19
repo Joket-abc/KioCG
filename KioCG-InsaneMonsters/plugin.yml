@@ -4,7 +4,7 @@ version: 2021
 api-version: 1.16
 
 commands:
-  InsaneMonsters:
+  insanemonsters:
     description: "查看<疯狂怪物>的指令帮助."
     aliases: [ im ]
     permission: kiocg.command.insanemonsters

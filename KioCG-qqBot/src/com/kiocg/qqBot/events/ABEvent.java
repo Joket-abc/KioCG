@@ -4,7 +4,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class ABEvent extends Event {
+public class ABEvent extends @NotNull Event {
     private final net.mamoe.mirai.event.Event event;
     private static final HandlerList handlers = new HandlerList();
 

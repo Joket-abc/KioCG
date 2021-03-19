@@ -1,6 +1,8 @@
 package com.kiocg.qqBot.events;
 
-public class GroupMessageEvent extends ABEvent {
+import org.jetbrains.annotations.NotNull;
+
+public class GroupMessageEvent extends @NotNull ABEvent {
     private final net.mamoe.mirai.event.events.GroupMessageEvent event;
 
     public GroupMessageEvent(final net.mamoe.mirai.event.events.GroupMessageEvent event) {

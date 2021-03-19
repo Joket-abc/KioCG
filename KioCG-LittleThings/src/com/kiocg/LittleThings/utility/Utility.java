@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Utility implements Listener {
+public class Utility implements @NotNull Listener {
     // 存储被白名单阻挡的玩家列表
     private final List<UUID> kickWhitelistPlayer = new ArrayList<>();
 

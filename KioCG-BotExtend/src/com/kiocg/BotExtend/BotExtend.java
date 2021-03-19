@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class BotExtend extends JavaPlugin {
+public class BotExtend extends @NotNull JavaPlugin {
     // 本类
     private static BotExtend instance;
     // Vault消息模块

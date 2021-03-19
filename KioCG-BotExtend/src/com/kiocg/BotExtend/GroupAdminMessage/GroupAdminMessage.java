@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class GroupAdminMessage implements Listener {
+public class GroupAdminMessage implements @NotNull Listener {
     @EventHandler
     public void onGroupAdminMessage(final @NotNull GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
@@ -41,7 +41,7 @@ public class GroupAdminMessage implements Listener {
             final ConsoleSender sender = new ConsoleSender(e);
             Bukkit.getScheduler().runTask(qqBot.getInstance(), () -> Bukkit.dispatchCommand(sender, cmd));
             Bukkit.getLogger().info(new GAMUtils().getLogMessage().replace("&", "§")
-                    .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
+                                                  .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
         });
     }
 }

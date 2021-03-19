@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class qqBot extends JavaPlugin {
+public class qqBot extends @NotNull JavaPlugin {
     private static qqBot instance;
 
     public static qqBot getInstance() {
