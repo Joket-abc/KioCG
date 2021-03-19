@@ -20,19 +20,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Events implements @NotNull Listener {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final ProtectSpawn plugin;
-
     // 存储主城原点坐标
-    private final @NotNull Location locSpawn;
+    private final @NotNull Location locSpawn = new Location(Bukkit.getWorld("KioCG_world"), 187.5, 144.0, 209.5);
     // 蛋糕是个谎言
     private final List<UUID> eatCake = new ArrayList<>();
-
-    public Events(final ProtectSpawn protectSpawn) {
-        plugin = protectSpawn;
-
-        locSpawn = new Location(Bukkit.getWorld("KioCG_world"), 187.5, 144.0, 209.5);
-    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {

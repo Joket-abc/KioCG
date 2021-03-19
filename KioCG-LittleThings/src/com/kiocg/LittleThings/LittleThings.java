@@ -10,15 +10,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class LittleThings extends @NotNull JavaPlugin {
-    private static LittleThings instance;
-
-    public static LittleThings getInstance() {
-        return instance;
-    }
+    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
+    public static LittleThings INSTANCE;
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+
         final PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new Fix(), this);
         pluginManager.registerEvents(new Fun(), this);

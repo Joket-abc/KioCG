@@ -38,7 +38,7 @@ public class Link {
             return;
         }
 
-        new GMUtils().addPlayerLink(uuid, e.getSender().getId());
+        GMUtils.addPlayerLink(uuid, e.getSender().getId());
         if (!offlinePlayer.isOnline()) {
             e.getGroup().sendMessage("请上线后再在游戏内输入 /link " + e.getSender().getId() + " 来连接此QQ账号");
         } else {

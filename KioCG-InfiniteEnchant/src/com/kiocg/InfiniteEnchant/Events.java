@@ -16,13 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Events implements @NotNull Listener {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final InfiniteEnchant plugin;
-
-    public Events(final InfiniteEnchant infiniteEnchant) {
-        plugin = infiniteEnchant;
-    }
-
     @EventHandler
     public void onPrepareAnvilBook(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();

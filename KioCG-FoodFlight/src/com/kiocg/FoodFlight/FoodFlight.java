@@ -7,15 +7,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class FoodFlight extends @NotNull JavaPlugin {
-    private static FoodFlight instance;
-
-    public static FoodFlight getInstance() {
-        return instance;
-    }
+    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
+    public static FoodFlight INSTANCE;
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+
         getServer().getPluginManager().registerEvents(new Events(), this);
         Objects.requireNonNull(getServer().getPluginCommand("fly")).setExecutor(new FlyCommand());
     }
@@ -23,7 +21,7 @@ public class FoodFlight extends @NotNull JavaPlugin {
     @Override
     public void onDisable() {
         for (final Player player : Utils.flightPlayers) {
-            new Utils().removeFoodFlight(player);
+            Utils.removeFoodFlight(player);
             player.setAllowFlight(false);
             player.setFlying(false);
             player.sendMessage("§7[§b豆渣子§7] §c插件重载迫使你关闭了飞行模式.");

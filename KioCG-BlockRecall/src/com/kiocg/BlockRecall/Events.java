@@ -24,17 +24,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Events implements @NotNull Listener {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final BlockRecall plugin;
-
     // 存储玩家、最后放置方块的快照
     private final Map<Player, BlockState> lastBlockState = new HashMap<>();
     // 存储玩家、最后放置方块的物品
     private final Map<Player, ItemStack> lastBlockItemStack = new HashMap<>();
-
-    public Events(final BlockRecall blockRecall) {
-        plugin = blockRecall;
-    }
 
     @EventHandler
     public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {

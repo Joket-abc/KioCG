@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Utils {
     // 获取新的验证码
-    public @NotNull String getNewVerifyCode() {
+    public static @NotNull String getNewVerifyCode() {
         return ".say "
                + RandomStringUtils.randomAlphanumeric(180)
                + " _______________ "
@@ -20,7 +20,7 @@ public class Utils {
     }
 
     // 获取验证提示信息
-    public @NotNull Component getVerifyMessage(final @NotNull String verifyCode) {
+    public static @NotNull Component getVerifyMessage(final @NotNull String verifyCode) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize("§7[§9豆渣子§7] ")
                                         .append(Component.text("按", NamedTextColor.GOLD))
                                         .append(Component.keybind("key.chat").color(NamedTextColor.GOLD))

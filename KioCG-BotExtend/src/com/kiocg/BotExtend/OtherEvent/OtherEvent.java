@@ -19,7 +19,7 @@ public class OtherEvent implements @NotNull Listener {
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         if (!GMUtils.hasPlayerLink(player.getUniqueId())) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(),
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.INSTANCE,
                                                              () -> player.sendMessage("§7[§b豆渣子§7] §6尚未绑定QQ账号, 请输入 /link 来查看帮助."), 5L);
         }
     }
@@ -39,8 +39,7 @@ public class OtherEvent implements @NotNull Listener {
                                       .append("\n申请白名单请输入 .whitelist")
                                       .append("\n下载客户端请输入 .client")
                                       .append("\n查看备用IP请输入 .ip")
-                                      .append("\n这里不欢迎熊孩子，请友好相处。呐。")
-                                      .build());
+                                      .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
         }
     }
 }

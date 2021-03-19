@@ -12,8 +12,21 @@ public class GAMUtils {
     private static final Map<Long, ArrayList<Long>> groupAdmin = new HashMap<>();
     // 存储所有群指令前缀的缓存
     private static final Map<Long, ArrayList<String>> groupLabel = new HashMap<>();
+
     // 存储log_command消息
-    static @Nullable String logMessage = null;
+    public static @NotNull String logMessage = "";
+
+    public void loadConfig() {
+        final FileConfiguration config = BotExtend.INSTANCE.getConfig();
+        final List<Long> owners = config.getLongList("owners");
+        for (final String group : Objects.requireNonNull(config.getConfigurationSection("groups")).getKeys(false)) {
+            groupLabel.put(Long.valueOf(group), (ArrayList<String>) config.getStringList("groups." + group + ".command"));
+            final ArrayList<Long> groupAdmins = new ArrayList<>(owners);
+            groupAdmins.addAll(config.getLongList("groups." + group + ".admins"));
+            groupAdmin.put(Long.valueOf(group), groupAdmins);
+        }
+        logMessage = Objects.requireNonNull(config.getString("messages.log_command", "&cQQ用户 %user% 执行了 %cmd% 指令."));
+    }
 
     public static boolean isGroupAdmin(final long groupID, final long senderID) {
         try {
@@ -25,21 +38,5 @@ public class GAMUtils {
 
     public static @Nullable ArrayList<String> getGroupLabels(final long groupID) {
         return groupLabel.get(groupID);
-    }
-
-    public @NotNull String getLogMessage() {
-        return Objects.requireNonNull(logMessage);
-    }
-
-    public void loadConfig() {
-        final FileConfiguration config = BotExtend.getInstance().getConfig();
-        final List<Long> owners = config.getLongList("owners");
-        for (final String group : Objects.requireNonNull(config.getConfigurationSection("groups")).getKeys(false)) {
-            groupLabel.put(Long.valueOf(group), (ArrayList<String>) config.getStringList("groups." + group + ".command"));
-            final ArrayList<Long> groupAdmins = new ArrayList<>(owners);
-            groupAdmins.addAll(config.getLongList("groups." + group + ".admins"));
-            groupAdmin.put(Long.valueOf(group), groupAdmins);
-        }
-        logMessage = config.getString("messages.log_command", "&cQQ用户 %user% 执行了 %cmd% 指令.");
     }
 }

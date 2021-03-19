@@ -31,10 +31,10 @@ public class AutoRestart {
 
     // 自动重启
     private void autoRestart(final @NotNull Map<String, String> autoRestartMessage) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.INSTANCE, () -> {
             final String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
             if ("06:00:00".equals(date)) {
-                Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+                Bukkit.getScheduler().runTask(LittleThings.INSTANCE, () -> {
                     for (final Player player : Bukkit.getOnlinePlayers()) {
                         player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
                     }

@@ -12,6 +12,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,48 +23,33 @@ import java.util.Objects;
 
 public class BotExtend extends @NotNull JavaPlugin {
     // 本类
-    private static BotExtend instance;
+    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
+    public static BotExtend INSTANCE;
+
     // Vault经济模块
-    private @Nullable Economy economy;
+    public static @Nullable Economy economy;
     // Vault消息模块
-    private @Nullable Chat chat;
+    public static @Nullable Chat chat;
+
     // 玩家绑定QQ数据的文件
-    private File playersFile;
+    public static File playersFile;
     // 玩家绑定QQ数据的配置文件
-    private FileConfiguration playersFileConfiguration;
-
-    public static @NotNull BotExtend getInstance() {
-        return instance;
-    }
-
-    public @Nullable Economy getEconomy() {
-        return economy;
-    }
-
-    public @Nullable Chat getChat() {
-        return chat;
-    }
-
-    public @NotNull File getPlayersFile() {
-        return playersFile;
-    }
-
-    public @NotNull FileConfiguration getPlayersFileConfiguration() {
-        return playersFileConfiguration;
-    }
+    public static FileConfiguration playersFileConfiguration;
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+
+        final ServicesManager servicesManager = getServer().getServicesManager();
         // 注册Vault经济模块
         try {
-            economy = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Economy.class)).getProvider();
+            economy = Objects.requireNonNull(servicesManager.getRegistration(Economy.class)).getProvider();
         } catch (final @NotNull NullPointerException ignore) {
             economy = null;
         }
         // 注册Vault消息模块
         try {
-            chat = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Chat.class)).getProvider();
+            chat = Objects.requireNonNull(servicesManager.getRegistration(Chat.class)).getProvider();
         } catch (final @NotNull NullPointerException ignore) {
             chat = null;
         }

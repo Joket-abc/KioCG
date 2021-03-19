@@ -1,8 +1,8 @@
 package com.kiocg.InsaneMonsters.mobs;
 
+import com.kiocg.InsaneMonsters.InsaneMonsters;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -18,15 +18,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class SkeletonArcher {
-    private final NamespacedKey namespacedKey;
-
-    public SkeletonArcher(final NamespacedKey namespacedKey) {
-        this.namespacedKey = namespacedKey;
-    }
-
     public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, Skeleton.class);
-        livingEntity.getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, "SkeletonArcher");
+        livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "SkeletonArcher");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));
         livingEntity.setRemoveWhenFarAway(true);
 

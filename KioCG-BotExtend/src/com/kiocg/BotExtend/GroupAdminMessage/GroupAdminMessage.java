@@ -37,11 +37,12 @@ public class GroupAdminMessage implements @NotNull Listener {
         }
 
         final String cmd = message.substring(groupLabel.length());
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> {
             final ConsoleSender sender = new ConsoleSender(e);
-            Bukkit.getScheduler().runTask(qqBot.getInstance(), () -> Bukkit.dispatchCommand(sender, cmd));
-            Bukkit.getLogger().info(new GAMUtils().getLogMessage().replace("&", "§")
-                                                  .replace("%user%", String.valueOf(senderID)).replace("%cmd%", cmd));
+            Bukkit.getScheduler().runTask(qqBot.INSTANCE, () -> Bukkit.dispatchCommand(sender, cmd));
+            Bukkit.getLogger().info(GAMUtils.logMessage.replace("&", "§")
+                                                       .replace("%user%", String.valueOf(senderID))
+                                                       .replace("%cmd%", cmd));
         });
     }
 }

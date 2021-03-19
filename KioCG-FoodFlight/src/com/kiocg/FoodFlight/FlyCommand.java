@@ -22,7 +22,7 @@ public class FlyCommand implements @Nullable CommandExecutor {
         final Player player = (Player) sender;
         // 玩家尝试关闭飞行
         if (Utils.inFlightList(player)) {
-            new Utils().removeFlightList(player);
+            Utils.removeFlightList(player);
             player.sendMessage("§a[§b豆渣子§a] §c➷ 关掉关掉一定要关掉 ➷");
             return true;
         }
@@ -31,9 +31,9 @@ public class FlyCommand implements @Nullable CommandExecutor {
         switch (player.getWorld().getEnvironment()) {
             case NORMAL:
                 if (player.hasPermission("kiocg.foodflight.normal.free")) {
-                    new Utils().addFlightList(player, false);
+                    Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.normal")) {
-                    new Utils().addFlightList(player, true);
+                    Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;
@@ -41,9 +41,9 @@ public class FlyCommand implements @Nullable CommandExecutor {
                 break;
             case NETHER:
                 if (player.hasPermission("kiocg.foodflight.nether.free")) {
-                    new Utils().addFlightList(player, false);
+                    Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.nether")) {
-                    new Utils().addFlightList(player, true);
+                    Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;
@@ -51,15 +51,16 @@ public class FlyCommand implements @Nullable CommandExecutor {
                 break;
             case THE_END:
                 if (player.hasPermission("kiocg.foodflight.end.free")) {
-                    new Utils().addFlightList(player, false);
+                    Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.end")) {
-                    new Utils().addFlightList(player, true);
+                    Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
                     return true;
                 }
                 break;
         }
+
         player.setAllowFlight(true);
         player.sendMessage("§a[§b豆渣子§a] §a➹ 呼呼, 可以飞了呢 ➹");
         return true;

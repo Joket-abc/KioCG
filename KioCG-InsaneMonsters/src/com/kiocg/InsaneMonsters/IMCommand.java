@@ -1,8 +1,6 @@
 package com.kiocg.InsaneMonsters;
 
-import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,12 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class IMCommand implements @Nullable CommandExecutor {
-    private final NamespacedKey namespacedKey;
-
-    public IMCommand(final NamespacedKey namespacedKey) {
-        this.namespacedKey = namespacedKey;
-    }
-
     @SuppressWarnings("RedundantSuppression")
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
@@ -56,32 +48,32 @@ public class IMCommand implements @Nullable CommandExecutor {
             switch (args[0].toLowerCase()) {
                 case "giant":
                 case "g":
-                    new Giant(namespacedKey).spawn(loc);
+                    InsaneMonsters.giant.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成巨人.");
                     break;
                 case "zombiewarrior":
                 case "zw":
-                    new ZombieWarrior(namespacedKey).spawn(loc);
+                    InsaneMonsters.zombieWarrior.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成僵尸战士.");
                     break;
                 case "skeletonarcher":
                 case "sa":
-                    new SkeletonArcher(namespacedKey).spawn(loc);
+                    InsaneMonsters.skeletonArcher.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成骷髅弓箭手.");
                     break;
                 case "darkknight":
                 case "dk":
-                    new DarkKnight(namespacedKey).spawn(loc);
+                    InsaneMonsters.darkKnight.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成黑暗骑士.");
                     break;
                 case "orezombie":
                 case "oz":
-                    new OreZombie(namespacedKey).spawn(loc);
+                    InsaneMonsters.oreZombie.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
                     break;
                 case "blockzombie":
                 case "bz":
-                    new BlockZombie(namespacedKey).spawn(loc);
+                    InsaneMonsters.blockZombie.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成方块僵尸.");
                     break;
                 default:

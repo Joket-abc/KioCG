@@ -30,7 +30,8 @@ public class Fun implements @NotNull Listener {
         final Firework firework = entity.getWorld().spawn(e.getLocation(), Firework.class);
         final FireworkMeta fwMeta = firework.getFireworkMeta();
         final FireworkEffect fwEffect = FireworkEffect.builder().with(FireworkEffect.Type.CREEPER).flicker(true).trail(true)
-                                                      .withColor(Color.GREEN, Color.LIME).withFade(Color.YELLOW, Color.ORANGE).build();
+                                                      .withColor(Color.GREEN, Color.LIME)
+                                                      .withFade(Color.YELLOW, Color.ORANGE).build();
         fwMeta.addEffect(fwEffect);
         firework.setFireworkMeta(fwMeta);
     }
@@ -73,7 +74,6 @@ public class Fun implements @NotNull Listener {
         }
 
         final PotionEffectType[] potionEffectTypes = PotionEffectType.values();
-        ((Arrow) e.getProjectile()).addCustomEffect(
-                new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
+        ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
     }
 }

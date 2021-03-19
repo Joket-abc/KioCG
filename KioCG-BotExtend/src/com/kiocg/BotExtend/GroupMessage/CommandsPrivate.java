@@ -60,7 +60,9 @@ public class CommandsPrivate {
 
                 final double[] tps = Bukkit.getTPS();
                 e.getGroup().sendMessage("TPS(1m, 5m, 15m)："
-                                         + String.format("%.2f", tps[0]) + ", " + String.format("%.2f", tps[1]) + ", " + String.format("%.2f", tps[2]));
+                                         + String.format("%.2f", tps[0]) + ", "
+                                         + String.format("%.2f", tps[1]) + ", "
+                                         + String.format("%.2f", tps[2]));
                 break;
 
             // 功能信息

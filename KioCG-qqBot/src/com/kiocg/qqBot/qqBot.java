@@ -7,15 +7,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class qqBot extends @NotNull JavaPlugin {
-    private static qqBot instance;
-
-    public static qqBot getInstance() {
-        return instance;
-    }
+    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
+    public static qqBot INSTANCE;
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+
         saveDefaultConfig();
         new KioCGBot().start();
     }

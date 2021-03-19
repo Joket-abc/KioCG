@@ -13,7 +13,7 @@ public class Events implements @NotNull Listener {
     public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         if (Utils.inFlightList(player)) {
-            new Utils().removeFlightList(player);
+            Utils.removeFlightList(player);
         }
     }
 
@@ -47,7 +47,7 @@ public class Events implements @NotNull Listener {
             case NORMAL:
                 if (player.hasPermission("kiocg.foodflight.normal.free")) {
                     if (Utils.isFoodFlight(player)) {
-                        new Utils().removeFoodFlight(player);
+                        Utils.removeFoodFlight(player);
                     }
                     return;
                 } else if (player.hasPermission("kiocg.foodflight.normal")) {
@@ -60,7 +60,7 @@ public class Events implements @NotNull Listener {
             case NETHER:
                 if (player.hasPermission("kiocg.foodflight.nether.free")) {
                     if (Utils.isFoodFlight(player)) {
-                        new Utils().removeFoodFlight(player);
+                        Utils.removeFoodFlight(player);
                     }
                     return;
                 } else if (player.hasPermission("kiocg.foodflight.nether")) {
@@ -73,7 +73,7 @@ public class Events implements @NotNull Listener {
             case THE_END:
                 if (player.hasPermission("kiocg.foodflight.end.free")) {
                     if (Utils.isFoodFlight(player)) {
-                        new Utils().removeFoodFlight(player);
+                        Utils.removeFoodFlight(player);
                     }
                     return;
                 } else if (player.hasPermission("kiocg.foodflight.end")) {
@@ -85,7 +85,7 @@ public class Events implements @NotNull Listener {
                 break;
         }
 
-        new Utils().removeFlightList(player);
+        Utils.removeFlightList(player);
         player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
     }
 }

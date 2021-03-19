@@ -42,7 +42,7 @@ public class Misc implements @NotNull Listener {
         final int foodLevel = player.getFoodLevel();
         final float saturation = player.getSaturation();
         final float exhaustion = player.getExhaustion();
-        Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(LittleThings.INSTANCE, () -> {
             player.setFoodLevel(foodLevel);
             player.setSaturation(saturation);
             player.setExhaustion(exhaustion);
@@ -97,7 +97,7 @@ public class Misc implements @NotNull Listener {
 
         final Player player = (Player) e.getWhoClicked();
         if (player.hasPermission("kiocg.littlethings.fastworkbench")) {
-            Bukkit.getScheduler().runTask(LittleThings.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(LittleThings.INSTANCE, () -> {
                 player.closeInventory();
                 player.openWorkbench(player.getLocation(), true);
             });

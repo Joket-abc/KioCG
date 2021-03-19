@@ -15,12 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class Events implements @NotNull Listener {
-    private final BottleExp plugin;
-
-    public Events(final BottleExp bottleExp) {
-        plugin = bottleExp;
-    }
-
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.requireNonNull(e.getHand()).equals(EquipmentSlot.HAND)) {
@@ -41,7 +35,7 @@ public class Events implements @NotNull Listener {
         if (!player.hasPermission("kiocg.bottleexp.use")) {
             return;
         }
-        final int currentTotalExperience = new Utils().getCurrentTotalExperience(player);
+        final int currentTotalExperience = Utils.getCurrentTotalExperience(player);
         if (currentTotalExperience < 10) {
             return;
         }
@@ -60,7 +54,7 @@ public class Events implements @NotNull Listener {
                 world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
                 itemStack.setAmount(amount - enough);
             }
-            Bukkit.getScheduler().runTask(plugin, (Runnable) player::closeInventory);
+            Bukkit.getScheduler().runTask(BottleExp.INSTANCE, (Runnable) player::closeInventory);
         } else {
             player.giveExp(-10);
             world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE));

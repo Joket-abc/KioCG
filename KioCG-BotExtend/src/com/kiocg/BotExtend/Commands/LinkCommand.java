@@ -26,8 +26,7 @@ public class LinkCommand implements @NotNull CommandExecutor {
             player.sendMessage("§a[§b豆渣子§a] §6你已经连接了QQ账号 " + qq + ".");
             return true;
         }
-        final GMUtils gmUtils = new GMUtils();
-        final Long waitLinkQQ = gmUtils.getWaitLinkQQ(uuid);
+        final Long waitLinkQQ = GMUtils.getWaitLinkQQ(uuid);
         if (waitLinkQQ == null) {
             player.sendMessage("§7[§b豆渣子§7] §6请在群内输入 §e.link " + player.getName() + " §6来连接你的账号.");
             return true;
@@ -40,12 +39,12 @@ public class LinkCommand implements @NotNull CommandExecutor {
 
         if (args.length == 1) {
             if (args[0].equals(String.valueOf(waitLinkQQ))) {
-                gmUtils.addPlayerLink(uuid, waitLinkQQ);
-                gmUtils.removeWaitLinkQQ(uuid);
+                GMUtils.addPlayerLink(uuid, waitLinkQQ);
+                GMUtils.removeWaitLinkQQ(uuid);
                 player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ账号 " + waitLinkQQ + ".");
                 try {
-                    Objects.requireNonNull(BotExtend.getInstance().getEconomy()).depositPlayer(player, 10000.0);
-                } catch (final Exception ignore) {
+                    Objects.requireNonNull(BotExtend.economy).depositPlayer(player, 10000.0);
+                } catch (final @NotNull Exception ignore) {
                 }
             } else {
                 player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ账号有误, 请检查后再试或重新连接.");

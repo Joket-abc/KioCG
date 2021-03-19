@@ -17,13 +17,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Events implements @NotNull Listener {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final ItemCompress plugin;
-
-    public Events(final ItemCompress itemCompress) {
-        plugin = itemCompress;
-    }
-
     @EventHandler
     public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
         final Recipe recipe = e.getRecipe();
@@ -65,8 +58,7 @@ public class Events implements @NotNull Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(),
-                                                                                           NamedTextColor.LIGHT_PURPLE))
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
                                                                     .decoration(TextDecoration.ITALIC, false));
                 itemStackResult.setItemMeta(itemMetaResult);
             }
@@ -104,8 +96,7 @@ public class Events implements @NotNull Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(),
-                                                                                           NamedTextColor.LIGHT_PURPLE))
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
                                                                     .decoration(TextDecoration.ITALIC, false));
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
@@ -141,8 +132,7 @@ public class Events implements @NotNull Listener {
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(),
-                                                                                           NamedTextColor.LIGHT_PURPLE))
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
                                                                     .decoration(TextDecoration.ITALIC, false));
                 itemStackResult.setItemMeta(itemMetaResult);
                 craftingInventory.setResult(itemStackResult);

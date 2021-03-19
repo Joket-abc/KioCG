@@ -15,11 +15,11 @@ public class BotAPI {
     }
 
     public void sendGroupMsg(final Long groupID, final @NotNull String msg) {
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> Objects.requireNonNull(bot.getGroup(groupID)).sendMessage(msg));
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> Objects.requireNonNull(bot.getGroup(groupID)).sendMessage(msg));
     }
 
     public void sendPrivateMsg(final Long userID, final @NotNull String msg) {
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> Objects.requireNonNull(bot.getFriend(userID)).sendMessage(msg));
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> Objects.requireNonNull(bot.getFriend(userID)).sendMessage(msg));
     }
 
     public Bot getBot() {

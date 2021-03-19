@@ -38,7 +38,7 @@ public class Utility implements @NotNull Listener {
         for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
             toPlayer.sendMessage("§7[§b豆渣子§7] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
         }
-        LittleThings.getInstance().getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");
+        LittleThings.INSTANCE.getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");
         try {
             KioCGBot.getApi().sendGroupMsg(569696336L, "不明生物 " + playerName + " 被白名单结界阻挡了.");
         } catch (final @NotNull Exception ignored) {

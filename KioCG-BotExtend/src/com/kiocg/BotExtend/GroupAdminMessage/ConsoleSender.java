@@ -25,13 +25,13 @@ public class ConsoleSender implements @NotNull ConsoleCommandSender {
     private BukkitTask task;
 
     public ConsoleSender(final GroupMessageEvent event) {
-        this.consoleCommandSender = Bukkit.getConsoleSender();
+        consoleCommandSender = Bukkit.getConsoleSender();
         this.event = event;
         task = task();
     }
 
     private @NotNull BukkitTask task() {
-        return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.getInstance(), () -> {
+        return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.INSTANCE, () -> {
             final StringBuilder stringBuilder = new StringBuilder();
             for (final String string : output) {
                 stringBuilder.append(ChatColor.stripColor(string)).append("\n");

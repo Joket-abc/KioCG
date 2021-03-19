@@ -90,8 +90,7 @@ public class CommandsPublic implements @NotNull Listener {
             // 内部信息
             case ("whitelist"):
             case ("白名单"):
-                e.getGroup().sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki或者@saplingX"
-                                         + "\n非正版号不能申请！非正版号不能申请！非正版号不能申请！");
+                e.getGroup().sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki或者@saplingX");
                 break;
             case ("support"):
             case ("赞助"):

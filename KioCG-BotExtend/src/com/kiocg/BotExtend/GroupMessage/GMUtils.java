@@ -21,8 +21,7 @@ public class GMUtils {
     private static final Map<UUID, Long> waitLink = new HashMap<>();
 
     public void loadPlayers() {
-        final ConfigurationSection configurationSection = BotExtend.getInstance()
-                                                                   .getPlayersFileConfiguration().getConfigurationSection("links");
+        final ConfigurationSection configurationSection = BotExtend.playersFileConfiguration.getConfigurationSection("links");
         for (final Map.Entry<String, Object> entry : Objects.requireNonNull(configurationSection).getValues(false).entrySet()) {
             playerLinks.put(UUID.fromString(entry.getKey()), Long.valueOf(entry.getValue().toString()));
         }
@@ -57,21 +56,21 @@ public class GMUtils {
         }
     }
 
-    public void addPlayerLink(final @NotNull UUID uuid, final @NotNull Long qq) {
+    public static void addPlayerLink(final @NotNull UUID uuid, final @NotNull Long qq) {
         playerLinks.put(uuid, qq);
-        BotExtend.getInstance().getPlayersFileConfiguration().set("links." + uuid, qq);
-        BotExtend.getInstance().savePlayersFile();
+        BotExtend.playersFileConfiguration.set("links." + uuid, qq);
+        BotExtend.INSTANCE.savePlayersFile();
     }
 
-    public @Nullable Long getWaitLinkQQ(final @NotNull UUID uuid) {
+    public static @Nullable Long getWaitLinkQQ(final @NotNull UUID uuid) {
         return waitLink.get(uuid);
     }
 
-    public void addWaitLinkQQ(final @NotNull UUID uuid, final @NotNull Long qq) {
+    public static void addWaitLinkQQ(final @NotNull UUID uuid, final @NotNull Long qq) {
         waitLink.put(uuid, qq);
     }
 
-    public void removeWaitLinkQQ(final @NotNull UUID uuid) {
+    public static void removeWaitLinkQQ(final @NotNull UUID uuid) {
         waitLink.remove(uuid);
     }
 
@@ -81,9 +80,9 @@ public class GMUtils {
     }
 
     // 返回玩家带前后缀的名称
-    public @Nullable String getPlayerDisplayName(final @NotNull OfflinePlayer offlinePlayer) {
+    public static @Nullable String getPlayerDisplayName(final @NotNull OfflinePlayer offlinePlayer) {
         try {
-            final Chat chat = BotExtend.getInstance().getChat();
+            final Chat chat = BotExtend.chat;
             return Objects.requireNonNull(chat).getPlayerPrefix(null, offlinePlayer)
                    + offlinePlayer.getName()
                    + chat.getPlayerSuffix(null, offlinePlayer);
@@ -93,7 +92,7 @@ public class GMUtils {
     }
 
     // 将tick转为天时分秒的格式
-    public @NotNull String ticksToDHMS(final int tick) {
+    public static @NotNull String ticksToDHMS(final int tick) {
         final int allSeconds = tick / 20;
         final int days = allSeconds / (60 * 60 * 24);
         final int hours = (allSeconds % (60 * 60 * 24)) / (60 * 60);

@@ -18,12 +18,12 @@ public class KioCGBot {
 
     public void start() {
         // 读取主要配置文件
-        final FileConfiguration config = qqBot.getInstance().getConfig();
+        final FileConfiguration config = qqBot.INSTANCE.getConfig();
         final long qq = config.getLong("main.qq", 0L);
         final String password = config.getString("main.password", "");
         final BotConfiguration configuration = new BotConfiguration() {
             {
-                setWorkingDir(qqBot.getInstance().getDataFolder());
+                setWorkingDir(qqBot.INSTANCE.getDataFolder());
                 fileBasedDeviceInfo("deviceInfo.json");
                 setProtocol(BotConfiguration.MiraiProtocol.valueOf(config.getString("main.protocol", "ANDROID_PAD")));
                 // 是否输出额外的日志
@@ -35,7 +35,7 @@ public class KioCGBot {
             }
         };
 
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> {
             bot = BotFactory.INSTANCE.newBot(qq, Objects.requireNonNull(password), configuration);
             bot.login();
             api = new BotAPI(bot);

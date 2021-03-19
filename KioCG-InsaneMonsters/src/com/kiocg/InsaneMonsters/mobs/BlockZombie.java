@@ -1,8 +1,8 @@
 package com.kiocg.InsaneMonsters.mobs;
 
+import com.kiocg.InsaneMonsters.InsaneMonsters;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
@@ -13,15 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class BlockZombie {
-    private final NamespacedKey namespacedKey;
-
-    public BlockZombie(final NamespacedKey namespacedKey) {
-        this.namespacedKey = namespacedKey;
-    }
-
     public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
-        livingEntity.getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, "BlockZombie");
+        livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BlockZombie");
         livingEntity.setCustomName("§7方块僵尸");
         livingEntity.setRemoveWhenFarAway(true);
 

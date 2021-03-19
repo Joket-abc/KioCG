@@ -20,16 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Events implements @NotNull Listener {
-    private final AntiCheatingClient plugin;
-
     // 存储正在进行反作弊验证的玩家、验证码
     private final Map<Player, String> playerVerifyCode = new HashMap<>();
     // 存储正在进行反作弊验证的玩家、验证提示信息
     private final Map<Player, Component> playerVerifyMessage = new HashMap<>();
-
-    public Events(final AntiCheatingClient antiCheatingClient) {
-        plugin = antiCheatingClient;
-    }
 
     @EventHandler
     public void startPlayerVerify(final @NotNull PlayerJoinEvent e) {
@@ -38,12 +32,11 @@ public class Events implements @NotNull Listener {
             return;
         }
 
-        final Utils utils = new Utils();
-        final String verifyCode = utils.getNewVerifyCode();
-        final Component verifyMessage = utils.getVerifyMessage(verifyCode);
+        final String verifyCode = Utils.getNewVerifyCode();
+        final Component verifyMessage = Utils.getVerifyMessage(verifyCode);
         playerVerifyCode.put(player, verifyCode);
         playerVerifyMessage.put(player, verifyMessage);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> player.sendMessage(verifyMessage), 10L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AntiCheatingClient.INSTANCE, () -> player.sendMessage(verifyMessage), 10L);
     }
 
     @EventHandler
@@ -76,13 +69,13 @@ public class Events implements @NotNull Listener {
             // 临时封禁玩家1小时
             final Date date = new Date();
             date.setTime(date.getTime() + 1000L * 60L * 60L);
-            Bukkit.getScheduler().runTask(plugin, () -> player.banPlayer("§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
+            Bukkit.getScheduler().runTask(AntiCheatingClient.INSTANCE, () -> player.banPlayer("§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
             // 提醒全体玩家和群
             final String playerName = player.getName();
             for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
                 toPlayer.sendMessage("§7[§b豆渣子§7] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
             }
-            plugin.getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
+            AntiCheatingClient.INSTANCE.getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
             try {
                 KioCGBot.getApi().sendGroupMsg(569696336L, "邪恶生物 " + playerName + " 被安全检查拦截了.");
             } catch (final @NotNull Exception ignored) {

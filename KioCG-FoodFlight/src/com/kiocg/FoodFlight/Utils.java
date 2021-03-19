@@ -38,7 +38,7 @@ public class Utils {
                     foodFlightTasks.put(player, null);
                 }
             }
-        }.runTaskTimer(FoodFlight.getInstance(), 0L, 5L);
+        }.runTaskTimer(FoodFlight.INSTANCE, 0L, 5L);
     }
 
     public static boolean inFlightList(final @NotNull Player player) {
@@ -49,7 +49,7 @@ public class Utils {
         return foodFlightTasks.containsKey(player);
     }
 
-    public void addFlightList(final @NotNull Player player, final boolean isFoodFlight) {
+    public static void addFlightList(final @NotNull Player player, final boolean isFoodFlight) {
         flightPlayers.add(player);
         if (isFoodFlight) {
             foodFlightTasks.put(player, null);
@@ -68,7 +68,7 @@ public class Utils {
         foodFlightTasks.put(player, null);
     }
 
-    public void removeFoodFlight(final @NotNull Player player) {
+    public static void removeFoodFlight(final @NotNull Player player) {
         try {
             foodFlightTasks.get(player).cancel();
         } catch (final @NotNull NullPointerException ignore) {
@@ -76,7 +76,7 @@ public class Utils {
         foodFlightTasks.remove(player);
     }
 
-    public void removeFlightList(final @NotNull Player player) {
+    public static void removeFlightList(final @NotNull Player player) {
         flightPlayers.remove(player);
         if (isFoodFlight(player)) {
             removeFoodFlight(player);

@@ -1,9 +1,7 @@
 package com.kiocg.InsaneMonsters;
 
-import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -20,31 +18,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Events implements @NotNull Listener {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final InsaneMonsters plugin;
-
-    private final NamespacedKey namespacedKey;
-    private final @NotNull Giant giant;
-    private final @NotNull ZombieWarrior zombieWarrior;
-    private final @NotNull SkeletonArcher skeletonArcher;
-    private final @NotNull DarkKnight darkKnight;
-
-    private final @NotNull OreZombie oreZombie;
-    private final @NotNull BlockZombie blockZombie;
-
-    public Events(final InsaneMonsters insaneMonsters, final NamespacedKey namespacedKey) {
-        plugin = insaneMonsters;
-
-        this.namespacedKey = namespacedKey;
-        giant = new Giant(namespacedKey);
-        zombieWarrior = new ZombieWarrior(namespacedKey);
-        skeletonArcher = new SkeletonArcher(namespacedKey);
-        darkKnight = new DarkKnight(namespacedKey);
-
-        oreZombie = new OreZombie(namespacedKey);
-        blockZombie = new BlockZombie(namespacedKey);
-    }
-
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         if (!e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
@@ -61,14 +34,14 @@ public class Events implements @NotNull Listener {
                             return;
                         }
 
-                        giant.spawn(livingEntity.getLocation());
+                        InsaneMonsters.giant.spawn(livingEntity.getLocation());
                         break;
                     case 1:
                         if (random.nextInt(100) < 97) {
                             return;
                         }
 
-                        zombieWarrior.spawn(livingEntity.getLocation());
+                        InsaneMonsters.zombieWarrior.spawn(livingEntity.getLocation());
                         break;
                     case 2:
                         final Location loc = livingEntity.getLocation();
@@ -76,14 +49,14 @@ public class Events implements @NotNull Listener {
                             return;
                         }
 
-                        oreZombie.spawn(loc);
+                        InsaneMonsters.oreZombie.spawn(loc);
                         break;
                     case 3:
                         if (random.nextInt(100) < 90) {
                             return;
                         }
 
-                        blockZombie.spawn(livingEntity.getLocation());
+                        InsaneMonsters.blockZombie.spawn(livingEntity.getLocation());
                         break;
                 }
                 break;
@@ -92,25 +65,26 @@ public class Events implements @NotNull Listener {
                     return;
                 }
 
-                skeletonArcher.spawn(livingEntity.getLocation());
+                InsaneMonsters.skeletonArcher.spawn(livingEntity.getLocation());
                 break;
             case WITHER_SKELETON:
                 if (random.nextInt(100) < 97) {
                     return;
                 }
 
-                darkKnight.spawn(livingEntity.getLocation());
+                InsaneMonsters.darkKnight.spawn(livingEntity.getLocation());
                 break;
             default:
                 return;
         }
+
         e.setCancelled(true);
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")
     @EventHandler(ignoreCancelled = true)
     public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-        final String persistentData = e.getEntity().getPersistentDataContainer().get(namespacedKey, PersistentDataType.STRING);
+        final String persistentData = e.getEntity().getPersistentDataContainer().get(InsaneMonsters.namespacedKey, PersistentDataType.STRING);
         if (persistentData == null) {
             return;
         }
