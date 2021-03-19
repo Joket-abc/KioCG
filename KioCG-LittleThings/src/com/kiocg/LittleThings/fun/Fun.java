@@ -1,19 +1,19 @@
 package com.kiocg.LittleThings.fun;
 
 import org.bukkit.*;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -62,5 +62,18 @@ public class Fun implements @NotNull Listener {
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final Entity entity = e.getEntity();
         entity.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, entity.getLocation(), 1);
+    }
+
+    // 骷髅概率发射药水箭
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityShootBow(final @NotNull EntityShootBowEvent e) {
+        final Random random = new Random();
+        if (!(e.getEntity() instanceof Skeleton) || random.nextInt(100) < 97) {
+            return;
+        }
+
+        final PotionEffectType[] potionEffectTypes = PotionEffectType.values();
+        ((Arrow) e.getProjectile()).addCustomEffect(
+                new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
     }
 }
