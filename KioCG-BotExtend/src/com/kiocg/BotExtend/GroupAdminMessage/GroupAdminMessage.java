@@ -1,5 +1,6 @@
 package com.kiocg.BotExtend.GroupAdminMessage;
 
+import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.qqBot.events.GroupMessageEvent;
 import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
@@ -40,9 +41,9 @@ public class GroupAdminMessage implements @NotNull Listener {
         Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> {
             final ConsoleSender sender = new ConsoleSender(e);
             Bukkit.getScheduler().runTask(qqBot.INSTANCE, () -> Bukkit.dispatchCommand(sender, cmd));
-            Bukkit.getLogger().info(GAMUtils.logMessage.replace("&", "§")
-                                                       .replace("%user%", String.valueOf(senderID))
-                                                       .replace("%cmd%", cmd));
+            BotExtend.INSTANCE.getLogger().info(GAMUtils.logMessage.replace("&", "§")
+                                                                   .replace("%user%", String.valueOf(senderID))
+                                                                   .replace("%cmd%", cmd));
         });
     }
 }

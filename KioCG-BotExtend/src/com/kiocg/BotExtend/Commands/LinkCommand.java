@@ -2,6 +2,7 @@ package com.kiocg.BotExtend.Commands;
 
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,7 +44,10 @@ public class LinkCommand implements @NotNull CommandExecutor {
                 GMUtils.removeWaitLinkQQ(uuid);
                 player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ账号 " + waitLinkQQ + ".");
                 try {
-                    Objects.requireNonNull(BotExtend.economy).depositPlayer(player, 10000.0);
+                    final EconomyResponse economyResponse = Objects.requireNonNull(BotExtend.economy).depositPlayer(player, 10000.0);
+                    if (!economyResponse.transactionSuccess()) {
+                        BotExtend.INSTANCE.getLogger().warning(economyResponse.errorMessage);
+                    }
                 } catch (final @NotNull Exception ignore) {
                 }
             } else {

@@ -43,6 +43,7 @@ public class CommandsPublic implements @NotNull Listener {
                                          + "\n.prefix - 自定义称号说明"
                                          + "\n.color - RGB颜色对照表"
                                          + "\n.uuid - 正版UUID查询网站"
+                                         + "\n.wiki - 中文MC Wiki镜像站"
                                          // 功能信息
                                          + "\n.link <mcID> - 连接账号"
                                          // 私有的指令
@@ -110,6 +111,9 @@ public class CommandsPublic implements @NotNull Listener {
                 break;
             case ("uuid"):
                 e.getGroup().sendMessage("正版UUID查询：https://mcuuid.net/");
+                break;
+            case ("wiki"):
+                e.getGroup().sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/Minecraft_Wiki");
                 break;
 
             // 功能信息
