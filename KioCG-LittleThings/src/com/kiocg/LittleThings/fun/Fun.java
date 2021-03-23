@@ -62,7 +62,7 @@ public class Fun implements @NotNull Listener {
     }
 
     // 生物特性修改
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final LivingEntity livingEntity = e.getEntity();
 
