@@ -1,6 +1,8 @@
 package com.kiocg.LittleThings.fun;
 
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,6 +18,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Fun implements @NotNull Listener {
@@ -58,11 +61,21 @@ public class Fun implements @NotNull Listener {
         entityClicked.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 9, 1.0, 1.0, 1.0);
     }
 
-    // 生物出生粒子效果
+    // 生物特性修改
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
-        final Entity entity = e.getEntity();
-        entity.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, entity.getLocation(), 1);
+        final LivingEntity livingEntity = e.getEntity();
+
+        // 生物出生随机血量
+        final AttributeInstance maxHealth = Objects.requireNonNull(livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH));
+        final int randomHealth = (int) (maxHealth.getBaseValue() * (new Random().nextDouble() * 0.5 + 1.0));
+        //noinspection ImplicitNumericConversion
+        maxHealth.setBaseValue(randomHealth);
+        //noinspection ImplicitNumericConversion
+        livingEntity.setHealth(randomHealth);
+
+        // 生物出生粒子效果
+        livingEntity.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, livingEntity.getLocation(), 1);
     }
 
     // 骷髅概率发射药水箭

@@ -1,15 +1,12 @@
 package com.kiocg.BotExtend.Commands;
 
-import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class LinkCommand implements @NotNull CommandExecutor {
@@ -43,13 +40,13 @@ public class LinkCommand implements @NotNull CommandExecutor {
                 GMUtils.addPlayerLink(uuid, waitLinkQQ);
                 GMUtils.removeWaitLinkQQ(uuid);
                 player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ账号 " + waitLinkQQ + ".");
-                try {
-                    final EconomyResponse economyResponse = Objects.requireNonNull(BotExtend.economy).depositPlayer(player, 10000.0);
-                    if (!economyResponse.transactionSuccess()) {
-                        BotExtend.INSTANCE.getLogger().warning(economyResponse.errorMessage);
-                    }
-                } catch (final @NotNull Exception ignore) {
-                }
+                //                try {
+                //                    final EconomyResponse economyResponse = Objects.requireNonNull(BotExtend.economy).depositPlayer(player, 10000.0);
+                //                    if (!economyResponse.transactionSuccess()) {
+                //                        BotExtend.INSTANCE.getLogger().warning(economyResponse.errorMessage);
+                //                    }
+                //                } catch (final @NotNull Exception ignore) {
+                //                }
             } else {
                 player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ账号有误, 请检查后再试或重新连接.");
             }
