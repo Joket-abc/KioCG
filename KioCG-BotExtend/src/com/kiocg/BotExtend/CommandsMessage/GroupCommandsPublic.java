@@ -1,6 +1,6 @@
-package com.kiocg.BotExtend.GroupMessage;
+package com.kiocg.BotExtend.CommandsMessage;
 
-import com.kiocg.BotExtend.GroupMessage.Realize.Link;
+import com.kiocg.BotExtend.CommandsMessage.Realize.Link;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import net.mamoe.mirai.message.data.MessageChain;

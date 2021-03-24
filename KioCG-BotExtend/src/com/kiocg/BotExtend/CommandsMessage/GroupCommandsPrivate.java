@@ -1,7 +1,7 @@
-package com.kiocg.BotExtend.GroupMessage;
+package com.kiocg.BotExtend.CommandsMessage;
 
-import com.kiocg.BotExtend.GroupMessage.Realize.At;
-import com.kiocg.BotExtend.GroupMessage.Realize.Seen;
+import com.kiocg.BotExtend.CommandsMessage.Realize.At;
+import com.kiocg.BotExtend.CommandsMessage.Realize.Seen;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;

@@ -1,6 +1,6 @@
-package com.kiocg.BotExtend.GroupMessage.Realize;
+package com.kiocg.BotExtend.CommandsMessage.Realize;
 
-import com.kiocg.BotExtend.GroupMessage.GMUtils;
+import com.kiocg.BotExtend.CommandsMessage.GMUtils;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;

@@ -1,6 +1,6 @@
 package com.kiocg.BotExtend.Commands;
 
-import com.kiocg.BotExtend.GroupMessage.GMUtils;
+import com.kiocg.BotExtend.CommandsMessage.GMUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
