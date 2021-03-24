@@ -2,6 +2,7 @@ package com.kiocg.BotExtend.CommandsMessage;
 
 import com.kiocg.BotExtend.CommandsMessage.Realize.Link;
 import net.mamoe.mirai.contact.Contact;
+import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.User;
 import net.mamoe.mirai.message.data.MessageChain;
 import org.bukkit.Bukkit;
@@ -26,8 +27,12 @@ public class GroupCommandsPublic {
 
         // 公共的指令
         switch (msg.toLowerCase()) {
-            // 取消了.help指令
-            case ("HELP"):
+            case ("help"):
+                // 仅私聊可用
+                if (contact instanceof Group) {
+                    break;
+                }
+
                 contact.sendMessage(".help - 帮助"
                                     // 外部信息
                                     + "\n.info - 服务器介绍"
