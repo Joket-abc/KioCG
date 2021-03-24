@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class OtherEvent implements @NotNull Listener {
+    // 存储已发送进群消息的qq, 防止重复发送
+    private final List<Long> welcome = new ArrayList<>();
     // 存储低等级用户, 等待管理员二次审核
     private final List<Long> audit = new ArrayList<>();
 
@@ -41,10 +43,17 @@ public class OtherEvent implements @NotNull Listener {
         }
         final MemberJoinEvent e = (MemberJoinEvent) event.getEvent();
 
+        final Long userID = e.getMember().getId();
+        if (welcome.contains(userID)) {
+            return;
+        } else {
+            welcome.add(userID);
+        }
+
         final Group group = e.getGroup();
         if (group.getId() == 569696336L) {
             group.sendMessage(new MessageChainBuilder()
-                                      .append(new At(e.getMember().getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                      .append(new At(userID)).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
                                       .append("\n！请先仔细查看群公告！")
                                       .append("\n申请白名单请输入 .whitelist")
                                       .append("\n下载客户端请输入 .client")
