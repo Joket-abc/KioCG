@@ -1,7 +1,10 @@
 package com.kiocg.qqBot.bot;
 
 import com.kiocg.qqBot.events.ABEvent;
-import com.kiocg.qqBot.events.GroupMessageEvent;
+import com.kiocg.qqBot.events.messageEvent.FriendMessageEvent;
+import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;
+import com.kiocg.qqBot.events.messageEvent.GroupTempMessageEvent;
+import com.kiocg.qqBot.events.messageEvent.MessageEvent;
 import com.kiocg.qqBot.qqBot;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
@@ -39,8 +42,13 @@ public class KioCGBot {
             bot = BotFactory.INSTANCE.newBot(qq, Objects.requireNonNull(password), configuration);
             bot.login();
             api = new BotAPI(bot);
+
             bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.Event.class, event -> Bukkit.getPluginManager().callEvent(new ABEvent(event)));
+
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.MessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new MessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.FriendMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new FriendMessageEvent(event)));
             bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupMessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupTempMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupTempMessageEvent(event)));
         });
     }
 

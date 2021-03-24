@@ -1,7 +1,7 @@
 package com.kiocg.BotExtend.GroupAdminMessage;
 
 import com.kiocg.BotExtend.BotExtend;
-import com.kiocg.qqBot.events.GroupMessageEvent;
+import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;
 import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class GroupAdminMessage implements @NotNull Listener {
+public class AdminCommandsMessage implements @NotNull Listener {
     @EventHandler
     public void onGroupAdminMessage(final @NotNull GroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();

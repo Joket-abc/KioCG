@@ -2,9 +2,9 @@ package com.kiocg.BotExtend;
 
 import com.kiocg.BotExtend.Commands.LinkCommand;
 import com.kiocg.BotExtend.Commands.LinkgetCommand;
+import com.kiocg.BotExtend.GroupAdminMessage.AdminCommandsMessage;
 import com.kiocg.BotExtend.GroupAdminMessage.GAMUtils;
-import com.kiocg.BotExtend.GroupAdminMessage.GroupAdminMessage;
-import com.kiocg.BotExtend.GroupMessage.CommandsPublic;
+import com.kiocg.BotExtend.GroupMessage.CommandsMessage;
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
 import com.kiocg.BotExtend.OtherEvent.OtherEvent;
 import net.milkbowl.vault.chat.Chat;
@@ -74,8 +74,8 @@ public class BotExtend extends @NotNull JavaPlugin {
         new GMUtils().loadPlayers();
 
         final PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new CommandsPublic(), this);
-        pluginManager.registerEvents(new GroupAdminMessage(), this);
+        pluginManager.registerEvents(new CommandsMessage(), this);
+        pluginManager.registerEvents(new AdminCommandsMessage(), this);
         pluginManager.registerEvents(new OtherEvent(), this);
         Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new LinkCommand());
         Objects.requireNonNull(getServer().getPluginCommand("linkget")).setExecutor(new LinkgetCommand());

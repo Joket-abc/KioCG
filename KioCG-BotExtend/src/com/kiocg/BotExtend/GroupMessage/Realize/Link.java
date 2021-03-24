@@ -1,7 +1,8 @@
 package com.kiocg.BotExtend.GroupMessage.Realize;
 
 import com.kiocg.BotExtend.GroupMessage.GMUtils;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.contact.Contact;
+import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public class Link {
-    public void link(final @NotNull GroupMessageEvent e, final @NotNull String msg) {
+    public void link(final @NotNull Contact contact, final @NotNull User user, final @NotNull String msg) {
         final UUID uuid;
         final OfflinePlayer offlinePlayer;
         // 如果输入的是UUID
@@ -17,32 +18,32 @@ public class Link {
             try {
                 uuid = UUID.fromString(msg);
             } catch (final @NotNull IllegalArgumentException ignore) {
-                e.getGroup().sendMessage("非法的UUID：" + msg);
+                contact.sendMessage("非法的UUID：" + msg);
                 return;
             }
             offlinePlayer = Bukkit.getOfflinePlayer(uuid);
             if (!offlinePlayer.hasPlayedBefore()) {
-                e.getGroup().sendMessage("玩家UUID " + msg + " 从未出现过");
+                contact.sendMessage("玩家UUID " + msg + " 从未出现过");
                 return;
             }
         } else if (GMUtils.isLegalPlayerName(msg)) {
             // 输入的可能是玩家名
             offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
             if (offlinePlayer == null) {
-                e.getGroup().sendMessage("无法找到玩家 " + msg + "，请尝试使用UUID进行查询.");
+                contact.sendMessage("无法找到玩家 " + msg + "，请尝试使用UUID进行查询.");
                 return;
             }
             uuid = offlinePlayer.getUniqueId();
         } else {
-            e.getGroup().sendMessage("非法的玩家名：" + msg);
+            contact.sendMessage("非法的玩家名：" + msg);
             return;
         }
 
-        GMUtils.addPlayerLink(uuid, e.getSender().getId());
+        GMUtils.addPlayerLink(uuid, user.getId());
         if (!offlinePlayer.isOnline()) {
-            e.getGroup().sendMessage("请上线后再在游戏内输入 /link " + e.getSender().getId() + " 来连接此QQ账号");
+            contact.sendMessage("请上线后再在游戏内输入 /link " + user.getId() + " 来连接此QQ账号");
         } else {
-            e.getGroup().sendMessage("请在游戏内输入 /link " + e.getSender().getId() + " 来连接此QQ账号");
+            contact.sendMessage("请在游戏内输入 /link " + user.getId() + " 来连接此QQ账号");
         }
     }
 }

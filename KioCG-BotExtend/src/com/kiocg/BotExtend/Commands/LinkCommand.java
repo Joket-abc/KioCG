@@ -36,7 +36,8 @@ public class LinkCommand implements @NotNull CommandExecutor {
         }
 
         if (args.length == 1) {
-            if (args[0].equals(String.valueOf(waitLinkQQ))) {
+            if (args[0].equals(String.valueOf(waitLinkQQ))) //noinspection CommentedOutCode
+            {
                 GMUtils.addPlayerLink(uuid, waitLinkQQ);
                 GMUtils.removeWaitLinkQQ(uuid);
                 player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ账号 " + waitLinkQQ + ".");
