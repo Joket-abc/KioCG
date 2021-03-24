@@ -1,4 +1,4 @@
-package com.kiocg.BotExtend.GroupMessage;
+package com.kiocg.BotExtend.CommandsMessage;
 
 import com.kiocg.qqBot.events.messageEvent.FriendMessageEvent;
 import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;

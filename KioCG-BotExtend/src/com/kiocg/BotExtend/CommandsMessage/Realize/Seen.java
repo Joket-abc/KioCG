@@ -1,8 +1,8 @@
-package com.kiocg.BotExtend.GroupMessage.Realize;
+package com.kiocg.BotExtend.CommandsMessage.Realize;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.kiocg.BotExtend.BotExtend;
-import com.kiocg.BotExtend.GroupMessage.GMUtils;
+import com.kiocg.BotExtend.CommandsMessage.GMUtils;
 import net.mamoe.mirai.contact.Contact;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,6 +1,6 @@
 package com.kiocg.BotExtend.Commands;
 
-import com.kiocg.BotExtend.GroupMessage.GMUtils;
+import com.kiocg.BotExtend.CommandsMessage.GMUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
