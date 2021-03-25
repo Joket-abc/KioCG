@@ -6,6 +6,7 @@ import com.kiocg.qqBot.bot.KioCGBot;
 import com.kiocg.qqBot.events.ABEvent;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.contact.Group;
+import net.mamoe.mirai.contact.NormalMember;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.message.data.At;
@@ -43,7 +44,8 @@ public class OtherEvent implements @NotNull Listener {
         }
         final MemberJoinEvent e = (MemberJoinEvent) event.getEvent();
 
-        final Long userID = e.getMember().getId();
+        final NormalMember member = e.getMember();
+        final Long userID = member.getId();
         if (welcome.contains(userID)) {
             return;
         } else {
@@ -51,7 +53,8 @@ public class OtherEvent implements @NotNull Listener {
         }
 
         final Group group = e.getGroup();
-        if (group.getId() == 569696336L) {
+        final long groupId = group.getId();
+        if (groupId == 569696336L) {
             group.sendMessage(new MessageChainBuilder()
                                       .append(new At(userID)).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
                                       .append("\n！请先仔细查看群公告！")
@@ -59,6 +62,8 @@ public class OtherEvent implements @NotNull Listener {
                                       .append("\n下载客户端请输入 .client")
                                       .append("\n查看备用IP请输入 .ip")
                                       .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
+        } else if (groupId == 553171328L) {
+            member.setNameCard(Objects.requireNonNull(GMUtils.getPlayerLinkAsName(userID)));
         }
     }
 
@@ -69,7 +74,8 @@ public class OtherEvent implements @NotNull Listener {
         }
         final MemberJoinRequestEvent e = (MemberJoinRequestEvent) event.getEvent();
 
-        if (Objects.requireNonNull(e.getGroup()).getId() == 569696336L) {
+        final long groupId = Objects.requireNonNull(e.getGroup()).getId();
+        if (groupId == 569696336L) {
             final String message = e.getMessage();
             final String answer = message.substring(message.lastIndexOf('：') + 1).trim();
 
@@ -93,7 +99,7 @@ public class OtherEvent implements @NotNull Listener {
                         case ("楼梯"):
                         case ("木梯"):
                         case ("ladder"):
-                            e.reject(false, "高危账号，请重新加群等待管理员审核");
+                            e.reject(false, "危险账号，请重新加群并等待管理员审核");
                             audit.add(userID);
                             return;
                         default:
@@ -112,6 +118,12 @@ public class OtherEvent implements @NotNull Listener {
                     break;
                 default:
                     e.reject(false, "回答错误，请检查");
+            }
+        } else if (groupId == 553171328L) {
+            if (GMUtils.hasPlayerLink(e.getFromId())) {
+                e.accept();
+            } else {
+                e.reject(false, "此群仅限已连接游戏账号的用户加入");
             }
         }
     }
