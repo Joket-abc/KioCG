@@ -95,7 +95,7 @@ public class GroupCommandsPublic {
             // 内部信息
             case ("whitelist"):
             case ("白名单"):
-                contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki或者@saplingX"
+                contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki"
                                     + "\n记得查看群公告的《申请白名单须知》呐~");
                 break;
             case ("support"):

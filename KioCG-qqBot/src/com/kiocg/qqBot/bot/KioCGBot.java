@@ -11,6 +11,7 @@ import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -43,12 +44,13 @@ public class KioCGBot {
             bot.login();
             api = new BotAPI(bot);
 
-            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.Event.class, event -> Bukkit.getPluginManager().callEvent(new ABEvent(event)));
+            final PluginManager pluginManager = Bukkit.getPluginManager();
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.Event.class, event -> pluginManager.callEvent(new ABEvent(event)));
 
-            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.MessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new MessageEvent(event)));
-            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.FriendMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new FriendMessageEvent(event)));
-            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupMessageEvent(event)));
-            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupTempMessageEvent.class, event -> Bukkit.getPluginManager().callEvent(new GroupTempMessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.MessageEvent.class, event -> pluginManager.callEvent(new MessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.FriendMessageEvent.class, event -> pluginManager.callEvent(new FriendMessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupMessageEvent.class, event -> pluginManager.callEvent(new GroupMessageEvent(event)));
+            bot.getEventChannel().subscribeAlways(net.mamoe.mirai.event.events.GroupTempMessageEvent.class, event -> pluginManager.callEvent(new GroupTempMessageEvent(event)));
         });
     }
 

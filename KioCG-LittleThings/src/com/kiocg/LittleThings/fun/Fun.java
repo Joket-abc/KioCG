@@ -65,6 +65,35 @@ public class Fun implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final LivingEntity livingEntity = e.getEntity();
+        if (!(livingEntity instanceof Mob)) {
+            return;
+        }
+        switch (e.getSpawnReason()) {
+            case BREEDING:
+            case BUILD_IRONGOLEM:
+            case BUILD_SNOWMAN:
+            case BUILD_WITHER:
+            case DISPENSE_EGG:
+            case EGG:
+            case ENDER_PEARL:
+            case JOCKEY:
+            case LIGHTNING:
+            case MOUNT:
+            case NATURAL:
+            case NETHER_PORTAL:
+            case OCELOT_BABY:
+            case PATROL:
+            case RAID:
+            case REINFORCEMENTS:
+            case SPAWNER:
+            case SPAWNER_EGG:
+            case TRAP:
+            case VILLAGE_DEFENSE:
+            case VILLAGE_INVASION:
+                break;
+            default:
+                return;
+        }
 
         // 生物出生随机血量
         final AttributeInstance maxHealth = Objects.requireNonNull(livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH));
