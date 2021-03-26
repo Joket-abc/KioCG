@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Calendar;
 
 public class GroupCommandsPublic {
     @EventHandler
@@ -93,8 +94,22 @@ public class GroupCommandsPublic {
             // 内部信息
             case ("whitelist"):
             case ("白名单"):
-                contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki"
-                                    + "\n记得查看群公告的《申请白名单须知》呐~");
+                final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                if (9 <= hour && hour <= 22) {
+                    contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki"
+                                        + "\n记得查看群公告的《申请白名单须知》呐~");
+                } else if (23 <= hour || hour <= 1) {
+                    contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @StarryFK"
+                                        + "\n记得查看群公告的《申请白名单须知》呐~");
+                } else if (hour <= 3) {
+                    contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @StarryFK"
+                                        + "\n记得查看群公告的《申请白名单须知》呐~"
+                                        + "\n(当前时间管理员可能不在线，建议天亮再进行申请)");
+                } else {
+                    contact.sendMessage("白名单申请(仅限正版!)：请先进入一次服务器，然后带上你的ID @IbukiHoshisaki"
+                                        + "\n记得查看群公告的《申请白名单须知》呐~"
+                                        + "\n(当前时间管理员可能不在线，建议稍后再进行申请)");
+                }
                 break;
             case ("support"):
             case ("赞助"):
