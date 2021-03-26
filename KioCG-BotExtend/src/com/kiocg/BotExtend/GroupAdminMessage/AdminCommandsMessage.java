@@ -2,7 +2,6 @@ package com.kiocg.BotExtend.GroupAdminMessage;
 
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.qqBot.events.message.GroupMessageEvent;
-import com.kiocg.qqBot.qqBot;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,12 +37,19 @@ public class AdminCommandsMessage implements @NotNull Listener {
         }
 
         final String cmd = message.substring(groupLabel.length());
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> {
-            final ConsoleSender sender = new ConsoleSender(e);
-            Bukkit.getScheduler().runTask(qqBot.INSTANCE, () -> Bukkit.dispatchCommand(sender, cmd));
-            BotExtend.INSTANCE.getLogger().info(GAMUtils.logCommand.replace("&", "§")
-                                                                   .replace("%user%", String.valueOf(senderID))
-                                                                   .replace("%cmd%", cmd));
-        });
+        // 拦截白名单提示
+        if (cmd.startsWith("whitelist add ")) {
+            try {
+                Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> e.getGroup().sendMessage("已添加 " + cmd.substring(14) + " 至白名单"));
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            } catch (final @NotNull IndexOutOfBoundsException ignore) {
+                Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> e.getGroup().sendMessage("未输入玩家名"));
+            }
+        } else {
+            Bukkit.dispatchCommand(new ConsoleSender(e), cmd);
+        }
+        BotExtend.INSTANCE.getLogger().info(GAMUtils.logCommand.replace("&", "§")
+                                                               .replace("%user%", String.valueOf(senderID))
+                                                               .replace("%cmd%", cmd));
     }
 }
