@@ -1,8 +1,8 @@
 package com.kiocg.BotExtend.CommandsMessage;
 
-import com.kiocg.qqBot.events.messageEvent.FriendMessageEvent;
-import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;
-import com.kiocg.qqBot.events.messageEvent.GroupTempMessageEvent;
+import com.kiocg.qqBot.events.message.FriendMessageEvent;
+import com.kiocg.qqBot.events.message.GroupMessageEvent;
+import com.kiocg.qqBot.events.message.GroupTempMessageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;

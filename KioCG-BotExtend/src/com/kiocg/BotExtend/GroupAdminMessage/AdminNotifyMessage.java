@@ -1,6 +1,6 @@
 package com.kiocg.BotExtend.GroupAdminMessage;
 
-import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;
+import com.kiocg.qqBot.events.message.GroupMessageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
