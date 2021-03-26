@@ -25,7 +25,7 @@ public class GAMUtils {
             groupAdmins.addAll(config.getLongList("groups." + group + ".admins"));
             groupAdmin.put(Long.valueOf(group), groupAdmins);
         }
-        logCommand = Objects.requireNonNull(config.getString("messages.log_command", "&cQQ用户 %user% 执行了 %cmd% 指令."));
+        logCommand = Objects.requireNonNull(config.getString("messages.logCommand", "&cQQ用户 %user% 执行了 %cmd% 指令."));
     }
 
     public static boolean isGroupAdmin(final long groupID, final long senderID) {
