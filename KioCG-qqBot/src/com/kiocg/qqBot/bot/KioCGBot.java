@@ -1,10 +1,10 @@
 package com.kiocg.qqBot.bot;
 
 import com.kiocg.qqBot.events.ABEvent;
-import com.kiocg.qqBot.events.messageEvent.FriendMessageEvent;
-import com.kiocg.qqBot.events.messageEvent.GroupMessageEvent;
-import com.kiocg.qqBot.events.messageEvent.GroupTempMessageEvent;
-import com.kiocg.qqBot.events.messageEvent.MessageEvent;
+import com.kiocg.qqBot.events.message.FriendMessageEvent;
+import com.kiocg.qqBot.events.message.GroupMessageEvent;
+import com.kiocg.qqBot.events.message.GroupTempMessageEvent;
+import com.kiocg.qqBot.events.message.MessageEvent;
 import com.kiocg.qqBot.qqBot;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
@@ -23,15 +23,15 @@ public class KioCGBot {
     public void start() {
         // 读取主要配置文件
         final FileConfiguration config = qqBot.INSTANCE.getConfig();
-        final long qq = config.getLong("main.qq", 0L);
-        final String password = config.getString("main.password", "");
+        final long qq = config.getLong("bot.qq", 0L);
+        final String password = config.getString("bot.password", "");
         final BotConfiguration configuration = new BotConfiguration() {
             {
                 setWorkingDir(qqBot.INSTANCE.getDataFolder());
                 fileBasedDeviceInfo("deviceInfo.json");
-                setProtocol(BotConfiguration.MiraiProtocol.valueOf(config.getString("main.protocol", "ANDROID_PAD")));
+                setProtocol(BotConfiguration.MiraiProtocol.valueOf(config.getString("bot.protocol", "ANDROID_PAD")));
                 // 是否输出额外的日志
-                if (!config.getBoolean("main.debug", false)) {
+                if (!config.getBoolean("bot.debug", false)) {
                     noNetworkLog();
                     noBotLog();
                 }

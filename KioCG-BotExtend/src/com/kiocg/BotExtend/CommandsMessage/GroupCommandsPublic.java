@@ -4,7 +4,6 @@ import com.kiocg.BotExtend.CommandsMessage.Realize.Link;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.User;
-import net.mamoe.mirai.message.data.MessageChain;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
@@ -14,8 +13,7 @@ import java.net.UnknownHostException;
 
 public class GroupCommandsPublic {
     @EventHandler
-    public void onCommandsPublic(final @NotNull Contact contact, final @NotNull User user, final @NotNull MessageChain messageChain) {
-        String msg = messageChain.contentToString().trim();
+    public void onCommandsPublic(final @NotNull Contact contact, final @NotNull User user, @NotNull String msg) {
         try {
             if ((msg.charAt(0) != '.' && msg.charAt(0) != '。') || msg.charAt(1) == '.' || msg.charAt(1) == '。') {
                 return;

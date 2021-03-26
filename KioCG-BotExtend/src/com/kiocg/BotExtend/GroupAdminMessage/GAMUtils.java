@@ -14,7 +14,7 @@ public class GAMUtils {
     private static final Map<Long, ArrayList<String>> groupLabel = new HashMap<>();
 
     // 存储log_command消息
-    public static @NotNull String logMessage = "";
+    public static @NotNull String logCommand = "";
 
     public void loadConfig() {
         final FileConfiguration config = BotExtend.INSTANCE.getConfig();
@@ -25,7 +25,7 @@ public class GAMUtils {
             groupAdmins.addAll(config.getLongList("groups." + group + ".admins"));
             groupAdmin.put(Long.valueOf(group), groupAdmins);
         }
-        logMessage = Objects.requireNonNull(config.getString("messages.log_command", "&cQQ用户 %user% 执行了 %cmd% 指令."));
+        logCommand = Objects.requireNonNull(config.getString("messages.log_command", "&cQQ用户 %user% 执行了 %cmd% 指令."));
     }
 
     public static boolean isGroupAdmin(final long groupID, final long senderID) {

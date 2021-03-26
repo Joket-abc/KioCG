@@ -123,7 +123,7 @@ public class OtherEvent implements @NotNull Listener {
             if (GMUtils.hasPlayerLink(e.getFromId())) {
                 e.accept();
             } else {
-                e.reject(false, "此群仅限已连接游戏账号的用户加入");
+                e.reject(false, "此群仅限服务器玩家加入，请连接游戏账号后再来");
             }
         }
     }

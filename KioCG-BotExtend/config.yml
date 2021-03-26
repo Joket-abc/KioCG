@@ -11,4 +11,4 @@ groups:
       - 789
 
 messages:
-  log_command: "&cQQ用户 %user% 执行了 %cmd% 指令."
+  logCommand: "&cQQ用户 %user% 执行了 %cmd% 指令."

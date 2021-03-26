@@ -1,4 +1,4 @@
-main:
+bot:
   qq: 123
   password: "123"
   # ANDROID_PAD 平板. 不支持戳一戳事件解析.

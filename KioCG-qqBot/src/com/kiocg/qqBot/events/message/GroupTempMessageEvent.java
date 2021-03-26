@@ -1,4 +1,4 @@
-package com.kiocg.qqBot.events.messageEvent;
+package com.kiocg.qqBot.events.message;
 
 import org.jetbrains.annotations.NotNull;
 

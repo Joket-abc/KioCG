@@ -27,7 +27,7 @@ public class qqBot extends @NotNull JavaPlugin {
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final String[] args) {
         reloadConfig();
         new KioCGBot().restart();
-        sender.sendMessage("§7[§b豆渣子§7] §6重载配置文件.");
+        sender.sendMessage("§7[§b豆渣子§7] §6成功重载插件.");
         return true;
     }
 }

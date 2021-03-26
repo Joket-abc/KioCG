@@ -41,7 +41,7 @@ public class AdminCommandsMessage implements @NotNull Listener {
         Bukkit.getScheduler().runTaskAsynchronously(qqBot.INSTANCE, () -> {
             final ConsoleSender sender = new ConsoleSender(e);
             Bukkit.getScheduler().runTask(qqBot.INSTANCE, () -> Bukkit.dispatchCommand(sender, cmd));
-            BotExtend.INSTANCE.getLogger().info(GAMUtils.logMessage.replace("&", "§")
+            BotExtend.INSTANCE.getLogger().info(GAMUtils.logCommand.replace("&", "§")
                                                                    .replace("%user%", String.valueOf(senderID))
                                                                    .replace("%cmd%", cmd));
         });
