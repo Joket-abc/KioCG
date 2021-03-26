@@ -39,14 +39,10 @@ public class AdminCommandsMessage implements @NotNull Listener {
         final String cmd = message.substring(groupLabel.length());
         // 拦截白名单提示
         if (cmd.startsWith("whitelist add ")) {
-            try {
-                Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> e.getGroup().sendMessage("已添加 " + cmd.substring(14) + " 至白名单"));
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
-            } catch (final @NotNull IndexOutOfBoundsException ignore) {
-                Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> e.getGroup().sendMessage("未输入玩家名"));
-            }
+            Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
+            e.getGroup().sendMessage("已添加 " + cmd.substring(14) + " 至白名单");
         } else {
-            Bukkit.dispatchCommand(new ConsoleSender(e), cmd);
+            Bukkit.getScheduler().runTask(BotExtend.INSTANCE, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
         }
         BotExtend.INSTANCE.getLogger().info(GAMUtils.logCommand.replace("&", "§")
                                                                .replace("%user%", String.valueOf(senderID))
