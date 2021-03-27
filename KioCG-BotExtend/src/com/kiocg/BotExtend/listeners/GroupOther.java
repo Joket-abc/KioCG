@@ -7,11 +7,14 @@ import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.NormalMember;
+import net.mamoe.mirai.contact.PermissionDeniedException;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.MessageSource;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
@@ -87,7 +90,7 @@ public class GroupOther implements @NotNull Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onGroupBroadcast(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
@@ -96,5 +99,18 @@ public class GroupOther implements @NotNull Listener {
         }
 
         Objects.requireNonNull(e.getBot().getGroup(569696336L)).sendMessage(e.getMessage());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onProtectXML(final @NotNull AsyncGroupMessageEvent event) {
+        final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
+
+        if (e.getMessage().contentToString().startsWith("<?xml ")) {
+            try {
+                MessageSource.recall(e.getSource());
+            } catch (final @NotNull PermissionDeniedException ignore) {
+            }
+            event.setCancelled(true);
+        }
     }
 }

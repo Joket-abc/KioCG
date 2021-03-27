@@ -2,10 +2,7 @@ package com.kiocg.BotExtend;
 
 import com.kiocg.BotExtend.commands.Link;
 import com.kiocg.BotExtend.commands.Linkget;
-import com.kiocg.BotExtend.listeners.BotCommand;
-import com.kiocg.BotExtend.listeners.BotMessage;
-import com.kiocg.BotExtend.listeners.GroupOther;
-import com.kiocg.BotExtend.listeners.InGame;
+import com.kiocg.BotExtend.listeners.*;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.milkbowl.vault.chat.Chat;
@@ -81,6 +78,8 @@ public class BotExtend extends @NotNull JavaPlugin {
         pluginManager.registerEvents(new BotMessage(), this);
         pluginManager.registerEvents(new GroupOther(), this);
         pluginManager.registerEvents(new InGame(), this);
+
+        pluginManager.registerEvents(new Test(), this);
 
         // 注册指令
         Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new Link());

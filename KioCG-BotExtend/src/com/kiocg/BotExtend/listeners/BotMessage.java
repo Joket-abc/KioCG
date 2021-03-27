@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 public class BotMessage implements @NotNull Listener {
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onFriendMessage(final @NotNull AsyncFriendMessageEvent event) {
         final net.mamoe.mirai.event.events.FriendMessageEvent e = event.getEvent();
 
@@ -20,7 +20,7 @@ public class BotMessage implements @NotNull Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onGroupMessage(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
@@ -30,7 +30,7 @@ public class BotMessage implements @NotNull Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onGroupTempMessage(final @NotNull AsyncGroupTempMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupTempMessageEvent e = event.getEvent();
 

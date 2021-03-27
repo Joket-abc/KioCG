@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class BotCommand implements @NotNull Listener {
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onGroupMessage(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
