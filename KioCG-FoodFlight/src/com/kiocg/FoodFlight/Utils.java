@@ -24,6 +24,7 @@ public class Utils {
             @Override
             public void run() {
                 i = 1 - i;
+
                 if (i == 1 || player.isSprinting()) {
                     player.setExhaustion(5.0F);
                 }
@@ -33,12 +34,13 @@ public class Utils {
 
                 if (player.getFoodLevel() <= 6) {
                     player.setFlying(false);
+
                     // 不使用stopFoodFlightTask, 以免任务在意外情况下无法被取消
                     cancel();
                     foodFlightTasks.put(player, null);
                 }
             }
-        }.runTaskTimer(FoodFlight.INSTANCE, 0L, 5L);
+        }.runTaskTimer(FoodFlight.instance, 0L, 5L);
     }
 
     public static boolean inFlightList(final @NotNull Player player) {
@@ -51,6 +53,7 @@ public class Utils {
 
     public static void addFlightList(final @NotNull Player player, final boolean isFoodFlight) {
         flightPlayers.add(player);
+
         if (isFoodFlight) {
             foodFlightTasks.put(player, null);
         }
@@ -65,6 +68,7 @@ public class Utils {
             foodFlightTasks.get(player).cancel();
         } catch (final @NotNull NullPointerException ignore) {
         }
+
         foodFlightTasks.put(player, null);
     }
 
@@ -73,14 +77,17 @@ public class Utils {
             foodFlightTasks.get(player).cancel();
         } catch (final @NotNull NullPointerException ignore) {
         }
+
         foodFlightTasks.remove(player);
     }
 
     public static void removeFlightList(final @NotNull Player player) {
         flightPlayers.remove(player);
+
         if (isFoodFlight(player)) {
             removeFoodFlight(player);
         }
+
         player.setAllowFlight(false);
         player.setFlying(false);
     }

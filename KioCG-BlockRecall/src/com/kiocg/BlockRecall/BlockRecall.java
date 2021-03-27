@@ -4,13 +4,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockRecall extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName", "unused"})
-    public static BlockRecall INSTANCE;
+    @SuppressWarnings("unused")
+    public static BlockRecall instance;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
-        getServer().getPluginManager().registerEvents(new Events(), this);
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 }

@@ -20,6 +20,7 @@ import java.util.Random;
 public class ZombieWarrior {
     public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
+
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "ZombieWarrior");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));
         livingEntity.setRemoveWhenFarAway(true);
@@ -34,6 +35,7 @@ public class ZombieWarrior {
         sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
         sword.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
         sword.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+
         final EntityEquipment equipment = livingEntity.getEquipment();
         Objects.requireNonNull(equipment).setItemInMainHand(sword);
         equipment.setItemInOffHand(new ItemStack(Material.TOTEM_OF_UNDYING));

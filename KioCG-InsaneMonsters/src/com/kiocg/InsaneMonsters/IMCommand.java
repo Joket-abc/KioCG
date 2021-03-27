@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class IMCommand implements @Nullable CommandExecutor {
-    @SuppressWarnings("RedundantSuppression")
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (!(sender instanceof Player)) {
@@ -19,18 +19,13 @@ public class IMCommand implements @Nullable CommandExecutor {
         }
 
         final Player player = (Player) sender;
+
         if (args.length == 0) {
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4G§ciant §6| 巨人");
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4Z§combie§4W§carrior §6| 僵尸战士");
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4S§ckeleton§4A§crcher §6| 骷髅弓箭手");
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4D§cark§4K§cnight §6| 黑暗骑士");
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4O§cre§4Z§combie §6| 矿石僵尸");
-            //noinspection SpellCheckingInspection
             player.sendMessage("§4B§clock§4Z§combie §6| 方块僵尸");
             player.sendMessage("§7/insanemonsters <mob> 来生成指定的疯狂怪物.");
             return true;
@@ -38,6 +33,7 @@ public class IMCommand implements @Nullable CommandExecutor {
 
         if (args.length == 1) {
             final Block block = player.getTargetBlock(64);
+
             if (block == null) {
                 player.sendMessage("§a[§b豆渣子§a] §c所指向的方块距离太远了.");
                 return true;
@@ -45,6 +41,7 @@ public class IMCommand implements @Nullable CommandExecutor {
 
             final Location loc = block.getLocation().toCenterLocation();
             loc.setY(loc.getY() + 1.0);
+
             switch (args[0].toLowerCase()) {
                 case "giant":
                 case "g":
@@ -81,6 +78,7 @@ public class IMCommand implements @Nullable CommandExecutor {
             }
             return true;
         }
+
         return false;
     }
 }

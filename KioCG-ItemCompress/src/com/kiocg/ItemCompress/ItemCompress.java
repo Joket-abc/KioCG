@@ -4,15 +4,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class ItemCompress extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName", "unused"})
-    public static ItemCompress INSTANCE;
+    @SuppressWarnings("unused")
+    public static ItemCompress instance;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
         new CreateRecipe(this);
-        getServer().getPluginManager().registerEvents(new Events(), this);
+
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 
     @Override

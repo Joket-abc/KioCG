@@ -15,23 +15,27 @@ import java.util.Objects;
 public class BlockZombie {
     public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
+
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BlockZombie");
         livingEntity.setCustomName("§7方块僵尸");
         livingEntity.setRemoveWhenFarAway(true);
 
         final EntityEquipment equipment = livingEntity.getEquipment();
+
         Material material = location.getBlock().getType();
         if (!material.isAir() && material.isItem()) {
             Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
         } else {
             location.setY(location.getY() - 1.0);
             material = location.getBlock().getType();
+
             if (material.isItem() && !material.isAir()) {
                 Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
             } else {
                 Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
             }
         }
+
         equipment.setHelmetDropChance(0F);
     }
 }

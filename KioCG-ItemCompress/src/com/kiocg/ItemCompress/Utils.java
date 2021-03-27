@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    private final List<String> multipleText = new ArrayList<>() {{
+    private static final List<String> multipleText = new ArrayList<>() {{
         add("一");
         add("二");
         add("三");
@@ -19,7 +19,7 @@ public class Utils {
         add("十");
     }};
 
-    public @NotNull String upMultiple(final @NotNull String multiple) {
+    public static @NotNull String upMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) + 1);
         } catch (final @NotNull IndexOutOfBoundsException ignore) {
@@ -27,7 +27,7 @@ public class Utils {
         }
     }
 
-    public @NotNull String downMultiple(final @NotNull String multiple) {
+    public static @NotNull String downMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) - 1);
         } catch (final @NotNull IndexOutOfBoundsException ignore) {

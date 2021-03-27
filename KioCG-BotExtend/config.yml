@@ -3,7 +3,7 @@ owners:
 
 groups:
   '123456789':
-    command:
+    labels:
       - "/"
       - ","
       - "，"
@@ -11,4 +11,4 @@ groups:
       - 789
 
 messages:
-  logCommand: "&cQQ用户 %user% 执行了 %cmd% 指令."
+  logCommand: "&cQQ用户 %user% 执行了指令: %cmd%"

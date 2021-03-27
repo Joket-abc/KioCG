@@ -4,13 +4,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class AntiCheatingClient extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
-    public static AntiCheatingClient INSTANCE;
+    public static AntiCheatingClient instance;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
-        getServer().getPluginManager().registerEvents(new Events(), this);
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 }

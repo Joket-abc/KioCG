@@ -8,12 +8,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class InsaneMonsters extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName", "unused"})
-    public static InsaneMonsters INSTANCE;
+    @SuppressWarnings("unused")
+    public static InsaneMonsters instance;
 
     public static NamespacedKey namespacedKey;
 
     public static Giant giant;
+
     public static ZombieWarrior zombieWarrior;
     public static SkeletonArcher skeletonArcher;
     public static DarkKnight darkKnight;
@@ -23,11 +24,12 @@ public class InsaneMonsters extends @NotNull JavaPlugin {
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
         namespacedKey = new NamespacedKey(this, "InsaneMonsters");
 
         giant = new Giant();
+
         zombieWarrior = new ZombieWarrior();
         skeletonArcher = new SkeletonArcher();
         darkKnight = new DarkKnight();
@@ -35,7 +37,8 @@ public class InsaneMonsters extends @NotNull JavaPlugin {
         oreZombie = new OreZombie();
         blockZombie = new BlockZombie();
 
-        getServer().getPluginManager().registerEvents(new Events(), this);
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
+
         Objects.requireNonNull(getServer().getPluginCommand("insanemonsters")).setExecutor(new IMCommand());
     }
 }

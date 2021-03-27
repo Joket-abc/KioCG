@@ -7,14 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class qqBot extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
-    public static qqBot INSTANCE;
+    public static qqBot instance;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
         saveDefaultConfig();
+
         new KioCGBot().start();
     }
 
@@ -26,7 +26,9 @@ public class qqBot extends @NotNull JavaPlugin {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final String[] args) {
         reloadConfig();
+
         new KioCGBot().restart();
+
         sender.sendMessage("§7[§b豆渣子§7] §6成功重载插件.");
         return true;
     }

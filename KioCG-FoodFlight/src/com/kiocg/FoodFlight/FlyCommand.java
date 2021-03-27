@@ -20,9 +20,11 @@ public class FlyCommand implements @Nullable CommandExecutor {
         }
 
         final Player player = (Player) sender;
+
         // 玩家尝试关闭飞行
         if (Utils.inFlightList(player)) {
             Utils.removeFlightList(player);
+
             player.sendMessage("§a[§b豆渣子§a] §c➷ 关掉关掉一定要关掉 ➷");
             return true;
         }
@@ -62,6 +64,7 @@ public class FlyCommand implements @Nullable CommandExecutor {
         }
 
         player.setAllowFlight(true);
+
         player.sendMessage("§a[§b豆渣子§a] §a➹ 呼呼, 可以飞了呢 ➹");
         return true;
     }

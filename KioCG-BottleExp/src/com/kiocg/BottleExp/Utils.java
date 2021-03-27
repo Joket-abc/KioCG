@@ -4,10 +4,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Utils {
+    @SuppressWarnings("ImplicitNumericConversion")
     public static int getCurrentTotalExperience(final @NotNull Player player) {
         final int currentLevel = player.getLevel();
-        @SuppressWarnings("ImplicitNumericConversion") final int currentExperienceAtLevel
-                = Math.round(getCurrentExperienceAtLevel(currentLevel) * player.getExp());
+        final int currentExperienceAtLevel = Math.round(getCurrentExperienceAtLevel(currentLevel) * player.getExp());
+
         return getTotalExperienceReachedLevel(currentLevel) + currentExperienceAtLevel;
     }
 

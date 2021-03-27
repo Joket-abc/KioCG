@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class Giant {
     public void spawn(final @NotNull Location location) {
         final LivingEntity livingEntity = location.getWorld().spawn(location, org.bukkit.entity.Giant.class);
+
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "Giant");
         livingEntity.setRemoveWhenFarAway(true);
     }

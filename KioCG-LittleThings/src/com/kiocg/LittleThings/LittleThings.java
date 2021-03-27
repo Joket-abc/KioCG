@@ -1,21 +1,20 @@
 package com.kiocg.LittleThings;
 
-import com.kiocg.LittleThings.fix.Fix;
-import com.kiocg.LittleThings.fun.Fun;
-import com.kiocg.LittleThings.misc.Misc;
+import com.kiocg.LittleThings.listeners.Fix;
+import com.kiocg.LittleThings.listeners.Fun;
+import com.kiocg.LittleThings.listeners.Misc;
+import com.kiocg.LittleThings.listeners.Utility;
 import com.kiocg.LittleThings.utility.AutoRestart;
-import com.kiocg.LittleThings.utility.Utility;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class LittleThings extends @NotNull JavaPlugin {
-    @SuppressWarnings({"NonConstantFieldWithUpperCaseName"})
-    public static LittleThings INSTANCE;
+    public static LittleThings instance;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        instance = this;
 
         final PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new Fix(), this);
