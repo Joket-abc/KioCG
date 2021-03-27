@@ -77,18 +77,14 @@ public class OtherEvent implements @NotNull Listener {
         final long groupId = Objects.requireNonNull(e.getGroup()).getId();
         if (groupId == 569696336L) {
             final String message = e.getMessage();
-            final String answer = message.substring(message.lastIndexOf('：') + 1).trim().toLowerCase();
+            final String answer = message.substring(message.lastIndexOf('：') + 1).toLowerCase();
 
             // 低等级用户需管理员二次审核
             final Long userID = e.getFromId();
             if (Mirai.getInstance().queryProfile(KioCGBot.getApi().getBot(), userID).getQLevel() < 16) {
-                if (audit.contains(userID)) {
-                    if (!isAnswerTrue(answer)) {
-                        e.reject(false, "回答错误，请检查");
-                    }
-                } else {
+                if (!audit.contains(userID)) {
                     if (isAnswerTrue(answer)) {
-                        e.reject(false, "危险账号，请重新加群并等待管理员审核");
+                        e.reject(false, "危险账号，请重新加群并等待管理员审核(可以在回答里留言)");
                         audit.add(userID);
                     } else {
                         e.reject(false, "回答错误，请检查");

@@ -30,11 +30,12 @@ public class Events implements @NotNull Listener {
             case ZOMBIE:
                 switch (random.nextInt(4)) {
                     case 0:
-                        if (random.nextInt(1000) < 997) {
+                        final Location giantLoc = livingEntity.getLocation();
+                        if (giantLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(1000) < 997) {
                             return;
                         }
 
-                        InsaneMonsters.giant.spawn(livingEntity.getLocation());
+                        InsaneMonsters.giant.spawn(giantLoc);
                         break;
                     case 1:
                         if (random.nextInt(100) < 97) {
@@ -44,12 +45,12 @@ public class Events implements @NotNull Listener {
                         InsaneMonsters.zombieWarrior.spawn(livingEntity.getLocation());
                         break;
                     case 2:
-                        final Location loc = livingEntity.getLocation();
-                        if (!loc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 90) {
+                        final Location oreZombieLoc = livingEntity.getLocation();
+                        if (!oreZombieLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 90) {
                             return;
                         }
 
-                        InsaneMonsters.oreZombie.spawn(loc);
+                        InsaneMonsters.oreZombie.spawn(oreZombieLoc);
                         break;
                     case 3:
                         if (random.nextInt(100) < 90) {
