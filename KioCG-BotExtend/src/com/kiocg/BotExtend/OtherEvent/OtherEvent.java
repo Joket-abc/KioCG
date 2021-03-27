@@ -77,47 +77,30 @@ public class OtherEvent implements @NotNull Listener {
         final long groupId = Objects.requireNonNull(e.getGroup()).getId();
         if (groupId == 569696336L) {
             final String message = e.getMessage();
-            final String answer = message.substring(message.lastIndexOf('：') + 1).trim();
+            final String answer = message.substring(message.lastIndexOf('：') + 1).trim().toLowerCase();
 
             // 低等级用户需管理员二次审核
             final Long userID = e.getFromId();
             if (Mirai.getInstance().queryProfile(KioCGBot.getApi().getBot(), userID).getQLevel() < 16) {
                 if (audit.contains(userID)) {
-                    switch (answer.toLowerCase()) {
-                        case ("梯子"):
-                        case ("楼梯"):
-                        case ("木梯"):
-                        case ("ladder"):
-                            return;
-                        default:
-                            e.reject(false, "回答错误，请检查");
-                            return;
+                    if (!isAnswerTrue(answer)) {
+                        e.reject(false, "回答错误，请检查");
                     }
                 } else {
-                    switch (answer.toLowerCase()) {
-                        case ("梯子"):
-                        case ("楼梯"):
-                        case ("木梯"):
-                        case ("ladder"):
-                            e.reject(false, "危险账号，请重新加群并等待管理员审核");
-                            audit.add(userID);
-                            return;
-                        default:
-                            e.reject(false, "回答错误，请检查");
-                            return;
+                    if (isAnswerTrue(answer)) {
+                        e.reject(false, "危险账号，请重新加群并等待管理员审核");
+                        audit.add(userID);
+                    } else {
+                        e.reject(false, "回答错误，请检查");
                     }
                 }
+                return;
             }
 
-            switch (answer.toLowerCase()) {
-                case ("梯子"):
-                case ("楼梯"):
-                case ("木梯"):
-                case ("ladder"):
-                    e.accept();
-                    break;
-                default:
-                    e.reject(false, "回答错误，请检查");
+            if (isAnswerTrue(answer)) {
+                e.accept();
+            } else {
+                e.reject(false, "回答错误，请检查");
             }
         } else if (groupId == 553171328L) {
             if (GMUtils.hasPlayerLink(e.getFromId())) {
@@ -126,5 +109,9 @@ public class OtherEvent implements @NotNull Listener {
                 e.reject(false, "此群仅限服务器玩家加入，请连接游戏账号后再来");
             }
         }
+    }
+
+    private boolean isAnswerTrue(final @NotNull String answer) {
+        return (answer.contains("梯子") || answer.contains("楼梯") || answer.contains("木梯") || answer.contains("ladder"));
     }
 }
