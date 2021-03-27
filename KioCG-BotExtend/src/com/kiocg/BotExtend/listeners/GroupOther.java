@@ -102,13 +102,13 @@ public class GroupOther implements @NotNull Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onProtectXML(final @NotNull AsyncGroupMessageEvent event) {
+    public void onPreventXML(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         if (e.getMessage().contentToString().startsWith("<?xml ")) {
             try {
                 MessageSource.recall(e.getSource());
-            } catch (final @NotNull PermissionDeniedException ignore) {
+            } catch (final @NotNull Exception ignore) {
             }
             event.setCancelled(true);
         }
