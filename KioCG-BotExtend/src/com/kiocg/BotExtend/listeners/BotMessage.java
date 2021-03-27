@@ -26,7 +26,7 @@ public class BotMessage implements @NotNull Listener {
 
         final String userCommand = Utils.getUserCommand(e.getMessage().contentToString().trim());
         if (userCommand != null) {
-            new CommandsPublic().onCommandsPublic(e.getGroup(), e.getSender(), e.getMessage().contentToString().trim());
+            new CommandsPublic().onCommandsPublic(e.getGroup(), e.getSender(), userCommand);
         }
     }
 
@@ -36,7 +36,7 @@ public class BotMessage implements @NotNull Listener {
 
         final String userCommand = Utils.getUserCommand(e.getMessage().contentToString().trim());
         if (userCommand != null) {
-            new CommandsPublic().onCommandsPublic(e.getSender(), e.getSender(), e.getMessage().contentToString().trim());
+            new CommandsPublic().onCommandsPublic(e.getSender(), e.getSender(), userCommand);
         }
     }
 }

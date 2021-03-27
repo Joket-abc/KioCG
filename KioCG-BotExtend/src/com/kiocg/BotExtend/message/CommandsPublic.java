@@ -133,7 +133,7 @@ public class CommandsPublic {
                 contact.sendMessage("输入 .link <mcID> 来连接账号");
                 break;
             default:
-                if (userCommand.startsWith("link ") || userCommand.startsWith("连接 ")) {
+                if (userCommand.toLowerCase().startsWith("link ") || userCommand.startsWith("连接 ")) {
                     final String playerName = PlayerLinkUtils.getPlayerLinkAsName(user.getId());
                     if (playerName != null) {
                         contact.sendMessage("你已经连接了游戏账号 " + playerName);

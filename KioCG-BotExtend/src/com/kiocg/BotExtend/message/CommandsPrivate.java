@@ -20,7 +20,7 @@ public class CommandsPrivate {
         }
 
         // 私有的指令
-        switch (userCommand) {
+        switch (userCommand.toLowerCase()) {
             case ("qaq"):
                 contact.sendMessage("චᆽච");
                 break;
@@ -64,12 +64,12 @@ public class CommandsPrivate {
                 contact.sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
                 break;
             default:
-                if (userCommand.startsWith("seen ") || userCommand.startsWith("查询 ")) {
+                if (userCommand.toLowerCase().startsWith("seen ") || userCommand.startsWith("查询 ")) {
                     //noinspection DuplicateExpressions
                     new Seen().seen(contact, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
                     break;
                 }
-                if (userCommand.startsWith("at ") || userCommand.startsWith("@ ")) {
+                if (userCommand.toLowerCase().startsWith("at ") || userCommand.startsWith("@ ")) {
                     //noinspection DuplicateExpressions
                     new At().at(contact, user, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
                     break;
