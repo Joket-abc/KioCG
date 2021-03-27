@@ -3,10 +3,10 @@
     <output-path>$PROJECT_DIR$/out/artifacts/KioCG_qqBot_jar</output-path>
     <root id="archive" name="KioCG-qqBot.jar">
       <element id="module-output" name="KioCG-qqBot" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../mirai-core-all-2.4.2-all.jar" path-in-jar="/" />
       <element id="module-source" name="KioCG-qqBot" />
       <element id="file-copy" path="$PROJECT_DIR$/KioCG-qqBot/config.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/KioCG-qqBot/plugin.yml" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../mirai-core-all-2.5.0-all.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
