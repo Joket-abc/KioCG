@@ -1,7 +1,7 @@
 package com.kiocg.LittleThings.utility;
 
 import com.kiocg.LittleThings.LittleThings;
-import io.papermc.paper.adventure.PaperAdventure;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class AutoRestart {
             if ("06:00:00".equals(date)) {
                 Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
                     for (final Player player : Bukkit.getOnlinePlayers()) {
-                        player.kick(PaperAdventure.LEGACY_SECTION_UXRC.deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
+                        player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
                     }
 
                     Bukkit.shutdown();

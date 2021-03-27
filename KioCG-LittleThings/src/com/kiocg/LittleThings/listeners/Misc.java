@@ -1,8 +1,8 @@
 package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
-import io.papermc.paper.adventure.PaperAdventure;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,7 +62,7 @@ public class Misc implements @NotNull Listener {
     // @玩家
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(final @NotNull AsyncChatEvent e) {
-        String message = PaperAdventure.LEGACY_SECTION_UXRC.serialize(e.message());
+        String message = LegacyComponentSerializer.legacyAmpersand().serialize(e.message());
 
         if (!message.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
@@ -87,7 +87,7 @@ public class Misc implements @NotNull Listener {
             }
         }
 
-        e.message(PaperAdventure.LEGACY_SECTION_UXRC.deserialize(message));
+        e.message(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
     }
 
     // 随身工作台

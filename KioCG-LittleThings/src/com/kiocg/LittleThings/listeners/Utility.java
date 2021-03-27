@@ -5,7 +5,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.LittleThings.LittleThings;
 import com.kiocg.LittleThings.Utils;
 import com.kiocg.qqBot.bot.KioCGBot;
-import io.papermc.paper.adventure.PaperAdventure;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +53,7 @@ public class Utility implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         try {
-            if (Objects.requireNonNull(e.getItemInHand().lore()).contains(PaperAdventure.LEGACY_SECTION_UXRC.deserialize("§9无法放置"))) {
+            if (Objects.requireNonNull(e.getItemInHand().lore()).contains(LegacyComponentSerializer.legacyAmpersand().deserialize("§9无法放置"))) {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {

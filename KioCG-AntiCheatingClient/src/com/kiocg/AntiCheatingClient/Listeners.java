@@ -1,9 +1,9 @@
 package com.kiocg.AntiCheatingClient;
 
 import com.kiocg.qqBot.bot.KioCGBot;
-import io.papermc.paper.adventure.PaperAdventure;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -45,7 +45,7 @@ public class Listeners implements @NotNull Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
-        final String message = PaperAdventure.PLAIN.serialize(e.message());
+        final String message = PlainComponentSerializer.plain().serialize(e.message());
 
         if (message.length() < 192) {
             return;

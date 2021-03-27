@@ -7,7 +7,6 @@ import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.NormalMember;
-import net.mamoe.mirai.contact.PermissionDeniedException;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.message.data.At;

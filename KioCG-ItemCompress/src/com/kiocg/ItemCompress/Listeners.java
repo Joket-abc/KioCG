@@ -1,9 +1,10 @@
 package com.kiocg.ItemCompress;
 
-import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -46,7 +47,7 @@ public class Listeners implements @NotNull Listener {
                     final ItemMeta itemMeta = itemStack.getItemMeta();
 
                     if (itemMeta.hasDisplayName()) {
-                        final String displayName = PaperAdventure.PLAIN.serialize(Objects.requireNonNull(itemMeta.displayName()));
+                        final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
 
                         if (displayName.startsWith("§1§2§6")) {
                             multipleText = Utils.upMultiple(displayName.substring(6, 7));
@@ -67,9 +68,9 @@ public class Listeners implements @NotNull Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(PaperAdventure.LEGACY_SECTION_UXRC.deserialize("§1§2§6")
-                                                                             .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                             .decoration(TextDecoration.ITALIC, false));
+                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
+                                                                    .decoration(TextDecoration.ITALIC, false));
 
                 itemStackResult.setItemMeta(itemMetaResult);
             }
@@ -92,7 +93,7 @@ public class Listeners implements @NotNull Listener {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
 
                         if (itemMeta.hasDisplayName()) {
-                            final String displayName = PaperAdventure.PLAIN.serialize(Objects.requireNonNull(itemMeta.displayName()));
+                            final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
 
                             if (displayName.startsWith("§1§2§6")) {
                                 multipleText = Utils.downMultiple(displayName.substring(6, 7));
@@ -115,9 +116,9 @@ public class Listeners implements @NotNull Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(PaperAdventure.LEGACY_SECTION_UXRC.deserialize("§1§2§6")
-                                                                             .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                             .decoration(TextDecoration.ITALIC, false));
+                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
+                                                                    .decoration(TextDecoration.ITALIC, false));
 
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
@@ -138,7 +139,7 @@ public class Listeners implements @NotNull Listener {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
 
                         if (itemMeta.hasDisplayName()) {
-                            final String displayName = PaperAdventure.PLAIN.serialize(Objects.requireNonNull(itemMeta.displayName()));
+                            final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
 
                             if (displayName.startsWith("§1§2§6")) {
                                 itemStackResult = new ItemStack(itemStack.getType(), 9);
@@ -161,9 +162,9 @@ public class Listeners implements @NotNull Listener {
                 }
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(PaperAdventure.LEGACY_SECTION_UXRC.deserialize("§1§2§6")
-                                                                             .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                             .decoration(TextDecoration.ITALIC, false));
+                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
+                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
+                                                                    .decoration(TextDecoration.ITALIC, false));
 
                 itemStackResult.setItemMeta(itemMetaResult);
 
