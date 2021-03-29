@@ -15,8 +15,25 @@ import java.util.Arrays;
 public class CommandsPrivate {
     public void onCommandsPrivate(final @NotNull Contact contact, final @NotNull User user, final @NotNull String userCommand) {
         if (!PlayerLinkUtils.hasPlayerLink(user.getId())) {
-            contact.sendMessage("请在连接游戏账号后使用此指令\n输入 .link <mcID> 来连接账号");
-            return;
+            switch (userCommand.toLowerCase()) {
+                case ("qaq"):
+
+                    // 查询信息
+                case ("list"):
+                case ("在线"):
+                case ("plugin"):
+                case ("插件"):
+                case ("tps"):
+                case ("状态"):
+                    contact.sendMessage("请在连接游戏账号后使用此指令\n输入 .link <mcID> 来连接账号");
+                    return;
+                default:
+                    if (userCommand.toLowerCase().startsWith("seen") || userCommand.startsWith("查询")
+                        || userCommand.toLowerCase().startsWith("at") || userCommand.charAt(0) == '@') {
+                        contact.sendMessage("请在连接游戏账号后使用此指令\n输入 .link <mcID> 来连接账号");
+                        return;
+                    }
+            }
         }
 
         // 私有的指令

@@ -15,7 +15,7 @@ public class BotMessage implements @NotNull Listener {
         final net.mamoe.mirai.event.events.FriendMessageEvent e = event.getEvent();
 
         final String userCommand = Utils.getUserCommand(e.getMessage().contentToString().trim());
-        if (userCommand != null) {
+        if (userCommand != null && !userCommand.isEmpty()) {
             new CommandsPublic().onCommandsPublic(e.getSender(), e.getSender(), userCommand);
         }
     }
@@ -25,7 +25,7 @@ public class BotMessage implements @NotNull Listener {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         final String userCommand = Utils.getUserCommand(e.getMessage().contentToString().trim());
-        if (userCommand != null) {
+        if (userCommand != null && !userCommand.isEmpty()) {
             new CommandsPublic().onCommandsPublic(e.getGroup(), e.getSender(), userCommand);
         }
     }
@@ -35,7 +35,7 @@ public class BotMessage implements @NotNull Listener {
         final net.mamoe.mirai.event.events.GroupTempMessageEvent e = event.getEvent();
 
         final String userCommand = Utils.getUserCommand(e.getMessage().contentToString().trim());
-        if (userCommand != null) {
+        if (userCommand != null && !userCommand.isEmpty()) {
             new CommandsPublic().onCommandsPublic(e.getSender(), e.getSender(), userCommand);
         }
     }
