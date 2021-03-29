@@ -13,7 +13,7 @@ public class MessagesRemind {
             group.sendMessage("你不能利用BUG刷物品、刷数据、卡基岩、卡地狱(下届)顶等。");
         } else if (msg.contains("种子") && (msg.contains("服务器") || msg.contains("世界") || msg.contains("地图"))) {
             group.sendMessage("你不能向管理员索要物品、指令操作、世界种子等，所有管理员同玩家均没有任何特权。");
-        } else if (msg.contains("村民") && (msg.contains("僵尸")) || (msg.contains("海龟蛋") && (msg.contains("僵尸") || msg.contains("猪人") || msg.contains("猪灵")))) {
+        } else if ((msg.contains("村民") && !msg.contains("僵尸村民") && msg.contains("僵尸")) || (msg.contains("海龟蛋") && (msg.contains("僵尸") || msg.contains("猪人") || msg.contains("猪灵")))) {
             group.sendMessage("出于优化需要，所有实体的AI行为均与原版有所不同，有关实体的反馈将不受支持。");
         }
     }
