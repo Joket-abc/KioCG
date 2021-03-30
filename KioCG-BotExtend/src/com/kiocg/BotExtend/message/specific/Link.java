@@ -50,7 +50,7 @@ public class Link {
         if (!offlinePlayer.isOnline()) {
             contact.sendMessage("请上线后再在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
         } else {
-            contact.sendMessage("请在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
+            contact.sendMessage("请再在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
         }
     }
 }
