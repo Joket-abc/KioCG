@@ -2,6 +2,8 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -10,7 +12,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -117,5 +122,24 @@ public class Misc implements @NotNull Listener {
 
             e.setCancelled(true);
         }
+    }
+
+    // 铁砧重命名物品去除斜体
+    @EventHandler(ignoreCancelled = true)
+    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        final ItemStack itemStack = e.getResult();
+
+        if (itemStack == null) {
+            return;
+        }
+
+        final String renameText = e.getInventory().getRenameText();
+
+        if (renameText == null) {
+            return;
+        }
+
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.displayName(Component.text(renameText).decoration(TextDecoration.ITALIC, false));
     }
 }

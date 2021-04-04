@@ -6,7 +6,9 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -170,6 +172,16 @@ public class Listeners implements @NotNull Listener {
 
                 craftingInventory.setResult(itemStackResult);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        try {
+            if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(Objects.requireNonNull(e.getResult()).getItemMeta().displayName())).startsWith("§1§2§6")) {
+                e.setResult(null);
+            }
+        } catch (final @NotNull NullPointerException ignore) {
         }
     }
 
