@@ -18,7 +18,7 @@ public class OreZombie {
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "OreZombie");
         livingEntity.setCustomName("§7矿石僵尸");
-        livingEntity.setCustomNameVisible(true);
+        livingEntity.setCustomNameVisible(false);
         livingEntity.setRemoveWhenFarAway(true);
 
         final EntityEquipment equipment = livingEntity.getEquipment();

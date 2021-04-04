@@ -1,5 +1,6 @@
-package com.kiocg.CompressStore;
+package com.kiocg.CompressStore.commands;
 
+import com.kiocg.CompressStore.PantsCoins;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -50,15 +51,15 @@ public class StoryCommand implements @Nullable CommandExecutor {
 
         switch (displayName.substring(6, 7)) {
             case "三":
-                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 0.01);
+                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.01);
                 player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.01❣");
                 break;
             case "四":
-                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 0.1);
+                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.1);
                 player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.1❣");
                 break;
             case "五":
-                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 1.0);
+                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 1.0);
                 player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得1❣");
                 break;
             default:

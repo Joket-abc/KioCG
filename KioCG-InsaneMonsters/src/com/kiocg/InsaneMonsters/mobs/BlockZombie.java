@@ -18,7 +18,7 @@ public class BlockZombie {
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BlockZombie");
         livingEntity.setCustomName("§7方块僵尸");
-        livingEntity.setCustomNameVisible(true);
+        livingEntity.setCustomNameVisible(false);
         livingEntity.setRemoveWhenFarAway(true);
 
         final EntityEquipment equipment = livingEntity.getEquipment();

@@ -15,6 +15,9 @@ public class CreateRecipe {
         // 存储合成配方中有且仅有单个物品的配方物品匹配表、所对应的成品
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();
 
+        // 胖次币功能需要
+        compressMaterial.remove(Material.KNOWLEDGE_BOOK);
+
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while (iterator.hasNext()) {

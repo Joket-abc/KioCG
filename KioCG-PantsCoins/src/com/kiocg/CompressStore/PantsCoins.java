@@ -7,9 +7,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class CompressStore extends @NotNull JavaPlugin {
+public class PantsCoins extends @NotNull JavaPlugin {
     @SuppressWarnings("unused")
-    public static CompressStore instance;
+    public static PantsCoins instance;
 
     // Vault经济模块
     public static @Nullable Economy economy = null;
@@ -27,6 +27,7 @@ public class CompressStore extends @NotNull JavaPlugin {
             return;
         }
 
-        Objects.requireNonNull(getServer().getPluginCommand("story")).setExecutor(new StoryCommand());
+        // TODO 出售压缩物品
+        // Objects.requireNonNull(getServer().getPluginCommand("story")).setExecutor(new StoryCommand());
     }
 }

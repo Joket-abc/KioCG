@@ -2,9 +2,9 @@
   <artifact type="jar" build-on-make="true" name="KioCG-CompressStore:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/KioCG_CompressStore_jar</output-path>
     <root id="archive" name="KioCG-CompressStore.jar">
-      <element id="module-output" name="KioCG-CompressStore" />
-      <element id="module-source" name="KioCG-CompressStore" />
-      <element id="file-copy" path="$PROJECT_DIR$/KioCG-CompressStore/plugin.yml" />
+      <element id="module-output" name="KioCG-PantsCoins" />
+      <element id="module-source" name="KioCG-PantsCoins" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-PantsCoins/plugin.yml" />
     </root>
   </artifact>
 </component>
