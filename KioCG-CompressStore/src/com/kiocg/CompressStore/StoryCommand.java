@@ -32,28 +32,43 @@ public class StoryCommand implements @Nullable CommandExecutor {
         try {
             displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemStack.getItemMeta().displayName()));
 
-            if (!displayName.startsWith("§1§2§6") || !displayName.contains("五次压缩")) {
-                player.sendMessage("§a[§b豆渣子§a] §c你的手中没有五次压缩的物品.");
+            if (!displayName.startsWith("§1§2§6")) {
+                player.sendMessage("§a[§b豆渣子§a] §c你的手中没有压缩物品.");
                 return true;
             }
         } catch (final @NotNull NullPointerException ignore) {
-            player.sendMessage("§a[§b豆渣子§a] §c你的手中没有五次压缩的物品.");
+            player.sendMessage("§a[§b豆渣子§a] §c你的手中没有压缩物品.");
             return true;
         }
 
         final String permission = "kiocg.story." + itemStack.getType().toString().toLowerCase();
 
         if (player.hasPermission(permission)) {
-            player.sendMessage("§a[§b豆渣子§a] §6你最多只能出售1个" + displayName + ".");
+            player.sendMessage("§a[§b豆渣子§a] §6你最多只能出售1个压缩" + itemStack.getI18NDisplayName() + ".");
             return true;
         }
 
+        switch (displayName.substring(6, 7)) {
+            case "三":
+                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 0.01);
+                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.01❣");
+                break;
+            case "四":
+                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 0.1);
+                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.1❣");
+                break;
+            case "五":
+                Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 1.0);
+                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得1❣");
+                break;
+            default:
+                player.sendMessage("§a[§b豆渣子§a] §c你只能出售三次-五次压缩的物品.");
+                return true;
+        }
+
         itemStack.setAmount(itemStack.getAmount() - 1);
-
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set " + permission);
-        Objects.requireNonNull(CompressStore.economy).depositPlayer(player, 1.0);
 
-        player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得1❣");
         return true;
     }
 }
