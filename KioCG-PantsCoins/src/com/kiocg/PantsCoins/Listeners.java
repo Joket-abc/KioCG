@@ -1,4 +1,4 @@
-package com.kiocg.CompressStore;
+package com.kiocg.PantsCoins;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

@@ -1,4 +1,4 @@
-package com.kiocg.CompressStore;
+package com.kiocg.PantsCoins;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;

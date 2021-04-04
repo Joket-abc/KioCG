@@ -1,6 +1,6 @@
-package com.kiocg.CompressStore.commands;
+package com.kiocg.PantsCoins.commands;
 
-import com.kiocg.CompressStore.PantsCoins;
+import com.kiocg.PantsCoins.PantsCoins;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
