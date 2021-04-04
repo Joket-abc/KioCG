@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Linkget implements @NotNull CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
-        if (args.length != 2) {
+        if (args.length != 1) {
             sender.sendMessage("§7[§b豆渣子§7] §c请输入 §4/linkget <mcID/qqID> §c来获取连接的账号.");
             return true;
         }

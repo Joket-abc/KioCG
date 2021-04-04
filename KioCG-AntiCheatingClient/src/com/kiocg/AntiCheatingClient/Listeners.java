@@ -47,11 +47,11 @@ public class Listeners implements @NotNull Listener {
     public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
         final String message = PlainComponentSerializer.plain().serialize(e.message());
 
-        if (message.length() < 192) {
+        if (!message.startsWith(".say ")) {
             return;
         }
 
-        // 消息文本长度>=192即取消, 无论是否在进行反作弊验证
+        // 消息为反作弊前缀即取消, 无论是否在进行反作弊验证
         e.setCancelled(true);
 
         final Player player = e.getPlayer();
@@ -66,9 +66,9 @@ public class Listeners implements @NotNull Listener {
 
             player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
         } else if (message.equals(Utils.playerVerifyCode.get(player).substring(5))) {
-            // 临时封禁玩家1小时
+            // 临时封禁玩家24小时
             final Date date = new Date();
-            date.setTime(date.getTime() + 1000L * 60L * 60L);
+            date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
             Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
 
             final String playerName = player.getName();

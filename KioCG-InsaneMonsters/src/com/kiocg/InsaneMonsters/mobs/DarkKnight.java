@@ -23,6 +23,7 @@ public class DarkKnight {
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "DarkKnight");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));
+        livingEntity.setCustomNameVisible(true);
         livingEntity.setRemoveWhenFarAway(true);
 
         Objects.requireNonNull(livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(60.0);

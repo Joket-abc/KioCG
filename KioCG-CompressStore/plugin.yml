@@ -1,0 +1,13 @@
+name: CompressStore
+main: com.kiocg.CompressStore.CompressStore
+version: 2021
+api-version: 1.16
+
+depend: [ "Vault" ]
+
+commands:
+  story:
+    description: "出售手中五次压缩的物品."
+    permission: kiocg.command.story
+    permission-message: "§7[§b豆渣子§7] §c这个指令不可以喔 qaq"
+    usage: "用法: /<command> 出售手中五次压缩的物品."
