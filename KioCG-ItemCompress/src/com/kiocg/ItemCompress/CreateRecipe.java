@@ -16,7 +16,7 @@ public class CreateRecipe {
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();
 
         // 胖次币功能需要
-        compressMaterial.remove(Material.KNOWLEDGE_BOOK);
+        compressMaterial.remove(Material.BARRIER);
 
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
