@@ -27,6 +27,8 @@ public class PantsCoins extends @NotNull JavaPlugin {
             return;
         }
 
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
+
         // TODO 出售压缩物品
         // Objects.requireNonNull(getServer().getPluginCommand("story")).setExecutor(new StoryCommand());
     }
