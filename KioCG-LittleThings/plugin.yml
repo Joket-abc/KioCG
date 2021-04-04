@@ -9,6 +9,9 @@ permissions:
   kiocg.littlethings.at:
     description: "允许@玩家"
     default: true
+  kiocg.littlethings.coloranvil:
+    description: "允许铁砧重命名物品使用颜色代码"
+    default: true
   kiocg.littlethings.fastworkbench:
     description: "允许使用随身工作台"
     default: op

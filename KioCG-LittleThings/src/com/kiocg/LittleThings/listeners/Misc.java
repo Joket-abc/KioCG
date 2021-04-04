@@ -2,7 +2,6 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
@@ -23,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Misc implements @NotNull Listener {
     // 死亡原地复活
@@ -124,9 +124,11 @@ public class Misc implements @NotNull Listener {
         }
     }
 
-    // 铁砧重命名物品去除斜体
+    // 铁砧重命名物品支持颜色代码并默认去除斜体
     @EventHandler(ignoreCancelled = true)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        //TODO 权限判断 kiocg.littlethings.coloranvil
+
         final ItemStack itemStack = e.getResult();
 
         if (itemStack == null) {
@@ -139,8 +141,13 @@ public class Misc implements @NotNull Listener {
             return;
         }
 
+        // 内部保留前缀
+        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText)) {
+            e.setResult(null);
+        }
+
         final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(renameText).decoration(TextDecoration.ITALIC, false));
+        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(renameText.replaceAll("&", "§")).decoration(TextDecoration.ITALIC, false));
 
         itemStack.setItemMeta(itemMeta);
     }

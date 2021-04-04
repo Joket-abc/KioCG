@@ -17,7 +17,7 @@ public class Utils {
 
     // 返回是否为合法玩家名
     public static @NotNull Boolean isLegalPlayerName(final @NotNull String string) {
-        return Pattern.compile("^[0-9a-zA-Z_]{3,16}$").matcher(string).matches();
+        return Pattern.matches("^[0-9a-zA-Z_]{3,16}$", string);
     }
 
     // 返回玩家带前后缀的昵称
