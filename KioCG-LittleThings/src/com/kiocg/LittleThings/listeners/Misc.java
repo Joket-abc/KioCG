@@ -141,5 +141,7 @@ public class Misc implements @NotNull Listener {
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.displayName(Component.text(renameText).decoration(TextDecoration.ITALIC, false));
+
+        itemStack.setItemMeta(itemMeta);
     }
 }

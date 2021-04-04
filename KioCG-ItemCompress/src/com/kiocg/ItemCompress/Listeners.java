@@ -175,13 +175,29 @@ public class Listeners implements @NotNull Listener {
         }
     }
 
+    // 防止改名压缩物品
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
-        try {
-            if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(Objects.requireNonNull(e.getResult()).getItemMeta().displayName())).startsWith("§1§2§6")) {
-                e.setResult(null);
+        final AnvilInventory anvilInventory = e.getInventory();
+
+        final ItemStack item1 = anvilInventory.getFirstItem();
+        if (item1 != null) {
+            try {
+                if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(item1.getItemMeta().displayName())).startsWith("§1§2§6")) {
+                    e.setResult(null);
+                }
+            } catch (final @NotNull NullPointerException ignore) {
             }
-        } catch (final @NotNull NullPointerException ignore) {
+        }
+
+        final ItemStack item2 = anvilInventory.getSecondItem();
+        if (item2 != null) {
+            try {
+                if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(item2.getItemMeta().displayName())).startsWith("§1§2§6")) {
+                    e.setResult(null);
+                }
+            } catch (final @NotNull NullPointerException ignore) {
+            }
         }
     }
 
