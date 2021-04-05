@@ -11,10 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Fix implements @NotNull Listener {
     // 死亡移除消失诅咒的物品
@@ -54,6 +56,20 @@ public class Fix implements @NotNull Listener {
         final Entity remover = e.getRemover();
         if (!(remover instanceof Player)) {
             e.setCancelled(true);
+        }
+    }
+
+    // 保护内部保留的物品名前缀
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        if (e.getResult() == null) {
+            return;
+        }
+
+        final String renameText = e.getInventory().getRenameText();
+
+        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText) || Pattern.matches("^(&#[0-9a-zA-Z]{6}){3}.*$", renameText)) {
+            e.setResult(null);
         }
     }
 }

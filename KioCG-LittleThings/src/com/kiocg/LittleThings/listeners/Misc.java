@@ -10,7 +10,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class Misc implements @NotNull Listener {
     // 死亡原地复活
@@ -118,18 +116,6 @@ public class Misc implements @NotNull Listener {
             });
 
             e.setCancelled(true);
-        }
-    }
-
-    // 铁砧重命名物品时保护内部保留前缀
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
-        if (e.getResult() == null) {
-            return;
-        }
-
-        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", e.getInventory().getRenameText())) {
-            e.setResult(null);
         }
     }
 }
