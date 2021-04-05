@@ -176,8 +176,12 @@ public class Listeners implements @NotNull Listener {
     }
 
     // 防止改名压缩物品
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        if (e.getResult() == null) {
+            return;
+        }
+
         final AnvilInventory anvilInventory = e.getInventory();
 
         try {

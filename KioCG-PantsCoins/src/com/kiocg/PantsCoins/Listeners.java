@@ -9,8 +9,6 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class Listeners implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
@@ -20,13 +18,11 @@ public class Listeners implements @NotNull Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
-        try {
-            if (Objects.requireNonNull(e.getResult()).getType().equals(Material.BARRIER)) {
-                e.setResult(null);
-            }
-        } catch (final @NotNull NullPointerException ignore) {
+        final ItemStack itemStack = e.getResult();
+        if (itemStack != null && itemStack.getType().equals(Material.BARRIER)) {
+            e.setResult(null);
         }
     }
 }

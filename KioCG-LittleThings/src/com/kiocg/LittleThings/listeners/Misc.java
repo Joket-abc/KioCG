@@ -125,7 +125,7 @@ public class Misc implements @NotNull Listener {
     }
 
     // 铁砧重命名物品支持颜色代码并默认去除斜体
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         //TODO 权限判断 kiocg.littlethings.coloranvil
 
@@ -135,20 +135,21 @@ public class Misc implements @NotNull Listener {
             return;
         }
 
-        final String renameText = e.getInventory().getRenameText();
+        final ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (renameText == null) {
+        if (!itemMeta.hasDisplayName()) {
             return;
         }
+
+        final String renameText = e.getInventory().getRenameText();
 
         // 内部保留前缀
         if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText)) {
             e.setResult(null);
+            return;
         }
 
-        final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(renameText.replaceAll("&", "§")).decoration(TextDecoration.ITALIC, false));
-
+        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(Objects.requireNonNull(renameText).replaceAll("&", "§")).decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
     }
 }
