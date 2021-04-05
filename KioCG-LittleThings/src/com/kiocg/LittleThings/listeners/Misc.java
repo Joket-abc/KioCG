@@ -2,7 +2,6 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -124,7 +123,7 @@ public class Misc implements @NotNull Listener {
         }
     }
 
-    // 铁砧重命名物品支持颜色代码并默认去除斜体
+    // 铁砧重命名物品支持颜色代码
     @EventHandler
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         //TODO 权限判断 kiocg.littlethings.coloranvil
@@ -149,7 +148,7 @@ public class Misc implements @NotNull Listener {
             return;
         }
 
-        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(Objects.requireNonNull(renameText).replaceAll("&", "§")).decoration(TextDecoration.ITALIC, false));
+        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(Objects.requireNonNull(renameText).replaceAll("&", "§")));
         itemStack.setItemMeta(itemMeta);
     }
 }

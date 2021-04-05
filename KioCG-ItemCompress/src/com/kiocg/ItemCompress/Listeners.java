@@ -185,32 +185,11 @@ public class Listeners implements @NotNull Listener {
         final AnvilInventory anvilInventory = e.getInventory();
 
         try {
-            if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")) {
+            if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")
+                || PlainComponentSerializer.plain().serialize(Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getFirstItem()).getItemMeta().displayName())).startsWith("§1§2§6")) {
                 e.setResult(null);
-                return;
             }
         } catch (final @NotNull NullPointerException ignore) {
-        }
-
-        final ItemStack item1 = anvilInventory.getFirstItem();
-        if (item1 != null) {
-            try {
-                if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(item1.getItemMeta().displayName())).startsWith("§1§2§6")) {
-                    e.setResult(null);
-                    return;
-                }
-            } catch (final @NotNull NullPointerException ignore) {
-            }
-        }
-
-        final ItemStack item2 = anvilInventory.getSecondItem();
-        if (item2 != null) {
-            try {
-                if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(item2.getItemMeta().displayName())).startsWith("§1§2§6")) {
-                    e.setResult(null);
-                }
-            } catch (final @NotNull NullPointerException ignore) {
-            }
         }
     }
 
