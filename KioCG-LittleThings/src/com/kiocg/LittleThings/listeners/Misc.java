@@ -12,8 +12,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -123,32 +121,15 @@ public class Misc implements @NotNull Listener {
         }
     }
 
-    // 铁砧重命名物品支持颜色代码
-    @EventHandler
+    // 铁砧重命名物品时保护内部保留前缀
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
-        //TODO 权限判断 kiocg.littlethings.coloranvil
-
-        final ItemStack itemStack = e.getResult();
-
-        if (itemStack == null) {
+        if (e.getResult() == null) {
             return;
         }
 
-        final ItemMeta itemMeta = itemStack.getItemMeta();
-
-        if (!itemMeta.hasDisplayName()) {
-            return;
-        }
-
-        final String renameText = e.getInventory().getRenameText();
-
-        // 内部保留前缀
-        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText)) {
+        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", e.getInventory().getRenameText())) {
             e.setResult(null);
-            return;
         }
-
-        itemMeta.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize(Objects.requireNonNull(renameText).replaceAll("&", "§")));
-        itemStack.setItemMeta(itemMeta);
     }
 }
