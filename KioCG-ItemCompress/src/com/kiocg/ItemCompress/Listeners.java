@@ -180,11 +180,20 @@ public class Listeners implements @NotNull Listener {
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         final AnvilInventory anvilInventory = e.getInventory();
 
+        try {
+            if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")) {
+                e.setResult(null);
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+
         final ItemStack item1 = anvilInventory.getFirstItem();
         if (item1 != null) {
             try {
                 if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(item1.getItemMeta().displayName())).startsWith("§1§2§6")) {
                     e.setResult(null);
+                    return;
                 }
             } catch (final @NotNull NullPointerException ignore) {
             }
