@@ -49,22 +49,27 @@ public class StoryCommand implements @Nullable CommandExecutor {
             return true;
         }
 
-        switch (displayName.substring(6, 7)) {
-            case "三":
-                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.01);
-                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.01❣");
-                break;
-            case "四":
-                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.1);
-                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.1❣");
-                break;
-            case "五":
-                Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 1.0);
-                player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得1❣");
-                break;
-            default:
-                player.sendMessage("§a[§b豆渣子§a] §c你只能出售三次-五次压缩的物品.");
-                return true;
+        try {
+            switch (displayName.substring(6, 7)) {
+                case "三":
+                    Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.01);
+                    player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.01❣");
+                    break;
+                case "四":
+                    Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 0.1);
+                    player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得0.1❣");
+                    break;
+                case "五":
+                    Objects.requireNonNull(PantsCoins.economy).depositPlayer(player, 1.0);
+                    player.sendMessage("§a[§b豆渣子§a] §6成功出售1个" + displayName + ", 获得1❣");
+                    break;
+                default:
+                    player.sendMessage("§a[§b豆渣子§a] §c你只能出售三次-五次压缩的物品.");
+                    return true;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+            player.sendMessage("§a[§b豆渣子§a] §4发生内部错误, 请联系管理员.");
+            return true;
         }
 
         itemStack.setAmount(itemStack.getAmount() - 1);

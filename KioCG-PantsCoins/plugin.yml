@@ -3,7 +3,7 @@ main: com.kiocg.PantsCoins.PantsCoins
 version: 2021
 api-version: 1.16
 
-depend: [ "Vault" ]
+softdepend: [ "Vault" ]
 
 commands:
   story:

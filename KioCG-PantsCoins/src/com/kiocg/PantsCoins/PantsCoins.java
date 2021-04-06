@@ -1,5 +1,6 @@
 package com.kiocg.PantsCoins;
 
+import com.kiocg.PantsCoins.Utils.BlockManager;
 import com.kiocg.PantsCoins.commands.CustomModelDataCommand;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,7 +14,7 @@ public class PantsCoins extends @NotNull JavaPlugin {
     public static PantsCoins instance;
 
     // Vault经济模块
-    public static @Nullable Economy economy = null;
+    public static @Nullable Economy economy;
 
     @Override
     public void onEnable() {
@@ -23,10 +24,11 @@ public class PantsCoins extends @NotNull JavaPlugin {
         try {
             economy = Objects.requireNonNull(getServer().getServicesManager().getRegistration(Economy.class)).getProvider();
         } catch (final @NotNull NullPointerException ignore) {
+            economy = null;
             getLogger().warning("无法注册Vault经济模块!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
         }
+
+        new BlockManager().setup();
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 

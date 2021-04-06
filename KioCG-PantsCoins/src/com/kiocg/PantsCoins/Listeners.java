@@ -1,14 +1,20 @@
 package com.kiocg.PantsCoins;
 
+import com.kiocg.PantsCoins.Utils.BlockManager;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class Listeners implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -18,15 +24,38 @@ public class Listeners implements @NotNull Listener {
         if (itemStack.getType().equals(Material.BARRIER)) {
             final ItemMeta itemMeta = itemStack.getItemMeta();
 
-            if (itemMeta.hasDisplayName()) {
+            // 自定义方块
+            if (itemMeta.hasCustomModelData()) {
                 final int customModelData = itemMeta.getCustomModelData();
-                if (1001 <= customModelData && customModelData <= 1160) {
+                if (1001 <= customModelData && customModelData != 1054 && customModelData <= 1160) {
+                    BlockManager.setCustomBlock(e.getBlockPlaced(), customModelData);
                     return;
                 }
+            }
 
+            // 自定义物品
+            if (itemMeta.hasDisplayName()) {
                 e.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onBlockBreak(final @NotNull BlockBreakEvent e) {
+        final Block block = e.getBlock();
+
+        final Material material = block.getType();
+        if (!material.equals(Material.BROWN_MUSHROOM_BLOCK) && !material.equals(Material.RED_MUSHROOM_BLOCK) && !material.equals(Material.MUSHROOM_STEM)) {
+            return;
+        }
+
+        try {
+            block.getWorld().dropItemNaturally(block.getLocation(), Objects.requireNonNull(BlockManager.getCustomBlockAsItemStack((MultipleFacing) block.getBlockData())));
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
+        }
+
+        e.setDropItems(false);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
