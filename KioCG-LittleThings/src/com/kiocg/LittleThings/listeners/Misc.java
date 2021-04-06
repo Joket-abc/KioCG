@@ -2,15 +2,20 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -116,6 +121,33 @@ public class Misc implements @NotNull Listener {
             });
 
             e.setCancelled(true);
+        }
+    }
+
+    // 生物掉落矿物特有标签
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+        if (!(e.getEntity() instanceof Mob)) {
+            return;
+        }
+
+        for (final ItemStack itemStack : e.getDrops()) {
+            switch (itemStack.getType()) {
+                case COAL:
+                case IRON_INGOT:
+                case GOLD_INGOT:
+                case GOLD_NUGGET:
+                case REDSTONE:
+                case EMERALD:
+                    List<Component> lore = itemStack.lore();
+                    if (lore == null) {
+                        lore = new ArrayList<>();
+                    }
+
+                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+
+                    itemStack.lore(lore);
+            }
         }
     }
 }
