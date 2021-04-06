@@ -7,14 +7,25 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class Listeners implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final ItemStack itemStack = e.getItemInHand();
-        if (itemStack.getType().equals(Material.BARRIER) && itemStack.getItemMeta().hasDisplayName()) {
-            e.setCancelled(true);
+
+        if (itemStack.getType().equals(Material.BARRIER)) {
+            final ItemMeta itemMeta = itemStack.getItemMeta();
+
+            if (itemMeta.hasDisplayName()) {
+                final int customModelData = itemMeta.getCustomModelData();
+                if (1001 <= customModelData && customModelData <= 1160) {
+                    return;
+                }
+
+                e.setCancelled(true);
+            }
         }
     }
 
