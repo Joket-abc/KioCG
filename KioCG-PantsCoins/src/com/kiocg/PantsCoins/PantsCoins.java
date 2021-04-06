@@ -1,5 +1,6 @@
 package com.kiocg.PantsCoins;
 
+import com.kiocg.PantsCoins.commands.CustomModelDataCommand;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -31,5 +32,6 @@ public class PantsCoins extends @NotNull JavaPlugin {
 
         // TODO 出售压缩物品
         // Objects.requireNonNull(getServer().getPluginCommand("story")).setExecutor(new StoryCommand());
+        Objects.requireNonNull(getServer().getPluginCommand("custommodeldata")).setExecutor(new CustomModelDataCommand());
     }
 }
