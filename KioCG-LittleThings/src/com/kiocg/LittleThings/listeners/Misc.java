@@ -2,8 +2,6 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.entity.Mob;
@@ -16,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -139,14 +138,26 @@ public class Misc implements @NotNull Listener {
                 case GOLD_NUGGET:
                 case REDSTONE:
                 case EMERALD:
-                    List<Component> lore = itemStack.lore();
+                    // TODO 服务端版本升级后启用
+                    //                    List<Component> lore = itemStack.lore();
+                    //                    if (lore == null) {
+                    //                        lore = new ArrayList<>();
+                    //                    }
+                    //
+                    //                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+                    //
+                    //                    itemStack.lore(lore);
+                    final ItemMeta itemMeta = itemStack.getItemMeta();
+
+                    List<String> lore = itemMeta.getLore();
                     if (lore == null) {
                         lore = new ArrayList<>();
                     }
 
-                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+                    lore.add("§7(生物掉落)");
 
-                    itemStack.lore(lore);
+                    itemMeta.setLore(lore);
+                    itemStack.setItemMeta(itemMeta);
             }
         }
     }
