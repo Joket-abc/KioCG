@@ -52,6 +52,7 @@ public class Listeners implements @NotNull Listener {
         try {
             block.getWorld().dropItemNaturally(block.getLocation(), Objects.requireNonNull(BlockManager.getCustomBlockAsItemStack((MultipleFacing) block.getBlockData())));
         } catch (final @NotNull NullPointerException ignore) {
+            // 是原版蘑菇方块
             return;
         }
 

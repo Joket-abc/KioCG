@@ -35,8 +35,10 @@ public class BlockManager {
     }
 
     public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull MultipleFacing multipleFacing) {
+        final Boolean[] mushroomState = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
+
         for (final Map.Entry<Boolean[], Integer> entry : mushroomStateMap.entrySet()) {
-            if (Arrays.equals(entry.getKey(), new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)})) {
+            if (Arrays.equals(entry.getKey(), mushroomState)) {
                 final ItemStack itemStack = new ItemStack(Material.BARRIER);
                 final ItemMeta itemMeta = itemStack.getItemMeta();
 
