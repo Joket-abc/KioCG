@@ -49,8 +49,14 @@ public class BotCommand implements @NotNull Listener {
             final String playerName = cmd.substring(14);
 
             if (Utils.isLegalPlayerName(playerName)) {
+                if (!Utils.kickWhitelistPlayer.contains(playerName)) {
+                    e.getGroup().sendMessage("玩家 " + playerName + " 从未出现过");
+                    return;
+                }
+
                 Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
 
+                Utils.kickWhitelistPlayer.remove(playerName);
                 e.getGroup().sendMessage("已将玩家 " + playerName + " 添加至白名单");
             } else {
                 e.getGroup().sendMessage("非法的玩家名：" + playerName);
@@ -60,6 +66,11 @@ public class BotCommand implements @NotNull Listener {
             final String playerName = cmd.substring(17);
 
             if (Utils.isLegalPlayerName(playerName)) {
+                if (!Bukkit.getWhitelistedPlayers().contains(Bukkit.getOfflinePlayerIfCached(playerName))) {
+                    e.getGroup().sendMessage("玩家 " + playerName + " 不在白名单中");
+                    return;
+                }
+
                 Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
 
                 e.getGroup().sendMessage("已将玩家 " + playerName + " 移除出白名单");

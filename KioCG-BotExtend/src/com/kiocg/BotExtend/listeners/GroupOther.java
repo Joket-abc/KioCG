@@ -37,7 +37,7 @@ public class GroupOther implements @NotNull Listener {
                 if (Mirai.getInstance().queryProfile(e.getBot(), userID).getQLevel() < 16) {
                     if (!Utils.auditQQ.contains(userID)) {
                         if (Utils.isAnswerTrue(answer)) {
-                            e.reject(false, "危险账号，请重新加群并等待管理员审核(可以在回答里留言)");
+                            e.reject(false, "可疑账号，请重新加群并等待管理员审核(可以在回答里留言)");
                             Utils.auditQQ.add(userID);
                         } else {
                             e.reject(false, "回答错误，请检查");
@@ -100,6 +100,7 @@ public class GroupOther implements @NotNull Listener {
         Objects.requireNonNull(e.getBot().getGroup(569696336L)).sendMessage(e.getMessage());
     }
 
+    // 拦截所有XML消息
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPreventXML(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();

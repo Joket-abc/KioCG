@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockManager {
-    private static final Map<Boolean[], Integer> mushroomStateMap = new HashMap<>();
+    // 存储蘑菇方块的面属性数组、物品模型属性
+    private static final Map<Boolean[], Integer> mushroomFaceMap = new HashMap<>();
 
     public void setup() {
         final List<Integer> northIds = Arrays.asList(4, 5, 6, 7, 8, 9, 16, 17, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35, 36, 37, 38, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 63, 64, 65, 66, 67, 68, 77, 78, 79, 80, 81, 82, 83, 84, 93, 94, 95, 96, 97, 98, 99, 107, 108, 109, 110, 111, 112, 113, 114, 123, 124, 125, 126, 127, 128, 129, 138, 139, 140, 141, 142, 143, 144, 145, 154, 155, 156, 157, 158, 159, 160);
@@ -30,19 +31,20 @@ public class BlockManager {
                 continue;
             }
 
-            mushroomStateMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)}, n);
+            mushroomFaceMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)},
+                                n + 1000);
         }
     }
 
     public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull MultipleFacing multipleFacing) {
-        final Boolean[] mushroomState = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
+        final Boolean[] mushroomFace = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
 
-        for (final Map.Entry<Boolean[], Integer> entry : mushroomStateMap.entrySet()) {
-            if (Arrays.equals(entry.getKey(), mushroomState)) {
+        for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
+            if (Arrays.equals(entry.getKey(), mushroomFace)) {
                 final ItemStack itemStack = new ItemStack(Material.BARRIER);
                 final ItemMeta itemMeta = itemStack.getItemMeta();
 
-                itemMeta.setCustomModelData(1000 + entry.getValue());
+                itemMeta.setCustomModelData(entry.getValue());
                 itemStack.setItemMeta(itemMeta);
 
                 return itemStack;
@@ -52,22 +54,20 @@ public class BlockManager {
         return null;
     }
 
-    public static void setCustomBlock(final @NotNull Block block, int customModelData) {
-        customModelData -= 1000;
+    public static void setCustomBlock(final @NotNull Block block, final int customModelData) {
+        block.setType((customModelData <= 1053) ? Material.BROWN_MUSHROOM_BLOCK : ((customModelData >= 1100) ? Material.MUSHROOM_STEM : Material.RED_MUSHROOM_BLOCK));
 
-        block.setType((customModelData <= 53) ? Material.BROWN_MUSHROOM_BLOCK : ((customModelData >= 100) ? Material.MUSHROOM_STEM : Material.RED_MUSHROOM_BLOCK));
-
-        for (final Map.Entry<Boolean[], Integer> entry : mushroomStateMap.entrySet()) {
+        for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
             if (entry.getValue().equals(customModelData)) {
-                final Boolean[] mushroomState = entry.getKey();
+                final Boolean[] mushroomFace = entry.getKey();
                 final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
 
-                multipleFacing.setFace(BlockFace.NORTH, mushroomState[0]);
-                multipleFacing.setFace(BlockFace.EAST, mushroomState[1]);
-                multipleFacing.setFace(BlockFace.SOUTH, mushroomState[2]);
-                multipleFacing.setFace(BlockFace.WEST, mushroomState[3]);
-                multipleFacing.setFace(BlockFace.UP, mushroomState[4]);
-                multipleFacing.setFace(BlockFace.DOWN, mushroomState[5]);
+                multipleFacing.setFace(BlockFace.NORTH, mushroomFace[0]);
+                multipleFacing.setFace(BlockFace.EAST, mushroomFace[1]);
+                multipleFacing.setFace(BlockFace.SOUTH, mushroomFace[2]);
+                multipleFacing.setFace(BlockFace.WEST, mushroomFace[3]);
+                multipleFacing.setFace(BlockFace.UP, mushroomFace[4]);
+                multipleFacing.setFace(BlockFace.DOWN, mushroomFace[5]);
 
                 block.setBlockData(multipleFacing);
             }

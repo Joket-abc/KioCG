@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Utils {
+    // 存储被白名单阻挡的玩家列表
+    public static final List<String> kickWhitelistPlayer = new ArrayList<>();
     // 存储需要管理员审核的低等级QQ号
     public static final List<Long> auditQQ = new ArrayList<>();
 

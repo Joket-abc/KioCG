@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Utils {
+    // 返回玩家当前的总经验值
     @SuppressWarnings("ImplicitNumericConversion")
     public static int getCurrentTotalExperience(final @NotNull Player player) {
         final int currentLevel = player.getLevel();
@@ -12,6 +13,7 @@ public class Utils {
         return getTotalExperienceReachedLevel(currentLevel) + currentExperienceAtLevel;
     }
 
+    // 获取目标等级包含的经验值
     private static int getCurrentExperienceAtLevel(final int level) {
         if (level <= 15) {
             return (level << 1) + 7;
@@ -22,6 +24,7 @@ public class Utils {
         return (level * 9) - 158;
     }
 
+    // 获取到达目标等级需要的经验值
     @SuppressWarnings("ImplicitNumericConversion")
     private static int getTotalExperienceReachedLevel(final int level) {
         if (level <= 16) {

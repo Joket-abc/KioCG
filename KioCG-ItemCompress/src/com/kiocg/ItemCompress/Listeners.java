@@ -8,6 +8,7 @@ import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
@@ -188,6 +189,17 @@ public class Listeners implements @NotNull Listener {
             if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")
                 || PlainComponentSerializer.plain().serialize(Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getFirstItem()).getItemMeta().displayName())).startsWith("§1§2§6")) {
                 e.setResult(null);
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+    }
+
+    // 防止放置压缩物品
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockPlaceEvent(final @NotNull BlockPlaceEvent e) {
+        try {
+            if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(e.getItemInHand().getItemMeta().displayName())).startsWith("§1§2§6")) {
+                e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {
         }

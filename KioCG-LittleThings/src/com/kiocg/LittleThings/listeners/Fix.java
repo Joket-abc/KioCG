@@ -59,7 +59,7 @@ public class Fix implements @NotNull Listener {
         }
     }
 
-    // 保护内部保留的物品名前缀
+    // 防止重命名成内部保留的物品前缀名
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         if (e.getResult() == null) {

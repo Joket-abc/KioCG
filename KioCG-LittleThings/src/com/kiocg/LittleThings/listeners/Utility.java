@@ -1,54 +1,25 @@
 package com.kiocg.LittleThings.listeners;
 
-import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
-import com.destroystokyo.paper.profile.PlayerProfile;
-import com.kiocg.LittleThings.LittleThings;
-import com.kiocg.LittleThings.Utils;
-import com.kiocg.qqBot.bot.KioCGBot;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import org.bukkit.entity.Mob;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Utility implements @NotNull Listener {
-    // 广播被白名单拦截的玩家
-    @EventHandler
-    public void onProfileWhitelistVerify(final @NotNull ProfileWhitelistVerifyEvent e) {
-        if (e.isWhitelisted() || !e.isWhitelistEnabled()) {
-            return;
-        }
-
-        final PlayerProfile player = e.getPlayerProfile();
-        final UUID uuid = player.getId();
-
-        if (Utils.kickWhitelistPlayer.contains(uuid)) {
-            return;
-        }
-        Utils.kickWhitelistPlayer.add(uuid);
-
-        final String playerName = player.getName();
-
-        // 提醒全体玩家
-        for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-            toPlayer.sendMessage("§7[§b豆渣子§7] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
-        }
-        // 控制台记录
-        LittleThings.instance.getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");
-
-        // 提醒全体群成员
-        try {
-            KioCGBot.sendGroupMsgAsync(569696336L, "不明生物 " + playerName + " 被白名单结界阻挡了.");
-        } catch (final @NotNull Exception ignored) {
-        }
-    }
-
     // 无法放置
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
@@ -57,6 +28,59 @@ public class Utility implements @NotNull Listener {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {
+        }
+    }
+
+    // 生物掉落矿物特有标签
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+        if (!(e.getEntity() instanceof Mob)) {
+            return;
+        }
+
+        for (final ItemStack itemStack : e.getDrops()) {
+            switch (itemStack.getType()) {
+                case COAL:
+                case IRON_INGOT:
+                case GOLD_INGOT:
+                case GOLD_NUGGET:
+                case REDSTONE:
+                case EMERALD:
+                    List<Component> lore = itemStack.lore();
+                    if (lore == null) {
+                        lore = new ArrayList<>();
+                    }
+
+                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+
+                    itemStack.lore(lore);
+            }
+        }
+    }
+
+    // 生物掉落矿物合成标签
+    @EventHandler
+    public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
+        final CraftingInventory craftingInventory = e.getInventory();
+        final ItemStack result = craftingInventory.getResult();
+
+        if (result == null) {
+            return;
+        }
+
+        for (final ItemStack itemStack : craftingInventory.getMatrix()) {
+            try {
+                for (final Component lore : Objects.requireNonNull(itemStack.lore())) {
+                    if ("(生物掉落)".equals(PlainComponentSerializer.plain().serialize(lore))) {
+                        result.lore(new ArrayList<>() {{
+                            add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+                        }});
+
+                        return;
+                    }
+                }
+            } catch (final @NotNull NullPointerException ignore) {
+            }
         }
     }
 }
