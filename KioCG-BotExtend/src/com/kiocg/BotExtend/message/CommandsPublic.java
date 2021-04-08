@@ -68,9 +68,8 @@ public class CommandsPublic {
                 } catch (final @NotNull UnknownHostException ignore) {
                 }
 
-                //TODO 新机器备用地址的更改
                 contact.sendMessage("正版限定，IP地址：play.kiocg.com"
-                                    + "\n备用地址：" + spareAddress + ":unknown");
+                                    + "\n备用地址：" + spareAddress + ":20302");
                 break;
             case ("client"):
             case ("客户端"):

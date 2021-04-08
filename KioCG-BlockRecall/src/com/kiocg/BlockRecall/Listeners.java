@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,14 +40,22 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
+        final Player player = e.getPlayer();
+
+        // 台阶问题修复
+        final BlockData blockData = blockState.getBlockData();
+        if (blockData instanceof Slab && ((Slab) blockData).getType().equals(Slab.Type.DOUBLE)) {
+            Utils.lastBlockState.remove(player);
+            Utils.lastBlockItemStack.remove(player);
+            return;
+        }
+
         final ItemStack itemStackClone = e.getItemInHand().clone();
 
         // 防止放下的方块类型和手中物品类型不一致 (eg.打火石点火)
         if (!itemStackClone.getType().equals(blockState.getType())) {
             return;
         }
-
-        final Player player = e.getPlayer();
 
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
             return;

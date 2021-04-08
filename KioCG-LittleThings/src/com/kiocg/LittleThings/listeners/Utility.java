@@ -2,6 +2,7 @@ package com.kiocg.LittleThings.listeners;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.entity.Mob;
@@ -51,7 +52,7 @@ public class Utility implements @NotNull Listener {
                         lore = new ArrayList<>();
                     }
 
-                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
 
                     itemStack.lore(lore);
             }
@@ -73,7 +74,7 @@ public class Utility implements @NotNull Listener {
                 for (final Component lore : Objects.requireNonNull(itemStack.lore())) {
                     if ("(生物掉落)".equals(PlainComponentSerializer.plain().serialize(lore))) {
                         result.lore(new ArrayList<>() {{
-                            add(Component.text("(生物掉落)", NamedTextColor.GRAY));
+                            add(Component.text("(生物掉落)", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
                         }});
 
                         return;
