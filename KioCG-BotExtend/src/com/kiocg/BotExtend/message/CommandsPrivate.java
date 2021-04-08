@@ -22,6 +22,7 @@ public class CommandsPrivate {
                 case ("list"):
                 case ("在线"):
                 case ("plugin"):
+                case ("plugins"):
                 case ("插件"):
                 case ("tps"):
                 case ("状态"):
@@ -59,6 +60,7 @@ public class CommandsPrivate {
                 }
                 break;
             case ("plugin"):
+            case ("plugins"):
             case ("插件"):
                 contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
                 break;
