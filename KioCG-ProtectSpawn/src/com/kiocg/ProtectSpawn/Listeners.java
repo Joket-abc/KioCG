@@ -30,7 +30,7 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
-        player.sendMessage("§7[§9豆渣子§7] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
         e.setCancelled(true);
     }
 
@@ -47,7 +47,7 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
-        player.sendMessage("§7[§9豆渣子§7] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
         e.setCancelled(true);
     }
 

@@ -74,7 +74,7 @@ public class IMCommand implements @Nullable CommandExecutor {
                     player.sendMessage("§a[§b豆渣子§a] §6已生成方块僵尸.");
                     break;
                 default:
-                    player.sendMessage("§7[§b豆渣子§7] §c无效的疯狂怪物种类.");
+                    player.sendMessage("§a[§b豆渣子§a] §c无效的疯狂怪物种类.");
             }
             return true;
         }

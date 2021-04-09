@@ -29,12 +29,12 @@ public class Link implements @NotNull CommandExecutor {
         final Long waitLinkQQ = PlayerLinkUtils.getWaitLinkQQ(uuid);
 
         if (waitLinkQQ == null) {
-            player.sendMessage("§7[§b豆渣子§7] §6请在群内输入 §e.link " + player.getName() + " §6来连接你的账号.");
+            player.sendMessage("§a[§b豆渣子§a] §6请在群内输入 §e.link " + player.getName() + " §6来连接你的账号.");
             return true;
         }
 
         if (args.length != 1) {
-            player.sendMessage("§7[§b豆渣子§7] §c请输入 §4/link <QQ号> §c来连接此QQ号.");
+            player.sendMessage("§a[§b豆渣子§a] §c请输入 §4/link <QQ号> §c来连接此QQ号.");
             return true;
         }
 

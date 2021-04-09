@@ -50,7 +50,7 @@ public class AutoRestart {
             if (autoRestartMessage.containsKey(date)) {
                 for (final Player player : Bukkit.getOnlinePlayers()) {
                     player.sendTitle("§c世界正在破裂...", "§6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!", 10, 70, 20);
-                    player.sendMessage("§7[§9豆渣子§7] §c世界正在破裂... §6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!");
+                    player.sendMessage("§a[§b豆渣子§a] §c世界正在破裂... §6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!");
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1.0F, 1.0F);
                 }
 

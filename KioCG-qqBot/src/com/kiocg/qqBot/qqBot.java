@@ -29,7 +29,7 @@ public class qqBot extends @NotNull JavaPlugin {
 
         new KioCGBot().restart();
 
-        sender.sendMessage("§7[§b豆渣子§7] §6成功重载插件.");
+        sender.sendMessage("§a[§b豆渣子§a] §6成功重载插件.");
         return true;
     }
 }

@@ -25,7 +25,7 @@ public class FlyCommand implements @Nullable CommandExecutor {
         if (Utils.inFlightList(player)) {
             Utils.removeFlightList(player);
 
-            player.sendMessage("§a[§b豆渣子§a] §c➷ 关掉关掉一定要关掉 ➷");
+            player.sendMessage("§a[§b豆渣子§a] §6➷ 关掉关掉一定要关掉 ➷");
             return true;
         }
 
@@ -65,7 +65,7 @@ public class FlyCommand implements @Nullable CommandExecutor {
 
         player.setAllowFlight(true);
 
-        player.sendMessage("§a[§b豆渣子§a] §a➹ 呼呼, 可以飞了呢 ➹");
+        player.sendMessage("§a[§b豆渣子§a] §2➹ 呼呼, 可以飞了呢 ➹");
         return true;
     }
 }

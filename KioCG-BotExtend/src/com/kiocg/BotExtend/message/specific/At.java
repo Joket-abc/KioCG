@@ -51,7 +51,7 @@ public class At {
             return;
         }
 
-        player.sendMessage("§7[§b豆渣子§7] §6群成员 §e" + PlayerLinkUtils.getPlayerLinkAsName(user.getId()) + " §6提醒你" + messageExpand.trim());
+        player.sendMessage("§a[§b豆渣子§a] §6群成员 §e" + PlayerLinkUtils.getPlayerLinkAsName(user.getId()) + " §6提醒你" + messageExpand.trim());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
 
         contact.sendMessage("已提醒玩家 " + player.getName());

@@ -75,7 +75,7 @@ public class Listeners implements @NotNull Listener {
 
             // 提醒全体玩家
             for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-                toPlayer.sendMessage("§7[§b豆渣子§7] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
+                toPlayer.sendMessage("§a[§b豆渣子§a] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
             }
             // 控制台记录
             AntiCheatingClient.instance.getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
@@ -86,7 +86,7 @@ public class Listeners implements @NotNull Listener {
             } catch (final @NotNull Exception ignored) {
             }
         } else {
-            player.sendMessage("§7[§b豆渣子§7] §6不要修改文本内容呢.");
+            player.sendMessage("§a[§b豆渣子§a] §6不要修改文本内容呢.");
         }
     }
 

@@ -26,7 +26,7 @@ public class FoodFlight extends @NotNull JavaPlugin {
             player.setAllowFlight(false);
             player.setFlying(false);
 
-            player.sendMessage("§7[§b豆渣子§7] §c插件重载迫使你关闭了飞行模式.");
+            player.sendMessage("§a[§b豆渣子§a] §c插件重载迫使你关闭了飞行模式.");
         }
     }
 }

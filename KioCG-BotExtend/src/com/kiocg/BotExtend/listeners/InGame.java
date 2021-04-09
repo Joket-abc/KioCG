@@ -31,7 +31,7 @@ public class InGame implements @NotNull Listener {
 
         // 提醒全体玩家
         for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-            toPlayer.sendMessage("§7[§b豆渣子§7] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
+            toPlayer.sendMessage("§a[§b豆渣子§a] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
         }
         // 控制台记录
         BotExtend.instance.getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");
@@ -48,7 +48,7 @@ public class InGame implements @NotNull Listener {
         final Player player = e.getPlayer();
         if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance,
-                                                             () -> player.sendMessage("§7[§b豆渣子§7] §6尚未连接QQ号, 请输入 /link 来查看帮助."), 5L);
+                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6尚未连接QQ号, 请输入 /link 来查看帮助."), 5L);
         }
     }
 }
