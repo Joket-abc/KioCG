@@ -4,13 +4,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.TileState;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,22 +62,30 @@ public class Listeners implements @NotNull Listener {
             final Block block = e.getClickedBlock();
 
             final Location loc = Objects.requireNonNull(block).getLocation();
+            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
 
-            if (Objects.requireNonNull(block).getType().equals(Material.FARMLAND)
-                && "KioCG_world".equals(loc.getWorld().getName()) && loc.distance(Utils.locSpawn) <= 64.0) {
-
+            if (Objects.requireNonNull(block).getType().equals(Material.FARMLAND)) {
                 e.setCancelled(true);
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             final Block block = e.getClickedBlock();
+
             final Location loc = Objects.requireNonNull(block).getLocation();
+            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
+
+            // 防止打开容器
+            if (block instanceof TileState) {
+                e.setCancelled(true);
+                return;
+            }
 
             final Player player = e.getPlayer();
 
-            if (Objects.requireNonNull(block).getType().equals(Material.CAKE)
-                && "KioCG_world".equals(loc.getWorld().getName()) && loc.distance(Utils.locSpawn) <= 64.0
-                && player.getFoodLevel() != 20) {
-
+            if (Objects.requireNonNull(block).getType().equals(Material.CAKE) && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
                     for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
                         toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]");
@@ -85,5 +98,29 @@ public class Listeners implements @NotNull Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelEntityDamage(final @NotNull EntityDamageByEntityEvent e) {
+        final Entity damager = e.getDamager();
+        if (!(damager instanceof Player)) {
+            return;
+        }
+
+        final Entity entity = e.getEntity();
+        if (!(entity instanceof Animals) && !(entity instanceof Villager)) {
+            return;
+        }
+
+        if (damager.isOp()) {
+            return;
+        }
+
+        final Location loc = entity.getLocation();
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            return;
+        }
+
+        e.setCancelled(true);
     }
 }
