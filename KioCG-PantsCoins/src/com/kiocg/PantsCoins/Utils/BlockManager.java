@@ -15,8 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockManager {
-    // 存储蘑菇方块的面属性数组、物品模型属性
-    private static final Map<Boolean[], Integer> mushroomFaceMap = new HashMap<>();
+    // 存储 棕色蘑菇方块 的面属性数组、物品模型属性
+    private static final Map<Boolean[], Integer> brownMushroomFaceMap = new HashMap<>();
+    // 存储 红色蘑菇方块 的面属性数组、物品模型属性
+    private static final Map<Boolean[], Integer> redMushroomFaceMap = new HashMap<>();
+    // 存储 蘑菇柄      的面属性数组、物品模型属性
+    private static final Map<Boolean[], Integer> mushroomStemFaceMap = new HashMap<>();
 
     public void setup() {
         final List<Integer> northIds = Arrays.asList(4, 5, 6, 7, 8, 9, 16, 17, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35, 36, 37, 38, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 63, 64, 65, 66, 67, 68, 77, 78, 79, 80, 81, 82, 83, 84, 93, 94, 95, 96, 97, 98, 99, 107, 108, 109, 110, 111, 112, 113, 114, 123, 124, 125, 126, 127, 128, 129, 138, 139, 140, 141, 142, 143, 144, 145, 154, 155, 156, 157, 158, 159, 160);
@@ -26,36 +30,33 @@ public class BlockManager {
         final List<Integer> upIds = Arrays.asList(8, 9, 12, 15, 18, 21, 22, 25, 26, 29, 30, 33, 34, 37, 38, 41, 42, 45, 46, 49, 50, 53, 57, 58, 60, 62, 64, 67, 68, 71, 72, 75, 76, 79, 80, 83, 84, 87, 88, 91, 92, 95, 96, 99, 101, 102, 105, 106, 109, 110, 113, 114, 117, 118, 121, 122, 125, 126, 128, 129, 132, 133, 136, 137, 140, 141, 144, 145, 148, 149, 152, 153, 156, 157, 160);
         final List<Integer> downIds = Arrays.asList(23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160);
 
-        for (int n = 1; n <= 160; ++n) {
-            if (n == 54) {
-                continue;
-            }
-
-            mushroomFaceMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)},
-                                n + 1000);
+        for (int n = 1; n <= 53; ++n) {
+            brownMushroomFaceMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)},
+                                     n + 1000);
         }
-    }
-
-    public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull MultipleFacing multipleFacing) {
-        final Boolean[] mushroomFace = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
-
-        for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
-            if (Arrays.equals(entry.getKey(), mushroomFace)) {
-                final ItemStack itemStack = new ItemStack(Material.BARRIER);
-                final ItemMeta itemMeta = itemStack.getItemMeta();
-
-                itemMeta.setCustomModelData(entry.getValue());
-                itemStack.setItemMeta(itemMeta);
-
-                return itemStack;
-            }
+        for (int n = 55; n <= 99; ++n) {
+            redMushroomFaceMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)},
+                                   n + 1000);
         }
-
-        return null;
+        for (int n = 100; n <= 160; ++n) {
+            mushroomStemFaceMap.put(new Boolean[]{northIds.contains(n), eastIds.contains(n), southIds.contains(n), westIds.contains(n), upIds.contains(n), downIds.contains(n)},
+                                    n + 1000);
+        }
     }
 
     public static void setCustomBlock(final @NotNull Block block, final int customModelData) {
-        block.setType((customModelData <= 1053) ? Material.BROWN_MUSHROOM_BLOCK : ((customModelData >= 1100) ? Material.MUSHROOM_STEM : Material.RED_MUSHROOM_BLOCK));
+        final Map<Boolean[], Integer> mushroomFaceMap;
+
+        if (customModelData <= 1053) {
+            mushroomFaceMap = brownMushroomFaceMap;
+            block.setType(Material.BROWN_MUSHROOM_BLOCK);
+        } else if (customModelData <= 1099) {
+            mushroomFaceMap = redMushroomFaceMap;
+            block.setType(Material.RED_MUSHROOM_BLOCK);
+        } else {
+            mushroomFaceMap = mushroomStemFaceMap;
+            block.setType(Material.MUSHROOM_STEM);
+        }
 
         for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
             if (entry.getValue().equals(customModelData)) {
@@ -72,5 +73,34 @@ public class BlockManager {
                 block.setBlockData(multipleFacing);
             }
         }
+    }
+
+    public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull Block block) {
+        final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+        final Boolean[] mushroomFace = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
+
+        final Map<Boolean[], Integer> mushroomFaceMap;
+
+        final Material material = block.getType();
+        if (material.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+            mushroomFaceMap = brownMushroomFaceMap;
+        } else if (material.equals(Material.RED_MUSHROOM_BLOCK)) {
+            mushroomFaceMap = redMushroomFaceMap;
+        } else {
+            mushroomFaceMap = mushroomStemFaceMap;
+        }
+
+        for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
+            if (Arrays.equals(entry.getKey(), mushroomFace)) {
+                final ItemStack itemStack = new ItemStack(Material.BARRIER);
+                final ItemMeta itemMeta = itemStack.getItemMeta();
+
+                itemMeta.setCustomModelData(entry.getValue());
+                itemStack.setItemMeta(itemMeta);
+
+                return itemStack;
+            }
+        }
+        return null;
     }
 }

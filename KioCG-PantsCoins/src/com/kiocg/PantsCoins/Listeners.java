@@ -3,7 +3,6 @@ package com.kiocg.PantsCoins;
 import com.kiocg.PantsCoins.Utils.BlockManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -50,7 +49,7 @@ public class Listeners implements @NotNull Listener {
         }
 
         try {
-            block.getWorld().dropItemNaturally(block.getLocation(), Objects.requireNonNull(BlockManager.getCustomBlockAsItemStack((MultipleFacing) block.getBlockData())));
+            block.getWorld().dropItemNaturally(block.getLocation(), Objects.requireNonNull(BlockManager.getCustomBlockAsItemStack(block)));
         } catch (final @NotNull NullPointerException ignore) {
             // 是原版蘑菇方块
             return;
