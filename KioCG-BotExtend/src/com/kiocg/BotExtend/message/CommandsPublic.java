@@ -58,7 +58,7 @@ public class CommandsPublic {
                 contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
                                     + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
                                     + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
-                                    + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、经济插件、多世界插件(地皮资源世界)。");
+                                    + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、粘液科技、多世界插件(地皮资源世界)。");
                 break;
             case ("ip"):
             case ("地址"):
@@ -113,7 +113,7 @@ public class CommandsPublic {
             // 功能信息
             case ("prefix"):
             case ("称号"):
-                contact.sendMessage("元気达到1000或花费3胖次币即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");
+                contact.sendMessage("元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");
                 break;
             case ("color"):
             case ("rgb"):
