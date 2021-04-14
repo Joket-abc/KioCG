@@ -7,7 +7,7 @@ commands:
   fly:
     description: "切换飞行模式."
     permission: kiocg.command.fly
-    permission-message: "§7[§b豆渣子§7] §c这个指令不可以喔 qaq"
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> 切换飞行模式."
 
 permissions:

@@ -6,7 +6,7 @@
       <element id="module-source" name="KioCG-qqBot" />
       <element id="file-copy" path="$PROJECT_DIR$/KioCG-qqBot/config.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/KioCG-qqBot/plugin.yml" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../mirai-core-all-2.5.1-all.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../mirai-core-all-2.5.2-all.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

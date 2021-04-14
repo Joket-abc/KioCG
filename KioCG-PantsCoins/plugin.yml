@@ -9,13 +9,13 @@ commands:
   story:
     description: "出售手中的压缩物品."
     permission: kiocg.command.story
-    permission-message: "§7[§b豆渣子§7] §c这个指令不可以喔 qaq"
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> 出售手中的压缩物品."
   custommodeldata:
     description: "设置手中物品的物品模型属性."
     aliases: [ cmd ]
     permission: kiocg.command.custommodeldata
-    permission-message: "§7[§b豆渣子§7] §c这个指令不可以喔 qaq"
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> <int> 设置手中物品的物品模型属性."
 
 permissions:

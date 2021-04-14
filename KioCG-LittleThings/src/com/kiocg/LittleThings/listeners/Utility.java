@@ -1,26 +1,37 @@
 package com.kiocg.LittleThings.listeners;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
+import com.kiocg.LittleThings.utility.Utils;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
-import org.bukkit.entity.Mob;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Utility implements @NotNull Listener {
+    // 防止重命名成内部保留的物品前缀名
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
+        if (e.getResult() == null) {
+            return;
+        }
+
+        final String renameText = e.getInventory().getRenameText();
+
+        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText) || Pattern.matches("^(&#[0-9a-zA-Z]{6}){3}.*$", renameText)) {
+            e.setResult(null);
+        }
+    }
+
     // 无法放置
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
@@ -32,56 +43,27 @@ public class Utility implements @NotNull Listener {
         }
     }
 
-    // 生物掉落矿物特有标签
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-        if (!(e.getEntity() instanceof Mob)) {
+    // 防止自然刷怪塔
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
+        final Vector vector = e.getLocation().toBlockLocation().toVector();
+        if (Utils.spawnVector.contains(vector)) {
+            e.setCancelled(true);
             return;
         }
 
-        for (final ItemStack itemStack : e.getDrops()) {
-            switch (itemStack.getType()) {
-                case COAL:
-                case IRON_INGOT:
-                case GOLD_INGOT:
-                case GOLD_NUGGET:
-                case REDSTONE:
-                case EMERALD:
-                    List<Component> lore = itemStack.lore();
-                    if (lore == null) {
-                        lore = new ArrayList<>();
-                    }
+        final LivingEntity entity = e.getEntity();
+        final CreatureSpawnEvent.SpawnReason spawnReason = e.getSpawnReason();
 
-                    lore.add(Component.text("(生物掉落)", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
-
-                    itemStack.lore(lore);
-            }
-        }
-    }
-
-    // 生物掉落矿物合成标签
-    @EventHandler
-    public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
-        final CraftingInventory craftingInventory = e.getInventory();
-        final ItemStack result = craftingInventory.getResult();
-
-        if (result == null) {
+        if (entity instanceof Monster && spawnReason.equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+            Utils.spawnVector.add(vector);
             return;
         }
 
-        for (final ItemStack itemStack : craftingInventory.getMatrix()) {
-            try {
-                for (final Component lore : Objects.requireNonNull(itemStack.lore())) {
-                    if ("(生物掉落)".equals(PlainComponentSerializer.plain().serialize(lore))) {
-                        result.lore(new ArrayList<>() {{
-                            add(Component.text("(生物掉落)", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
-                        }});
-
-                        return;
-                    }
-                }
-            } catch (final @NotNull NullPointerException ignore) {
-            }
+        final EntityType entityType = entity.getType();
+        if ((entityType.equals(EntityType.IRON_GOLEM) && spawnReason.equals(CreatureSpawnEvent.SpawnReason.VILLAGE_DEFENSE))
+            || (entityType.equals(EntityType.ZOMBIFIED_PIGLIN) && spawnReason.equals(CreatureSpawnEvent.SpawnReason.NETHER_PORTAL))) {
+            Utils.spawnVector.add(vector);
         }
     }
 }

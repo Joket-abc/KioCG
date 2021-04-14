@@ -56,7 +56,7 @@ public class Utils {
 
     // 返回是否为正确的加群验证答案
     public static boolean isAnswerTrue(final @NotNull String answer) {
-        return (answer.contains("梯子") || answer.contains("楼梯") || answer.contains("木梯") || answer.toLowerCase().contains("ladder"));
+        return (answer.contains("梯") || answer.toLowerCase().contains("ti") || answer.toLowerCase().contains("ladder"));
     }
 
     // 返回去除指令前缀的用户指令

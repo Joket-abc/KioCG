@@ -40,22 +40,14 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
-        final Player player = e.getPlayer();
-
-        // 台阶问题修复
-        final BlockData blockData = blockState.getBlockData();
-        if (blockData instanceof Slab && ((Slab) blockData).getType().equals(Slab.Type.DOUBLE)) {
-            Utils.lastBlockState.remove(player);
-            Utils.lastBlockItemStack.remove(player);
-            return;
-        }
-
         final ItemStack itemStackClone = e.getItemInHand().clone();
 
         // 防止放下的方块类型和手中物品类型不一致 (eg.打火石点火)
         if (!itemStackClone.getType().equals(blockState.getType())) {
             return;
         }
+
+        final Player player = e.getPlayer();
 
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
             return;
@@ -83,6 +75,14 @@ public class Listeners implements @NotNull Listener {
 
         // 防止最后放置的方块一直被记录, 优化体验
         if (!Utils.lastBlockState.get(player).equals(blockState)) {
+            Utils.lastBlockState.remove(player);
+            Utils.lastBlockItemStack.remove(player);
+            return;
+        }
+
+        // 台阶问题修复
+        final BlockData blockData = blockState.getBlockData();
+        if (blockData instanceof Slab && ((Slab) blockData).getType().equals(Slab.Type.DOUBLE)) {
             Utils.lastBlockState.remove(player);
             Utils.lastBlockItemStack.remove(player);
             return;

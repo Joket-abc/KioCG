@@ -5,6 +5,7 @@ import com.kiocg.LittleThings.listeners.Fun;
 import com.kiocg.LittleThings.listeners.Misc;
 import com.kiocg.LittleThings.listeners.Utility;
 import com.kiocg.LittleThings.utility.AutoRestart;
+import com.kiocg.LittleThings.utility.Utils;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,9 @@ public class LittleThings extends @NotNull JavaPlugin {
 
         // 启动定时自动重启
         new AutoRestart();
+
+        // 定时清空spawnVector
+        new Utils().spawnVectorClear();
     }
 
     @Override

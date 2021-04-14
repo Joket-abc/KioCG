@@ -35,6 +35,11 @@ public class FlyCommand implements @Nullable CommandExecutor {
                 if (player.hasPermission("kiocg.foodflight.normal.free")) {
                     Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.normal")) {
+                    if (player.getLocation().getBlockY() < 0) {
+                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+                        return true;
+                    }
+
                     Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
@@ -45,6 +50,11 @@ public class FlyCommand implements @Nullable CommandExecutor {
                 if (player.hasPermission("kiocg.foodflight.nether.free")) {
                     Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.nether")) {
+                    if (player.getLocation().getBlockY() < 0) {
+                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+                        return true;
+                    }
+
                     Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
@@ -55,6 +65,11 @@ public class FlyCommand implements @Nullable CommandExecutor {
                 if (player.hasPermission("kiocg.foodflight.end.free")) {
                     Utils.addFlightList(player, false);
                 } else if (player.hasPermission("kiocg.foodflight.end")) {
+                    if (player.getLocation().getBlockY() < 0) {
+                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+                        return true;
+                    }
+
                     Utils.addFlightList(player, true);
                 } else {
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");

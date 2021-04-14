@@ -5,10 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
-import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -35,6 +34,7 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
+        player.damage(1.0);
         player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
         e.setCancelled(true);
     }
@@ -52,6 +52,7 @@ public class Listeners implements @NotNull Listener {
             return;
         }
 
+        player.damage(1.0);
         player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
         e.setCancelled(true);
     }
@@ -103,16 +104,12 @@ public class Listeners implements @NotNull Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelEntityDamage(final @NotNull EntityDamageByEntityEvent e) {
         final Entity damager = e.getDamager();
-        if (!(damager instanceof Player)) {
+        if (!(damager instanceof Player) || damager.isOp()) {
             return;
         }
 
         final Entity entity = e.getEntity();
-        if (!(entity instanceof Animals) && !(entity instanceof Villager)) {
-            return;
-        }
-
-        if (damager.isOp()) {
+        if (entity instanceof Monster) {
             return;
         }
 
