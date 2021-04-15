@@ -79,7 +79,7 @@ public class Listeners implements @NotNull Listener {
             }
 
             // 防止打开容器
-            if (block instanceof TileState) {
+            if (block.getState() instanceof TileState) {
                 e.setCancelled(true);
                 return;
             }

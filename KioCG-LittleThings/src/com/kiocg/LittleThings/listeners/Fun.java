@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Fun implements @NotNull Listener {
@@ -75,5 +76,41 @@ public class Fun implements @NotNull Listener {
 
         final PotionEffectType[] potionEffectTypes = PotionEffectType.values();
         ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
+    }
+
+    // 下届之星捕捉怪物
+    @EventHandler(ignoreCancelled = true)
+    public void onCatchMonster(final @NotNull PlayerInteractEntityEvent e) {
+        if (!e.getHand().equals(EquipmentSlot.HAND)) {
+            return;
+        }
+
+        final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
+
+        if (!itemStack.getType().equals(Material.NETHER_STAR)) {
+            return;
+        }
+
+        final Entity entity = e.getRightClicked();
+
+        if (!(entity instanceof Monster) || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof Giant || entity instanceof Wither) {
+            return;
+        }
+
+        final World world = entity.getWorld();
+        final Location location = entity.getLocation();
+
+        try {
+            world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
+        } catch (final @NotNull NullPointerException ignore) {
+            e.getPlayer().sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
+            return;
+        }
+
+        itemStack.setAmount(itemStack.getAmount() - 1);
+        entity.remove();
+
+        world.createExplosion(location, 0F);
+        world.playEffect(location, Effect.SMOKE, 0);
     }
 }
