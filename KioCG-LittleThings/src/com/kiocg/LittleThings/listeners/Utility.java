@@ -2,6 +2,7 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.utility.Utils;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -11,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -46,9 +46,11 @@ public class Utility implements @NotNull Listener {
     // 防止自然刷怪塔
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
-        final Vector vector = e.getLocation().toBlockLocation().toVector();
-        if (Utils.spawnVector.contains(vector)) {
-            e.setCancelled(true);
+        final Location location = e.getLocation();
+        final EntityType entityType = e.getEntityType();
+
+        if (Utils.isSpawnLimit(location, entityType)) {
+            e.getEntity().setAI(false);
             return;
         }
 
@@ -56,14 +58,13 @@ public class Utility implements @NotNull Listener {
         final CreatureSpawnEvent.SpawnReason spawnReason = e.getSpawnReason();
 
         if (entity instanceof Monster && spawnReason.equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
-            Utils.spawnVector.add(vector);
+            Utils.addSpawnLimit(location, entityType);
             return;
         }
 
-        final EntityType entityType = entity.getType();
         if ((entityType.equals(EntityType.IRON_GOLEM) && spawnReason.equals(CreatureSpawnEvent.SpawnReason.VILLAGE_DEFENSE))
             || (entityType.equals(EntityType.ZOMBIFIED_PIGLIN) && spawnReason.equals(CreatureSpawnEvent.SpawnReason.NETHER_PORTAL))) {
-            Utils.spawnVector.add(vector);
+            Utils.addSpawnLimit(location, entityType);
         }
     }
 }

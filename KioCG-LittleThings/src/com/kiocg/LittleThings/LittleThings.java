@@ -26,8 +26,8 @@ public class LittleThings extends @NotNull JavaPlugin {
         // 启动定时自动重启
         new AutoRestart();
 
-        // 定时清空spawnVector
-        new Utils().spawnVectorClear();
+        // 定时清空spawnLimit
+        new Utils().spawnLimitClear();
     }
 
     @Override
