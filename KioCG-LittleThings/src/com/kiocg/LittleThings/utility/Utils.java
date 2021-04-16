@@ -23,7 +23,7 @@ public class Utils {
 
     // 写入生物限制位置
     public static void addSpawnLimit(final @NotNull Location location, final EntityType entityType) {
-        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), (location.getBlockX() / 3), location.getBlockY() / 7, location.getBlockZ() / 3);
+        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), (location.getBlockX() / 3), location.getBlockY(), location.getBlockZ() / 3);
 
         if (spawnLimit.containsKey(newLoc)) {
             final Map<EntityType, Integer> value = spawnLimit.get(newLoc);
@@ -37,7 +37,6 @@ public class Utils {
 
                 spawnLimitForever.put(newLoc, num2);
 
-                LittleThings.instance.getLogger().info("已临时限制刷怪: " + location);
                 if (num2 == 4) {
                     LittleThings.instance.getLogger().info("已半永久限制刷怪: " + location);
                 }
@@ -51,7 +50,7 @@ public class Utils {
 
     // 获取生物是否限制
     public static boolean isSpawnLimit(final @NotNull Location location, final EntityType entityType) {
-        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), location.getBlockX() / 3, location.getBlockY() / 7, location.getBlockZ() / 3);
+        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), location.getBlockX() / 3, location.getBlockY(), location.getBlockZ() / 3);
 
         if (spawnLimitForever.containsKey(newLoc)) {
             return spawnLimitForever.get(newLoc) > 3;
