@@ -3,6 +3,7 @@ package com.kiocg.LittleThings.utility;
 import com.kiocg.LittleThings.LittleThings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,8 +14,8 @@ import java.util.Map;
 public class Utils {
     // 存储怪物出生的坐标向量、数据值(怪物类型、次数)
     private static final Map<Location, Map<EntityType, Integer>> spawnLimit = new HashMap<>();
-    // 存储半永久禁止刷怪的区块、数据值(怪物类型、次数)
-    private static final Map<Long, Map<EntityType, Integer>> spawnLimitForever = new HashMap<>();
+    // 存储半永久禁止刷怪的区块、次数
+    private static final Map<Long, Integer> spawnLimitForever = new HashMap<>();
 
     // 定时清空生物位置
     public void spawnLimitClear() {
@@ -23,13 +24,20 @@ public class Utils {
 
     // 写入生物限制位置
     public static void addSpawnLimit(final @NotNull Location location, final EntityType entityType) {
-        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), (location.getBlockX() / 3), location.getBlockY(), location.getBlockZ() / 3);
+        final World world = location.getWorld();
+        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(world, (location.getBlockX() / 3), location.getBlockY() / 7, location.getBlockZ() / 3);
 
         if (spawnLimit.containsKey(newLoc)) {
             final Map<EntityType, Integer> value = spawnLimit.get(newLoc);
 
             if (value.containsKey(entityType)) {
-                value.put(entityType, value.get(entityType) + 1);
+                final int num = value.get(entityType);
+                value.put(entityType, num + 1);
+
+                if (num == 3) {
+                    final Long chunkKeyWorld = Long.valueOf(location.getChunk().getChunkKey() + String.valueOf(world.getName().hashCode()));
+                    spawnLimitForever.put(chunkKeyWorld, spawnLimitForever.get(chunkKeyWorld) == null ? 1 : spawnLimitForever.get(chunkKeyWorld) + 1);
+                }
             } else {
                 value.put(entityType, 1);
             }
@@ -42,7 +50,14 @@ public class Utils {
 
     // 获取生物是否限制
     public static boolean isSpawnLimit(final @NotNull Location location, final EntityType entityType) {
-        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(location.getWorld(), location.getBlockX() / 3, location.getBlockY(), location.getBlockZ() / 3);
+        final World world = location.getWorld();
+
+        final Long chunkKeyWorld = Long.valueOf(location.getChunk().getChunkKey() + String.valueOf(world.getName().hashCode()));
+        if (spawnLimitForever.containsKey(chunkKeyWorld)) {
+            return spawnLimitForever.get(chunkKeyWorld) > 3;
+        }
+
+        @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "ImplicitNumericConversion"}) final Location newLoc = new Location(world, location.getBlockX() / 3, location.getBlockY() / 7, location.getBlockZ() / 3);
 
         if (spawnLimit.containsKey(newLoc)) {
             final Map<EntityType, Integer> value = spawnLimit.get(newLoc);
