@@ -28,15 +28,17 @@ public class Utils {
         if (spawnLimit.containsKey(newLoc)) {
             final Map<EntityType, Integer> value = spawnLimit.get(newLoc);
 
-            if (value.containsKey(entityType)) {
-                final int num = value.get(entityType);
-                value.put(entityType, num + 1);
+            final int num = value.get(entityType) == null ? 1 : value.get(entityType) + 1;
 
-                if (num == 3) {
-                    spawnLimitForever.put(newLoc, spawnLimitForever.get(newLoc) == null ? 1 : spawnLimitForever.get(newLoc) + 1);
+            value.put(entityType, num);
+
+            if (num == 4) {
+                final int num2 = spawnLimitForever.get(newLoc) == null ? 1 : spawnLimitForever.get(newLoc) + 1;
+
+                spawnLimitForever.put(newLoc, num2);
+                if (num2 == 4) {
+                    LittleThings.instance.getLogger().info("已半永久禁止刷怪: " + location);
                 }
-            } else {
-                value.put(entityType, 1);
             }
         } else {
             spawnLimit.put(newLoc, new EnumMap<>(EntityType.class) {{
