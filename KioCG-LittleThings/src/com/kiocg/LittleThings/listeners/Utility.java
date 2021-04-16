@@ -43,7 +43,7 @@ public class Utility implements @NotNull Listener {
         }
     }
 
-    // 防止自然刷怪塔
+    // 限制自然刷怪塔
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final Location location = e.getLocation();

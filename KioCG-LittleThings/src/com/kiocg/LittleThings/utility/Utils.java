@@ -13,7 +13,7 @@ import java.util.Map;
 public class Utils {
     // 存储怪物出生的坐标、数据值(怪物类型、次数)
     private static final Map<Location, Map<EntityType, Integer>> spawnLimit = new HashMap<>();
-    // 存储半永久禁止刷怪的坐标、次数
+    // 存储半永久限制刷怪的坐标、次数
     private static final Map<Location, Integer> spawnLimitForever = new HashMap<>();
 
     // 定时清空生物位置
@@ -36,8 +36,10 @@ public class Utils {
                 final int num2 = spawnLimitForever.get(newLoc) == null ? 1 : spawnLimitForever.get(newLoc) + 1;
 
                 spawnLimitForever.put(newLoc, num2);
+
+                LittleThings.instance.getLogger().info("已临时限制刷怪: " + location);
                 if (num2 == 4) {
-                    LittleThings.instance.getLogger().info("已半永久禁止刷怪: " + location);
+                    LittleThings.instance.getLogger().info("已半永久限制刷怪: " + location);
                 }
             }
         } else {
