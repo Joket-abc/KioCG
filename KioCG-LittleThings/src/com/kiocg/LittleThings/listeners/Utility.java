@@ -1,5 +1,6 @@
 package com.kiocg.LittleThings.listeners;
 
+import com.kiocg.LittleThings.LittleThings;
 import com.kiocg.LittleThings.utility.Utils;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Location;
@@ -50,7 +51,8 @@ public class Utility implements @NotNull Listener {
         final EntityType entityType = e.getEntityType();
 
         if (Utils.isSpawnLimit(location, entityType)) {
-            e.getEntity().setAI(false);
+            location.getNearbyPlayers(160.0).forEach(player -> player.sendMessage("§a[§b豆渣子§a] §c检测到你附近可能有自然刷怪塔, 请及时改用为刷怪笼刷怪塔."));
+            LittleThings.instance.getLogger().info("位置(" + location + ")可能存在自然刷怪塔.");
             return;
         }
 

@@ -71,13 +71,13 @@ public class Seen {
         try {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
         } catch (final @NotNull Exception ignore) {
-            stringBuilder.append("   元気：NULL");
+            stringBuilder.append("NULL");
         }
 
         try {
             stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer));
         } catch (final @NotNull Exception ignore) {
-            stringBuilder.append("   胖次币：NULL");
+            stringBuilder.append("NULL");
         }
 
         contact.sendMessage(stringBuilder.toString());
