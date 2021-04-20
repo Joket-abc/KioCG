@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler
     public void onPrepareAnvilBook(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();

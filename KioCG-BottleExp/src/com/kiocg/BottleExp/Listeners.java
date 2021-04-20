@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.requireNonNull(e.getHand()).equals(EquipmentSlot.HAND)

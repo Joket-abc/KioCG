@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Random;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         if (!e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {

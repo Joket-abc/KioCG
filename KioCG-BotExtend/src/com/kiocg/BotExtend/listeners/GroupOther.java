@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class GroupOther implements @NotNull Listener {
+public class GroupOther implements Listener {
     @EventHandler
     public void onMemberJoinRequest(final @NotNull AsyncABEvent event) {
         if (!(event.getEvent() instanceof MemberJoinRequestEvent)) {

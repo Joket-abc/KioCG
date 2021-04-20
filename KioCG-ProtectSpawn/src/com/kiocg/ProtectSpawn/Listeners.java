@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
         final Player player = e.getPlayer();

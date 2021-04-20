@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class InGame implements @NotNull Listener {
+public class InGame implements Listener {
     // 广播被白名单拦截的玩家
     @EventHandler
     public void onProfileWhitelistVerify(final @NotNull ProfileWhitelistVerifyEvent e) {

@@ -1,9 +1,8 @@
 package com.kiocg.AntiCheatingClient;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-public class AntiCheatingClient extends @NotNull JavaPlugin {
+public class AntiCheatingClient extends JavaPlugin {
     public static AntiCheatingClient instance;
 
     @Override

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Utility implements @NotNull Listener {
+public class Utility implements Listener {
     // 防止重命名成内部保留的物品前缀名
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
@@ -51,7 +51,7 @@ public class Utility implements @NotNull Listener {
         final EntityType entityType = e.getEntityType();
 
         if (Utils.isSpawnLimit(location, entityType)) {
-            location.getNearbyPlayers(160.0).forEach(player -> player.sendMessage("§a[§b豆渣子§a] §c检测到你附近可能有自然刷怪塔, 请及时改用为刷怪笼刷怪塔."));
+            location.getNearbyPlayers(160.0).forEach(player -> player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§a[§b豆渣子§a] §c检测到你附近可能有自然刷怪塔, 请及时改用为刷怪笼刷怪塔.")));
             LittleThings.instance.getLogger().info("位置(" + location + ")可能存在自然刷怪塔.");
             return;
         }

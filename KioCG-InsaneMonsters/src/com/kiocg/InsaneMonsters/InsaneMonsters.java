@@ -3,11 +3,10 @@ package com.kiocg.InsaneMonsters;
 import com.kiocg.InsaneMonsters.mobs.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class InsaneMonsters extends @NotNull JavaPlugin {
+public class InsaneMonsters extends JavaPlugin {
     @SuppressWarnings("unused")
     public static InsaneMonsters instance;
 

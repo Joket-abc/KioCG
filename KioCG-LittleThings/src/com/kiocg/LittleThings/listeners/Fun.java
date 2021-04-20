@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Random;
 
-public class Fun implements @NotNull Listener {
+public class Fun implements Listener {
     // 苦力怕爆炸产生烟花
     @EventHandler(ignoreCancelled = true)
     public void onEntityExplode(final @NotNull EntityExplodeEvent e) {

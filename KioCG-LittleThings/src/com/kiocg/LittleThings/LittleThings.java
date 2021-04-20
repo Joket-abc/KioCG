@@ -8,9 +8,8 @@ import com.kiocg.LittleThings.utility.AutoRestart;
 import com.kiocg.LittleThings.utility.Utils;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-public class LittleThings extends @NotNull JavaPlugin {
+public class LittleThings extends JavaPlugin {
     public static LittleThings instance;
 
     @Override

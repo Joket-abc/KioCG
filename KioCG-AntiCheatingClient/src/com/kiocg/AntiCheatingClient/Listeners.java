@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler
     public void startPlayerVerify(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class PantsCoins extends @NotNull JavaPlugin {
+public class PantsCoins extends JavaPlugin {
     @SuppressWarnings("unused")
     public static PantsCoins instance;
 

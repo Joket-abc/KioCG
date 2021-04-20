@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-public class BotMessage implements @NotNull Listener {
+public class BotMessage implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onFriendMessage(final @NotNull AsyncFriendMessageEvent event) {
         final net.mamoe.mirai.event.events.FriendMessageEvent e = event.getEvent();

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler
     public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
         final Recipe recipe = e.getRecipe();

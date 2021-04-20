@@ -1,9 +1,8 @@
 package com.kiocg.BlockRecall;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-public class BlockRecall extends @NotNull JavaPlugin {
+public class BlockRecall extends JavaPlugin {
     @SuppressWarnings("unused")
     public static BlockRecall instance;
 

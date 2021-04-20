@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final ItemStack itemStack = e.getItemInHand();

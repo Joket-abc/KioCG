@@ -1,9 +1,8 @@
 package com.kiocg.BottleExp;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-public class BottleExp extends @NotNull JavaPlugin {
+public class BottleExp extends JavaPlugin {
     public static BottleExp instance;
 
     @Override

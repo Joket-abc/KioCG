@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Listeners implements @NotNull Listener {
+public class Listeners implements Listener {
     @EventHandler
     public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();

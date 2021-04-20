@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class Link implements @NotNull CommandExecutor {
+public class Link implements CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
         if (!(sender instanceof Player)) {

@@ -1,9 +1,8 @@
 package com.kiocg.ItemCompress;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-public class ItemCompress extends @NotNull JavaPlugin {
+public class ItemCompress extends JavaPlugin {
     @SuppressWarnings("unused")
     public static ItemCompress instance;
 

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Fix implements @NotNull Listener {
+public class Fix implements Listener {
     // 死亡移除消失诅咒的物品
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fixVanishingCurse(final @NotNull PlayerDeathEvent e) {

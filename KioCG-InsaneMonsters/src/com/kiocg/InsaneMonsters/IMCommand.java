@@ -7,9 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class IMCommand implements @Nullable CommandExecutor {
+public class IMCommand implements CommandExecutor {
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {

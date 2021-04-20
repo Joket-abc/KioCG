@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Misc implements @NotNull Listener {
+public class Misc implements Listener {
     // 死亡原地复活
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(final @NotNull PlayerRespawnEvent e) {
