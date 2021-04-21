@@ -4,7 +4,6 @@ import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,15 +54,6 @@ public class Fix implements Listener {
         final Entity remover = e.getRemover();
         if (!(remover instanceof Player)) {
             e.setCancelled(true);
-        }
-    }
-
-    // 修复没有AI的生物
-    @EventHandler(ignoreCancelled = true)
-    public void fixAI(final @NotNull PlayerInteractEntityEvent e) {
-        final Entity entityClicked = e.getRightClicked();
-        if (entityClicked instanceof Mob && !((Mob) entityClicked).hasAI()) {
-            ((Mob) entityClicked).setAI(true);
         }
     }
 }

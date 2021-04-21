@@ -93,7 +93,7 @@ public class Fun implements Listener {
 
         final Entity entity = e.getRightClicked();
 
-        if (!(entity instanceof Monster) || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof Giant || entity instanceof Wither) {
+        if ((!(entity instanceof Monster) && !(entity instanceof Ghast)) || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof Giant || entity instanceof Wither) {
             return;
         }
 
