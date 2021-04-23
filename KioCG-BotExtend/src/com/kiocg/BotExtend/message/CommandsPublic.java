@@ -90,18 +90,18 @@ public class CommandsPublic {
                 final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                 if (9 <= hour && hour <= 22) {
                     contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID"
-                                        + "\n记得查看群公告的《申请白名单须知》呐~");
+                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
                 } else if (23 <= hour || hour <= 1) {
                     contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID"
-                                        + "\n记得查看群公告的《申请白名单须知》呐~");
+                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
                 } else if (hour <= 3) {
                     contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID"
                                         + "\n记得查看群公告的《申请白名单须知》呐~"
-                                        + "\n(当前时间管理员可能不在线，建议9点后再进行申请)");
+                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
                 } else {
                     contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID"
                                         + "\n记得查看群公告的《申请白名单须知》呐~"
-                                        + "\n(当前时间管理员可能不在线，建议9点后再进行申请)");
+                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
                 }
                 break;
             case ("support"):
