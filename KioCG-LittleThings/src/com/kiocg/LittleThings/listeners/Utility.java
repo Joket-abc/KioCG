@@ -1,15 +1,19 @@
 package com.kiocg.LittleThings.listeners;
 
+import com.kiocg.LittleThings.LittleThings;
 import com.kiocg.LittleThings.utility.Utils;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -44,25 +48,38 @@ public class Utility implements Listener {
     }
 
     // 限制自然刷怪塔
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
-        if (!(e.getEntity() instanceof Monster) || !e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+        final LivingEntity livingEntity = e.getEntity();
+        if (!(livingEntity instanceof Monster) || !e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
             return;
         }
 
-        final long blockKey = e.getLocation().toBlockKey();
+        livingEntity.getPersistentDataContainer().set(LittleThings.namespacedKey, PersistentDataType.LONG, livingEntity.getLocation().toBlockKey());
+    }
+
+    // 限制自然刷怪塔
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+        final Long spawnBlockKey = e.getEntity().getPersistentDataContainer().get(LittleThings.namespacedKey, PersistentDataType.LONG);
+
+        if (spawnBlockKey == null) {
+            return;
+        }
+
         final EntityType entityType = e.getEntityType();
 
-        if (Utils.limitMonsters.containsKey(blockKey)) {
-            final List<EntityType> monstersList = Utils.limitMonsters.get(blockKey);
+        if (Utils.limitMonsters.containsKey(spawnBlockKey)) {
+            final List<EntityType> monstersList = Utils.limitMonsters.get(spawnBlockKey);
 
             if (monstersList.contains(entityType)) {
-                e.setCancelled(true);
+                e.setDroppedExp(0);
+                e.getDrops().clear();
             } else {
                 monstersList.add(entityType);
             }
         } else {
-            Utils.limitMonsters.put(blockKey, new ArrayList<>() {{
+            Utils.limitMonsters.put(spawnBlockKey, new ArrayList<>() {{
                 add(entityType);
             }});
         }
