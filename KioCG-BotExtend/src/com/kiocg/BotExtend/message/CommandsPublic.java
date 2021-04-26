@@ -58,7 +58,7 @@ public class CommandsPublic {
                 contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
                                     + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
                                     + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
-                                    + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、粘液科技、多世界插件(地皮资源世界)。");
+                                    + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。");
                 break;
             case ("ip"):
             case ("地址"):
@@ -73,7 +73,9 @@ public class CommandsPublic {
                 break;
             case ("client"):
             case ("客户端"):
-                contact.sendMessage("正版限定，客户端下载：群文件或百度网盘https://pan.baidu.com/s/1lq0o1Ma2ox2maLA2B3DqpQ");
+                contact.sendMessage("正版限定，客户端下载：群文件" +
+                                    "\n阿里云盘（密码kiocg）http://alidrive.kiocg.com/drive0/-%7BMinecraft%7D%20%E4%BA%BA%E9%97%B4%E5%86%92%E9%99%A9%20KioCG-" +
+                                    "\n百度网盘https://pan.baidu.com/s/1lq0o1Ma2ox2maLA2B3DqpQ");
                 break;
             case ("poster"):
             case ("宣传帖"):

@@ -47,7 +47,7 @@ public class Listeners implements Listener {
     public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
         final String message = PlainComponentSerializer.plain().serialize(e.message());
 
-        if (!message.startsWith(".say ")) {
+        if (!message.startsWith(".say AntiCheatingCheck___") && !message.startsWith("AntiCheatingCheck___")) {
             return;
         }
 

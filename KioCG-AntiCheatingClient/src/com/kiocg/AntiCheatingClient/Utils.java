@@ -20,8 +20,8 @@ public class Utils {
 
     // 获取新的验证码
     public static @NotNull String getNewVerifyCode() {
-        return ".say "
-               + RandomStringUtils.randomAlphanumeric(180)
+        return ".say AntiCheatingCheck___"
+               + RandomStringUtils.randomAlphanumeric(160)
                + " _______________ "
                + "我已阅读并同意 \"使用作弊客户端、模组、软件等非法程序将被永久封禁\" 等条款!"
                + " _____"
