@@ -73,9 +73,7 @@ public class CommandsPublic {
                 break;
             case ("client"):
             case ("客户端"):
-                contact.sendMessage("正版限定，客户端下载：群文件" +
-                                    "\n阿里云盘（密码kiocg）http://alidrive.kiocg.com/drive0/-%7BMinecraft%7D%20%E4%BA%BA%E9%97%B4%E5%86%92%E9%99%A9%20KioCG-" +
-                                    "\n百度网盘https://pan.baidu.com/s/1lq0o1Ma2ox2maLA2B3DqpQ");
+                contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com");
                 break;
             case ("poster"):
             case ("宣传帖"):
