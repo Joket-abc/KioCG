@@ -15,6 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -114,6 +115,17 @@ public class Listeners implements Listener {
         }
 
         final Location loc = entity.getLocation();
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    // 实体爆炸不破坏方块
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void cancelHangingBreakByEntity(final @NotNull EntityExplodeEvent e) {
+        final Location loc = e.getLocation();
         if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;
         }

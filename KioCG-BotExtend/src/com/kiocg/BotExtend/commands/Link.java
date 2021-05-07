@@ -39,6 +39,13 @@ public class Link implements CommandExecutor {
         }
 
         if (args[0].equals(String.valueOf(waitLinkQQ))) {
+            // 防止多个玩家同时尝试连接同一QQ号
+            final String playerLinkAsName = PlayerLinkUtils.getPlayerLinkAsName(waitLinkQQ);
+            if (playerLinkAsName != null) {
+                player.sendMessage("§a[§b豆渣子§a] §6此QQ号 " + waitLinkQQ + " 已经连接了玩家 " + playerLinkAsName + ".");
+                return true;
+            }
+
             PlayerLinkUtils.addPlayerLink(uuid, waitLinkQQ);
             PlayerLinkUtils.removeWaitLinkQQ(uuid);
 

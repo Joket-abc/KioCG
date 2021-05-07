@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,10 +67,15 @@ public class Listeners implements Listener {
 
             player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
         } else if (message.equals(Utils.playerVerifyCode.get(player).substring(5))) {
-            // 临时封禁玩家24小时
-            final Date date = new Date();
-            date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
-            Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
+            if (player.getStatistic(Statistic.PLAY_ONE_MINUTE) > 20 * 60 * 60 * 24) {
+                // 临时封禁非萌新玩家24小时
+                final Date date = new Date();
+                date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
+            } else {
+                // 永久封禁萌新玩家
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("§7... §c尝试作弊而被永久封禁 §7..."));
+            }
 
             final String playerName = player.getName();
 

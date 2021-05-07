@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public class MessagesRemind {
     @EventHandler
     public void onMessages(final @NotNull Group group, final @NotNull String msg) {
-        if (msg.contains("按键精灵") || msg.contains("鼠标宏") || msg.contains("连点器") || msg.contains("自动钓鱼")) {
-            group.sendMessage("你不能使用诸如按键精灵、鼠标宏、自动钓鱼等自动操作程序，这将会被视为作弊。");
+        if (msg.contains("按键精灵") || msg.contains("鼠标宏") || msg.contains("键盘宏") || msg.contains("连点") || msg.contains("自动钓鱼")) {
+            group.sendMessage("你不能使用诸如按键精灵、宏操作、自动钓鱼等自动操作程序，这将会被视为作弊。");
         } else if (((msg.contains("刷") || msg.contains("复制")) && (msg.contains("沙子") || msg.contains("tnt") || msg.contains("地毯") || msg.contains("铁轨"))) || msg.contains("卡基岩") || msg.contains("地狱顶")) {
             group.sendMessage("你不能利用BUG刷物品、刷数据、卡基岩、卡地狱(下届)顶等。");
         } else if (msg.contains("种子") && (msg.contains("服务器") || msg.contains("世界") || msg.contains("地图"))) {

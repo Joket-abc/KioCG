@@ -45,7 +45,7 @@ public class Link {
             return;
         }
 
-        PlayerLinkUtils.addPlayerLink(uuid, user.getId());
+        PlayerLinkUtils.addWaitLinkQQ(uuid, user.getId());
 
         if (!offlinePlayer.isOnline()) {
             contact.sendMessage("请上线后再在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
