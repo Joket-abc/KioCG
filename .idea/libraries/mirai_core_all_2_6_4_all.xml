@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mirai-core-all-2.6.4-all">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../mirai-core-all-2.6.4-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
