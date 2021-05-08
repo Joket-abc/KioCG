@@ -8,9 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Misc implements Listener {
     // 死亡原地复活
@@ -117,5 +121,25 @@ public class Misc implements Listener {
 
             e.setCancelled(true);
         }
+    }
+
+    // 随机放置方块
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
+        final PlayerInventory playerInventory = e.getPlayer().getInventory();
+
+        if (!playerInventory.getItemInOffHand().getType().equals(Material.STICK)) {
+            return;
+        }
+
+        final List<Integer> slot = new ArrayList<>();
+        for (int i = 0; i <= 8; ++i) {
+            final ItemStack itemStack = playerInventory.getItem(i);
+            if (itemStack != null && itemStack.getType().isBlock()) {
+                slot.add(i);
+            }
+        }
+
+        playerInventory.setHeldItemSlot(slot.get(new Random().nextInt(slot.size())));
     }
 }

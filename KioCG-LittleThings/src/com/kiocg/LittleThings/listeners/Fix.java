@@ -4,12 +4,14 @@ import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -53,6 +55,14 @@ public class Fix implements Listener {
 
         final Entity remover = e.getRemover();
         if (!(remover instanceof Player)) {
+            e.setCancelled(true);
+        }
+    }
+
+    // 猪刷怪笼禁止生成猪
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void cancelSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
+        if (!e.getEntityType().equals(EntityType.PIG)) {
             e.setCancelled(true);
         }
     }

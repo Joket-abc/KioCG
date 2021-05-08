@@ -1,4 +1,4 @@
-package com.kiocg.LittleThings.utility;
+package com.kiocg.LimitMonsterFarm;
 
 import org.bukkit.entity.EntityType;
 
