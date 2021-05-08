@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Listeners implements Listener {
-    // 限制自然刷怪塔
+    // 记录怪物出生的位置值
     @EventHandler(ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final LivingEntity livingEntity = e.getEntity();
@@ -41,6 +41,7 @@ public class Listeners implements Listener {
             final List<EntityType> monstersList = Utils.limitMonsters.get(spawnBlockKey);
 
             if (monstersList.contains(entityType)) {
+                // 清空怪物掉落
                 e.setDroppedExp(0);
                 e.getDrops().clear();
             } else {
@@ -52,5 +53,4 @@ public class Listeners implements Listener {
             }});
         }
     }
-
 }

@@ -1,5 +1,7 @@
 package com.kiocg.InsaneMonsters;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,6 +13,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
@@ -100,35 +103,53 @@ public class Listeners implements Listener {
 
         switch (persistentData) {
             case "Giant":
-                final ItemStack itemStack = new ItemStack(Material.ENCHANTED_BOOK);
+                final ItemStack itemStackG = new ItemStack(Material.ENCHANTED_BOOK);
 
-                final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStack.getItemMeta();
+                final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStackG.getItemMeta();
 
                 final Enchantment[] enchantments = Enchantment.values();
                 final Enchantment randomEnchantment = enchantments[random.nextInt(enchantments.length)];
 
                 enchantmentStorageMeta.addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
 
-                itemStack.setItemMeta(enchantmentStorageMeta);
+                itemStackG.setItemMeta(enchantmentStorageMeta);
 
-                drops.add(new ItemStack(itemStack));
+                drops.add(new ItemStack(itemStackG));
                 break;
             case "ZombieWarrior":
                 drops.clear();
 
-                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
+                final ItemStack itemStackZW = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
+
+                final ItemMeta itemMetaZW = itemStackZW.getItemMeta();
+                itemMetaZW.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                itemStackZW.setItemMeta(itemMetaZW);
+
+                drops.add(itemStackZW);
                 drops.add(new ItemStack(Material.ROTTEN_FLESH, random.nextInt(3) + 1));
                 break;
             case "SkeletonArcher":
                 drops.clear();
 
-                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
+                final ItemStack itemStackSA = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
+
+                final ItemMeta itemMetaSA = itemStackSA.getItemMeta();
+                itemMetaSA.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                itemStackSA.setItemMeta(itemMetaSA);
+
+                drops.add(itemStackSA);
                 drops.add(new ItemStack(Material.BONE, random.nextInt(3) + 1));
                 break;
             case "DarkKnight":
                 drops.clear();
 
-                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
+                final ItemStack itemStackDK = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
+
+                final ItemMeta itemMetaDK = itemStackDK.getItemMeta();
+                itemMetaDK.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                itemStackDK.setItemMeta(itemMetaDK);
+
+                drops.add(itemStackDK);
 
                 if (random.nextInt(100) < 10) {
                     drops.add(new ItemStack(Material.NETHERITE_SCRAP));

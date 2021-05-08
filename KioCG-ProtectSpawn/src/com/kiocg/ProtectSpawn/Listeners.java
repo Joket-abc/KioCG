@@ -122,9 +122,9 @@ public class Listeners implements Listener {
         e.setCancelled(true);
     }
 
-    // 实体爆炸不破坏方块
+    // 取消实体爆炸
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelHangingBreakByEntity(final @NotNull EntityExplodeEvent e) {
+    public void cancelEntityExplode(final @NotNull EntityExplodeEvent e) {
         final Location loc = e.getLocation();
         if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;

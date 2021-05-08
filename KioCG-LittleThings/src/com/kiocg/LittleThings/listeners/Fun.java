@@ -1,15 +1,21 @@
 package com.kiocg.LittleThings.listeners;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -112,5 +118,21 @@ public class Fun implements Listener {
 
         world.createExplosion(location, 0F);
         world.playEffect(location, Effect.SMOKE, 0);
+    }
+
+    // 怪物掉落货币
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+        if (!e.getEntity().getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+            return;
+        }
+
+        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
+
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
+        itemStack.setItemMeta(itemMeta);
+
+        e.getDrops().add(itemStack);
     }
 }
