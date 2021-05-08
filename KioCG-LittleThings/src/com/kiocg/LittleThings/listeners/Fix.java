@@ -62,7 +62,7 @@ public class Fix implements Listener {
     // 猪刷怪笼禁止生成猪
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
-        if (!e.getEntityType().equals(EntityType.PIG)) {
+        if (e.getEntityType().equals(EntityType.PIG)) {
             e.setCancelled(true);
         }
     }
