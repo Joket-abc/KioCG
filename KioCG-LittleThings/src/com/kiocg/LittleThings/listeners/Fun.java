@@ -84,7 +84,7 @@ public class Fun implements Listener {
         ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
     }
 
-    // 下届之星捕捉怪物
+    // 下届之星捕捉怪物、铁傀儡
     @EventHandler(ignoreCancelled = true)
     public void onCatchMonster(final @NotNull PlayerInteractEntityEvent e) {
         if (!e.getHand().equals(EquipmentSlot.HAND)) {
@@ -99,7 +99,7 @@ public class Fun implements Listener {
 
         final Entity entity = e.getRightClicked();
 
-        if ((!(entity instanceof Monster) && !(entity instanceof Ghast)) || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof Giant || entity instanceof Wither) {
+        if ((!(entity instanceof Monster) && !(entity instanceof Ghast) && !(entity instanceof IronGolem)) || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof Giant || entity instanceof Wither) {
             return;
         }
 
