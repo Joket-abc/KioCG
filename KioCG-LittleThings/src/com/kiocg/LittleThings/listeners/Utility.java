@@ -1,6 +1,6 @@
 package com.kiocg.LittleThings.listeners;
 
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -37,8 +37,11 @@ public class Utility implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         try {
-            if (Objects.requireNonNull(e.getItemInHand().lore()).contains(LegacyComponentSerializer.legacyAmpersand().deserialize("§9无法放置"))) {
-                e.setCancelled(true);
+            for (final Component lore : Objects.requireNonNull(e.getItemInHand().lore())) {
+                if (lore.toString().contains("无法放置")) {
+                    e.setCancelled(true);
+                    return;
+                }
             }
         } catch (final @NotNull NullPointerException ignore) {
         }

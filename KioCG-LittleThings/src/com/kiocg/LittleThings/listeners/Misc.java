@@ -2,7 +2,8 @@ package com.kiocg.LittleThings.listeners;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,9 +67,9 @@ public class Misc implements Listener {
     // @玩家
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(final @NotNull AsyncChatEvent e) {
-        String message = LegacyComponentSerializer.legacyAmpersand().serialize(e.message());
+        Component message = e.message();
 
-        if (!message.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
+        if (!message.toString().contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
         }
 
@@ -82,16 +83,16 @@ public class Misc implements Listener {
         onlinePlayersName.sort((a, b) -> (b.length() - a.length()));
 
         for (final String playerName : onlinePlayersName) {
-            if (message.toLowerCase().contains("@" + playerName.toLowerCase()) || message.toLowerCase().contains("@ " + playerName.toLowerCase())) {
+            if (message.toString().toLowerCase().contains("@" + playerName.toLowerCase()) || message.toString().toLowerCase().contains("@ " + playerName.toLowerCase())) {
                 final Player thePlayer = Bukkit.getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
 
-                message = message.replaceAll("(?i)@" + playerName, "§9§o@§9§o" + playerName + "§r")
-                                 .replaceAll("(?i)@ " + playerName, "§9§o@§9§o" + playerName + "§r");
+                message = message.replaceText(TextReplacementConfig.builder().match("(?i)@" + playerName).replacement("§9§o@§9§o" + playerName + "§r").build())
+                                 .replaceText(TextReplacementConfig.builder().match("(?i)@ " + playerName).replacement("§9§o@§9§o" + playerName + "§r").build());
             }
         }
 
-        e.message(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
+        e.message(message);
     }
 
     // 随身工作台
