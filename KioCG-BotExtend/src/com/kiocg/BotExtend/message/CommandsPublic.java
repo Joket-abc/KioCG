@@ -29,6 +29,7 @@ public class CommandsPublic {
                                     + "\n.info - 服务器介绍"
                                     + "\n.ip - 服务器IP地址"
                                     + "\n.client - 客户端下载地址"
+                                    + "\n.status - 服务器统计信息"
                                     + "\n.poster - 服务器宣传贴"
                                     + "\n.github - 插件项目开源"
                                     // 内部信息
@@ -74,6 +75,10 @@ public class CommandsPublic {
             case ("client"):
             case ("客户端"):
                 contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com");
+                break;
+            case ("status"):
+            case ("统计"):
+                contact.sendMessage("服务器统计信息：http://status.kiocg.com");
                 break;
             case ("poster"):
             case ("宣传帖"):

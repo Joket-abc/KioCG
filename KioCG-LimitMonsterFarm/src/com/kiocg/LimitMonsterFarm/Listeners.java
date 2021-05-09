@@ -19,7 +19,7 @@ public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
         final LivingEntity livingEntity = e.getEntity();
-        if (!(livingEntity instanceof Monster) || !e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+        if ((!(livingEntity instanceof Monster) || !e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) && !e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.VILLAGE_DEFENSE)) {
             return;
         }
 

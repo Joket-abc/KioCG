@@ -195,7 +195,7 @@ public class Listeners implements Listener {
     }
 
     // 防止放置压缩物品
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlaceEvent(final @NotNull BlockPlaceEvent e) {
         try {
             if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(e.getItemInHand().getItemMeta().displayName())).startsWith("§1§2§6")) {
