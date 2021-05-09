@@ -38,7 +38,6 @@ public class CommandsPublic {
                                     // 功能信息
                                     + "\n.prefix - 自定义称号说明"
                                     + "\n.color - RGB颜色对照表"
-                                    + "\n.uuid - 正版UUID查询网站"
                                     + "\n.wiki - 中文MC Wiki镜像站"
                                     // 功能信息
                                     + "\n.link <mcID> - 连接游戏账号"
@@ -50,7 +49,8 @@ public class CommandsPublic {
                                     + "\n.tps - 服务端TPS"
                                     // 功能信息
                                     + "\n.seen <玩家> - 查询玩家"
-                                    + "\n.at <玩家> [内容] - 提醒游戏内的玩家");
+                                    + "\n.at <玩家> [内容] - 提醒游戏内的玩家"
+                                    + "\n.uuid <玩家> - 调用API查询正版UUID");
                 break;
 
             // 外部信息
@@ -124,9 +124,6 @@ public class CommandsPublic {
             case ("rgb"):
             case ("颜色"):
                 contact.sendMessage("RGB颜色对照表：https://tool.oschina.net/commons?type=3");
-                break;
-            case ("uuid"):
-                contact.sendMessage("正版UUID查询：https://mcuuid.net/");
                 break;
             case ("wiki"):
                 contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/Minecraft_Wiki");

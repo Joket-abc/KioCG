@@ -123,7 +123,8 @@ public class Fun implements Listener {
     // 怪物掉落货币
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-        if (!e.getEntity().getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+        final Entity entity = e.getEntity();
+        if (entity instanceof Player || !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
             return;
         }
 

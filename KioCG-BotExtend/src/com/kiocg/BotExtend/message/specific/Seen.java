@@ -2,6 +2,7 @@ package com.kiocg.BotExtend.message.specific;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.kiocg.BotExtend.BotExtend;
+import com.kiocg.BotExtend.utils.HttpsUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import net.mamoe.mirai.contact.Contact;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class Seen {
     public void seen(final @NotNull Contact contact, final @NotNull String msg) {
         final UUID uuid;
-        final OfflinePlayer offlinePlayer;
+        OfflinePlayer offlinePlayer;
 
         // 如果输入的是UUID
         if (msg.length() == 36) {
@@ -39,12 +40,19 @@ public class Seen {
             // 输入的可能是玩家名
             offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
 
-            if (offlinePlayer == null) {
-                contact.sendMessage("无法找到玩家 " + msg + "，请尝试使用UUID进行查询.");
-                return;
-            }
+            if (offlinePlayer != null) {
+                uuid = offlinePlayer.getUniqueId();
+            } else {
+                final String uuidString = HttpsUtils.getPlayerUUIDFromApi(msg);
 
-            uuid = offlinePlayer.getUniqueId();
+                if (uuidString == null) {
+                    contact.sendMessage("玩家不存在：" + msg);
+                    return;
+                }
+
+                uuid = UUID.fromString(uuidString);
+                offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            }
         } else {
             contact.sendMessage("非法的玩家名：" + msg);
             return;

@@ -2,6 +2,7 @@ package com.kiocg.BotExtend.message;
 
 import com.kiocg.BotExtend.message.specific.At;
 import com.kiocg.BotExtend.message.specific.Seen;
+import com.kiocg.BotExtend.message.specific.Uuid;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
@@ -30,7 +31,8 @@ public class CommandsPrivate {
                     return;
                 default:
                     if (userCommand.toLowerCase().startsWith("seen") || userCommand.startsWith("查询")
-                        || userCommand.toLowerCase().startsWith("at") || userCommand.charAt(0) == '@') {
+                        || userCommand.toLowerCase().startsWith("at") || userCommand.charAt(0) == '@'
+                        || userCommand.toLowerCase().startsWith("uuid")) {
                         contact.sendMessage("请在连接游戏账号后使用此指令\n输入 .link <mcID> 来连接账号");
                         return;
                     }
@@ -82,6 +84,9 @@ public class CommandsPrivate {
             case ("@"):
                 contact.sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
                 break;
+            case ("uuid"):
+                contact.sendMessage(".uuid <玩家> - 调用API查询正版UUID");
+                break;
             default:
                 if (userCommand.toLowerCase().startsWith("seen ") || userCommand.startsWith("查询 ")) {
                     //noinspection DuplicateExpressions
@@ -91,6 +96,11 @@ public class CommandsPrivate {
                 if (userCommand.toLowerCase().startsWith("at ") || userCommand.startsWith("@ ")) {
                     //noinspection DuplicateExpressions
                     new At().at(contact, user, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
+                    break;
+                }
+                if (userCommand.toLowerCase().startsWith("uuid ")) {
+                    //noinspection DuplicateExpressions
+                    new Uuid().uuid(contact, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
                     break;
                 }
         }
