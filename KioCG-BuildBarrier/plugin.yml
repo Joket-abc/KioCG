@@ -1,0 +1,18 @@
+name: BuildBarrier
+main: com.kiocg.BuildBarrier.BuildBarrier
+version: 2021
+api-version: 1.16
+
+depend: [ "ProtocolLib" ]
+
+commands:
+  barrier:
+    description: "切换屏障观察模式."
+    permission: kiocg.command.barrier
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
+    usage: "用法: /<command> 切换屏障观察模式."
+
+permissions:
+  kiocg.command.barrier:
+    description: 切换屏障观察模式
+    default: true

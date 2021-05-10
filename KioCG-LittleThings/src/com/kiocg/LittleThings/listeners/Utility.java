@@ -77,7 +77,7 @@ public class Utility implements Listener {
         }
     }
 
-    // 限制刷怪笼(临时的)
+    // 修复刷怪笼限制(临时的)
     // TODO 1.17移除
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
