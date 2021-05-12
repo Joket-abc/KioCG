@@ -106,7 +106,7 @@ public class Fun implements Listener {
         }
 
         // 防止捕捉被命名生物
-        if (entity.customName() != null) {
+        if (entity.getCustomName() != null) {
             return;
         }
 
