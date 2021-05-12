@@ -84,13 +84,44 @@ public class Fun implements Listener {
     // 鸡蛋捕捉生物(大师球)
     @EventHandler(ignoreCancelled = true)
     public void onCatchMonster(final @NotNull EntityDamageByEntityEvent e) {
-        if (!e.getDamager().getType().equals(EntityType.EGG)) {
+        final Entity damager = e.getDamager();
+        if (!(damager instanceof Egg)) {
             return;
         }
 
         final Entity entity = e.getEntity();
 
         if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || !(entity instanceof Mob) || entity instanceof ElderGuardian || entity instanceof EnderDragon || entity instanceof Wither) {
+            return;
+        }
+
+        // 防止捕捉幼年生物
+        if (entity instanceof Ageable && !((Ageable) entity).isAdult()) {
+            return;
+        }
+
+        // 防止捕捉被驯服生物
+        if (entity instanceof Tameable && ((Tameable) entity).isTamed()) {
+            return;
+        }
+
+        // 防止捕捉被命名生物
+        if (entity.customName() != null) {
+            return;
+        }
+
+        // 防止捕捉没羊毛的羊
+        if (entity instanceof Sheep && ((Sheep) entity).isSheared()) {
+            return;
+        }
+
+        // 防止捕捉有箱子的类马
+        if (entity instanceof ChestedHorse && ((ChestedHorse) entity).isCarryingChest()) {
+            return;
+        }
+
+        // 捕捉概率30%
+        if (new Random().nextInt(100) < 70) {
             return;
         }
 
@@ -107,6 +138,8 @@ public class Fun implements Listener {
         }
 
         e.setCancelled(true);
+
+        damager.remove();
         entity.remove();
 
         world.createExplosion(location, 0F);
