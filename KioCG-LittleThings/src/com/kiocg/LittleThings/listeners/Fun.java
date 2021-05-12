@@ -7,10 +7,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -84,20 +81,14 @@ public class Fun implements Listener {
         ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
     }
 
-    // 下届之星捕捉生物
+    // 鸡蛋捕捉生物(大师球)
     @EventHandler(ignoreCancelled = true)
-    public void onCatchMonster(final @NotNull PlayerInteractEntityEvent e) {
-        if (!e.getHand().equals(EquipmentSlot.HAND)) {
+    public void onCatchMonster(final @NotNull EntityDamageByEntityEvent e) {
+        if (!e.getDamager().getType().equals(EntityType.EGG)) {
             return;
         }
 
-        final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
-
-        if (!itemStack.getType().equals(Material.NETHER_STAR)) {
-            return;
-        }
-
-        final Entity entity = e.getRightClicked();
+        final Entity entity = e.getEntity();
 
         if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || !(entity instanceof Mob) || entity instanceof ElderGuardian || entity instanceof EnderDragon || entity instanceof Wither) {
             return;
@@ -109,11 +100,12 @@ public class Fun implements Listener {
         try {
             world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
         } catch (final @NotNull NullPointerException ignore) {
-            e.getPlayer().sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
+            for (final Player player : location.getNearbyEntitiesByType(Player.class, 16.0)) {
+                player.sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
+            }
             return;
         }
 
-        itemStack.setAmount(itemStack.getAmount() - 1);
         entity.remove();
 
         world.createExplosion(location, 0F);
