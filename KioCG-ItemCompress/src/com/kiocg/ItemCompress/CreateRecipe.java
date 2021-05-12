@@ -18,6 +18,10 @@ public class CreateRecipe {
         // 胖次币功能需要
         compressMaterial.remove(Material.BARRIER);
 
+        // 修复某些小问题
+        compressMaterial.remove(Material.PLAYER_HEAD);
+        compressMaterial.remove(Material.SPAWNER);
+
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while (iterator.hasNext()) {
