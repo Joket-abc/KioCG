@@ -106,6 +106,7 @@ public class Fun implements Listener {
             return;
         }
 
+        e.setCancelled(true);
         entity.remove();
 
         world.createExplosion(location, 0F);
