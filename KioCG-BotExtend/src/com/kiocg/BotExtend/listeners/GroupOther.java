@@ -81,6 +81,7 @@ public class GroupOther implements Listener {
                                           .append("\n有关白名单请输入 .whitelist")
                                           .append("\n下载客户端请输入 .client")
                                           .append("\n查看备用IP请输入 .ip")
+                                          .append("\n服务器含假矿+反作弊等保护插件")
                                           .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
                 break;
             case "553171328":
