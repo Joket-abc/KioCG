@@ -26,7 +26,9 @@ public class Listeners implements Listener {
             e.setCancelled(true);
         }
 
-        pendingConnection.setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + Utils.splitPlayerName(playerAndPassword)).getBytes(Charsets.UTF_8)));
+        final String uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + Utils.splitPlayerName(playerAndPassword)).getBytes(Charsets.UTF_8)).toString();
+        //noinspection SpellCheckingInspection
+        pendingConnection.setUniqueId(UUID.fromString("ffffffff-ffff-ffff" + uuid.substring(18)));
     }
 
     @EventHandler
