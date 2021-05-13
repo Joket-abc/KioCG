@@ -1,18 +1,16 @@
 package com.kiocg.LittleThings.listeners;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -81,17 +79,24 @@ public class Fun implements Listener {
         ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
     }
 
-    // 鸡蛋捕捉生物(大师球)
+    // 下届之星捕捉怪物
     @EventHandler(ignoreCancelled = true)
-    public void onCatchMonster(final @NotNull EntityDamageByEntityEvent e) {
-        final Entity damager = e.getDamager();
-        if (!(damager instanceof Egg)) {
+    public void onCatchMonsters(final @NotNull PlayerInteractEntityEvent e) {
+        if (!e.getHand().equals(EquipmentSlot.HAND)) {
             return;
         }
 
-        final Entity entity = e.getEntity();
+        final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
 
-        if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || !(entity instanceof Mob) || entity instanceof ElderGuardian || entity instanceof EnderDragon || entity instanceof Wither) {
+        if (!itemStack.getType().equals(Material.NETHER_STAR)) {
+            return;
+        }
+
+        final Entity entity = e.getRightClicked();
+
+        if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || (!(entity instanceof Monster) && !(entity instanceof Ghast))
+            || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof EnderDragon
+            || entity instanceof Giant || entity instanceof Wither) {
             return;
         }
 
@@ -120,26 +125,19 @@ public class Fun implements Listener {
             return;
         }
 
-        // 捕捉概率30%
-        if (new Random().nextInt(100) < 70) {
-            return;
-        }
-
         final World world = entity.getWorld();
         final Location location = entity.getLocation();
 
         try {
             world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
         } catch (final @NotNull NullPointerException ignore) {
-            for (final Player player : location.getNearbyEntitiesByType(Player.class, 16.0)) {
-                player.sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
-            }
+            e.getPlayer().sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
             return;
         }
 
         e.setCancelled(true);
 
-        damager.remove();
+        itemStack.setAmount(itemStack.getAmount() - 1);
         entity.remove();
 
         world.createExplosion(location, 0F);
@@ -147,19 +145,19 @@ public class Fun implements Listener {
     }
 
     // 怪物掉落货币
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-        final Entity entity = e.getEntity();
-        if (entity instanceof Player || entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
-            return;
-        }
-
-        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
-
-        final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
-        itemStack.setItemMeta(itemMeta);
-
-        e.getDrops().add(itemStack);
-    }
+    //    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    //    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+    //        final Entity entity = e.getEntity();
+    //        if (entity instanceof Player || entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
+    //            return;
+    //        }
+    //
+    //        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
+    //
+    //        final ItemMeta itemMeta = itemStack.getItemMeta();
+    //        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
+    //        itemStack.setItemMeta(itemMeta);
+    //
+    //        e.getDrops().add(itemStack);
+    //    }
 }
