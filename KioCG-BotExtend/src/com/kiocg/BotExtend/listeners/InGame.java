@@ -60,7 +60,7 @@ public class InGame implements Listener {
         final Player player = e.getPlayer();
 
         //noinspection SpellCheckingInspection
-        if (player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
+        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId()) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
             // 防止卡视角和卡空中
             final Location from = e.getFrom();
             final Location to = e.getTo();

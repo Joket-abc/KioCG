@@ -35,6 +35,7 @@ public class CommandsPublic {
                                     // 内部信息
                                     + "\n.whitelist - 白名单申请方法"
                                     + "\n.support - 赞助服务器说明"
+                                    + "\n.offline - 离线(盗版)账号说明"
                                     // 功能信息
                                     + "\n.prefix - 自定义称号说明"
                                     + "\n.color - RGB颜色对照表"
@@ -113,6 +114,13 @@ public class CommandsPublic {
             case ("赞助"):
                 contact.sendMessage("请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。"
                                     + "\n如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。");
+                break;
+            case ("offline"):
+            case ("离线"):
+            case ("盗版"):
+                contact.sendMessage("离线模式适用范围：正版玩家想要带朋友一起游玩，但是对方没有正版；"
+                                    + "\n你能明确证明自己不是熊孩子(群等级达到10以上的二次元患者)。"
+                                    + "\n如需申请离线账号请联系群主，需保证离线账号的使用者不是熊孩子。");
                 break;
 
             // 功能信息
