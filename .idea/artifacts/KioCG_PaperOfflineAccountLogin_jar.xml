@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KioCG-PaperOfflineAccountLogin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_PaperOfflineAccountLogin_jar</output-path>
+    <root id="archive" name="KioCG-PaperOfflineAccountLogin.jar">
+      <element id="module-output" name="KioCG-PaperOfflineAccountLogin" />
+      <element id="module-source" name="KioCG-PaperOfflineAccountLogin" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-PaperOfflineAccountLogin/plugin.yml" />
+    </root>
+  </artifact>
+</component>

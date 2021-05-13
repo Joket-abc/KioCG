@@ -1,5 +1,6 @@
 package com.kiocg.WaterfallOfflineAccountLogin;
 
+import com.google.common.base.Charsets;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -8,6 +9,8 @@ import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+
+import java.util.UUID;
 
 public class Listeners implements Listener {
     @EventHandler
@@ -22,6 +25,8 @@ public class Listeners implements Listener {
             e.setCancelReason(new ComponentBuilder("... ").color(ChatColor.GRAY).append("离线玩家, 密码错误或账号不存在").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
             e.setCancelled(true);
         }
+
+        pendingConnection.setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + Utils.splitPlayerName(playerAndPassword)).getBytes(Charsets.UTF_8)));
     }
 
     @EventHandler
