@@ -19,10 +19,10 @@ public class Listeners implements Listener {
         final String playerAndPassword = pendingConnection.getName();
 
         if (!playerAndPassword.contains("-")) {
-            e.setCancelReason(new ComponentBuilder("... ").color(ChatColor.GRAY).append("离线玩家, 请输入密码").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
+            e.setCancelReason(new ComponentBuilder("... ").color(ChatColor.GRAY).append("离线玩家不存在").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
             e.setCancelled(true);
         } else if (!Utils.isPasswordTrue(playerAndPassword)) {
-            e.setCancelReason(new ComponentBuilder("... ").color(ChatColor.GRAY).append("离线玩家, 密码错误或账号不存在").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
+            e.setCancelReason(new ComponentBuilder("... ").color(ChatColor.GRAY).append("离线玩家不存在").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
             e.setCancelled(true);
         }
 

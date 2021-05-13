@@ -52,6 +52,13 @@ public class WaterfallOfflineAccountLogin extends Plugin {
         new Utils().loadPlayers();
 
         BungeeCord.getInstance().getPluginManager().registerListener(this, new Listeners());
+        BungeeCord.getInstance().getPluginManager().registerCommand(this, new NewplayerCommand());
+    }
+
+    @Override
+    public void onDisable() {
+        BungeeCord.getInstance().getPluginManager().unregisterListeners(this);
+        BungeeCord.getInstance().getPluginManager().unregisterCommands(this);
     }
 
     public void savePlayersFile() {
