@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KioCG-WaterfallOfflineAccountLogin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_WaterfallOfflineAccountLogin_jar</output-path>
+    <root id="archive" name="KioCG-WaterfallOfflineAccountLogin.jar">
+      <element id="module-output" name="KioCG-WaterfallOfflineAccountLogin" />
+      <element id="module-source" name="KioCG-WaterfallOfflineAccountLogin" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-WaterfallOfflineAccountLogin/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-WaterfallOfflineAccountLogin/players.yml" />
+    </root>
+  </artifact>
+</component>
