@@ -46,11 +46,11 @@ public class ZombieWarrior {
         equipment.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
         equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
 
-        equipment.setItemInMainHandDropChance(0F);
-        equipment.setItemInOffHandDropChance(0F);
-        equipment.setHelmetDropChance(0F);
-        equipment.setChestplateDropChance(0F);
-        equipment.setLeggingsDropChance(0F);
-        equipment.setBootsDropChance(0F);
+        equipment.setItemInMainHandDropChance(0.0F);
+        equipment.setItemInOffHandDropChance(0.0F);
+        equipment.setHelmetDropChance(0.0F);
+        equipment.setChestplateDropChance(0.0F);
+        equipment.setLeggingsDropChance(0.0F);
+        equipment.setBootsDropChance(0.0F);
     }
 }

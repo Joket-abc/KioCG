@@ -103,7 +103,7 @@ public class GroupOther implements Listener {
         if (e.getMessage().contentToString().startsWith("<?xml ")) {
             try {
                 MessageSource.recall(e.getSource());
-            } catch (final @NotNull Exception ignore) {
+            } catch (final @NotNull RuntimeException ignore) {
             }
             event.setCancelled(true);
         }

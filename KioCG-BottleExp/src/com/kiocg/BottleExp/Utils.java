@@ -31,8 +31,8 @@ public class Utils {
             return (level * level) + level * 6;
         }
         if (level <= 31) {
-            return (int) ((level * level * 2.5) - level * 40.5 + 360D);
+            return (int) ((level * level * 2.5) - level * 40.5 + 360.0D);
         }
-        return (int) ((level * level * 4.5) - level * 162.5 + 2220D);
+        return (int) ((level * level * 4.5) - level * 162.5 + 2220.0D);
     }
 }

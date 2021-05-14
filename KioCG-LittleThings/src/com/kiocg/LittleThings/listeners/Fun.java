@@ -140,7 +140,7 @@ public class Fun implements Listener {
         itemStack.setAmount(itemStack.getAmount() - 1);
         entity.remove();
 
-        world.createExplosion(location, 0F);
+        world.createExplosion(location, 0.0F);
         world.playEffect(location, Effect.SMOKE, 0);
     }
 

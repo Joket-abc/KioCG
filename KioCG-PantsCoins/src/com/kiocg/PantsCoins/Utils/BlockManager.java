@@ -1,5 +1,6 @@
 package com.kiocg.PantsCoins.Utils;
 
+import com.google.common.collect.Maps;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -10,17 +11,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlockManager {
     // 存储 棕色蘑菇方块 的面属性数组、物品模型属性
-    private static final Map<Boolean[], Integer> brownMushroomFaceMap = new HashMap<>();
+    private static final Map<Boolean[], Integer> brownMushroomFaceMap = Maps.newHashMapWithExpectedSize(53);
     // 存储 红色蘑菇方块 的面属性数组、物品模型属性
-    private static final Map<Boolean[], Integer> redMushroomFaceMap = new HashMap<>();
+    private static final Map<Boolean[], Integer> redMushroomFaceMap = Maps.newHashMapWithExpectedSize(45);
     // 存储 蘑菇柄      的面属性数组、物品模型属性
-    private static final Map<Boolean[], Integer> mushroomStemFaceMap = new HashMap<>();
+    private static final Map<Boolean[], Integer> mushroomStemFaceMap = Maps.newHashMapWithExpectedSize(61);
 
     public void setup() {
         final List<Integer> northIds = Arrays.asList(4, 5, 6, 7, 8, 9, 16, 17, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35, 36, 37, 38, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 63, 64, 65, 66, 67, 68, 77, 78, 79, 80, 81, 82, 83, 84, 93, 94, 95, 96, 97, 98, 99, 107, 108, 109, 110, 111, 112, 113, 114, 123, 124, 125, 126, 127, 128, 129, 138, 139, 140, 141, 142, 143, 144, 145, 154, 155, 156, 157, 158, 159, 160);

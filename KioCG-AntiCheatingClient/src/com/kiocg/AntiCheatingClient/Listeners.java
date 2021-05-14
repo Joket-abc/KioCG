@@ -89,7 +89,7 @@ public class Listeners implements Listener {
             // 提醒全体群成员
             try {
                 KioCGBot.sendGroupMsgAsync(569696336L, "邪恶生物 " + playerName + " 被安全检查拦截了.");
-            } catch (final @NotNull Exception ignored) {
+            } catch (final @NotNull RuntimeException ignored) {
             }
         } else {
             player.sendMessage("§a[§b豆渣子§a] §6不要修改文本内容呢.");

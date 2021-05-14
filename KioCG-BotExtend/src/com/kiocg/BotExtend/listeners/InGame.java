@@ -41,7 +41,7 @@ public class InGame implements Listener {
         // 提醒全体群成员
         try {
             KioCGBot.sendGroupMsgAsync(569696336L, "不明生物 " + playerName + " 被白名单结界阻挡了.");
-        } catch (final @NotNull Exception ignored) {
+        } catch (final @NotNull RuntimeException ignored) {
         }
     }
 

@@ -15,8 +15,11 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class Seen {
+    private static final Pattern RGBColor = Pattern.compile("&#.{6}");
+
     public void seen(final @NotNull Contact contact, final @NotNull String msg) {
         final UUID uuid;
         OfflinePlayer offlinePlayer;
@@ -60,8 +63,7 @@ public class Seen {
 
         final StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))
-                                    .replaceAll("&#.{6}", ""))
+        stringBuilder.append(RGBColor.matcher(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))).replaceAll(""))
                      .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")")
                      .append("   QQ：").append(PlayerLinkUtils.getPlayerLink(uuid));
 
@@ -78,13 +80,13 @@ public class Seen {
 
         try {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
-        } catch (final @NotNull Exception ignore) {
+        } catch (final @NotNull RuntimeException ignore) {
             stringBuilder.append("NULL");
         }
 
         try {
             stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer));
-        } catch (final @NotNull Exception ignore) {
+        } catch (final @NotNull RuntimeException ignore) {
             stringBuilder.append("NULL");
         }
 

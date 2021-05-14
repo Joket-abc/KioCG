@@ -23,6 +23,6 @@ public class OreZombie {
 
         final EntityEquipment equipment = livingEntity.getEquipment();
         Objects.requireNonNull(equipment).setHelmet(new ItemStack(Utils.getOverworldRandomOre()));
-        equipment.setHelmetDropChance(1F);
+        equipment.setHelmetDropChance(1.0F);
     }
 }
