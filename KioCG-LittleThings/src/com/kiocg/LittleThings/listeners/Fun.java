@@ -130,8 +130,7 @@ public class Fun implements Listener {
 
         try {
             world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
-        } catch (final @NotNull NullPointerException ignore) {
-            e.getPlayer().sendMessage("§a[§b豆渣子§a] §c发生内部错误, 请联系管理员!");
+        } catch (final NullPointerException ignore) {
             return;
         }
 
