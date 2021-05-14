@@ -60,7 +60,7 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
-        if (e.getAction().equals(Action.PHYSICAL)) {
+        if (e.getAction() == Action.PHYSICAL) {
             final Block block = e.getClickedBlock();
 
             final Location loc = Objects.requireNonNull(block).getLocation();
@@ -68,10 +68,10 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (Objects.requireNonNull(block).getType().equals(Material.FARMLAND)) {
+            if (Objects.requireNonNull(block).getType() == Material.FARMLAND) {
                 e.setCancelled(true);
             }
-        } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             final Block block = e.getClickedBlock();
 
             final Location loc = Objects.requireNonNull(block).getLocation();
@@ -87,7 +87,7 @@ public class Listeners implements Listener {
 
             final Player player = e.getPlayer();
 
-            if (Objects.requireNonNull(block).getType().equals(Material.CAKE) && player.getFoodLevel() != 20) {
+            if (Objects.requireNonNull(block).getType() == Material.CAKE && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
                     for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
                         toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]");

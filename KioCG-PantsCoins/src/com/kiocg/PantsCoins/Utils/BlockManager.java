@@ -82,9 +82,9 @@ public class BlockManager {
         final Map<Boolean[], Integer> mushroomFaceMap;
 
         final Material material = block.getType();
-        if (material.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+        if (material == Material.BROWN_MUSHROOM_BLOCK) {
             mushroomFaceMap = brownMushroomFaceMap;
-        } else if (material.equals(Material.RED_MUSHROOM_BLOCK)) {
+        } else if (material == Material.RED_MUSHROOM_BLOCK) {
             mushroomFaceMap = redMushroomFaceMap;
         } else {
             mushroomFaceMap = mushroomStemFaceMap;

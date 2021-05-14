@@ -36,7 +36,7 @@ public class Utils {
             for (int y = blockY - 32; y <= blockY + 32; ++y) {
                 for (int z = blockZ - 32; z <= blockZ + 32; ++z) {
                     final Location loc = new Location(world, x, y, z);
-                    if (world.getBlockAt(loc).getType().equals(Material.BARRIER)) {
+                    if (world.getBlockAt(loc).getType() == Material.BARRIER) {
                         player.sendBlockChange(loc, Bukkit.createBlockData(Material.BEDROCK));
                     }
                 }

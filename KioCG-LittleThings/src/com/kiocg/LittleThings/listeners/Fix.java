@@ -34,7 +34,7 @@ public class Fix implements Listener {
     public void cancelArmorStandDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
 
-        if (!entity.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+        if (entity.getWorld().getEnvironment() != World.Environment.NORMAL) {
             return;
         }
 
@@ -46,7 +46,7 @@ public class Fix implements Listener {
     // 实体和爆炸不破坏悬挂实体
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
-        if (!e.getEntity().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+        if (e.getEntity().getWorld().getEnvironment() != World.Environment.NORMAL) {
             return;
         }
 

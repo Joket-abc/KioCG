@@ -20,7 +20,7 @@ public class Listeners implements Listener {
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final ItemStack itemStack = e.getItemInHand();
 
-        if (itemStack.getType().equals(Material.BARRIER)) {
+        if (itemStack.getType() == Material.BARRIER) {
             final ItemMeta itemMeta = itemStack.getItemMeta();
 
             // 自定义方块
@@ -44,7 +44,7 @@ public class Listeners implements Listener {
         final Block block = e.getBlock();
 
         final Material material = block.getType();
-        if (!material.equals(Material.BROWN_MUSHROOM_BLOCK) && !material.equals(Material.RED_MUSHROOM_BLOCK) && !material.equals(Material.MUSHROOM_STEM)) {
+        if (material != Material.BROWN_MUSHROOM_BLOCK && material != Material.RED_MUSHROOM_BLOCK && material != Material.MUSHROOM_STEM) {
             return;
         }
 
@@ -61,7 +61,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         final ItemStack itemStack = e.getResult();
-        if (itemStack != null && itemStack.getType().equals(Material.BARRIER)) {
+        if (itemStack != null && itemStack.getType() == Material.BARRIER) {
             e.setResult(null);
         }
     }

@@ -17,15 +17,15 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
-        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !Objects.requireNonNull(e.getHand()).equals(EquipmentSlot.HAND)
-            || !Objects.requireNonNull(e.getClickedBlock()).getType().equals(Material.ENCHANTING_TABLE)) {
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || Objects.requireNonNull(e.getHand()) != EquipmentSlot.HAND
+            || Objects.requireNonNull(e.getClickedBlock()).getType() != Material.ENCHANTING_TABLE) {
             return;
         }
 
         final ItemStack itemStack = e.getItem();
 
         try {
-            if (!Objects.requireNonNull(itemStack).getType().equals(Material.GLASS_BOTTLE)) {
+            if (Objects.requireNonNull(itemStack).getType() != Material.GLASS_BOTTLE) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {

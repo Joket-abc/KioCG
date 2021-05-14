@@ -40,13 +40,13 @@ public class Listeners implements Listener {
         final ItemMeta itemMeta1 = item1.getItemMeta();
         final ItemMeta itemMeta2 = item2.getItemMeta();
 
-        if (item1.getType().equals(Material.ENCHANTED_BOOK)) {
+        if (item1.getType() == Material.ENCHANTED_BOOK) {
             enchantments1 = ((EnchantmentStorageMeta) itemMeta1).getStoredEnchants();
         } else {
             enchantments1 = item1.getEnchantments();
         }
 
-        if (item2.getType().equals(Material.ENCHANTED_BOOK)) {
+        if (item2.getType() == Material.ENCHANTED_BOOK) {
             enchantments2 = ((EnchantmentStorageMeta) itemMeta2).getStoredEnchants();
         } else {
             enchantments2 = item2.getEnchantments();
@@ -73,7 +73,7 @@ public class Listeners implements Listener {
 
         final boolean item3IsBook;
 
-        if (item3.getType().equals(Material.ENCHANTED_BOOK)) {
+        if (item3.getType() == Material.ENCHANTED_BOOK) {
             enchantments3 = ((EnchantmentStorageMeta) itemMeta3).getStoredEnchants();
 
             item3IsBook = true;

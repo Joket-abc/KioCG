@@ -43,13 +43,13 @@ public class Listeners implements Listener {
         final ItemStack itemStackClone = e.getItemInHand().clone();
 
         // 防止放下的方块类型和手中物品类型不一致 (eg.打火石点火)
-        if (!itemStackClone.getType().equals(blockState.getType())) {
+        if (itemStackClone.getType() != blockState.getType()) {
             return;
         }
 
         final Player player = e.getPlayer();
 
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
+        if (player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
@@ -60,13 +60,13 @@ public class Listeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
-        if (!e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+        if (e.getAction() != Action.LEFT_CLICK_BLOCK) {
             return;
         }
 
         final Player player = e.getPlayer();
 
-        if (!Utils.lastBlockState.containsKey(player) || player.getGameMode().equals(GameMode.CREATIVE)) {
+        if (!Utils.lastBlockState.containsKey(player) || player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
@@ -82,7 +82,7 @@ public class Listeners implements Listener {
 
         // 台阶问题修复
         final BlockData blockData = blockState.getBlockData();
-        if (blockData instanceof Slab && ((Slab) blockData).getType().equals(Slab.Type.DOUBLE)) {
+        if (blockData instanceof Slab && ((Slab) blockData).getType() == Slab.Type.DOUBLE) {
             Utils.lastBlockState.remove(player);
             Utils.lastBlockItemStack.remove(player);
             return;

@@ -24,7 +24,7 @@ public class CustomModelDataCommand implements CommandExecutor {
 
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType().equals(Material.AIR)) {
+        if (itemStack.getType() == Material.AIR) {
             player.sendMessage("§a[§b豆渣子§a] §c你的手中没有物品.");
             return true;
         }

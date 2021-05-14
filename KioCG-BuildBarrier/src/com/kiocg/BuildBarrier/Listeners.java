@@ -31,24 +31,24 @@ public class Listeners implements Listener {
     // 破坏屏障
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
-        if (!e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+        if (e.getAction() != Action.LEFT_CLICK_BLOCK) {
             return;
         }
 
         final Block block = e.getClickedBlock();
 
-        if (!Objects.requireNonNull(block).getType().equals(Material.BARRIER)) {
+        if (Objects.requireNonNull(block).getType() != Material.BARRIER) {
             return;
         }
 
         final PlayerInventory playerInventory = e.getPlayer().getInventory();
 
         final ItemStack offItemStack = playerInventory.getItemInOffHand();
-        if (!offItemStack.getType().equals(Material.BARRIER)) {
+        if (offItemStack.getType() != Material.BARRIER) {
             return;
         }
         final ItemStack mainItemStack = playerInventory.getItemInMainHand();
-        if (!mainItemStack.getType().equals(Material.BARRIER)) {
+        if (mainItemStack.getType() != Material.BARRIER) {
             return;
         }
 

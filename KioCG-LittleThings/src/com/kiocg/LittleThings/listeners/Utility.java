@@ -49,7 +49,7 @@ public class Utility implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSpawnerPlace(final @NotNull BlockPlaceEvent e) {
         final Block block = e.getBlockPlaced();
-        if (!block.getType().equals(Material.SPAWNER)) {
+        if (block.getType() != Material.SPAWNER) {
             return;
         }
 
@@ -62,7 +62,7 @@ public class Utility implements Listener {
         for (int x = chunkX - 1; x <= chunkX + 1; ++x) {
             for (int z = chunkZ - 1; z <= chunkZ + 1; ++z) {
                 for (final BlockState entityBlock : world.getChunkAt(x, z).getTileEntities()) {
-                    if (entityBlock.getType().equals(Material.SPAWNER)) {
+                    if (entityBlock.getType() == Material.SPAWNER) {
                         if (++count > 16) {
                             e.getPlayer().sendMessage("§a[§b豆渣子§a] §6相邻九个区块内最多允许存在16个克隆箱.");
 

@@ -23,7 +23,7 @@ import java.util.Random;
 public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent e) {
-        if (!e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) {
+        if (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.NATURAL) {
             return;
         }
 
@@ -37,7 +37,7 @@ public class Listeners implements Listener {
                     case 0 -> {
                         final Location giantLoc = livingEntity.getLocation();
 
-                        if (giantLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(1000) < 997) {
+                        if (giantLoc.getBlock().getType() == Material.CAVE_AIR || random.nextInt(1000) < 997) {
                             return;
                         }
 
@@ -53,7 +53,7 @@ public class Listeners implements Listener {
                     case 2 -> {
                         final Location oreZombieLoc = livingEntity.getLocation();
 
-                        if (!oreZombieLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 90) {
+                        if (oreZombieLoc.getBlock().getType() != Material.CAVE_AIR || random.nextInt(100) < 90) {
                             return;
                         }
 

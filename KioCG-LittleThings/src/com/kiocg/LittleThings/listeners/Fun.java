@@ -41,7 +41,7 @@ public class Fun implements Listener {
     // 骨粉催熟玩家
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteractEntity(final @NotNull PlayerInteractEntityEvent e) {
-        if (!e.getHand().equals(EquipmentSlot.HAND)) {
+        if (e.getHand() != EquipmentSlot.HAND) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class Fun implements Listener {
 
         final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
 
-        if (!itemStack.getType().equals(Material.BONE_MEAL)) {
+        if (itemStack.getType() != Material.BONE_MEAL) {
             return;
         }
 
@@ -82,19 +82,19 @@ public class Fun implements Listener {
     // 下届之星捕捉怪物
     @EventHandler(ignoreCancelled = true)
     public void onCatchMonsters(final @NotNull PlayerInteractEntityEvent e) {
-        if (!e.getHand().equals(EquipmentSlot.HAND)) {
+        if (e.getHand() != EquipmentSlot.HAND) {
             return;
         }
 
         final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
 
-        if (!itemStack.getType().equals(Material.NETHER_STAR)) {
+        if (itemStack.getType() != Material.NETHER_STAR) {
             return;
         }
 
         final Entity entity = e.getRightClicked();
 
-        if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || (!(entity instanceof Monster) && !(entity instanceof Ghast))
+        if (entity.getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER || (!(entity instanceof Monster) && !(entity instanceof Ghast))
             || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof EnderDragon
             || entity instanceof Giant || entity instanceof Wither) {
             return;

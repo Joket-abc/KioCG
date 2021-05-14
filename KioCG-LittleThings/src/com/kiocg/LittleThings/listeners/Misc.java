@@ -38,11 +38,11 @@ public class Misc implements Listener {
 
         final World.Environment environment = loc.getWorld().getEnvironment();
 
-        if (environment.equals(World.Environment.NETHER) && loc.getY() > 127.0) {
+        if (environment == World.Environment.NETHER && loc.getY() > 127.0) {
             return;
         }
 
-        if (environment.equals(World.Environment.THE_END) && loc.getBlock().getType().equals(Material.END_PORTAL)) {
+        if (environment == World.Environment.THE_END && loc.getBlock().getType() == Material.END_PORTAL) {
             return;
         }
 
@@ -99,16 +99,16 @@ public class Misc implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(final @NotNull InventoryClickEvent e) {
         try {
-            if (!Objects.requireNonNull(e.getClickedInventory()).getType().equals(InventoryType.CRAFTING)) {
+            if (Objects.requireNonNull(e.getClickedInventory()).getType() != InventoryType.CRAFTING) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
-        if (!e.getSlotType().equals(InventoryType.SlotType.RESULT)
-            || !Objects.requireNonNull(e.getCurrentItem()).getType().equals(Material.AIR)
-            || !Objects.requireNonNull(e.getCursor()).getType().equals(Material.AIR)) {
+        if (e.getSlotType() != InventoryType.SlotType.RESULT
+            || Objects.requireNonNull(e.getCurrentItem()).getType() != Material.AIR
+            || Objects.requireNonNull(e.getCursor()).getType() != Material.AIR) {
             return;
         }
 
@@ -129,7 +129,7 @@ public class Misc implements Listener {
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final PlayerInventory playerInventory = e.getPlayer().getInventory();
 
-        if (!playerInventory.getItemInOffHand().getType().equals(Material.STICK)) {
+        if (playerInventory.getItemInOffHand().getType() != Material.STICK) {
             return;
         }
 
