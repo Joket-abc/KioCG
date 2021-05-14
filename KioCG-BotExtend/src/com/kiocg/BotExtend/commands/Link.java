@@ -12,12 +12,11 @@ import java.util.UUID;
 public class Link implements CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof final @NotNull Player player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;
         }
 
-        final Player player = (Player) sender;
         final UUID uuid = player.getUniqueId();
 
         final Long qq = PlayerLinkUtils.getPlayerLink(uuid);

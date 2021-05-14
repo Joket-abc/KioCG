@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class BarrierCommand implements CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof final @NotNull Player player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;
         }
@@ -17,8 +17,6 @@ public class BarrierCommand implements CommandExecutor {
         if (args.length != 0) {
             return false;
         }
-
-        final Player player = (Player) sender;
 
         //        if (!Utils.barrierPlayers.contains(player)) {
         //            Utils.barrierPlayers.add(player);

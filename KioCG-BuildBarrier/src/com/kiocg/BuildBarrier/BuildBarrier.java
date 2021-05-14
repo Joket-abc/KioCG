@@ -1,22 +1,21 @@
 package com.kiocg.BuildBarrier;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
 public class BuildBarrier extends JavaPlugin {
+    @SuppressWarnings("unused")
     public static BuildBarrier instance;
 
-    public ProtocolManager protocolManager;
+    //    public static ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        protocolManager = ProtocolLibrary.getProtocolManager();
+        //        protocolManager = ProtocolLibrary.getProtocolManager();
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 

@@ -12,12 +12,10 @@ public class IMCommand implements CommandExecutor {
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof final @NotNull Player player)) {
             sender.sendMessage("此指令仅限玩家使用.");
             return true;
         }
-
-        final Player player = (Player) sender;
 
         if (args.length == 0) {
             player.sendMessage("§4G§ciant §6| 巨人");
@@ -42,38 +40,31 @@ public class IMCommand implements CommandExecutor {
             loc.setY(loc.getY() + 1.0);
 
             switch (args[0].toLowerCase()) {
-                case "giant":
-                case "g":
+                case "giant", "g" -> {
                     InsaneMonsters.giant.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成巨人.");
-                    break;
-                case "zombiewarrior":
-                case "zw":
+                }
+                case "zombiewarrior", "zw" -> {
                     InsaneMonsters.zombieWarrior.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成僵尸战士.");
-                    break;
-                case "skeletonarcher":
-                case "sa":
+                }
+                case "skeletonarcher", "sa" -> {
                     InsaneMonsters.skeletonArcher.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成骷髅弓箭手.");
-                    break;
-                case "darkknight":
-                case "dk":
+                }
+                case "darkknight", "dk" -> {
                     InsaneMonsters.darkKnight.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成黑暗骑士.");
-                    break;
-                case "orezombie":
-                case "oz":
+                }
+                case "orezombie", "oz" -> {
                     InsaneMonsters.oreZombie.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
-                    break;
-                case "blockzombie":
-                case "bz":
+                }
+                case "blockzombie", "bz" -> {
                     InsaneMonsters.blockZombie.spawn(loc);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成方块僵尸.");
-                    break;
-                default:
-                    player.sendMessage("§a[§b豆渣子§a] §c无效的疯狂怪物种类.");
+                }
+                default -> player.sendMessage("§a[§b豆渣子§a] §c无效的疯狂怪物种类.");
             }
             return true;
         }

@@ -22,10 +22,9 @@ import java.util.Objects;
 public class GroupOther implements Listener {
     @EventHandler
     public void onMemberJoinRequest(final @NotNull AsyncABEvent event) {
-        if (!(event.getEvent() instanceof MemberJoinRequestEvent)) {
+        if (!(event.getEvent() instanceof final @NotNull MemberJoinRequestEvent e)) {
             return;
         }
-        final MemberJoinRequestEvent e = (MemberJoinRequestEvent) event.getEvent();
 
         switch (String.valueOf(Objects.requireNonNull(e.getGroup()).getId())) {
             case "569696336":
@@ -64,29 +63,24 @@ public class GroupOther implements Listener {
 
     @EventHandler
     public void onMemberJoin(final @NotNull AsyncABEvent event) {
-        if (!(event.getEvent() instanceof MemberJoinEvent)) {
+        if (!(event.getEvent() instanceof final @NotNull MemberJoinEvent e)) {
             return;
         }
-        final MemberJoinEvent e = (MemberJoinEvent) event.getEvent();
 
         final NormalMember member = e.getMember();
         final long userID = member.getId();
 
         final Group group = e.getGroup();
         switch (String.valueOf(group.getId())) {
-            case "569696336":
-                group.sendMessage(new MessageChainBuilder()
-                                          .append(new At(userID)).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
-                                          .append("\n！请先仔细查看群公告！")
-                                          .append("\n有关白名单请输入 .whitelist")
-                                          .append("\n下载客户端请输入 .client")
-                                          .append("\n查看备用IP请输入 .ip")
-                                          .append("\n服务器含假矿+反作弊等保护插件")
-                                          .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
-                break;
-            case "553171328":
-                member.setNameCard(Objects.requireNonNull(PlayerLinkUtils.getPlayerLinkAsName(userID)));
-                break;
+            case "569696336" -> group.sendMessage(new MessageChainBuilder()
+                                                          .append(new At(userID)).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                                          .append("\n！请先仔细查看群公告！")
+                                                          .append("\n有关白名单请输入 .whitelist")
+                                                          .append("\n下载客户端请输入 .client")
+                                                          .append("\n查看备用IP请输入 .ip")
+                                                          .append("\n服务器含假矿+反作弊等保护插件")
+                                                          .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
+            case "553171328" -> member.setNameCard(Objects.requireNonNull(PlayerLinkUtils.getPlayerLinkAsName(userID)));
         }
     }
 

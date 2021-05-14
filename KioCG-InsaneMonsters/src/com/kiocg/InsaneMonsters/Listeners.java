@@ -34,7 +34,7 @@ public class Listeners implements Listener {
         switch (livingEntity.getType()) {
             case ZOMBIE:
                 switch (random.nextInt(4)) {
-                    case 0:
+                    case 0 -> {
                         final Location giantLoc = livingEntity.getLocation();
 
                         if (giantLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(1000) < 997) {
@@ -42,15 +42,15 @@ public class Listeners implements Listener {
                         }
 
                         InsaneMonsters.giant.spawn(giantLoc);
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         if (random.nextInt(100) < 97) {
                             return;
                         }
 
                         InsaneMonsters.zombieWarrior.spawn(livingEntity.getLocation());
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         final Location oreZombieLoc = livingEntity.getLocation();
 
                         if (!oreZombieLoc.getBlock().getType().equals(Material.CAVE_AIR) || random.nextInt(100) < 90) {
@@ -58,14 +58,14 @@ public class Listeners implements Listener {
                         }
 
                         InsaneMonsters.oreZombie.spawn(oreZombieLoc);
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         if (random.nextInt(100) < 90) {
                             return;
                         }
 
                         InsaneMonsters.blockZombie.spawn(livingEntity.getLocation());
-                        break;
+                    }
                 }
                 break;
             case SKELETON:

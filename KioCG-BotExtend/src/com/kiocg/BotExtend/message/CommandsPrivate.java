@@ -41,53 +41,38 @@ public class CommandsPrivate {
 
         // 私有的指令
         switch (userCommand.toLowerCase()) {
-            case ("qaq"):
-                contact.sendMessage("චᆽච");
-                break;
+            case ("qaq") -> contact.sendMessage("චᆽච");
+
 
             // 查询信息
-            case ("list"):
-            case ("在线"):
+            case ("list"), ("在线") -> {
                 final StringBuilder stringBuilder = new StringBuilder();
 
                 for (final Player player : Bukkit.getOnlinePlayers()) {
                     stringBuilder.append(player.getName()).append(", ");
                 }
 
-                if (stringBuilder.length() == 0) {
+                if (stringBuilder.isEmpty()) {
                     contact.sendMessage("当前没有玩家在线呢qaq");
                 } else {
                     contact.sendMessage("当前在线玩家(" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + ")："
                                         + stringBuilder.substring(0, stringBuilder.length() - 2));
                 }
-                break;
-            case ("plugin"):
-            case ("plugins"):
-            case ("插件"):
-                contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
-                break;
-            case ("tps"):
-            case ("状态"):
+            }
+            case ("plugin"), ("plugins"), ("插件") -> contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
+            case ("tps"), ("状态") -> {
                 final double[] tps = Bukkit.getTPS();
                 contact.sendMessage("TPS(1m, 5m, 15m)："
                                     + String.format("%.2f", tps[0]) + ", "
                                     + String.format("%.2f", tps[1]) + ", "
                                     + String.format("%.2f", tps[2]));
-                break;
+            }
 
             // 功能信息
-            case ("seen"):
-            case ("查询"):
-                contact.sendMessage(".seen <玩家> - 查询玩家");
-                break;
-            case ("at"):
-            case ("@"):
-                contact.sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
-                break;
-            case ("uuid"):
-                contact.sendMessage(".uuid <玩家> - 调用API查询正版UUID");
-                break;
-            default:
+            case ("seen"), ("查询") -> contact.sendMessage(".seen <玩家> - 查询玩家");
+            case ("at"), ("@") -> contact.sendMessage(".at <玩家> [内容] - 提醒游戏内的玩家");
+            case ("uuid") -> contact.sendMessage(".uuid <玩家> - 调用API查询正版UUID");
+            default -> {
                 if (userCommand.toLowerCase().startsWith("seen ") || userCommand.startsWith("查询 ")) {
                     //noinspection DuplicateExpressions
                     new Seen().seen(contact, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
@@ -101,8 +86,8 @@ public class CommandsPrivate {
                 if (userCommand.toLowerCase().startsWith("uuid ")) {
                     //noinspection DuplicateExpressions
                     new Uuid().uuid(contact, userCommand.substring(userCommand.indexOf(' ') + 1).trim());
-                    break;
                 }
+            }
         }
     }
 }
