@@ -50,9 +50,10 @@ public class CommandsPublic {
 
             // 外部信息
             case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
-                                                         + "\n①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。"
-                                                         + "\n②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。"
-                                                         + "\n③服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。");
+                                                         + """
+                                                           ①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。
+                                                           ②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。
+                                                           ③服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。""");
             case ("ip"), ("地址") -> {
                 String spareAddress = "NULL";
                 try {
@@ -73,11 +74,13 @@ public class CommandsPublic {
             case ("whitelist"), ("白名单") -> {
                 final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                 if (9 <= hour && hour <= 22) {
-                    contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID"
-                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
+                    contact.sendMessage("""
+                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID
+                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
                 } else if (23 <= hour || hour <= 1) {
-                    contact.sendMessage("白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID"
-                                        + "\n审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~");
+                    contact.sendMessage("""
+                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
+                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
                 } else if (hour <= 3) {
                     contact.sendMessage("""
                                         白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
@@ -90,8 +93,9 @@ public class CommandsPublic {
                                         审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
                 }
             }
-            case ("support"), ("赞助") -> contact.sendMessage("请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。"
-                                                            + "\n如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。");
+            case ("support"), ("赞助") -> contact.sendMessage("""
+                                                            请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。
+                                                            如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。""");
             case ("offline"), ("离线"), ("盗版") -> contact.sendMessage("""
                                                                     离线模式适用范围：正版玩家想要带朋友一起游玩，但是对方没有正版；
                                                                     你能明确证明自己不是熊孩子（群等级达到10以上的二次元患者）。

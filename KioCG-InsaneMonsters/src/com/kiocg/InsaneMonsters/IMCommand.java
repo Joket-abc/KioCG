@@ -18,13 +18,14 @@ public class IMCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            player.sendMessage("§4G§ciant §6| 巨人");
-            player.sendMessage("§4Z§combie§4W§carrior §6| 僵尸战士");
-            player.sendMessage("§4S§ckeleton§4A§crcher §6| 骷髅弓箭手");
-            player.sendMessage("§4D§cark§4K§cnight §6| 黑暗骑士");
-            player.sendMessage("§4O§cre§4Z§combie §6| 矿石僵尸");
-            player.sendMessage("§4B§clock§4Z§combie §6| 方块僵尸");
-            player.sendMessage("§7/insanemonsters <mob> 来生成指定的疯狂怪物.");
+            player.sendMessage("""
+                               §4G§ciant §6| 巨人
+                               §4Z§combie§4W§carrior §6| 僵尸战士
+                               §4S§ckeleton§4A§crcher §6| 骷髅弓箭手
+                               §4D§cark§4K§cnight §6| 黑暗骑士
+                               §4O§cre§4Z§combie §6| 矿石僵尸
+                               §4B§clock§4Z§combie §6| 方块僵尸
+                               §7/insanemonsters <mob> 来生成指定的疯狂怪物.""");
             return true;
         }
 

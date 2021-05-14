@@ -100,7 +100,12 @@ public class GroupOther implements Listener {
     public void onPreventXML(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
-        if (e.getMessage().contentToString().startsWith("<?xml ")) {
+        final String message = e.getMessage().contentToString();
+        if (message.startsWith("<?xml ")) {
+            if (message.contains("serviceID=\"33\" action=\"web\" actionData=\"\"")) {
+                return;
+            }
+
             try {
                 MessageSource.recall(e.getSource());
             } catch (final @NotNull RuntimeException ignore) {
