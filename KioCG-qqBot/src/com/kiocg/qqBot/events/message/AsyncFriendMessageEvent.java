@@ -5,7 +5,7 @@ import net.mamoe.mirai.event.events.FriendMessageEvent;
 public class AsyncFriendMessageEvent extends AsyncMessageEvent {
     private final FriendMessageEvent event;
 
-    private boolean cancelledFlag = false;
+    private boolean cancelledFlag;
 
     public AsyncFriendMessageEvent(final FriendMessageEvent event) {
         super(event);

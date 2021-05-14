@@ -5,7 +5,7 @@ import net.mamoe.mirai.event.events.GroupTempMessageEvent;
 public class AsyncGroupTempMessageEvent extends AsyncMessageEvent {
     private final GroupTempMessageEvent event;
 
-    private boolean cancelledFlag = false;
+    private boolean cancelledFlag;
 
     public AsyncGroupTempMessageEvent(final GroupTempMessageEvent event) {
         super(event);

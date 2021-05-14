@@ -5,7 +5,7 @@ import net.mamoe.mirai.event.events.GroupMessageEvent;
 public class AsyncGroupMessageEvent extends AsyncMessageEvent {
     private final GroupMessageEvent event;
 
-    private boolean cancelledFlag = false;
+    private boolean cancelledFlag;
 
     public AsyncGroupMessageEvent(final GroupMessageEvent event) {
         super(event);

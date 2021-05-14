@@ -7,7 +7,7 @@ import org.bukkit.event.Cancellable;
 public class AsyncMessageEvent extends AsyncABEvent implements Cancellable {
     private final MessageEvent event;
 
-    private boolean cancelledFlag = false;
+    private boolean cancelledFlag;
 
     public AsyncMessageEvent(final MessageEvent event) {
         super(event);

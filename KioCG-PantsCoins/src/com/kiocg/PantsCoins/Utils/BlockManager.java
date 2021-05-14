@@ -77,7 +77,7 @@ public class BlockManager {
 
     public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull Block block) {
         final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-        final Boolean[] mushroomFace = new Boolean[]{multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
+        final Boolean[] mushroomFace = {multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
 
         final Map<Boolean[], Integer> mushroomFaceMap;
 

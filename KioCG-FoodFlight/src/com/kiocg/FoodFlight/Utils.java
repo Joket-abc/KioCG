@@ -19,7 +19,7 @@ public class Utils {
 
     private static @NotNull BukkitTask flightTask(final @NotNull Player player) {
         return new BukkitRunnable() {
-            int i = 0;
+            int i;
 
             @Override
             public void run() {
