@@ -68,7 +68,6 @@ public class CommandsPublic {
             case ("poster"), ("宣传帖") -> contact.sendMessage("服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html 记得去给个好评哟~");
             case ("github"), ("开源") -> contact.sendMessage("插件项目开源：https://github.com/Joket-abc/KioCG");
 
-
             // 内部信息
             case ("whitelist"), ("白名单") -> contact.sendMessage("""
                                                                白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
@@ -101,12 +100,10 @@ public class CommandsPublic {
                                                                     你能明确证明自己不是熊孩子（群等级达到10以上的二次元患者）。
                                                                     如需申请离线账号请联系群主，需保证离线账号的使用者不是熊孩子。""");
 
-
             // 功能信息
             case ("prefix"), ("称号") -> contact.sendMessage("元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");
             case ("color"), ("rgb"), ("颜色") -> contact.sendMessage("RGB颜色对照表：https://tool.oschina.net/commons?type=3");
             case ("wiki") -> contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/Minecraft_Wiki");
-
 
             // 功能信息
             case ("link"), ("连接") -> contact.sendMessage("输入 .link <mcID> 来连接账号");

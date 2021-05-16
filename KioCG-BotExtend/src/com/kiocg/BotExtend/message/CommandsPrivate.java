@@ -43,7 +43,6 @@ public class CommandsPrivate {
         switch (userCommand.toLowerCase()) {
             case ("qaq") -> contact.sendMessage("චᆽච");
 
-
             // 查询信息
             case ("list"), ("在线") -> {
                 final StringBuilder stringBuilder = new StringBuilder();
