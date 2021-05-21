@@ -29,6 +29,7 @@ public class CommandsPublic {
                                     .ip - 服务器IP地址
                                     .client - 客户端下载地址
                                     .status - 服务器统计信息
+                                    .map - 网页世界地图
                                     .poster - 服务器宣传贴
                                     .github - 插件项目开源
                                     .whitelist - 白名单申请方法
@@ -65,12 +66,13 @@ public class CommandsPublic {
             }
             case ("client"), ("客户端") -> contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com");
             case ("status"), ("统计") -> contact.sendMessage("服务器统计信息：http://status.kiocg.com");
+            case ("map"), ("地图") -> contact.sendMessage("网页世界地图：http://map.kiocg.com");
             case ("poster"), ("宣传帖") -> contact.sendMessage("服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html 记得去给个好评哟~");
             case ("github"), ("开源") -> contact.sendMessage("插件项目开源：https://github.com/Joket-abc/KioCG");
 
             // 内部信息
             case ("whitelist"), ("白名单") -> contact.sendMessage("""
-                                                               白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
+                                                               白名单申请(仅限正版!)：请先连接一次服务器，然后@任意昵称带前缀◈的管理员并报出你的ID
                                                                审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
             //                final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             //                if (9 <= hour && hour <= 22) {
