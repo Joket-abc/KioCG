@@ -52,7 +52,9 @@ public class WaterfallOfflineAccountLogin extends Plugin {
         new Utils().loadPlayers();
 
         BungeeCord.getInstance().getPluginManager().registerListener(this, new Listeners());
+
         BungeeCord.getInstance().getPluginManager().registerCommand(this, new NewplayerCommand());
+        BungeeCord.getInstance().getPluginManager().registerCommand(this, new WrongipCommand());
     }
 
     @Override

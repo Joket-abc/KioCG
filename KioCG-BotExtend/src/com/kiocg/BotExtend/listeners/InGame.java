@@ -50,7 +50,7 @@ public class InGame implements Listener {
         final Player player = e.getPlayer();
         if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance,
-                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6尚未连接QQ号, 请输入 /link 来查看帮助."), 5L);
+                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 建议在群内输入 §e.link " + player.getName() + " §6来连接."), 5L);
         }
     }
 

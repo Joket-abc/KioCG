@@ -2,14 +2,14 @@ package com.kiocg.WaterfallOfflineAccountLogin;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Utils {
     // 存储玩家-密码
     private static final List<String> playerPasswords = new ArrayList<>();
+    // 存储IP、密码错误次数
+    public static final Map<String, Integer> wrongPasswordIPs = new HashMap<>();
 
     public void loadPlayers() {
         playerPasswords.addAll(WaterfallOfflineAccountLogin.playersFileConfiguration.getStringList("password"));
