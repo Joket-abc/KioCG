@@ -1,0 +1,4 @@
+name: PlayOhTheDungeon
+main: com.kiocg.PlayOhTheDungeon.PlayOhTheDungeon
+version: 2021
+api-version: 1.16

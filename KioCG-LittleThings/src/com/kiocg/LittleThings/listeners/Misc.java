@@ -4,7 +4,10 @@ import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,13 +39,11 @@ public class Misc implements Listener {
             return;
         }
 
-        final World.Environment environment = loc.getWorld().getEnvironment();
+        final String worldName = loc.getWorld().getName();
 
-        if (environment == World.Environment.NETHER && loc.getY() > 127.0) {
-            return;
-        }
-
-        if (environment == World.Environment.THE_END && loc.getBlock().getType() == Material.END_PORTAL) {
+        if (("KioCG_world_nether".equals(worldName) && loc.getY() > 127.0)
+            || ("KioCG_world_the_end".equals(worldName) && loc.getBlock().getType() == Material.END_PORTAL)
+            || "KioCG_OhTheDungeon".equals(worldName)) {
             return;
         }
 

@@ -96,7 +96,7 @@ public class Listeners implements Listener {
                     Utils.eatCake.add(player.getUniqueId());
                 }
 
-                player.damage(99.9);
+                player.setHealth(0.0);
                 e.setCancelled(true);
             }
         }
