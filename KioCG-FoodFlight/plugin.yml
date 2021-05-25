@@ -15,36 +15,12 @@ permissions:
     description: 切换飞行模式
     default: true
 
-  kiocg.foodflight.normal:
-    description: 允许在主世界飞行
-    default: true
-  kiocg.foodflight.nether:
-    description: 允许在下届飞行
-    default: false
-  kiocg.foodflight.end:
-    description: 允许在末地飞行
-    default: false
-
-  kiocg.foodflight.normal.free:
-    description: 允许在主世界无限飞行
-    default: false
-    children:
-      kiocg.foodflight.normal: true
-  kiocg.foodflight.nether.free:
-    description: 允许在下届无限飞行
-    default: false
-    children:
-      kiocg.foodflight.nether: true
-  kiocg.foodflight.end.free:
-    description: 允许在末地无限飞行
-    default: false
-    children:
-      kiocg.foodflight.end: true
-
+  kiocg.foodflight.world_name:
+    description: 允许在指定世界飞行
+    default: op
+  kiocg.foodflight.free.world_name:
+    description: 允许在指定世界无限飞行
+    default: op
   kiocg.foodflight.free:
     description: 允许在所有世界无限飞行
     default: op
-    children:
-      kiocg.foodflight.normal.free: true
-      kiocg.foodflight.nether.free: true
-      kiocg.foodflight.end.free: true

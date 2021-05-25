@@ -27,52 +27,19 @@ public class FlyCommand implements CommandExecutor {
         }
 
         // 玩家尝试开启飞行
-        switch (player.getWorld().getEnvironment()) {
-            case NORMAL:
-                if (player.hasPermission("kiocg.foodflight.normal.free")) {
-                    Utils.addFlightList(player, false);
-                } else if (player.hasPermission("kiocg.foodflight.normal")) {
-                    if (player.getLocation().getBlockY() < 0) {
-                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
-                        return true;
-                    }
+        final String worldName = player.getWorld().getName().toLowerCase();
+        if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
+            Utils.addFlightList(player, false);
+        } else if (player.hasPermission("kiocg.foodflight." + worldName)) {
+            if (player.getLocation().getBlockY() < 0) {
+                player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+                return true;
+            }
 
-                    Utils.addFlightList(player, true);
-                } else {
-                    player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
-                    return true;
-                }
-                break;
-            case NETHER:
-                if (player.hasPermission("kiocg.foodflight.nether.free")) {
-                    Utils.addFlightList(player, false);
-                } else if (player.hasPermission("kiocg.foodflight.nether")) {
-                    if (player.getLocation().getBlockY() < 0) {
-                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
-                        return true;
-                    }
-
-                    Utils.addFlightList(player, true);
-                } else {
-                    player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
-                    return true;
-                }
-                break;
-            case THE_END:
-                if (player.hasPermission("kiocg.foodflight.end.free")) {
-                    Utils.addFlightList(player, false);
-                } else if (player.hasPermission("kiocg.foodflight.end")) {
-                    if (player.getLocation().getBlockY() < 0) {
-                        player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
-                        return true;
-                    }
-
-                    Utils.addFlightList(player, true);
-                } else {
-                    player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
-                    return true;
-                }
-                break;
+            Utils.addFlightList(player, true);
+        } else {
+            player.sendMessage("§a[§b豆渣子§a] §c➷ 不可以在这个世界飞行喔 ➷");
+            return true;
         }
 
         player.setAllowFlight(true);

@@ -45,46 +45,17 @@ public class Listeners implements Listener {
             return;
         }
 
-        switch (player.getWorld().getEnvironment()) {
-            case NORMAL:
-                if (player.hasPermission("kiocg.foodflight.normal.free")) {
-                    if (Utils.isFoodFlight(player)) {
-                        Utils.removeFoodFlight(player);
-                    }
-                    return;
-                } else if (player.hasPermission("kiocg.foodflight.normal")) {
-                    if (!Utils.isFoodFlight(player)) {
-                        Utils.startFoodFlightTask(player);
-                    }
-                    return;
-                }
-                break;
-            case NETHER:
-                if (player.hasPermission("kiocg.foodflight.nether.free")) {
-                    if (Utils.isFoodFlight(player)) {
-                        Utils.removeFoodFlight(player);
-                    }
-                    return;
-                } else if (player.hasPermission("kiocg.foodflight.nether")) {
-                    if (!Utils.isFoodFlight(player)) {
-                        Utils.startFoodFlightTask(player);
-                    }
-                    return;
-                }
-                break;
-            case THE_END:
-                if (player.hasPermission("kiocg.foodflight.end.free")) {
-                    if (Utils.isFoodFlight(player)) {
-                        Utils.removeFoodFlight(player);
-                    }
-                    return;
-                } else if (player.hasPermission("kiocg.foodflight.end")) {
-                    if (!Utils.isFoodFlight(player)) {
-                        Utils.startFoodFlightTask(player);
-                    }
-                    return;
-                }
-                break;
+        final String worldName = player.getWorld().getName().toLowerCase();
+        if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
+            if (Utils.isFoodFlight(player)) {
+                Utils.removeFoodFlight(player);
+            }
+            return;
+        } else if (player.hasPermission("kiocg.foodflight." + worldName)) {
+            if (!Utils.isFoodFlight(player)) {
+                Utils.startFoodFlightTask(player);
+            }
+            return;
         }
 
         Utils.removeFlightList(player);

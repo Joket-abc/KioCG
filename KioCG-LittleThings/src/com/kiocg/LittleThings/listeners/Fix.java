@@ -1,6 +1,5 @@
 package com.kiocg.LittleThings.listeners;
 
-import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -34,7 +33,7 @@ public class Fix implements Listener {
     public void cancelArmorStandDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
 
-        if (entity.getWorld().getEnvironment() != World.Environment.NORMAL) {
+        if (!"KioCG_world".equals(entity.getWorld().getName())) {
             return;
         }
 
@@ -46,7 +45,7 @@ public class Fix implements Listener {
     // 实体和爆炸不破坏悬挂实体
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
-        if (e.getEntity().getWorld().getEnvironment() != World.Environment.NORMAL) {
+        if (!"KioCG_world".equals(e.getEntity().getWorld().getName())) {
             return;
         }
 
