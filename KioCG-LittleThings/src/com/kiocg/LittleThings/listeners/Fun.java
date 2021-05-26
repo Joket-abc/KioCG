@@ -149,6 +149,6 @@ public class Fun implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDropItem(final @NotNull PlayerDropItemEvent e) {
         final Player player = e.getPlayer();
-        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
+        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_REMOVE_ITEM, 0.5F, 2.0F);
     }
 }
