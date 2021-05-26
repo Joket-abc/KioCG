@@ -25,6 +25,10 @@ public class PlayOhTheDungeon extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
+
+        for (final Player player : getServer().getOnlinePlayers()) {
+            Utils.playerRabbits.put(player.getUniqueId().toString(), 0);
+        }
     }
 
     @Override

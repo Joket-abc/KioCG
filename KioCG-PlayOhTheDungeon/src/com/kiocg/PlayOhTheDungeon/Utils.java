@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Utils {
-    // 存储触发兔子洞的玩家UUID、剩余触发次数
+    // 存储触发兔子洞的玩家UUID、触发次数
     public static final Map<String, Integer> playerRabbits = new HashMap<>();
 
     public static void joinRabbit(final @NotNull Player player) {
