@@ -1,5 +1,10 @@
 package com.kiocg.PlayOhTheDungeon;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,10 +21,21 @@ import java.io.IOException;
 import java.util.*;
 
 public class Utils {
+    // 存储触发兔子洞的玩家UUID、待确认的blockKey
+    public static final Map<String, Long> playerRabbitConfirm = new HashMap<>();
+
     // 存储触发兔子洞的玩家UUID、触发次数
     public static final Map<String, Integer> playerRabbits = new HashMap<>();
     // 存储进入过的兔子洞blockKey
     public static final List<Long> RabbitKeys = new ArrayList<>();
+
+    // 获取确认提示信息
+    public static @NotNull Component getConfirmMessage(final long blockKey) {
+        return LegacyComponentSerializer.legacyAmpersand().deserialize("§7[§9豆渣子§7] ")
+                                        .append(Component.text("你在地上发现了一个兔子窝洞口. ", NamedTextColor.GRAY))
+                                        .append(Component.text("[探头去看看]", NamedTextColor.GRAY, TextDecoration.BOLD)
+                                                         .clickEvent(ClickEvent.runCommand("/rabbit " + blockKey)));
+    }
 
     public static void joinRabbit(final @NotNull Player player) {
         new BukkitRunnable() {

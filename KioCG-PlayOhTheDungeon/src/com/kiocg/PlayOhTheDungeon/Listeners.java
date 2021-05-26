@@ -41,12 +41,11 @@ public class Listeners implements Listener {
         }
 
         final String uuid = player.getUniqueId().toString();
-        final int rabbit = Utils.playerRabbits.get(uuid);
-        //noinspection ImplicitNumericConversion
-        if (blockKey % (3000L + rabbit * 3000L) == 126L) {
-            Utils.playerRabbits.put(uuid, rabbit + 1);
+        if (blockKey % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
             Utils.RabbitKeys.add(blockKey);
-            Utils.joinRabbit(player);
+
+            Utils.playerRabbitConfirm.put(uuid, blockKey);
+            player.sendMessage(Utils.getConfirmMessage(blockKey));
         }
     }
 
@@ -63,7 +62,7 @@ public class Listeners implements Listener {
         if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
             Utils.saveAndClearBackpack(player);
             player.sendTitle("", "§7... 怎么回事, 我这是在哪? ...", 10, 70, 20);
-            player.sendMessage("§a[§b豆渣子§a] §3你来到了一个梦境中的地牢世界,");
+            player.sendMessage("§a[§b豆渣子§a] §3你来到了一个梦境中的世界,");
             player.sendMessage("§a[§b豆渣子§a] §2尝试找到回到现实世界的办法吧...");
         }
     }

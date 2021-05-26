@@ -2,3 +2,11 @@ name: PlayOhTheDungeon
 main: com.kiocg.PlayOhTheDungeon.PlayOhTheDungeon
 version: 2021
 api-version: 1.16
+
+commands:
+  rabbit:
+    description: "进入找到的兔子洞."
+    permission: kiocg.command.rabbit
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
+    usage: "用法: 无法单独使用."
+

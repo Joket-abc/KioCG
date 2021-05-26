@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Objects;
 
 public class PlayOhTheDungeon extends JavaPlugin {
     public static PlayOhTheDungeon instance;
@@ -24,11 +25,13 @@ public class PlayOhTheDungeon extends JavaPlugin {
             return;
         }
 
-        getServer().getPluginManager().registerEvents(new Listeners(), this);
-
         for (final Player player : getServer().getOnlinePlayers()) {
             Utils.playerRabbits.put(player.getUniqueId().toString(), 0);
         }
+
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
+
+        Objects.requireNonNull(getServer().getPluginCommand("rabbit")).setExecutor(new RabbitCommand());
     }
 
     @Override
