@@ -44,7 +44,10 @@ public class Utils {
             @Override
             public void run() {
                 switch (i) {
-                    case 0 -> player.sendTitle("", "§7... 你感到头晕目眩 ...", 10, 70, 20);
+                    case 0 -> {
+                        player.sendMessage("§a[§b豆渣子§a] §2你发现兔子窝里有只兔女郎!");
+                        player.sendTitle("", "§7... 你感到头晕目眩 ...", 10, 70, 20);
+                    }
 
                     case 1 -> {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 99999, 9));

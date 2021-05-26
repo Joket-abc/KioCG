@@ -18,12 +18,10 @@ public class RabbitCommand implements CommandExecutor {
         }
 
         final String uuid = player.getUniqueId().toString();
-        if (args[0].equals(Utils.playerRabbitConfirm.get(uuid).toString())) {
+        if (args[0].equals(String.valueOf(Utils.playerRabbitConfirm.get(uuid)))) {
             Utils.playerRabbitConfirm.remove(uuid);
             Utils.playerRabbits.put(uuid, Utils.playerRabbits.get(uuid) + 1);
             Utils.joinRabbit(player);
-        } else {
-            player.sendMessage("§a[§b豆渣子§a] §6你找不到这个兔子窝了!");
         }
 
         return true;
