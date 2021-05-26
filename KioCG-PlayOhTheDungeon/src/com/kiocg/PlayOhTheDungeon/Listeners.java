@@ -30,7 +30,13 @@ public class Listeners implements Listener {
 
         final Player player = e.getPlayer();
 
-        if (block.getBlockKey() % (2000L + Utils.playerRabbits.get(player.getUniqueId().toString()) * 1000L) == 126L) {
+        final long blockKey = block.getBlockKey();
+        if (Utils.RabbitKeys.contains(blockKey)) {
+            return;
+        }
+
+        if (blockKey % (1000L + Utils.playerRabbits.get(player.getUniqueId().toString()) * 1000L) == 126L) {
+            Utils.RabbitKeys.add(blockKey);
             Utils.joinRabbit(player);
         }
     }

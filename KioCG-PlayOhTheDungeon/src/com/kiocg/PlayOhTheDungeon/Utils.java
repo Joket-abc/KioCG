@@ -14,14 +14,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Utils {
     // 存储触发兔子洞的玩家UUID、触发次数
     public static final Map<String, Integer> playerRabbits = new HashMap<>();
+    // 存储进入过的兔子洞blockKey
+    public static final List<Long> RabbitKeys = new ArrayList<>();
 
     public static void joinRabbit(final @NotNull Player player) {
         new BukkitRunnable() {
