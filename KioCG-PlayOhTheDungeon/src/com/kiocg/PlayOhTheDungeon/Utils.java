@@ -29,6 +29,8 @@ public class Utils {
     // 存储进入过的兔子洞blockKey
     public static final List<Long> RabbitKeys = new ArrayList<>();
 
+    public static final long today = System.currentTimeMillis();
+
     // 获取确认提示信息
     public static @NotNull Component getConfirmMessage(final long blockKey) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize("§7[§9豆渣子§7] ")

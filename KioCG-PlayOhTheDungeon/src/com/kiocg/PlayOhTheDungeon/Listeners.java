@@ -41,7 +41,7 @@ public class Listeners implements Listener {
         }
 
         final String uuid = player.getUniqueId().toString();
-        if (blockKey % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
+        if ((blockKey & Utils.today) % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
             Utils.RabbitKeys.add(blockKey);
 
             Utils.playerRabbitConfirm.put(uuid, blockKey);
