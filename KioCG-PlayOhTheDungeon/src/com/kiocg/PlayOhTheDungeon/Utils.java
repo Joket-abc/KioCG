@@ -18,18 +18,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 
 public class Utils {
     // 存储触发兔子洞的玩家UUID、待确认的blockKey
     public static final Map<String, Long> playerRabbitConfirm = new HashMap<>();
-
     // 存储触发兔子洞的玩家UUID、触发次数
     public static final Map<String, Integer> playerRabbits = new HashMap<>();
-    // 存储进入过的兔子洞blockKey
-    public static final List<Long> RabbitKeys = new ArrayList<>();
 
-    public static final long today = System.currentTimeMillis();
+    // 存储兔子洞生成位置的变量
+    public static long variable = System.currentTimeMillis();
 
     // 获取确认提示信息
     public static @NotNull Component getConfirmMessage(final long blockKey) {
