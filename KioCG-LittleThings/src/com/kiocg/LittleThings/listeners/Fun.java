@@ -3,10 +3,12 @@ package com.kiocg.LittleThings.listeners;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -141,5 +143,12 @@ public class Fun implements Listener {
 
         world.createExplosion(location, 0.0F);
         world.playEffect(location, Effect.SMOKE, 0);
+    }
+
+    // 丢弃物品的音效
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPlayerDropItem(final @NotNull PlayerDropItemEvent e) {
+        final Player player = e.getPlayer();
+        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
     }
 }
