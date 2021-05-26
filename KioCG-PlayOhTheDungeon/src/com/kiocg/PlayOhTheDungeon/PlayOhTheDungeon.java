@@ -38,7 +38,6 @@ public class PlayOhTheDungeon extends JavaPlugin {
         for (final Player player : getServer().getOnlinePlayers()) {
             if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
                 player.setHealth(0.0);
-                player.sendMessage("§a[§b豆渣子§a] §2你醒了... 可是为什么你在这?");
                 Utils.restoreBackpackAndLoot(player);
             }
         }

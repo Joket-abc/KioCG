@@ -49,7 +49,7 @@ public class Listeners implements Listener {
 
         final Player player = e.getPlayer();
 
-        if (player.getGameMode() == GameMode.CREATIVE) {
+        if (!player.hasPermission("kiocg.blockrecall.use") || player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
 

@@ -50,9 +50,6 @@ public class Utils {
                     case 9 -> TeleportDungeon(player);
 
                     case 10 -> {
-                        player.sendTitle("", "§7... 怎么回事, 我这是在哪? ...", 10, 70, 20);
-                        player.sendMessage("§a[§b豆渣子§a] §3你来到了一个梦境中的地牢世界,");
-                        player.sendMessage("§a[§b豆渣子§a] §2尝试找到回到现实世界的办法吧...");
                         player.removePotionEffect(PotionEffectType.CONFUSION);
                         player.removePotionEffect(PotionEffectType.SLOW);
                         player.removePotionEffect(PotionEffectType.LEVITATION);
@@ -65,6 +62,14 @@ public class Utils {
                 ++i;
             }
         }.runTaskTimer(PlayOhTheDungeon.instance, 0L, 10L);
+    }
+
+    public static void TeleportDungeon(final @NotNull Player player) {
+        final Random random = new Random();
+        final int x = random.nextInt(9001) - 4500;
+        final int z = random.nextInt(9001) - 4500;
+
+        player.teleport(Objects.requireNonNull(Bukkit.getWorld("KioCG_OhTheDungeon")).getHighestBlockAt(x, z).getLocation());
     }
 
     public static void saveAndClearBackpack(final @NotNull Player player) {
@@ -133,13 +138,5 @@ public class Utils {
         if (!playerFile.delete()) {
             player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile delete failed)");
         }
-    }
-
-    public static void TeleportDungeon(final @NotNull Player player) {
-        final Random random = new Random();
-        final int x = random.nextInt(9001) - 4500;
-        final int z = random.nextInt(9001) - 4500;
-
-        player.teleport(Objects.requireNonNull(Bukkit.getWorld("KioCG_OhTheDungeon")).getHighestBlockAt(x, z).getLocation());
     }
 }

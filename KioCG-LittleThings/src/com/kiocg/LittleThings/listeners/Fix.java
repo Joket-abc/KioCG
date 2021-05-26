@@ -58,7 +58,13 @@ public class Fix implements Listener {
     // 动物或凋零骷髅刷怪笼禁止使用
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
-        if (!(e.getEntity() instanceof Monster) || e.getEntity() instanceof WitherSkeleton) {
+        final Entity entity = e.getEntity();
+
+        if ("KioCG_OhTheDungeon".equals(entity.getWorld().getName())) {
+            return;
+        }
+
+        if (!(entity instanceof Monster) || entity instanceof WitherSkeleton) {
             e.setCancelled(true);
         }
     }

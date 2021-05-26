@@ -1,16 +1,24 @@
 package com.kiocg.PlayOhTheDungeon;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
 
 public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -32,7 +40,11 @@ public class Listeners implements Listener {
             return;
         }
 
-        if (blockKey % (3000L + Utils.playerRabbits.get(player.getUniqueId().toString()) * 3000L) == 126L) {
+        final String uuid = player.getUniqueId().toString();
+        final int rabbit = Utils.playerRabbits.get(uuid);
+        //noinspection ImplicitNumericConversion
+        if (blockKey % (3000L + rabbit * 3000L) == 126L) {
+            Utils.playerRabbits.put(uuid, rabbit + 1);
             Utils.RabbitKeys.add(blockKey);
             Utils.joinRabbit(player);
         }
@@ -40,14 +52,19 @@ public class Listeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerChangedWorld(final @NotNull PlayerChangedWorldEvent e) {
+        final Player player = e.getPlayer();
+
         if ("KioCG_OhTheDungeon".equals(e.getFrom().getName())) {
             Utils.restoreBackpackAndLoot(e.getPlayer());
+            player.sendMessage("§a[§b豆渣子§a] §2你醒了... 可是为什么你在这?");
             return;
         }
 
-        final Player player = e.getPlayer();
         if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
             Utils.saveAndClearBackpack(player);
+            player.sendTitle("", "§7... 怎么回事, 我这是在哪? ...", 10, 70, 20);
+            player.sendMessage("§a[§b豆渣子§a] §3你来到了一个梦境中的地牢世界,");
+            player.sendMessage("§a[§b豆渣子§a] §2尝试找到回到现实世界的办法吧...");
         }
     }
 
@@ -56,17 +73,6 @@ public class Listeners implements Listener {
         if ("KioCG_OhTheDungeon".equals(e.getPlayer().getWorld().getName())) {
             e.setCancelled(true);
         }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerDeath(final @NotNull PlayerDeathEvent e) {
-        final Player player = e.getEntity();
-
-        if (!"KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
-            return;
-        }
-
-        player.sendMessage("§a[§b豆渣子§a] §2你醒了... 可是为什么你在这?");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -83,5 +89,22 @@ public class Listeners implements Listener {
         }
 
         player.setHealth(0.0);
+    }
+
+    // 怪物掉落货币
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
+        final Entity entity = e.getEntity();
+        if (entity instanceof Player || new Random().nextInt(10) != 0) {
+            return;
+        }
+
+        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
+
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
+        itemStack.setItemMeta(itemMeta);
+
+        e.getDrops().add(itemStack);
     }
 }

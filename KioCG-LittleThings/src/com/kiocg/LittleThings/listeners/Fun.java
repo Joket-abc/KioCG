@@ -142,21 +142,4 @@ public class Fun implements Listener {
         world.createExplosion(location, 0.0F);
         world.playEffect(location, Effect.SMOKE, 0);
     }
-
-    // 怪物掉落货币
-    //    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    //    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-    //        final Entity entity = e.getEntity();
-    //        if (entity instanceof Player || entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
-    //            return;
-    //        }
-    //
-    //        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
-    //
-    //        final ItemMeta itemMeta = itemStack.getItemMeta();
-    //        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
-    //        itemStack.setItemMeta(itemMeta);
-    //
-    //        e.getDrops().add(itemStack);
-    //    }
 }
