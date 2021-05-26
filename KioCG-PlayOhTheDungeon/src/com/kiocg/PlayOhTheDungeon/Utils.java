@@ -36,7 +36,7 @@ public class Utils {
     public static @NotNull Component getConfirmMessage(final long blockKey) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize("§7[§9豆渣子§7] ")
                                         .append(Component.text("你在地上发现了一个兔子窝洞口. ", NamedTextColor.GRAY))
-                                        .append(Component.text("[探头去看看]", NamedTextColor.GRAY, TextDecoration.BOLD)
+                                        .append(Component.text("[钻进去看看]", NamedTextColor.GRAY, TextDecoration.BOLD)
                                                          .clickEvent(ClickEvent.runCommand("/rabbit " + blockKey)));
     }
 

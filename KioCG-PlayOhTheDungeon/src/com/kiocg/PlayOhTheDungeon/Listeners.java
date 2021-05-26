@@ -59,7 +59,7 @@ public class Listeners implements Listener {
         if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
             Utils.saveAndClearBackpack(player);
             player.sendTitle("", "§7... 怎么回事, 我这是在哪? ...", 10, 70, 20);
-            player.sendMessage("§a[§b豆渣子§a] §3你来到了一个梦境中的世界,");
+            player.sendMessage("§a[§b豆渣子§a] §3你来到了一个奇怪的世界,");
             player.sendMessage("§a[§b豆渣子§a] §2尝试找到回到现实世界的办法吧...");
         }
     }
