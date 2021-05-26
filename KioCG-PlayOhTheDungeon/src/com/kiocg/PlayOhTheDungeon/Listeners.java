@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +32,7 @@ public class Listeners implements Listener {
             return;
         }
 
-        if (blockKey % (1000L + Utils.playerRabbits.get(player.getUniqueId().toString()) * 1000L) == 126L) {
+        if (blockKey % (3000L + Utils.playerRabbits.get(player.getUniqueId().toString()) * 3000L) == 126L) {
             Utils.RabbitKeys.add(blockKey);
             Utils.joinRabbit(player);
         }
@@ -47,6 +48,13 @@ public class Listeners implements Listener {
         final Player player = e.getPlayer();
         if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
             Utils.saveAndClearBackpack(player);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerBedEnter(final @NotNull PlayerBedEnterEvent e) {
+        if ("KioCG_OhTheDungeon".equals(e.getPlayer().getWorld().getName())) {
+            e.setCancelled(true);
         }
     }
 

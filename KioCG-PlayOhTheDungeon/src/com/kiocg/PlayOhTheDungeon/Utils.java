@@ -1,7 +1,6 @@
 package com.kiocg.PlayOhTheDungeon;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -111,7 +110,7 @@ public class Utils {
         }
 
         final PlayerInventory playerInventory = player.getInventory();
-        // 延时外获取背包内容
+        // 延时外获取背包内容拷贝
         final ItemStack[] contents = playerInventory.getContents();
         playerInventory.clear();
 
@@ -128,9 +127,7 @@ public class Utils {
 
         for (int i = 0; i < 41; ++i) {
             final ItemStack itemStack = (ItemStack) YamlConfiguration.loadConfiguration(playerFile).get(String.valueOf(i));
-            if (itemStack != null) {
-                playerInventory.setItem(i, itemStack);
-            }
+            playerInventory.setItem(i, itemStack);
         }
 
         if (!playerFile.delete()) {
@@ -139,12 +136,10 @@ public class Utils {
     }
 
     public static void TeleportDungeon(final @NotNull Player player) {
-        final World world = Bukkit.getWorld("KioCG_OhTheDungeon");
-
         final Random random = new Random();
         final int x = random.nextInt(9001) - 4500;
         final int z = random.nextInt(9001) - 4500;
 
-        player.teleport(Objects.requireNonNull(world).getHighestBlockAt(x, z).getLocation());
+        player.teleport(Objects.requireNonNull(Bukkit.getWorld("KioCG_OhTheDungeon")).getHighestBlockAt(x, z).getLocation());
     }
 }
