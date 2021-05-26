@@ -45,7 +45,7 @@ public class Utils {
             public void run() {
                 switch (i) {
                     case 0 -> {
-                        player.sendMessage("§a[§b豆渣子§a] §2你发现兔子窝里有只兔女郎!");
+                        player.sendMessage("§a[§b豆渣子§a] §2你发现兔子窝里有只兔女郎! 但是...");
                         player.sendTitle("", "§7... 你感到头晕目眩 ...", 10, 70, 20);
                     }
 

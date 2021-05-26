@@ -33,16 +33,4 @@ public class PlayOhTheDungeon extends JavaPlugin {
 
         Objects.requireNonNull(getServer().getPluginCommand("rabbit")).setExecutor(new RabbitCommand());
     }
-
-    @Override
-    public void onDisable() {
-        getServer().getScheduler().cancelTasks(this);
-
-        for (final Player player : getServer().getOnlinePlayers()) {
-            if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
-                player.setHealth(0.0);
-                Utils.restoreBackpackAndLoot(player);
-            }
-        }
-    }
 }
