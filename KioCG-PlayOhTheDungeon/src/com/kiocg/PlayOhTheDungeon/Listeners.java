@@ -15,17 +15,13 @@ public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
-        final Material material = block.getType();
-        if (material != Material.STONE) {
-            // 拿着刷怪笼打破基岩可以触发兔子洞
-            if (material == Material.BEDROCK) {
-                final Player player = e.getPlayer();
-                if (player.getInventory().getItemInMainHand().getType() == Material.SPAWNER) {
-                    Utils.joinRabbit(player);
-                }
-            }
 
-            return;
+        // 拿着刷怪笼打破基岩可以触发兔子洞
+        if (block.getType() == Material.BEDROCK) {
+            final Player player = e.getPlayer();
+            if (player.getInventory().getItemInMainHand().getType() == Material.SPAWNER) {
+                Utils.joinRabbit(player);
+            }
         }
 
         final Player player = e.getPlayer();
