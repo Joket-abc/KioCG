@@ -46,12 +46,12 @@ public class Listeners implements Listener {
         }
 
         final Location location = block.getLocation().toCenterLocation();
-        block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
-
         if (new Random().nextInt() * 100 >= 45) {
+            block.getWorld().playSound(location, Sound.BLOCK_COMPOSTER_FILL, 1.0F, 1.0F);
             block.getWorld().playEffect(location.add(0.0, 1.0, 0.0), Effect.SMOKE, 0);
             return;
         }
+        block.getWorld().playSound(location, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1.0F, 1.0F);
         block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
 
         final long blockKey = block.getBlockKey();
