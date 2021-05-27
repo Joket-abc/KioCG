@@ -3,8 +3,9 @@ package com.kiocg.WoolTree;
 import com.destroystokyo.paper.MaterialSetTag;
 import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.TreeType;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
@@ -42,7 +43,9 @@ public class Listeners implements Listener {
         }
 
         if (new Random().nextInt() * 100 >= 45) {
-            block.getWorld().playEffect(block.getLocation().add(0.0, 0.5, 0.0), Effect.SMOKE, 0);
+            final Location location = block.getLocation().toCenterLocation().add(0.0, 1.0, 0.0);
+            block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
+            block.getWorld().playEffect(location, Effect.SMOKE, 0);
             itemStack.setAmount(itemStack.getAmount() - 1);
             return;
         }
@@ -56,7 +59,10 @@ public class Listeners implements Listener {
             }});
         }
 
-        block.getWorld().playEffect(block.getLocation().add(0.0, 0.5, 0.0), Effect.VILLAGER_PLANT_GROW, 0);
+        final Location location = block.getLocation().toCenterLocation();
+        block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
+        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
+
         itemStack.setAmount(itemStack.getAmount() - 1);
     }
 
@@ -73,10 +79,6 @@ public class Listeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onStructureGrow(final @NotNull StructureGrowEvent e) {
-        if (e.getSpecies() != TreeType.TREE || !e.isFromBonemeal()) {
-            return;
-        }
-
         final long blockKey = e.getLocation().toBlockKey();
 
         if (!Utils.treeWools.containsKey(blockKey)) {
