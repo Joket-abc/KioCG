@@ -39,6 +39,12 @@ public class Listeners implements Listener {
             return;
         }
 
+        if (new Random().nextInt() * 100 >= 45) {
+            block.getWorld().playEffect(block.getLocation().add(0.0, 0.5, 0.0), Effect.SMOKE, 0);
+            itemStack.setAmount(itemStack.getAmount() - 1);
+            return;
+        }
+
         final long blockKey = block.getBlockKey();
         if (Utils.treeWools.containsKey(blockKey)) {
             Utils.treeWools.get(blockKey).add(Utils.dye2wool(itemStack.getType()));
