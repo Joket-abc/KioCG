@@ -38,7 +38,7 @@ public class Listeners implements Listener {
         final long blockKey = block.getBlockKey();
 
         final String uuid = player.getUniqueId().toString();
-        if ((blockKey & Utils.variable) % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
+        if ((blockKey + Utils.variable) % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
             Utils.variable = System.currentTimeMillis();
 
             Utils.playerRabbitConfirm.put(uuid, blockKey);
