@@ -27,8 +27,7 @@ public class BlockZombie {
         if (!material.isAir() && material.isItem()) {
             Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
         } else {
-            location.setY(location.getY() - 1.0);
-            final Material materialNew = location.getBlock().getType();
+            final Material materialNew = location.subtract(0.0, 1.0, 0.0).getBlock().getType();
 
             if (materialNew.isItem() && !materialNew.isAir()) {
                 Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));

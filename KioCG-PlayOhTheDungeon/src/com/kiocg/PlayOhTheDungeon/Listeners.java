@@ -46,7 +46,7 @@ public class Listeners implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPlayerChangedWorld(final @NotNull PlayerChangedWorldEvent e) {
         final Player player = e.getPlayer();
 

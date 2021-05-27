@@ -62,10 +62,7 @@ public class Fun implements Listener {
         itemStack.setAmount(itemStack.getAmount() - 1);
         ((Player) entityClicked).giveExp(1);
 
-        final Location loc = entityClicked.getLocation();
-        loc.setY(loc.getY() + 1.0);
-
-        entityClicked.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 9, 1.0, 1.0, 1.0);
+        entityClicked.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, entityClicked.getLocation().add(0.0, 1.0, 0.0), 9, 1.0, 1.0, 1.0);
     }
 
     // 骷髅概率发射药水箭

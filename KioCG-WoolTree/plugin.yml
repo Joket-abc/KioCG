@@ -1,0 +1,4 @@
+name: WoolTree
+main: com.kiocg.WoolTree.WoolTree
+version: 2021
+api-version: 1.16

@@ -37,8 +37,7 @@ public class IMCommand implements CommandExecutor {
                 return true;
             }
 
-            final Location loc = block.getLocation().toCenterLocation();
-            loc.setY(loc.getY() + 1.0);
+            final Location loc = block.getLocation().toCenterLocation().add(0.0, 1.0, 0.0);
 
             switch (args[0].toLowerCase()) {
                 case "giant", "g" -> {
