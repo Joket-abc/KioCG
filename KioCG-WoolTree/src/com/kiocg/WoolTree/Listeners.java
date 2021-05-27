@@ -2,12 +2,10 @@ package com.kiocg.WoolTree;
 
 import com.destroystokyo.paper.MaterialSetTag;
 import com.destroystokyo.paper.MaterialTags;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -36,19 +34,25 @@ public class Listeners implements Listener {
             return;
         }
 
-        final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
+        final Player player = e.getPlayer();
+        final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (!MaterialTags.DYES.isTagged(itemStack.getType())) {
             return;
         }
 
-        if (new Random().nextInt() * 100 >= 45) {
-            final Location location = block.getLocation().toCenterLocation().add(0.0, 1.0, 0.0);
-            block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
-            block.getWorld().playEffect(location, Effect.SMOKE, 0);
+        if (player.getGameMode() != GameMode.CREATIVE) {
             itemStack.setAmount(itemStack.getAmount() - 1);
+        }
+
+        final Location location = block.getLocation().toCenterLocation();
+        block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
+
+        if (new Random().nextInt() * 100 >= 45) {
+            block.getWorld().playEffect(location.add(0.0, 1.0, 0.0), Effect.SMOKE, 0);
             return;
         }
+        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
 
         final long blockKey = block.getBlockKey();
         if (Utils.treeWools.containsKey(blockKey)) {
@@ -58,12 +62,6 @@ public class Listeners implements Listener {
                 add(Utils.dye2wool(itemStack.getType()));
             }});
         }
-
-        final Location location = block.getLocation().toCenterLocation();
-        block.getWorld().playEffect(location, Effect.COMPOSTER_COMPOSTS, 0);
-        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
-
-        itemStack.setAmount(itemStack.getAmount() - 1);
     }
 
     @EventHandler(ignoreCancelled = true)
