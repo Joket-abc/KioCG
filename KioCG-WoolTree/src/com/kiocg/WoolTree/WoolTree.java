@@ -1,3 +1,5 @@
+package com.kiocg.WoolTree;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class WoolTree extends JavaPlugin {

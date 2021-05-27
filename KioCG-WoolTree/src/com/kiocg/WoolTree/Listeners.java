@@ -1,3 +1,5 @@
+package com.kiocg.WoolTree;
+
 import com.destroystokyo.paper.MaterialSetTag;
 import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.Effect;
