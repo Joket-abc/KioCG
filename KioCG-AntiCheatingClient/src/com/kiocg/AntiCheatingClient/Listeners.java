@@ -38,7 +38,7 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void cancelPlayerVerify(final @NotNull PlayerQuitEvent e) {
+    public void removePlayerVerify(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         Utils.playerVerifyCode.remove(player);
         Utils.playerVerifyMessage.remove(player);
@@ -48,26 +48,42 @@ public class Listeners implements Listener {
     public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
         final String message = PlainComponentSerializer.plain().serialize(e.message());
 
-        if (!message.startsWith(".say AntiCheatingCheck___") && !message.startsWith("AntiCheatingCheck___")) {
+        // 可能未使用作弊端
+        if (message.startsWith(".say AntiCheatingCheck___")) {
+            // 消息为反作弊前缀即取消, 无论是否在进行反作弊验证
+            e.setCancelled(true);
+
+            final Player player = e.getPlayer();
+            final String playerVerifyCode = Utils.playerVerifyCode.get(player);
+
+            if (playerVerifyCode == null) {
+                return;
+            }
+
+            if (message.equals(playerVerifyCode)) {
+                player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
+
+                Utils.playerVerifyCode.remove(player);
+                Utils.playerVerifyMessage.remove(player);
+            } else {
+                player.sendMessage("§a[§b豆渣子§a] §6请不要修改文本内容呢.");
+            }
+
             return;
         }
 
-        // 消息为反作弊前缀即取消, 无论是否在进行反作弊验证
-        e.setCancelled(true);
+        // 可能使用作弊端
+        if (message.startsWith("AntiCheatingCheck___")) {
+            // 消息为反作弊前缀即取消, 无论是否在进行反作弊验证
+            e.setCancelled(true);
 
-        final Player player = e.getPlayer();
+            final Player player = e.getPlayer();
 
-        if (!Utils.playerVerifyCode.containsKey(player)) {
-            return;
-        }
+            if (!Utils.playerVerifyCode.containsKey(player)) {
+                return;
+            }
 
-        if (message.equals(Utils.playerVerifyCode.get(player))) {
-            Utils.playerVerifyCode.remove(player);
-            Utils.playerVerifyMessage.remove(player);
-
-            player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
-        } else if (message.equals(Utils.playerVerifyCode.get(player).substring(5))) {
-            if (player.getStatistic(Statistic.PLAY_ONE_MINUTE) > 20 * 60 * 60 * 24) {
+            if (player.getStatistic(Statistic.PLAY_ONE_MINUTE) > 20 * 60 * 60 * 12) {
                 // 临时封禁非萌新玩家24小时
                 final Date date = new Date();
                 date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
@@ -77,30 +93,30 @@ public class Listeners implements Listener {
                 Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("§7... §c尝试作弊而被永久封禁 §7..."));
             }
 
-            final String playerName = player.getName();
+            final String banMsg = "邪恶生物 " + player.getName() + " 被安全检查拦截了.";
 
             // 提醒全体玩家
             for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-                toPlayer.sendMessage("§a[§b豆渣子§a] §c邪恶生物 " + playerName + " 被安全检查拦截了.");
+                toPlayer.sendMessage("§a[§b豆渣子§a] §c" + banMsg);
             }
             // 控制台记录
-            AntiCheatingClient.instance.getLogger().info("§c邪恶生物 " + playerName + " 被安全检查拦截了.");
+            AntiCheatingClient.instance.getLogger().info("§c" + banMsg);
 
             // 提醒全体群成员
             try {
-                KioCGBot.sendGroupMsgAsync(569696336L, "邪恶生物 " + playerName + " 被安全检查拦截了.");
+                KioCGBot.sendGroupMsgAsync(569696336L, banMsg);
             } catch (final @NotNull RuntimeException ignored) {
             }
-        } else {
-            player.sendMessage("§a[§b豆渣子§a] §6不要修改文本内容呢.");
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerCommandPreprocess(final @NotNull PlayerCommandPreprocessEvent e) {
         final Player player = e.getPlayer();
-        if (Utils.playerVerifyCode.containsKey(player)) {
-            player.sendMessage(Utils.playerVerifyMessage.get(player));
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+
+        if (playerVerifyMessage != null) {
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -108,8 +124,9 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
         final Player player = e.getPlayer();
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
-        if (Utils.playerVerifyCode.containsKey(player)) {
+        if (playerVerifyMessage != null) {
             // 防止卡视角和卡空中
             final Location from = e.getFrom();
             final Location to = e.getTo();
@@ -117,7 +134,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            player.sendMessage(Utils.playerVerifyMessage.get(player));
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -125,8 +142,10 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
         final Player player = e.getPlayer();
-        if (Utils.playerVerifyCode.containsKey(player)) {
-            player.sendMessage(Utils.playerVerifyMessage.get(player));
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+
+        if (playerVerifyMessage != null) {
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -134,8 +153,10 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerDropItem(final @NotNull PlayerDropItemEvent e) {
         final Player player = e.getPlayer();
-        if (Utils.playerVerifyCode.containsKey(player)) {
-            player.sendMessage(Utils.playerVerifyMessage.get(player));
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+
+        if (playerVerifyMessage != null) {
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -144,7 +165,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelPlayerDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
-        if (entity instanceof Player && Utils.playerVerifyCode.containsKey(entity)) {
+        if (entity instanceof Player && Utils.playerVerifyCode.containsKey((Player) entity)) {
             e.setCancelled(true);
         }
     }

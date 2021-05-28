@@ -14,8 +14,7 @@ public class HttpsUtils {
     public static @Nullable String getPlayerUUIDFromApi(final @NotNull String playerName) {
         //noinspection OverlyBroadCatchBlock
         try {
-            final URL url = new URL("https://playerdb.co/api/player/minecraft/" + playerName);
-            final URLConnection urlCon = url.openConnection();
+            final URLConnection urlCon = new URL("https://playerdb.co/api/player/minecraft/" + playerName).openConnection();
             urlCon.setConnectTimeout(5000);
             urlCon.setReadTimeout(5000);
 

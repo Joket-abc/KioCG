@@ -23,9 +23,9 @@ public class GroupAdminUtils {
         for (final String group : Objects.requireNonNull(config.getConfigurationSection("groups")).getKeys(false)) {
             groupLabels.put(Long.valueOf(group), (ArrayList<String>) config.getStringList("groups." + group + ".labels"));
 
-            final ArrayList<Long> groupAdmins = new ArrayList<>(owners);
-            groupAdmins.addAll(config.getLongList("groups." + group + ".admins"));
-            GroupAdminUtils.groupAdmins.put(Long.valueOf(group), groupAdmins);
+            groupAdmins.put(Long.valueOf(group), new ArrayList<>(owners) {{
+                addAll(config.getLongList("groups." + group + ".admins"));
+            }});
         }
 
         logCommand = Objects.requireNonNull(config.getString("messages.logCommand", "&cQQ用户 %user% 执行了指令: %cmd%"));

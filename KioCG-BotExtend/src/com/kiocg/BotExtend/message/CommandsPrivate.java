@@ -26,10 +26,12 @@ public class CommandsPrivate {
                 case ("plugins"):
                 case ("插件"):
                 case ("tps"):
+                case ("mspt"):
                 case ("状态"):
                     contact.sendMessage("请在连接游戏账号后使用此指令\n输入 .link <mcID> 来连接账号");
                     return;
                 default:
+                    // 功能信息
                     if (userCommand.toLowerCase().startsWith("seen") || userCommand.startsWith("查询")
                         || userCommand.toLowerCase().startsWith("at") || userCommand.charAt(0) == '@'
                         || userCommand.toLowerCase().startsWith("uuid")) {
@@ -59,12 +61,13 @@ public class CommandsPrivate {
                 }
             }
             case ("plugin"), ("plugins"), ("插件") -> contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
-            case ("tps"), ("状态") -> {
+            case ("tps"), ("mspt"), ("状态") -> {
                 final double[] tps = Bukkit.getTPS();
                 contact.sendMessage("TPS(1m, 5m, 15m)："
                                     + String.format("%.2f", tps[0]) + ", "
                                     + String.format("%.2f", tps[1]) + ", "
-                                    + String.format("%.2f", tps[2]));
+                                    + String.format("%.2f", tps[2])
+                                    + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
             }
 
             // 功能信息

@@ -1,7 +1,6 @@
 package com.kiocg.BotExtend.utils;
 
 import com.kiocg.BotExtend.BotExtend;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,8 +13,6 @@ import java.util.regex.Pattern;
 public class Utils {
     // 存储被白名单阻挡的玩家列表
     public static final List<String> kickWhitelistPlayer = new ArrayList<>();
-    // 存储需要管理员审核的低等级QQ号
-    public static final List<Long> auditQQ = new ArrayList<>();
 
     // 返回是否为合法玩家名
     public static @NotNull Boolean isLegalPlayerName(final @NotNull String string) {
@@ -25,10 +22,9 @@ public class Utils {
     // 返回玩家带前后缀的昵称
     public static @Nullable String getPlayerDisplayName(final @NotNull OfflinePlayer offlinePlayer) {
         try {
-            final Chat chat = BotExtend.chat;
-            return Objects.requireNonNull(chat).getPlayerPrefix(null, offlinePlayer)
+            return Objects.requireNonNull(BotExtend.chat).getPlayerPrefix(null, offlinePlayer)
                    + offlinePlayer.getName()
-                   + chat.getPlayerSuffix(null, offlinePlayer);
+                   + BotExtend.chat.getPlayerSuffix(null, offlinePlayer);
         } catch (final @NotNull NullPointerException ignore) {
             return offlinePlayer.getName();
         }

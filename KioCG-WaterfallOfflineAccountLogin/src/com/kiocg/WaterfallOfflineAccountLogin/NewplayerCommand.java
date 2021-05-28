@@ -18,7 +18,7 @@ public class NewplayerCommand extends Command {
 
         final String playerName = args[0];
         if (!Utils.isLegalPlayerName(playerName)) {
-            commandSender.sendMessage(TextComponent.fromLegacyText("非法的玩家账号. &7[0-9a-zA-Z_]{3,14}"));
+            commandSender.sendMessage(TextComponent.fromLegacyText("错误的玩家账号. &7[0-9a-zA-Z_]{3,14}"));
             return;
         }
 

@@ -21,43 +21,35 @@ public class Seen {
     private static final Pattern RGBColor = Pattern.compile("&#.{6}");
 
     public void seen(final @NotNull Contact contact, final @NotNull String msg) {
-        final UUID uuid;
-        OfflinePlayer offlinePlayer;
+        if (!Utils.isLegalPlayerName(msg)) {
+            contact.sendMessage("错误的玩家名：" + msg);
+            return;
+        }
 
-        // 如果输入的是UUID
-        if (msg.length() == 36) {
-            try {
-                uuid = UUID.fromString(msg);
-            } catch (final @NotNull IllegalArgumentException ignore) {
-                contact.sendMessage("非法的UUID：" + msg);
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
+        final UUID uuid;
+
+        if (offlinePlayer == null) {
+            final String uuidString = HttpsUtils.getPlayerUUIDFromApi(msg);
+            if (uuidString == null) {
+                contact.sendMessage("正版玩家不存在：" + msg);
                 return;
             }
-
+            uuid = UUID.fromString(uuidString);
             offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
             if (!offlinePlayer.hasPlayedBefore()) {
-                contact.sendMessage("玩家UUID " + msg + " 从未出现过");
+                contact.sendMessage("玩家 " + msg + " 从未出现过");
                 return;
             }
-        } else if (Utils.isLegalPlayerName(msg)) {
-            // 输入的可能是玩家名
-            offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
-
-            if (offlinePlayer != null) {
-                uuid = offlinePlayer.getUniqueId();
-            } else {
-                final String uuidString = HttpsUtils.getPlayerUUIDFromApi(msg);
-
-                if (uuidString == null) {
-                    contact.sendMessage("玩家不存在：" + msg);
-                    return;
-                }
-
-                uuid = UUID.fromString(uuidString);
-                offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-            }
         } else {
-            contact.sendMessage("非法的玩家名：" + msg);
+            uuid = offlinePlayer.getUniqueId();
+        }
+
+        final String playerName = offlinePlayer.getName();
+
+        if (playerName == null) {
+            contact.sendMessage("玩家 " + msg + " 从未出现过");
             return;
         }
 
@@ -65,7 +57,7 @@ public class Seen {
 
         stringBuilder.append(RGBColor.matcher(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))).replaceAll(""))
                      .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")")
-                     .append("   QQ：").append(PlayerLinkUtils.getPlayerLink(uuid));
+                     .append("   QQ：").append(PlayerLinkUtils.getPlayerLinkQQ(playerName));
 
         stringBuilder.append("\nUUID：").append(uuid);
 
@@ -77,13 +69,11 @@ public class Seen {
         stringBuilder.append("\n累计在线时间：").append(Utils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.PLAY_ONE_MINUTE)));
 
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次");
-
         try {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
         } catch (final @NotNull RuntimeException ignore) {
             stringBuilder.append("NULL");
         }
-
         try {
             stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer));
         } catch (final @NotNull RuntimeException ignore) {

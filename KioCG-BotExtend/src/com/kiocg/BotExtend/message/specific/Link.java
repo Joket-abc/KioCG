@@ -8,49 +8,35 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 public class Link {
     public void link(final @NotNull Contact contact, final @NotNull User user, final @NotNull String msg) {
-        final UUID uuid;
-        final OfflinePlayer offlinePlayer;
-
-        // 如果输入的是UUID
-        if (msg.length() == 36) {
-            try {
-                uuid = UUID.fromString(msg);
-            } catch (final @NotNull IllegalArgumentException ignore) {
-                contact.sendMessage("非法的UUID：" + msg);
-                return;
-            }
-
-            offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-
-            if (!offlinePlayer.hasPlayedBefore()) {
-                contact.sendMessage("玩家UUID " + msg + " 从未出现过");
-                return;
-            }
-        } else if (Utils.isLegalPlayerName(msg)) {
-            // 输入的可能是玩家名
-            offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
-
-            if (offlinePlayer == null) {
-                contact.sendMessage("无法找到玩家 " + msg + "，请尝试使用UUID进行查询.");
-                return;
-            }
-
-            uuid = offlinePlayer.getUniqueId();
-        } else {
-            contact.sendMessage("非法的玩家名：" + msg);
+        if (!Utils.isLegalPlayerName(msg)) {
+            contact.sendMessage("错误的玩家名：" + msg);
             return;
         }
 
-        PlayerLinkUtils.addWaitLinkQQ(uuid, user.getId());
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
+
+        if (offlinePlayer == null) {
+            contact.sendMessage("无法找到玩家 " + msg + "，请上线后再试");
+            return;
+        }
+
+        final String playerName = offlinePlayer.getName();
+
+        if (playerName == null) {
+            contact.sendMessage("无法找到玩家 " + msg + "，请上线后再试");
+            return;
+        }
+
+        final long qq = user.getId();
+
+        PlayerLinkUtils.waitLinks.put(qq, playerName);
 
         if (!offlinePlayer.isOnline()) {
-            contact.sendMessage("请上线后再在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
+            contact.sendMessage("请上线后再在游戏内输入 /link " + qq + " 来连接此QQ号");
         } else {
-            contact.sendMessage("请再在游戏内输入 /link " + user.getId() + " 来连接此QQ号");
+            contact.sendMessage("请再在游戏内输入 /link " + qq + " 来连接此QQ号");
         }
     }
 }

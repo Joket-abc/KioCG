@@ -31,31 +31,22 @@ public class GroupOther implements Listener {
                 final String message = e.getMessage();
                 final String answer = message.substring(message.lastIndexOf('：') + 1);
 
-                // 低等级QQ号需要管理员审核
-                final Long userID = e.getFromId();
-                if (Mirai.getInstance().queryProfile(e.getBot(), userID).getQLevel() < 16) {
-                    if (!Utils.auditQQ.contains(userID)) {
-                        if (Utils.isAnswerTrue(answer)) {
-                            e.reject(false, "可疑账号，请重新加群并等待管理员审核(可以在回答里留言)");
-                            Utils.auditQQ.add(userID);
-                        } else {
-                            e.reject(false, "回答错误，请检查");
-                        }
-                    }
-                    return;
-                }
-
                 if (Utils.isAnswerTrue(answer)) {
+                    // 低等级QQ号需要管理员审核
+                    if (Mirai.getInstance().queryProfile(e.getBot(), e.getFromId()).getQLevel() < 16) {
+                        break;
+                    }
+
                     e.accept();
                 } else {
-                    e.reject(false, "回答错误，请检查");
+                    e.reject(false, "回答错误，请检查后再试~");
                 }
                 break;
             case "553171328":
                 if (PlayerLinkUtils.hasPlayerLink(e.getFromId())) {
                     e.accept();
                 } else {
-                    e.reject(false, "此群仅限服务器内玩家加入，请连接游戏账号后再来");
+                    e.reject(false, "此群仅限服务器内玩家加入");
                 }
                 break;
         }
@@ -67,20 +58,19 @@ public class GroupOther implements Listener {
             return;
         }
 
-        final NormalMember member = e.getMember();
-        final long userID = member.getId();
-
         final Group group = e.getGroup();
+        final NormalMember member = e.getMember();
+
         switch (String.valueOf(group.getId())) {
             case "569696336" -> group.sendMessage(new MessageChainBuilder()
-                                                          .append(new At(userID)).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                                          .append(new At(member.getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
                                                           .append("\n！请先仔细查看群公告！")
                                                           .append("\n有关白名单请输入 .whitelist")
                                                           .append("\n下载客户端请输入 .client")
                                                           .append("\n查看备用IP请输入 .ip")
-                                                          .append("\n服务器含假矿+反作弊等保护插件")
+                                                          .append("\n服务器含假矿+反作弊等安全插件")
                                                           .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
-            case "553171328" -> member.setNameCard(Objects.requireNonNull(PlayerLinkUtils.getPlayerLinkAsName(userID)));
+            case "553171328" -> member.setNameCard(Objects.requireNonNull(PlayerLinkUtils.getPlayerLinkName(member.getId())));
         }
     }
 

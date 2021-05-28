@@ -5,6 +5,7 @@ import com.kiocg.BotExtend.utils.ConsoleSender;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
+import net.mamoe.mirai.contact.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,8 @@ public class BotCommand implements Listener {
     public void onGroupMessage(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
-        final long groupID = e.getGroup().getId();
+        final Group group = e.getGroup();
+        final long groupID = group.getId();
         final long senderID = e.getSender().getId();
 
         if (!GroupAdminUtils.isGroupAdmin(groupID, senderID)) {
@@ -25,59 +27,55 @@ public class BotCommand implements Listener {
         }
 
         final String message = e.getMessage().contentToString().trim();
-        String groupLabel = null;
+        final String cmd;
 
+        label:
         try {
             for (final String label : Objects.requireNonNull(GroupAdminUtils.getGroupLabels(groupID))) {
                 if (message.startsWith(label)) {
-                    groupLabel = label;
-                    break;
+                    cmd = message.substring(label.length());
+                    break label;
                 }
             }
-
-            if (groupLabel == null) {
-                return;
-            }
+            return;
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
-
-        final String cmd = message.substring(groupLabel.length());
 
         // 拦截白名单提示
         if (cmd.startsWith("whitelist add ")) {
             final String playerName = cmd.substring(14);
 
-            if (Utils.isLegalPlayerName(playerName)) {
-                if (!Utils.kickWhitelistPlayer.contains(playerName)) {
-                    e.getGroup().sendMessage("玩家 " + playerName + " 从未出现过");
-                    return;
-                }
-
-                Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
-
-                Utils.kickWhitelistPlayer.remove(playerName);
-                e.getGroup().sendMessage("已将玩家 " + playerName + " 添加至白名单");
-            } else {
-                e.getGroup().sendMessage("非法的玩家名：" + playerName);
+            if (!Utils.isLegalPlayerName(playerName)) {
+                group.sendMessage("错误的玩家名：" + playerName);
                 return;
             }
+
+            if (!Utils.kickWhitelistPlayer.contains(playerName)) {
+                group.sendMessage("玩家 " + playerName + " 从未出现过");
+                return;
+            }
+
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
+
+            Utils.kickWhitelistPlayer.remove(playerName);
+            group.sendMessage("已将玩家 " + playerName + " 添加至白名单");
         } else if (cmd.startsWith("whitelist remove ")) {
             final String playerName = cmd.substring(17);
 
-            if (Utils.isLegalPlayerName(playerName)) {
-                if (!Bukkit.getWhitelistedPlayers().contains(Bukkit.getOfflinePlayerIfCached(playerName))) {
-                    e.getGroup().sendMessage("玩家 " + playerName + " 不在白名单中");
-                    return;
-                }
-
-                Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
-
-                e.getGroup().sendMessage("已将玩家 " + playerName + " 移除出白名单");
-            } else {
-                e.getGroup().sendMessage("非法的玩家名：" + playerName);
+            if (!Utils.isLegalPlayerName(playerName)) {
+                group.sendMessage("错误的玩家名：" + playerName);
                 return;
             }
+
+            if (!Bukkit.getWhitelistedPlayers().contains(Bukkit.getOfflinePlayerIfCached(playerName))) {
+                group.sendMessage("玩家 " + playerName + " 可能不在白名单中.\n强制移除使用,WHITELIST remove");
+                return;
+            }
+
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
+
+            group.sendMessage("已将玩家 " + playerName + " 移除出白名单");
         } else {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
         }

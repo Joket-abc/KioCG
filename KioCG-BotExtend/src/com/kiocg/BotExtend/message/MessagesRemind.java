@@ -5,8 +5,14 @@ import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class MessagesRemind {
+    private static long replyTime = System.currentTimeMillis();
+
     @EventHandler
     public void onMessages(final @NotNull Group group, final @NotNull String msg) {
+        if (System.currentTimeMillis() - replyTime < 1000L * 60L * 10L) {
+            return;
+        }
+
         if (msg.contains("按键精灵") || msg.contains("鼠标宏") || msg.contains("键盘宏") || msg.contains("连点") || msg.contains("自动钓鱼")) {
             group.sendMessage("你不能使用诸如按键精灵、宏操作、自动钓鱼等自动操作程序，这将会被视为作弊。");
         } else if (((msg.contains("刷") || msg.contains("复制")) && (msg.contains("沙子") || msg.contains("tnt") || msg.contains("地毯") || msg.contains("铁轨"))) || msg.contains("卡基岩") || msg.contains("地狱顶")) {
@@ -16,5 +22,7 @@ public class MessagesRemind {
         } else if ((msg.contains("村民") && !msg.contains("僵尸村民") && msg.contains("僵尸")) || (msg.contains("海龟蛋") && (msg.contains("僵尸") || msg.contains("猪人") || msg.contains("猪灵")))) {
             group.sendMessage("出于优化需要，所有实体的AI行为均与原版有所不同，有关实体的反馈将不受支持。");
         }
+
+        replyTime = System.currentTimeMillis();
     }
 }

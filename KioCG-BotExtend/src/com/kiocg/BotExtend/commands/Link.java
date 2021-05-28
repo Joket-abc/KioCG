@@ -7,8 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 public class Link implements CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
@@ -17,18 +15,18 @@ public class Link implements CommandExecutor {
             return true;
         }
 
-        final UUID uuid = player.getUniqueId();
+        final String uuid = player.getUniqueId().toString();
 
-        final Long qq = PlayerLinkUtils.getPlayerLink(uuid);
+        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuid);
         if (qq != null) {
             player.sendMessage("§a[§b豆渣子§a] §6你已经连接了QQ号 " + qq + ".");
             return true;
         }
 
-        final Long waitLinkQQ = PlayerLinkUtils.getWaitLinkQQ(uuid);
+        final String playerName = player.getName();
 
-        if (waitLinkQQ == null) {
-            player.sendMessage("§a[§b豆渣子§a] §6请在群内输入 §e.link " + player.getName() + " §6来连接你的账号.");
+        if (!PlayerLinkUtils.waitLinks.containsValue(playerName)) {
+            player.sendMessage("§a[§b豆渣子§a] §6请在群内输入 §e.link " + playerName + " §6来连接你的账号.");
             return true;
         }
 
@@ -37,20 +35,21 @@ public class Link implements CommandExecutor {
             return true;
         }
 
-        if (args[0].equals(String.valueOf(waitLinkQQ))) {
-            // 防止多个玩家同时尝试连接同一QQ号
-            final String playerLinkAsName = PlayerLinkUtils.getPlayerLinkAsName(waitLinkQQ);
-            if (playerLinkAsName != null) {
-                player.sendMessage("§a[§b豆渣子§a] §6此QQ号 " + waitLinkQQ + " 已经连接了玩家 " + playerLinkAsName + ".");
-                return true;
-            }
+        final Long waitLinkQQ;
+        try {
+            waitLinkQQ = Long.parseLong(args[0]);
+        } catch (final @NotNull NumberFormatException ignore) {
+            player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ号有误, 请检查后再试.");
+            return true;
+        }
 
+        if (playerName.equals(PlayerLinkUtils.waitLinks.get(waitLinkQQ))) {
             PlayerLinkUtils.addPlayerLink(uuid, waitLinkQQ);
-            PlayerLinkUtils.removeWaitLinkQQ(uuid);
+            PlayerLinkUtils.waitLinks.remove(waitLinkQQ);
 
             player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ号 " + waitLinkQQ + ".");
         } else {
-            player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ号有误, 请检查后再试或重新连接.");
+            player.sendMessage("§a[§b豆渣子§a] §c你输入的QQ号有误, 请检查后再试.");
         }
         return true;
     }

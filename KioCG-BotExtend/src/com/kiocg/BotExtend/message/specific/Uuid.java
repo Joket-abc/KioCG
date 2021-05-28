@@ -8,17 +8,17 @@ import org.jetbrains.annotations.NotNull;
 public class Uuid {
     public void uuid(final @NotNull Contact contact, final @NotNull String msg) {
         if (!Utils.isLegalPlayerName(msg)) {
-            contact.sendMessage("非法的玩家名：" + msg);
+            contact.sendMessage("错误的玩家名：" + msg);
             return;
         }
 
         final String uuid = HttpsUtils.getPlayerUUIDFromApi(msg);
 
         if (uuid == null) {
-            contact.sendMessage("玩家不存在：" + msg);
+            contact.sendMessage("正版玩家不存在：" + msg);
             return;
         }
 
-        contact.sendMessage("玩家 " + msg + " 的UUID：\n" + uuid);
+        contact.sendMessage(" 正版玩家 " + msg + " 的UUID：\n" + uuid);
     }
 }

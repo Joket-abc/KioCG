@@ -28,7 +28,7 @@ public class BotExtend extends JavaPlugin {
     public static @Nullable Chat chat;
 
     // 玩家连接QQ的数据文件
-    public static File playersFile;
+    private static File playersFile;
     // 玩家连接QQ的数据配置文件
     public static FileConfiguration playersFileConfiguration;
 
@@ -37,14 +37,12 @@ public class BotExtend extends JavaPlugin {
         instance = this;
 
         final ServicesManager servicesManager = getServer().getServicesManager();
-
         // 注册Vault经济模块
         try {
             economy = Objects.requireNonNull(servicesManager.getRegistration(Economy.class)).getProvider();
         } catch (final @NotNull NullPointerException ignore) {
             economy = null;
         }
-
         // 注册Vault消息模块
         try {
             chat = Objects.requireNonNull(servicesManager.getRegistration(Chat.class)).getProvider();

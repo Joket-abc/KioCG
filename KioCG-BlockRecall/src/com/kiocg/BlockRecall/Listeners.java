@@ -33,6 +33,12 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
+        final Player player = e.getPlayer();
+
+        if (!player.hasPermission("kiocg.blockrecall.use") || player.getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
+
         final BlockState blockState = e.getBlockPlaced().getState();
 
         // 容器容易出事情
@@ -43,17 +49,12 @@ public class Listeners implements Listener {
         final ItemStack itemStackClone = e.getItemInHand().clone();
 
         // 防止放下的方块类型和手中物品类型不一致 (eg.打火石点火)
-        if (itemStackClone.getType() != blockState.getType()) {
-            return;
-        }
-
-        final Player player = e.getPlayer();
-
-        if (!player.hasPermission("kiocg.blockrecall.use") || player.getGameMode() == GameMode.CREATIVE) {
+        if (blockState.getType() != itemStackClone.getType()) {
             return;
         }
 
         Utils.lastBlockState.put(player, blockState);
+
         itemStackClone.setAmount(1);
         Utils.lastBlockItemStack.put(player, itemStackClone);
     }
@@ -76,7 +77,7 @@ public class Listeners implements Listener {
         // 防止最后放置的方块一直被记录, 优化体验
         if (!Utils.lastBlockState.get(player).equals(blockState)) {
             Utils.lastBlockState.remove(player);
-            Utils.lastBlockItemStack.remove(player);
+            // 优化不需要的 Utils.lastBlockItemStack.remove(player);
             return;
         }
 
@@ -84,7 +85,7 @@ public class Listeners implements Listener {
         final BlockData blockData = blockState.getBlockData();
         if (blockData instanceof Slab && ((Slab) blockData).getType() == Slab.Type.DOUBLE) {
             Utils.lastBlockState.remove(player);
-            Utils.lastBlockItemStack.remove(player);
+            // 优化不需要的 Utils.lastBlockItemStack.remove(player);
             return;
         }
 
@@ -95,19 +96,18 @@ public class Listeners implements Listener {
         // 如果事件被取消则玩家没有权限撤回方块. 并且其他插件可能会修改方块, 需要再次判断
         if (event.isCancelled() || !Utils.lastBlockState.get(player).equals(blockState)) {
             Utils.lastBlockState.remove(player);
-            Utils.lastBlockItemStack.remove(player);
+            // 优化不需要的 Utils.lastBlockItemStack.remove(player);
             return;
         }
 
-        final Location loc = block.getLocation();
+        Utils.lastBlockState.remove(player);
+        // 优化不需要的 Utils.lastBlockItemStack.remove(player);
 
-        block.getWorld().dropItemNaturally(loc, Utils.lastBlockItemStack.get(player));
+        e.setCancelled(true);
         block.setType(Material.AIR);
 
+        final Location loc = block.getLocation();
+        block.getWorld().dropItemNaturally(loc, Utils.lastBlockItemStack.get(player));
         player.playSound(loc.toCenterLocation(), block.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
-        e.setCancelled(true);
-
-        Utils.lastBlockState.remove(player);
-        Utils.lastBlockItemStack.remove(player);
     }
 }

@@ -1,7 +1,6 @@
 package com.kiocg.BotExtend.listeners;
 
 import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
@@ -23,44 +22,48 @@ public class InGame implements Listener {
             return;
         }
 
-        final PlayerProfile player = e.getPlayerProfile();
-        final String playerName = player.getName();
+        final String playerName = e.getPlayerProfile().getName();
 
         if (Utils.kickWhitelistPlayer.contains(playerName)) {
             return;
         }
         Utils.kickWhitelistPlayer.add(playerName);
 
+        final String whitelistMsg = "不明生物 " + playerName + " 被白名单结界阻挡了.";
+
         // 提醒全体玩家
         for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-            toPlayer.sendMessage("§a[§b豆渣子§a] §c不明生物 " + playerName + " 被白名单结界阻挡了.");
+            toPlayer.sendMessage("§a[§b豆渣子§a] §c" + whitelistMsg);
         }
         // 控制台记录
-        BotExtend.instance.getLogger().info("§c不明生物 " + playerName + " 被白名单结界阻挡了.");
+        BotExtend.instance.getLogger().info("§c" + whitelistMsg);
 
         // 提醒全体群成员
         try {
-            KioCGBot.sendGroupMsgAsync(569696336L, "不明生物 " + playerName + " 被白名单结界阻挡了.");
+            KioCGBot.sendGroupMsgAsync(569696336L, whitelistMsg);
         } catch (final @NotNull RuntimeException ignored) {
         }
     }
 
+    // 提醒玩家连接QQ号
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
-        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId())) {
+        final String playerName = player.getName();
+        if (!PlayerLinkUtils.hasPlayerLink(playerName)) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance,
-                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 建议在群内输入 §e.link " + player.getName() + " §6来连接."), 5L);
+                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 请在群里输入 §e.link " + playerName + " §6来连接."), 5L);
         }
     }
 
-    // 离线玩家强制要求绑定QQ号
+    // 离线玩家强制要求连接QQ号
     @EventHandler(ignoreCancelled = true)
     public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
         final Player player = e.getPlayer();
+        final String playerName = player.getName();
 
         //noinspection SpellCheckingInspection
-        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId()) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
+        if (!PlayerLinkUtils.hasPlayerLink(playerName) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
             // 防止卡视角和卡空中
             final Location from = e.getFrom();
             final Location to = e.getTo();
@@ -68,7 +71,7 @@ public class InGame implements Listener {
                 return;
             }
 
-            player.sendMessage("§a[§b豆渣子§a] §6离线玩家必须绑定QQ号, 请输入 /link 来查看帮助.");
+            player.sendMessage("§a[§b豆渣子§a] §6离线玩家须连接QQ号, 请在群里输入 §e.link " + playerName + " §6来连接.");
             e.setCancelled(true);
         }
     }

@@ -60,6 +60,8 @@ public class ConsoleSender implements ConsoleCommandSender {
         task = newTask();
     }
 
+    // 分割线 分割线 分割线 分割线 分割线
+
     @Override
     public void sendMessage(final @Nullable UUID uuid, final @NotNull String string) {
         consoleCommandSender.sendMessage(uuid, string);

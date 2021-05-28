@@ -15,3 +15,8 @@ commands:
     permission: kiocg.command.linkget
     permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> <mcID/qqID> 获取连接的账号."
+
+permissions:
+  kiocg.command.linkget:
+    description: 获取玩家连接的账号
+    default: op

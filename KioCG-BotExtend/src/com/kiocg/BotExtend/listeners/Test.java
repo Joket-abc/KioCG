@@ -15,6 +15,7 @@ public class Test implements Listener {
         }
 
         e.getGroup().sendMessage("contentToString：" + e.getMessage().contentToString()
-                                 + "\nserializeToMiraiCode：" + e.getMessage().serializeToMiraiCode());
+                                 + "\n\n\n\n"
+                                 + "serializeToMiraiCode：" + e.getMessage().serializeToMiraiCode());
     }
 }

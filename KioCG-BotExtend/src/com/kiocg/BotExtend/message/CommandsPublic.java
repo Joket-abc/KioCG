@@ -74,26 +74,6 @@ public class CommandsPublic {
             case ("whitelist"), ("白名单") -> contact.sendMessage("""
                                                                白名单申请(仅限正版!)：请先连接一次服务器，然后@任意昵称带前缀◈的管理员并报出你的ID
                                                                审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
-            //                final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            //                if (9 <= hour && hour <= 22) {
-            //                    contact.sendMessage("""
-            //                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID
-            //                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
-            //                } else if (23 <= hour || hour <= 1) {
-            //                    contact.sendMessage("""
-            //                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
-            //                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
-            //                } else if (hour <= 3) {
-            //                    contact.sendMessage("""
-            //                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @StarryFK 并报出你的ID
-            //                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~
-            //                                        (当前时间管理员可能不在线，建议9点后再进行申请)""");
-            //                } else {
-            //                    contact.sendMessage("""
-            //                                        白名单申请(仅限正版!)：请先连接一次服务器，然后 @IbukiHoshisaki 并报出你的ID
-            //                                        审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~
-            //                                        (当前时间管理员可能不在线，建议9点后再进行申请)""");
-            //                }
             case ("support"), ("赞助") -> contact.sendMessage("""
                                                             请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。
                                                             如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。""");
@@ -111,7 +91,7 @@ public class CommandsPublic {
             case ("link"), ("连接") -> contact.sendMessage("输入 .link <mcID> 来连接账号");
             default -> {
                 if (userCommand.toLowerCase().startsWith("link ") || userCommand.startsWith("连接 ")) {
-                    final String playerName = PlayerLinkUtils.getPlayerLinkAsName(user.getId());
+                    final String playerName = PlayerLinkUtils.getPlayerLinkName(user.getId());
                     if (playerName != null) {
                         contact.sendMessage("你已经连接了游戏账号 " + playerName);
                         return;
