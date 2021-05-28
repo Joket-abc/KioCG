@@ -53,23 +53,23 @@ public class Listeners implements Listener {
             if (currentTotalExperience >= amount * 10) {
                 player.giveExp(-amount * 10);
 
-                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, amount));
                 itemStack.setAmount(0);
+                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, amount));
             } else {
                 final int enough = currentTotalExperience / 10;
 
                 player.giveExp(-enough * 10);
 
-                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
                 itemStack.setAmount(amount - enough);
+                world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
             }
 
             Bukkit.getScheduler().runTask(BottleExp.instance, (Runnable) player::closeInventory);
         } else {
             player.giveExp(-10);
 
-            world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE));
             itemStack.setAmount(itemStack.getAmount() - 1);
+            world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE));
         }
 
         world.playSound(location, Sound.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);

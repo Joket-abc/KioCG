@@ -18,17 +18,7 @@ public class BarrierCommand implements CommandExecutor {
             return false;
         }
 
-        //        if (!Utils.barrierPlayers.contains(player)) {
-        //            Utils.barrierPlayers.add(player);
-        //            Utils.startBarrier(player);
-        //            player.sendMessage("§a[§b豆渣子§a] §6已开启屏障观察模式.");
-        //        } else {
-        //            Utils.barrierPlayers.remove(player);
-        //            Utils.stopBarrier(player);
-        //            player.sendMessage("§a[§b豆渣子§a] §6已关闭屏障观察模式.");
-        //        }
-
-        Utils.startBarrier(player);
+        Utils.sendBarrierChange(player);
         player.sendMessage("§a[§b豆渣子§a] §6已为你显示周围的屏障.");
 
         return true;

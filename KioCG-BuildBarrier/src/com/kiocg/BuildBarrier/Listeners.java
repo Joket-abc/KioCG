@@ -10,24 +10,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class Listeners implements Listener {
-    @EventHandler
-    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
-        final Player player = e.getPlayer();
-        if (Utils.barrierPlayers.contains(player)) {
-            Utils.barrierPlayers.remove(player);
-            Utils.stopBarrier(player);
-        }
-    }
-
     // 破坏屏障
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
@@ -41,14 +30,10 @@ public class Listeners implements Listener {
             return;
         }
 
-        final PlayerInventory playerInventory = e.getPlayer().getInventory();
+        final Player player = e.getPlayer();
+        final ItemStack offItemStack = player.getInventory().getItemInOffHand();
 
-        final ItemStack offItemStack = playerInventory.getItemInOffHand();
         if (offItemStack.getType() != Material.BARRIER) {
-            return;
-        }
-        final ItemStack mainItemStack = playerInventory.getItemInMainHand();
-        if (mainItemStack.getType() != Material.BARRIER) {
             return;
         }
 
@@ -56,12 +41,6 @@ public class Listeners implements Listener {
         if (offItemMeta.hasDisplayName() || offItemMeta.hasCustomModelData()) {
             return;
         }
-        final ItemMeta mainItemMeta = mainItemStack.getItemMeta();
-        if (mainItemMeta.hasDisplayName() || mainItemMeta.hasCustomModelData()) {
-            return;
-        }
-
-        final Player player = e.getPlayer();
 
         // 判断玩家能否破坏方块, 并且能让Coreprotect记录数据
         final BlockBreakEvent event = new BlockBreakEvent(block, player);

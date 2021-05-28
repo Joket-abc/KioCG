@@ -1,5 +1,7 @@
 package com.kiocg.FoodFlight;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,6 +19,28 @@ public class Utils {
     // 存储开启消耗饱食度飞行的玩家、扣除饱食度任务
     public static final Map<Player, BukkitTask> foodFlightTasks = new HashMap<>();
 
+    // 定期检查飞行玩家权限的改变
+    public void checkPermTask() {
+        Bukkit.getScheduler().runTaskTimer(FoodFlight.instance, () -> {
+            for (final Player player : Utils.flightPlayers) {
+                final String worldName = player.getWorld().getName().toLowerCase();
+
+                if (player.hasPermission("kiocg.foodflight.free." + worldName) && Utils.isFoodFlight(player)) {
+                    Utils.removeFoodFlight(player);
+                    player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在无限飞行 ➹");
+                    return;
+                } else if (player.hasPermission("kiocg.foodflight." + worldName) && !Utils.isFoodFlight(player)) {
+                    Utils.startFoodFlightTask(player);
+                    player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在饥饿飞行 ➹");
+                    return;
+                }
+
+                Utils.removeFlightList(player);
+                player.sendMessage("§a[§b豆渣子§a] §c➷ 飞行权限已改变 ➷");
+            }
+        }, 20L * 60L, 20L * 60L);
+    }
+
     private static @NotNull BukkitTask flightTask(final @NotNull Player player) {
         return new BukkitRunnable() {
             int i;
@@ -29,25 +53,28 @@ public class Utils {
                     player.setExhaustion(5.0F);
                 }
 
+                final Location location = player.getLocation();
+
                 // 播放烟雾动画来区分可能作弊的玩家
-                player.getWorld().spawnParticle(Particle.ASH, player.getLocation(), 9);
+                player.getWorld().spawnParticle(Particle.ASH, location, 9);
 
                 if (player.getFoodLevel() <= 6) {
                     player.setFlying(false);
 
                     // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
-                    cancel();
                     foodFlightTasks.put(player, null);
+                    cancel();
                     return;
                 }
 
-                if (player.getLocation().getBlockY() < 0) {
+                if (location.getBlockY() < 0) {
                     player.setFlying(false);
 
-                    // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
-                    cancel();
-                    foodFlightTasks.put(player, null);
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+
+                    // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
+                    foodFlightTasks.put(player, null);
+                    cancel();
                 }
             }
         }.runTaskTimer(FoodFlight.instance, 0L, 5L);
@@ -82,6 +109,14 @@ public class Utils {
         foodFlightTasks.put(player, null);
     }
 
+    public static void removeFlightList(final @NotNull Player player) {
+        flightPlayers.remove(player);
+        removeFoodFlight(player);
+
+        player.setAllowFlight(false);
+        player.setFlying(false);
+    }
+
     public static void removeFoodFlight(final @NotNull Player player) {
         try {
             foodFlightTasks.get(player).cancel();
@@ -89,16 +124,5 @@ public class Utils {
         }
 
         foodFlightTasks.remove(player);
-    }
-
-    public static void removeFlightList(final @NotNull Player player) {
-        flightPlayers.remove(player);
-
-        if (isFoodFlight(player)) {
-            removeFoodFlight(player);
-        }
-
-        player.setAllowFlight(false);
-        player.setFlying(false);
     }
 }

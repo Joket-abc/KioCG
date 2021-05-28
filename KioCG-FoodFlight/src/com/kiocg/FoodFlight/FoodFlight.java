@@ -15,6 +15,8 @@ public class FoodFlight extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 
         Objects.requireNonNull(getServer().getPluginCommand("fly")).setExecutor(new FlyCommand());
+
+        new Utils().checkPermTask();
     }
 
     @Override
@@ -27,5 +29,7 @@ public class FoodFlight extends JavaPlugin {
 
             player.sendMessage("§a[§b豆渣子§a] §c插件重载迫使你关闭了飞行模式.");
         }
+
+        getServer().getScheduler().cancelTasks(this);
     }
 }
