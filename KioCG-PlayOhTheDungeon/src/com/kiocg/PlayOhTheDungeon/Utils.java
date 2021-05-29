@@ -24,13 +24,13 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Utils {
-    // 存储触发兔子洞的玩家UUID、待确认的blockKey
-    public static final Map<String, Long> playerRabbitConfirm = new HashMap<>();
     // 存储触发兔子洞的玩家UUID、触发次数
     public static final Map<String, Integer> playerRabbits = new HashMap<>();
+    // 存储触发兔子洞的玩家UUID、待确认的blockKey
+    public static final Map<String, Long> playerRabbitConfirm = new HashMap<>();
 
     // 存储兔子洞生成位置的变量
-    public static long variable = System.currentTimeMillis();
+    public static long variable = System.currentTimeMillis() % 1000L;
 
     // 获取确认提示信息
     public static @NotNull Component getConfirmMessage(final long blockKey) {
@@ -96,19 +96,10 @@ public class Utils {
 
     public static void saveAndClearBackpack(final @NotNull Player player) {
         final File playerFile = new File(PlayOhTheDungeon.instance.getDataFolder(), player.getUniqueId() + ".yml");
-        if (playerFile.exists()) {
-            player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile exists)");
-            return;
-        }
         try {
-            if (!playerFile.createNewFile()) {
-                player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile create failed)");
-                return;
-            }
-        } catch (final @NotNull IOException e) {
-            player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile create IOException)");
-            e.printStackTrace();
-            return;
+            //noinspection ResultOfMethodCallIgnored
+            playerFile.createNewFile();
+        } catch (final @NotNull IOException ignore) {
         }
 
         final PlayerInventory playerInventory = player.getInventory();
@@ -122,8 +113,7 @@ public class Utils {
         }
         try {
             fileConfiguration.save(playerFile);
-        } catch (final @NotNull IOException e) {
-            e.printStackTrace();
+        } catch (final @NotNull IOException ignore) {
         }
 
         playerInventory.clear();
@@ -131,15 +121,22 @@ public class Utils {
 
     public static void restoreBackpackAndLoot(final @NotNull Player player) {
         final File playerFile = new File(PlayOhTheDungeon.instance.getDataFolder(), player.getUniqueId() + ".yml");
-        if (!playerFile.exists()) {
-            player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile not exists)");
-            return;
-        }
 
         final PlayerInventory playerInventory = player.getInventory();
         // 延时外获取背包内容拷贝
         final ItemStack[] contents = playerInventory.getContents();
         playerInventory.clear();
+
+        final FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(playerFile);
+        for (int i = 0; i < 41; ++i) {
+            final ItemStack itemStack = (ItemStack) fileConfiguration.get(String.valueOf(i));
+            if (itemStack != null) {
+                playerInventory.setItem(i, itemStack);
+            }
+        }
+
+        //noinspection ResultOfMethodCallIgnored
+        playerFile.delete();
 
         new BukkitRunnable() {
             @Override
@@ -151,14 +148,5 @@ public class Utils {
                 }
             }
         }.runTaskLater(PlayOhTheDungeon.instance, 10L);
-
-        for (int i = 0; i < 41; ++i) {
-            final ItemStack itemStack = (ItemStack) YamlConfiguration.loadConfiguration(playerFile).get(String.valueOf(i));
-            playerInventory.setItem(i, itemStack);
-        }
-
-        if (!playerFile.delete()) {
-            player.sendMessage("§a[§b豆渣子§a] §4出现内部错误, 请联系管理员! (saveFile delete failed)");
-        }
     }
 }

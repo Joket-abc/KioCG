@@ -1,4 +1,4 @@
-name: ProtectSpawn
+name: KioCG-ProtectSpawn
 main: com.kiocg.ProtectSpawn.ProtectSpawn
 version: 2021
 api-version: 1.16

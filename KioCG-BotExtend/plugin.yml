@@ -1,4 +1,4 @@
-name: BotExtend
+name: KioCG-BotExtend
 main: com.kiocg.BotExtend.BotExtend
 version: 2021
 api-version: 1.16

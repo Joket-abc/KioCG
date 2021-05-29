@@ -29,24 +29,40 @@ public class Listeners implements Listener {
         if (block.getType() == Material.BEDROCK) {
             final Player player = e.getPlayer();
             if (player.getInventory().getItemInMainHand().getType() == Material.SPAWNER) {
-                Utils.joinRabbit(player);
+                final long blockKey = block.getBlockKey();
+                Utils.playerRabbitConfirm.put(player.getUniqueId().toString(), blockKey);
+                player.sendMessage(Utils.getConfirmMessage(blockKey));
+                return;
             }
         }
 
         final Player player = e.getPlayer();
+        final String uuid = player.getUniqueId().toString();
 
         final long blockKey = block.getBlockKey();
-
-        final String uuid = player.getUniqueId().toString();
-        if ((blockKey + Utils.variable) % (1500L + Utils.playerRabbits.get(uuid) * 1500L) == 126L) {
-            Utils.variable = System.currentTimeMillis();
+        if (blockKey % (1000L + Utils.playerRabbits.get(uuid) * 1000L) == Utils.variable) {
+            Utils.variable = System.currentTimeMillis() % 1000L;
 
             Utils.playerRabbitConfirm.put(uuid, blockKey);
             player.sendMessage(Utils.getConfirmMessage(blockKey));
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
+        final Player player = e.getPlayer();
+
+        final String uuid = player.getUniqueId().toString();
+        if (!Utils.playerRabbits.containsKey(uuid)) {
+            Utils.playerRabbits.put(uuid, 0);
+        }
+
+        if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
+            player.setHealth(0.0);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChangedWorld(final @NotNull PlayerChangedWorldEvent e) {
         final Player player = e.getPlayer();
 
@@ -71,27 +87,12 @@ public class Listeners implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
-        final Player player = e.getPlayer();
-
-        final String uuid = player.getUniqueId().toString();
-        if (!Utils.playerRabbits.containsKey(uuid)) {
-            Utils.playerRabbits.put(uuid, 0);
-        }
-
-        if (!"KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
-            return;
-        }
-
-        player.setHealth(0.0);
-    }
-
     // 怪物掉落货币
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDeath(final @NotNull EntityDeathEvent e) {
         final Entity entity = e.getEntity();
-        if (entity instanceof Player || new Random().nextInt(10) != 0) {
+
+        if (!"KioCG_OhTheDungeon".equals(entity.getWorld().getName()) || entity instanceof Player || new Random().nextInt(7) != 0) {
             return;
         }
 

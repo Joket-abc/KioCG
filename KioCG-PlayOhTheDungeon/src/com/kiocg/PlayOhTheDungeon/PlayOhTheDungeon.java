@@ -30,7 +30,6 @@ public class PlayOhTheDungeon extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
-
         Objects.requireNonNull(getServer().getPluginCommand("rabbit")).setExecutor(new RabbitCommand());
     }
 }
