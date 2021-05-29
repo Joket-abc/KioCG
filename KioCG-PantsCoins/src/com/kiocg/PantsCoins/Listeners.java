@@ -1,6 +1,6 @@
 package com.kiocg.PantsCoins;
 
-import com.kiocg.PantsCoins.Utils.BlockManager;
+import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -43,8 +43,7 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
-        final Material material = block.getType();
-        if (material != Material.BROWN_MUSHROOM_BLOCK && material != Material.RED_MUSHROOM_BLOCK && material != Material.MUSHROOM_STEM) {
+        if (!MaterialTags.MUSHROOM_BLOCKS.isTagged(block.getType())) {
             return;
         }
 

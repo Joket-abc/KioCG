@@ -1,4 +1,4 @@
-package com.kiocg.PantsCoins.Utils;
+package com.kiocg.PantsCoins;
 
 import com.google.common.collect.Maps;
 import org.bukkit.Material;
@@ -60,9 +60,9 @@ public class BlockManager {
 
         for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
             if (entry.getValue().equals(customModelData)) {
-                final Boolean[] mushroomFace = entry.getKey();
                 final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
 
+                final Boolean[] mushroomFace = entry.getKey();
                 multipleFacing.setFace(BlockFace.NORTH, mushroomFace[0]);
                 multipleFacing.setFace(BlockFace.EAST, mushroomFace[1]);
                 multipleFacing.setFace(BlockFace.SOUTH, mushroomFace[2]);
@@ -71,14 +71,12 @@ public class BlockManager {
                 multipleFacing.setFace(BlockFace.DOWN, mushroomFace[5]);
 
                 block.setBlockData(multipleFacing);
+                return;
             }
         }
     }
 
     public static @Nullable ItemStack getCustomBlockAsItemStack(final @NotNull Block block) {
-        final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-        final Boolean[] mushroomFace = {multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST), multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST), multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
-
         final Map<Boolean[], Integer> mushroomFaceMap;
 
         final Material material = block.getType();
@@ -90,11 +88,16 @@ public class BlockManager {
             mushroomFaceMap = mushroomStemFaceMap;
         }
 
+        final MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+        final Boolean[] mushroomFace = {multipleFacing.hasFace(BlockFace.NORTH), multipleFacing.hasFace(BlockFace.EAST),
+                                        multipleFacing.hasFace(BlockFace.SOUTH), multipleFacing.hasFace(BlockFace.WEST),
+                                        multipleFacing.hasFace(BlockFace.UP), multipleFacing.hasFace(BlockFace.DOWN)};
+
         for (final Map.Entry<Boolean[], Integer> entry : mushroomFaceMap.entrySet()) {
             if (Arrays.equals(entry.getKey(), mushroomFace)) {
                 final ItemStack itemStack = new ItemStack(Material.BARRIER);
-                final ItemMeta itemMeta = itemStack.getItemMeta();
 
+                final ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setCustomModelData(entry.getValue());
                 itemStack.setItemMeta(itemMeta);
 

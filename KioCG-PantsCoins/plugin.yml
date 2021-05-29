@@ -3,14 +3,7 @@ main: com.kiocg.PantsCoins.PantsCoins
 version: 2021
 api-version: 1.16
 
-softdepend: [ "Vault" ]
-
 commands:
-  story:
-    description: "出售手中的压缩物品."
-    permission: kiocg.command.story
-    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
-    usage: "用法: /<command> 出售手中的压缩物品."
   custommodeldata:
     description: "设置手中物品的物品模型属性."
     aliases: [ cmd ]
@@ -19,6 +12,6 @@ commands:
     usage: "用法: /<command> <int> 设置手中物品的物品模型属性."
 
 permissions:
-  kiocg.command.story:
-    description: 出售手中的压缩物品
-    default: true
+  kiocg.command.custommodeldata:
+    description: 设置手中物品的物品模型属性
+    default: op

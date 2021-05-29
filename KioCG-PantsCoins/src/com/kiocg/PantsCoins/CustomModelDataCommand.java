@@ -1,4 +1,4 @@
-package com.kiocg.PantsCoins.commands;
+package com.kiocg.PantsCoins;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
@@ -31,7 +31,6 @@ public class CustomModelDataCommand implements CommandExecutor {
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setCustomModelData(Integer.valueOf(args[0]));
-
         itemStack.setItemMeta(itemMeta);
         return true;
     }
