@@ -12,7 +12,7 @@ public class Utils {
     // 存储树苗位置的blockKey、羊毛种类列表
     public static final Map<Long, List<Material>> treeWools = new HashMap<>();
 
-    public static @Nullable Material dye2wool(final @NotNull Material material) {
+    public static @Nullable Material dye2Wool(final @NotNull Material material) {
         return Material.getMaterial(material.toString().replace("_DYE", "_WOOL"));
     }
 }

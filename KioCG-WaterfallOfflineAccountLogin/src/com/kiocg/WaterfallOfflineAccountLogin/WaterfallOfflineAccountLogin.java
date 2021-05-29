@@ -34,8 +34,9 @@ public class WaterfallOfflineAccountLogin extends Plugin {
             try (final InputStream inputStream = getResourceAsStream("players.yml")) {
                 Files.copy(inputStream, playersFile.toPath());
                 playersFile = new File(getDataFolder(), "players.yml");
-            } catch (final IOException ignore) {
+            } catch (final IOException e) {
                 BungeeCord.getInstance().getLogger().warning("加载玩家密码的数据文件失败！");
+                e.printStackTrace();
                 return;
             }
         }
@@ -43,8 +44,9 @@ public class WaterfallOfflineAccountLogin extends Plugin {
         // 加载玩家密码的数据配置文件
         try {
             playersFileConfiguration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(playersFile);
-        } catch (final IOException ignore) {
+        } catch (final IOException e) {
             BungeeCord.getInstance().getLogger().warning("加载玩家密码的数据配置文件失败！");
+            e.printStackTrace();
             return;
         }
 
@@ -67,6 +69,7 @@ public class WaterfallOfflineAccountLogin extends Plugin {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(playersFileConfiguration, playersFile);
         } catch (final IOException e) {
+            BungeeCord.getInstance().getLogger().warning("保存玩家密码的数据文件失败！");
             e.printStackTrace();
         }
     }

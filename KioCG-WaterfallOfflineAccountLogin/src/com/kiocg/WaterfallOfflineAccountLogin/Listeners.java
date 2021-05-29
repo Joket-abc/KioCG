@@ -51,7 +51,6 @@ public class Listeners implements Listener {
     @EventHandler
     public void onServerConnect(final ServerConnectEvent e) {
         final ProxiedPlayer proxiedPlayer = e.getPlayer();
-
         proxiedPlayer.setDisplayName(Utils.splitPlayerName(proxiedPlayer.getName()));
     }
 }

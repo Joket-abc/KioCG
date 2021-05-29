@@ -2,3 +2,8 @@ name: KioCG-ProtectSpawn
 main: com.kiocg.ProtectSpawn.ProtectSpawn
 version: 2021
 api-version: 1.16
+
+permissions:
+  kiocg.protectspawn.bypass:
+    description: 绕过主城保护
+    default: op

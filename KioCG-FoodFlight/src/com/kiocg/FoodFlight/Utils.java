@@ -8,14 +8,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Utils {
     // 存储所有开启飞行的玩家
-    public static final List<Player> flightPlayers = new ArrayList<>();
+    public static final Set<Player> flightPlayers = new HashSet<>();
     // 存储开启消耗饱食度飞行的玩家、扣除饱食度任务
     public static final Map<Player, BukkitTask> foodFlightTasks = new HashMap<>();
 

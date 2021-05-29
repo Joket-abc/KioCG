@@ -32,9 +32,7 @@ public class InGame implements Listener {
         final String whitelistMsg = "不明生物 " + playerName + " 被白名单结界阻挡了.";
 
         // 提醒全体玩家
-        for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-            toPlayer.sendMessage("§a[§b豆渣子§a] §c" + whitelistMsg);
-        }
+        Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage("§a[§b豆渣子§a] §c" + whitelistMsg));
         // 控制台记录
         BotExtend.instance.getLogger().info("§c" + whitelistMsg);
 

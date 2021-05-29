@@ -10,7 +10,7 @@ import java.util.*;
 public class CreateRecipe {
     public CreateRecipe() {
         // 存储能够压缩与解压的物品
-        final List<Material> compressMaterial = new ArrayList<>(Arrays.asList(Material.values()));
+        final Set<Material> compressMaterial = EnumSet.allOf(Material.class);
         // 存储合成配方中仅有单个物品的配方物品匹配表、所对应的成品
         // 配方物品匹配表 例如: 所有颜色的羊毛为羊毛类配方物品匹配表
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();
@@ -76,7 +76,7 @@ public class CreateRecipe {
         }
 
         // 创建压缩与解压的物品配方
-        for (final Material material : compressMaterial) {
+        compressMaterial.forEach(material -> {
             if (material.isItem() && !material.isAir() && material.getMaxStackSize() != 1) {
                 Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(ItemCompress.instance, "ItemCompress_" + material), new ItemStack(material))
                                          .shape("aaa", "aaa", "aaa").setIngredient('a', material));
@@ -84,17 +84,15 @@ public class CreateRecipe {
                 Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, "ItemDecompress_" + material), new ItemStack(material, 9))
                                          .addIngredient(1, material));
             }
-        }
+        });
         // 创建覆盖解压的物品配方
-        for (final Map.Entry<List<RecipeChoice>, ItemStack> entry : oneItemMaterial.entrySet()) {
-            final String key = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) entry.getKey().get(0)).getItemStack().getType();
+        oneItemMaterial.forEach((recipeChoices, result) -> {
+            final String namespacedKeyKey = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) recipeChoices.get(0)).getItemStack().getType();
 
-            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, key), entry.getValue());
-            for (final RecipeChoice recipeChoice : entry.getKey()) {
-                shapelessRecipe.addIngredient(recipeChoice);
-            }
+            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, namespacedKeyKey), result);
+            recipeChoices.forEach(shapelessRecipe::addIngredient);
 
             Bukkit.addRecipe(shapelessRecipe);
-        }
+        });
     }
 }

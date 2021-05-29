@@ -19,9 +19,7 @@ public class PlayerLinkUtils {
 
     public void loadPlayers() {
         final ConfigurationSection configurationSection = BotExtend.playersFileConfiguration.getConfigurationSection("links");
-        for (final Map.Entry<String, Object> entry : Objects.requireNonNull(configurationSection).getValues(false).entrySet()) {
-            playerLinks.put(entry.getKey(), Long.valueOf(entry.getValue().toString()));
-        }
+        Objects.requireNonNull(configurationSection).getValues(false).forEach((uuid, qq) -> playerLinks.put(uuid, Long.valueOf(qq.toString())));
     }
 
     public static @NotNull Boolean hasPlayerLink(final @NotNull String uuid) {

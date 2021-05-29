@@ -24,14 +24,14 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
-        final Player player = e.getPlayer();
-
-        if (player.isOp()) {
+        final Location loc = e.getBlock().getLocation();
+        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
             return;
         }
 
-        final Location loc = e.getBlock().getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.protectspawn.bypass")) {
             return;
         }
 
@@ -42,14 +42,14 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
-        final Player player = e.getPlayer();
-
-        if (player.isOp()) {
+        final Location loc = e.getBlock().getLocation();
+        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
             return;
         }
 
-        final Location loc = e.getBlock().getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.protectspawn.bypass")) {
             return;
         }
 
@@ -63,19 +63,27 @@ public class Listeners implements Listener {
         if (e.getAction() == Action.PHYSICAL) {
             final Block block = e.getClickedBlock();
 
-            final Location loc = Objects.requireNonNull(block).getLocation();
-            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            if (Objects.requireNonNull(block).getType() != Material.FARMLAND) {
                 return;
             }
 
-            if (Objects.requireNonNull(block).getType() == Material.FARMLAND) {
-                e.setCancelled(true);
+            final Location loc = Objects.requireNonNull(block).getLocation();
+            if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+                return;
             }
+
+            e.setCancelled(true);
         } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             final Block block = e.getClickedBlock();
 
             final Location loc = Objects.requireNonNull(block).getLocation();
-            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+                return;
+            }
+
+            final Player player = e.getPlayer();
+
+            if (player.hasPermission("kiocg.protectspawn.bypass")) {
                 return;
             }
 
@@ -85,14 +93,9 @@ public class Listeners implements Listener {
                 return;
             }
 
-            final Player player = e.getPlayer();
-
             if (Objects.requireNonNull(block).getType() == Material.CAKE && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
-                    for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-                        toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]");
-                    }
-
+                    Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]"));
                     Utils.eatCake.add(player.getUniqueId());
                 }
 
@@ -104,18 +107,18 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelEntityDamage(final @NotNull EntityDamageByEntityEvent e) {
-        final Entity damager = e.getDamager();
-        if (!(damager instanceof Player) || damager.isOp()) {
-            return;
-        }
-
         final Entity entity = e.getEntity();
         if (entity instanceof Monster) {
             return;
         }
 
         final Location loc = entity.getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+            return;
+        }
+
+        final Entity damager = e.getDamager();
+        if (!(damager instanceof Player) || damager.hasPermission("kiocg.protectspawn.bypass")) {
             return;
         }
 
@@ -126,7 +129,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelEntityExplode(final @NotNull EntityExplodeEvent e) {
         final Location loc = e.getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
             return;
         }
 

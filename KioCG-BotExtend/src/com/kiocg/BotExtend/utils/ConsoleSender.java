@@ -36,9 +36,7 @@ public class ConsoleSender implements ConsoleCommandSender {
         return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance, () -> {
             final StringBuilder stringBuilder = new StringBuilder();
 
-            for (final String string : output) {
-                stringBuilder.append(ChatColor.stripColor(string)).append("\n");
-            }
+            output.forEach(string -> stringBuilder.append(ChatColor.stripColor(string)).append("\n"));
             output.clear();
 
             final String message = stringBuilder.toString().trim();

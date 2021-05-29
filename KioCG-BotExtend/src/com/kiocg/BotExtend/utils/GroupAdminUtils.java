@@ -9,9 +9,9 @@ import java.util.*;
 
 public class GroupAdminUtils {
     // 存储所有群、管理员列表
-    private static final Map<Long, ArrayList<Long>> groupAdmins = new HashMap<>();
+    private static final Map<Long, HashSet<Long>> groupAdmins = new HashMap<>();
     // 存储所有群、指令前缀列表
-    private static final Map<Long, ArrayList<String>> groupLabels = new HashMap<>();
+    private static final Map<Long, HashSet<String>> groupLabels = new HashMap<>();
 
     // 存储logCommand消息
     public static @NotNull String logCommand = "";
@@ -21,9 +21,9 @@ public class GroupAdminUtils {
         final List<Long> owners = config.getLongList("owners");
 
         for (final String group : Objects.requireNonNull(config.getConfigurationSection("groups")).getKeys(false)) {
-            groupLabels.put(Long.valueOf(group), (ArrayList<String>) config.getStringList("groups." + group + ".labels"));
+            groupLabels.put(Long.valueOf(group), new HashSet<>(config.getStringList("groups." + group + ".labels")));
 
-            groupAdmins.put(Long.valueOf(group), new ArrayList<>(owners) {{
+            groupAdmins.put(Long.valueOf(group), new HashSet<>(owners) {{
                 addAll(config.getLongList("groups." + group + ".admins"));
             }});
         }
@@ -39,7 +39,7 @@ public class GroupAdminUtils {
         }
     }
 
-    public static @Nullable ArrayList<String> getGroupLabels(final long groupID) {
+    public static @Nullable HashSet<String> getGroupLabels(final long groupID) {
         return groupLabels.get(groupID);
     }
 }

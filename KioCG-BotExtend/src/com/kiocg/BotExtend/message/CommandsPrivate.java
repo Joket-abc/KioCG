@@ -7,7 +7,6 @@ import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -49,9 +48,7 @@ public class CommandsPrivate {
             case ("list"), ("在线") -> {
                 final StringBuilder stringBuilder = new StringBuilder();
 
-                for (final Player player : Bukkit.getOnlinePlayers()) {
-                    stringBuilder.append(player.getName()).append(", ");
-                }
+                Bukkit.getOnlinePlayers().forEach(player -> stringBuilder.append(player.getName()).append(", "));
 
                 if (stringBuilder.isEmpty()) {
                     contact.sendMessage("当前没有玩家在线呢qaq");

@@ -96,9 +96,7 @@ public class Listeners implements Listener {
             final String banMsg = "邪恶生物 " + player.getName() + " 被安全检查拦截了.";
 
             // 提醒全体玩家
-            for (final Player toPlayer : Bukkit.getOnlinePlayers()) {
-                toPlayer.sendMessage("§a[§b豆渣子§a] §c" + banMsg);
-            }
+            Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage("§a[§b豆渣子§a] §c" + banMsg));
             // 控制台记录
             AntiCheatingClient.instance.getLogger().info("§c" + banMsg);
 

@@ -4,7 +4,6 @@ import com.kiocg.LittleThings.LittleThings;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -34,21 +33,18 @@ public class AutoRestart {
 
             if ("06:00:00".equals(date)) {
                 Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
-                    for (final Player player : Bukkit.getOnlinePlayers()) {
-                        player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)"));
-                    }
-
+                    Bukkit.getOnlinePlayers().forEach(player -> player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)")));
                     Bukkit.shutdown();
                 });
                 return;
             }
 
             if (autoRestartMessage.containsKey(date)) {
-                for (final Player player : Bukkit.getOnlinePlayers()) {
+                Bukkit.getOnlinePlayers().forEach(player -> {
                     player.sendTitle("§c世界正在破裂...", "§6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!", 10, 70, 20);
                     player.sendMessage("§a[§b豆渣子§a] §c世界正在破裂... §6将在 §e" + autoRestartMessage.get(date) + " §6后自动重启!");
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1.0F, 1.0F);
-                }
+                });
 
                 autoRestartMessage.remove(date);
             }

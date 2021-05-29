@@ -57,12 +57,12 @@ public class Listeners implements Listener {
         // 获取待合成物品上所有的附魔属性, 并保留等级较大的
         final Map<Enchantment, Integer> enchantBigger = new HashMap<>(enchantments2);
 
-        enchantments1.forEach((key1, value1) -> {
-            if (enchantments2.containsKey(key1) && enchantments2.get(key1).equals(value1)) {
-                enchantEquals.put(key1, value1);
+        enchantments1.forEach((enchantment, level) -> {
+            if (enchantments2.containsKey(enchantment) && enchantments2.get(enchantment).equals(level)) {
+                enchantEquals.put(enchantment, level);
             }
 
-            enchantBigger.merge(key1, value1, Integer::max);
+            enchantBigger.merge(enchantment, level, Integer::max);
         });
 
         // 获取铁砧结果栏中物品的附魔属性
@@ -86,13 +86,13 @@ public class Listeners implements Listener {
         // 创建结果附魔
         final Map<Enchantment, Integer> enchantResult = new HashMap<>();
 
-        enchantEquals.forEach((keyEquals, valueEquals) -> {
+        enchantEquals.forEach((enchantmentEquals, levelEquals) -> {
             // 判断结果物品上的附魔属性是否小于等于待合成物品(到达原版附魔等级上限)
-            if (enchantments3.get(keyEquals) <= valueEquals) {
-                enchantResult.put(keyEquals, valueEquals < 9 ? ++valueEquals : 10);
+            if (enchantments3.get(enchantmentEquals) <= levelEquals) {
+                enchantResult.put(enchantmentEquals, levelEquals < 9 ? ++levelEquals : 10);
             }
 
-            enchantBigger.remove(keyEquals);
+            enchantBigger.remove(enchantmentEquals);
         });
 
         // 设置物品惩罚
@@ -104,15 +104,15 @@ public class Listeners implements Listener {
         enchantResult.putAll(enchantBigger);
 
         if (item3IsBook) {
-            for (final Map.Entry<Enchantment, Integer> entryResult : enchantResult.entrySet()) {
-                ((EnchantmentStorageMeta) itemMeta3).removeStoredEnchant(entryResult.getKey());
-                ((EnchantmentStorageMeta) itemMeta3).addStoredEnchant(entryResult.getKey(), entryResult.getValue(), true);
-            }
+            enchantResult.forEach((enchantment, level) -> {
+                ((EnchantmentStorageMeta) itemMeta3).removeStoredEnchant(enchantment);
+                ((EnchantmentStorageMeta) itemMeta3).addStoredEnchant(enchantment, level, true);
+            });
         } else {
-            for (final Map.Entry<Enchantment, Integer> entryResult : enchantResult.entrySet()) {
-                itemMeta3.removeEnchant(entryResult.getKey());
-                itemMeta3.addEnchant(entryResult.getKey(), entryResult.getValue(), true);
-            }
+            enchantResult.forEach((enchantment, level) -> {
+                itemMeta3.removeEnchant(enchantment);
+                itemMeta3.addEnchant(enchantment, level, true);
+            });
         }
 
         item3.setItemMeta(itemMeta3);

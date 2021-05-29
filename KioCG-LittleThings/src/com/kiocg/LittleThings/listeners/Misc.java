@@ -80,9 +80,7 @@ public class Misc implements Listener {
 
         // 获取在线玩家名列表，从长到短排序
         final List<String> onlinePlayersName = new ArrayList<>();
-        for (final Player player : Bukkit.getOnlinePlayers()) {
-            onlinePlayersName.add(player.getName());
-        }
+        Bukkit.getOnlinePlayers().forEach(player -> onlinePlayersName.add(player.getName()));
         onlinePlayersName.sort((a, b) -> (b.length() - a.length()));
 
         final String messageStringLowerCase = messageString.toLowerCase();

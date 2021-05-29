@@ -57,9 +57,17 @@ public class KioCGBot {
         });
     }
 
+    public static void sendGroupMsgAsync(final Long groupID, final @NotNull String msg) {
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.instance, () -> Objects.requireNonNull(bot.getGroup(groupID)).sendMessage(msg));
+    }
+
+    public static void sendPrivateMsgAsync(final Long userID, final @NotNull String msg) {
+        Bukkit.getScheduler().runTaskAsynchronously(qqBot.instance, () -> Objects.requireNonNull(bot.getFriend(userID)).sendMessage(msg));
+    }
+
     public void close() {
         try {
-            bot.close(new Throwable());
+            bot.close();
         } catch (final @NotNull NullPointerException ignore) {
         }
     }
@@ -67,13 +75,5 @@ public class KioCGBot {
     public void restart() {
         close();
         start();
-    }
-
-    public static void sendGroupMsgAsync(final Long groupID, final @NotNull String msg) {
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.instance, () -> Objects.requireNonNull(bot.getGroup(groupID)).sendMessage(msg));
-    }
-
-    public static void sendPrivateMsgAsync(final Long userID, final @NotNull String msg) {
-        Bukkit.getScheduler().runTaskAsynchronously(qqBot.instance, () -> Objects.requireNonNull(bot.getFriend(userID)).sendMessage(msg));
     }
 }

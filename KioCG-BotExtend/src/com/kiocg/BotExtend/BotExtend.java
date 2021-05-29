@@ -88,6 +88,7 @@ public class BotExtend extends JavaPlugin {
         try {
             playersFileConfiguration.save(playersFile);
         } catch (final @NotNull IOException e) {
+            getLogger().warning("保存玩家连接QQ的数据文件失败！");
             e.printStackTrace();
         }
     }

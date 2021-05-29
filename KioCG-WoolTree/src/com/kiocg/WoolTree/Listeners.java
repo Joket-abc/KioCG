@@ -41,6 +41,11 @@ public class Listeners implements Listener {
             return;
         }
 
+        if (!player.hasPermission("kiocg.wooltree.ues")) {
+            player.sendMessage("§a[§b豆渣子§a] §6你不可以种植羊毛树.");
+            return;
+        }
+
         if (player.getGameMode() != GameMode.CREATIVE) {
             itemStack.setAmount(itemStack.getAmount() - 1);
         }
@@ -51,28 +56,27 @@ public class Listeners implements Listener {
             block.getWorld().playEffect(location.add(0.0, 1.0, 0.0), Effect.SMOKE, 0);
             return;
         }
-        block.getWorld().playSound(location, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1.0F, 1.0F);
-        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
 
         final long blockKey = block.getBlockKey();
         if (Utils.treeWools.containsKey(blockKey)) {
-            Utils.treeWools.get(blockKey).add(Utils.dye2wool(itemStack.getType()));
+            Utils.treeWools.get(blockKey).add(Utils.dye2Wool(itemStack.getType()));
         } else {
             Utils.treeWools.put(blockKey, new ArrayList<>() {{
-                add(Utils.dye2wool(itemStack.getType()));
+                add(Utils.dye2Wool(itemStack.getType()));
             }});
         }
+
+        block.getWorld().playSound(location, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1.0F, 1.0F);
+        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 9, 0.1, 0.1, 0.1);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
-        if (!MaterialSetTag.SAPLINGS.isTagged(Objects.requireNonNull(block).getType())) {
-            return;
+        if (MaterialSetTag.SAPLINGS.isTagged(Objects.requireNonNull(block).getType())) {
+            Utils.treeWools.remove(block.getBlockKey());
         }
-
-        Utils.treeWools.remove(block.getBlockKey());
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -84,8 +88,9 @@ public class Listeners implements Listener {
         }
 
         final List<Material> wools = Utils.treeWools.get(blockKey);
-        final int amount = wools.size();
+
         final Random random = new Random();
+        final int amount = wools.size();
         for (final BlockState blockState : e.getBlocks()) {
             if (MaterialSetTag.LEAVES.isTagged(blockState.getType())) {
                 blockState.setType(wools.get(random.nextInt(amount)));

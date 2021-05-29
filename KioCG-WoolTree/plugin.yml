@@ -2,3 +2,8 @@ name: KioCG-WoolTree
 main: com.kiocg.WoolTree.WoolTree
 version: 2021
 api-version: 1.16
+
+permissions:
+  kiocg.wooltree.ues:
+    description: 允许种植羊毛树
+    default: true
