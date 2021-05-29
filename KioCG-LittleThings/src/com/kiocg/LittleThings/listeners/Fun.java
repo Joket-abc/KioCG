@@ -31,12 +31,12 @@ public class Fun implements Listener {
         }
 
         final Firework firework = entity.getWorld().spawn(e.getLocation(), Firework.class);
-        final FireworkMeta fwMeta = firework.getFireworkMeta();
-        final FireworkEffect fwEffect = FireworkEffect.builder().with(FireworkEffect.Type.CREEPER).flicker(true).trail(true)
-                                                      .withColor(Color.GREEN, Color.LIME)
-                                                      .withFade(Color.YELLOW, Color.ORANGE).build();
 
-        fwMeta.addEffect(fwEffect);
+        final FireworkMeta fwMeta = firework.getFireworkMeta();
+        fwMeta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.CREEPER).flicker(true).trail(true)
+                                       .withColor(Color.GREEN, Color.LIME)
+                                       .withFade(Color.YELLOW, Color.ORANGE).build());
+
         firework.setFireworkMeta(fwMeta);
     }
 
@@ -75,7 +75,7 @@ public class Fun implements Listener {
         }
 
         final PotionEffectType[] potionEffectTypes = PotionEffectType.values();
-        ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, 0), false);
+        ((Arrow) e.getProjectile()).addCustomEffect(new PotionEffect(potionEffectTypes[random.nextInt(potionEffectTypes.length)], 20 * 7, random.nextInt(3)), false);
     }
 
     // 下届之星捕捉怪物
@@ -85,7 +85,13 @@ public class Fun implements Listener {
             return;
         }
 
-        final ItemStack itemStack = e.getPlayer().getInventory().getItemInMainHand();
+        final Player player = e.getPlayer();
+
+        if (!player.hasPermission("kiocg.catchmonsters.use")) {
+            return;
+        }
+
+        final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (itemStack.getType() != Material.NETHER_STAR) {
             return;
@@ -93,9 +99,9 @@ public class Fun implements Listener {
 
         final Entity entity = e.getRightClicked();
 
-        if (entity.getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER || (!(entity instanceof Monster) && !(entity instanceof Ghast))
+        if (entity.getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER || !(entity instanceof Monster)
             || entity instanceof WitherSkeleton || entity instanceof ElderGuardian || entity instanceof EnderDragon
-            || entity instanceof Giant || entity instanceof Wither) {
+            || entity instanceof Wither || entity instanceof Giant) {
             return;
         }
 
@@ -124,19 +130,19 @@ public class Fun implements Listener {
             return;
         }
 
+        e.setCancelled(true);
+
+        itemStack.setAmount(itemStack.getAmount() - 1);
+        entity.remove();
+
         final World world = entity.getWorld();
         final Location location = entity.getLocation();
 
         try {
             world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
-        } catch (final NullPointerException ignore) {
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
-
-        e.setCancelled(true);
-
-        itemStack.setAmount(itemStack.getAmount() - 1);
-        entity.remove();
 
         world.createExplosion(location, 0.0F);
         world.playEffect(location, Effect.SMOKE, 0);

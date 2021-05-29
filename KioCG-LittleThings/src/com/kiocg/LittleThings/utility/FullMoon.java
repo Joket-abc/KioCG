@@ -9,30 +9,30 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Objects;
 
 public class FullMoon {
-    private final @Nullable World world = Bukkit.getWorld("KioCG_world");
-    private final BossBar bossBar = Bukkit.createBossBar("FullMoon", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
+    private final World world;
+
+    private final @NotNull BossBar bossBar;
 
     public FullMoon() {
+        world = Objects.requireNonNull(Bukkit.getWorld("KioCG_world"));
+
+        bossBar = Bukkit.createBossBar("FullMoon", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
         bossBar.setVisible(false);
+
         this.FullMoonTask();
     }
 
     // 满月特殊效果
     private void FullMoonTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.instance, () -> {
-            if (Objects.requireNonNull(world).getMoonPhase() == MoonPhase.NEW_MOON) {
-                final List<Player> players = bossBar.getPlayers();
-
+            if (world.getMoonPhase() == MoonPhase.NEW_MOON) {
                 for (final Player player : Bukkit.getOnlinePlayers()) {
-                    if (!players.contains(player)) {
-                        bossBar.addPlayer(player);
-                    }
+                    bossBar.addPlayer(player);
                 }
                 return;
             }

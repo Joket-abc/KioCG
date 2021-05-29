@@ -32,6 +32,11 @@ public class Misc implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(final @NotNull PlayerRespawnEvent e) {
         final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.originrespawn.bypass")) {
+            return;
+        }
+
         final Location loc = player.getLocation();
 
         //TODO 1.17 Y坐标更改!
@@ -40,7 +45,6 @@ public class Misc implements Listener {
         }
 
         final String worldName = loc.getWorld().getName();
-
         if (("KioCG_world_nether".equals(worldName) && loc.getY() > 127.0)
             || ("KioCG_world_the_end".equals(worldName) && loc.getBlock().getType() == Material.END_PORTAL)
             || "KioCG_OhTheDungeon".equals(worldName)) {
@@ -52,9 +56,8 @@ public class Misc implements Listener {
         final int foodLevel = player.getFoodLevel();
         final float saturation = player.getSaturation();
         final float exhaustion = player.getExhaustion();
-
         Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
-            player.setFoodLevel(foodLevel);
+            player.setFoodLevel(Math.max(foodLevel, 3));
             player.setSaturation(saturation);
             player.setExhaustion(exhaustion);
 
@@ -69,27 +72,28 @@ public class Misc implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(final @NotNull AsyncChatEvent e) {
         Component message = e.message();
+        final String messageString = message.toString();
 
-        if (!message.toString().contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
+        if (!messageString.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;
         }
 
         // 获取在线玩家名列表，从长到短排序
         final List<String> onlinePlayersName = new ArrayList<>();
-
         for (final Player player : Bukkit.getOnlinePlayers()) {
             onlinePlayersName.add(player.getName());
         }
-
         onlinePlayersName.sort((a, b) -> (b.length() - a.length()));
 
+        final String messageStringLowerCase = messageString.toLowerCase();
         for (final String playerName : onlinePlayersName) {
-            if (message.toString().toLowerCase().contains("@" + playerName.toLowerCase()) || message.toString().toLowerCase().contains("@ " + playerName.toLowerCase())) {
+            final String playerNameLowerCase = playerName.toLowerCase();
+            if (messageStringLowerCase.contains("@ " + playerNameLowerCase) || messageStringLowerCase.contains("@" + playerNameLowerCase)) {
                 final Player thePlayer = Bukkit.getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
 
-                message = message.replaceText(TextReplacementConfig.builder().match("(?i)@" + playerName).replacement("§9§o@§9§o" + playerName + "§r").build())
-                                 .replaceText(TextReplacementConfig.builder().match("(?i)@ " + playerName).replacement("§9§o@§9§o" + playerName + "§r").build());
+                message = message.replaceText(TextReplacementConfig.builder().match("(?i)@ " + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build())
+                                 .replaceText(TextReplacementConfig.builder().match("(?i)@" + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build());
             }
         }
 
@@ -107,9 +111,7 @@ public class Misc implements Listener {
             return;
         }
 
-        if (e.getSlotType() != InventoryType.SlotType.RESULT
-            || Objects.requireNonNull(e.getCurrentItem()).getType() != Material.AIR
-            || Objects.requireNonNull(e.getCursor()).getType() != Material.AIR) {
+        if (e.getSlotType() != InventoryType.SlotType.RESULT || Objects.requireNonNull(e.getCurrentItem()).getType() != Material.AIR) {
             return;
         }
 
@@ -134,14 +136,14 @@ public class Misc implements Listener {
             return;
         }
 
-        final List<Integer> slot = new ArrayList<>();
+        final List<Integer> slots = new ArrayList<>();
         for (int i = 0; i <= 8; ++i) {
             final ItemStack itemStack = playerInventory.getItem(i);
             if (itemStack != null && itemStack.getType().isBlock()) {
-                slot.add(i);
+                slots.add(i);
             }
         }
 
-        playerInventory.setHeldItemSlot(slot.get(new Random().nextInt(slot.size())));
+        playerInventory.setHeldItemSlot(slots.get(new Random().nextInt(slots.size())));
     }
 }

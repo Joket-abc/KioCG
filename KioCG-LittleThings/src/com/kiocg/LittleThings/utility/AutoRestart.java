@@ -14,8 +14,7 @@ import java.util.Map;
 
 public class AutoRestart {
     public AutoRestart() {
-        // 存储自动重启的消息
-        final Map<String, String> autoRestartMessage = new HashMap<>() {{
+        autoRestart(new HashMap<>() {{
             put("05:00:00", "1小时");
             put("05:50:00", "10分钟");
             put("05:59:00", "1分钟");
@@ -25,9 +24,7 @@ public class AutoRestart {
             put("05:59:57", "3秒");
             put("05:59:58", "2秒");
             put("05:59:59", "1秒");
-        }};
-
-        autoRestart(autoRestartMessage);
+        }});
     }
 
     // 自动重启
@@ -43,7 +40,6 @@ public class AutoRestart {
 
                     Bukkit.shutdown();
                 });
-
                 return;
             }
 
@@ -56,7 +52,6 @@ public class AutoRestart {
 
                 autoRestartMessage.remove(date);
             }
-
             // 每19tick循环防止tps小于20时导致错过时间
         }, 19L, 19L);
     }

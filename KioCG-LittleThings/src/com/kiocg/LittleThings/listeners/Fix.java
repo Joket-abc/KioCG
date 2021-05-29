@@ -18,7 +18,13 @@ public class Fix implements Listener {
     // 死亡移除消失诅咒的物品
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fixVanishingCurse(final @NotNull PlayerDeathEvent e) {
-        for (final ItemStack itemStack : e.getEntity().getInventory().getContents()) {
+        final Player player = e.getEntity();
+
+        if (player.hasPermission("kiocg.vanishingcurse.keep")) {
+            return;
+        }
+
+        for (final ItemStack itemStack : player.getInventory().getContents()) {
             try {
                 if (Objects.requireNonNull(itemStack).containsEnchantment(Enchantment.VANISHING_CURSE)) {
                     itemStack.setAmount(0);
@@ -49,15 +55,14 @@ public class Fix implements Listener {
             return;
         }
 
-        final Entity remover = e.getRemover();
-        if (!(remover instanceof Player)) {
+        if (!(e.getRemover() instanceof Player)) {
             e.setCancelled(true);
         }
     }
 
     // 动物或凋零骷髅刷怪笼禁止使用
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
+    public void cancelSomeSpawnerSpawn(final @NotNull SpawnerSpawnEvent e) {
         final Entity entity = e.getEntity();
 
         if ("KioCG_OhTheDungeon".equals(entity.getWorld().getName())) {
