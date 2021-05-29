@@ -13,7 +13,6 @@ public class BuildBarrier extends JavaPlugin {
         instance = this;
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
-
         Objects.requireNonNull(getServer().getPluginCommand("barrier")).setExecutor(new BarrierCommand());
     }
 }

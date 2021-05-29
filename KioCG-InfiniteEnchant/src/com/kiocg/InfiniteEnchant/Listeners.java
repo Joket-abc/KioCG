@@ -25,7 +25,6 @@ public class Listeners implements Listener {
         }
 
         final AnvilInventory anvilInventory = e.getInventory();
-
         final ItemStack item1 = anvilInventory.getFirstItem();
         final ItemStack item2 = anvilInventory.getSecondItem();
 
@@ -75,11 +74,9 @@ public class Listeners implements Listener {
 
         if (item3.getType() == Material.ENCHANTED_BOOK) {
             enchantments3 = ((EnchantmentStorageMeta) itemMeta3).getStoredEnchants();
-
             item3IsBook = true;
         } else {
             enchantments3 = item3.getEnchantments();
-
             item3IsBook = false;
         }
 

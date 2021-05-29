@@ -37,7 +37,6 @@ public class InsaneMonsters extends JavaPlugin {
         blockZombie = new BlockZombie();
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
-
         Objects.requireNonNull(getServer().getPluginCommand("insanemonsters")).setExecutor(new IMCommand());
     }
 }

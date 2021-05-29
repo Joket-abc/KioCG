@@ -5,5 +5,5 @@ api-version: 1.16
 
 permissions:
   kiocg.infiniteenchant.use:
-    description: 允许最大X级的附魔
+    description: 允许最大10级的附魔
     default: true

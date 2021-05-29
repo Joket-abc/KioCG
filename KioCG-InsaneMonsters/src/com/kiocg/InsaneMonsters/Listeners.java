@@ -106,10 +106,8 @@ public class Listeners implements Listener {
                 final ItemStack itemStackG = new ItemStack(Material.ENCHANTED_BOOK);
 
                 final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStackG.getItemMeta();
-
                 final Enchantment[] enchantments = Enchantment.values();
                 final Enchantment randomEnchantment = enchantments[random.nextInt(enchantments.length)];
-
                 enchantmentStorageMeta.addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
 
                 itemStackG.setItemMeta(enchantmentStorageMeta);
@@ -151,7 +149,7 @@ public class Listeners implements Listener {
 
                 drops.add(itemStackDK);
 
-                if (random.nextInt(100) < 10) {
+                if (random.nextInt(100) < 33) {
                     drops.add(new ItemStack(Material.NETHERITE_SCRAP));
                 }
                 break;

@@ -1,6 +1,7 @@
 package com.kiocg.ItemCompress;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +20,19 @@ public class Utils {
         add("十");
     }};
 
-    public static @NotNull String upMultiple(final @NotNull String multiple) {
+    public static @Nullable String upMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) + 1);
         } catch (final @NotNull IndexOutOfBoundsException ignore) {
-            return "";
+            return null;
         }
     }
 
-    public static @NotNull String downMultiple(final @NotNull String multiple) {
+    public static @Nullable String downMultiple(final @NotNull String multiple) {
         try {
             return multipleText.get(multipleText.indexOf(multiple) - 1);
         } catch (final @NotNull IndexOutOfBoundsException ignore) {
-            return "";
+            return null;
         }
     }
 }

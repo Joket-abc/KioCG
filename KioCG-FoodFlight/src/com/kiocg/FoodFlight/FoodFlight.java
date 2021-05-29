@@ -13,7 +13,6 @@ public class FoodFlight extends JavaPlugin {
         instance = this;
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
-
         Objects.requireNonNull(getServer().getPluginCommand("fly")).setExecutor(new FlyCommand());
 
         new Utils().checkPermTask();

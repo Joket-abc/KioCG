@@ -10,3 +10,8 @@ commands:
     permission: kiocg.command.insanemonsters
     permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> 查看<疯狂怪物>的指令帮助."
+
+permissions:
+  kiocg.command.insanemonsters:
+    description: 查看<疯狂怪物>的指令帮助
+    default: op

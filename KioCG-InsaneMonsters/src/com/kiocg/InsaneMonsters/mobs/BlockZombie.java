@@ -23,17 +23,11 @@ public class BlockZombie {
 
         final EntityEquipment equipment = livingEntity.getEquipment();
 
-        final Material material = location.getBlock().getType();
-        if (!material.isAir() && material.isItem()) {
+        final Material material = location.subtract(0.0, 1.0, 0.0).getBlock().getType();
+        if (material.isItem() && !material.isAir()) {
             Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
         } else {
-            final Material materialNew = location.subtract(0.0, 1.0, 0.0).getBlock().getType();
-
-            if (materialNew.isItem() && !materialNew.isAir()) {
-                Objects.requireNonNull(equipment).setHelmet(new ItemStack(material));
-            } else {
-                Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
-            }
+            Objects.requireNonNull(equipment).setHelmet(new ItemStack(Material.STONE));
         }
 
         equipment.setHelmetDropChance(0.0F);

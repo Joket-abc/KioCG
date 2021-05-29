@@ -15,9 +15,9 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Listeners implements Listener {
     @EventHandler
@@ -28,13 +28,13 @@ public class Listeners implements Listener {
             // 压缩物品
             if (((ShapedRecipe) recipe).getKey().getKey().startsWith("itemcompress_")) {
                 final CraftingInventory craftingInventory = e.getInventory();
+                final ItemStack[] matrixClone = craftingInventory.getMatrix().clone();
 
-                final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
+                final Set<ItemStack> ingredientEquals = new HashSet<>();
 
-                for (final ItemStack itemStack : craftingInventory.getMatrix()) {
-                    final ItemStack itemStackClone = itemStack.clone();
-                    itemStackClone.setAmount(1);
-                    ingredientEquals.put(itemStackClone, true);
+                for (final ItemStack itemStack : matrixClone) {
+                    itemStack.setAmount(1);
+                    ingredientEquals.add(itemStack);
                 }
 
                 // 如果这9个物品有不同
@@ -44,27 +44,25 @@ public class Listeners implements Listener {
                 }
 
                 // 获取压缩次数
-                String multipleText = "";
+                final String multipleText;
 
-                for (final ItemStack itemStack : ingredientEquals.keySet()) {
-                    final ItemMeta itemMeta = itemStack.getItemMeta();
+                final ItemMeta itemMeta = matrixClone[0].getItemMeta();
+                final Component displayNameComponent = itemMeta.displayName();
+                if (displayNameComponent != null) {
+                    final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
 
-                    if (itemMeta.hasDisplayName()) {
-                        final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
+                    if (displayName.startsWith("§1§2§6")) {
+                        multipleText = Utils.upMultiple(displayName.substring(6, 7));
 
-                        if (displayName.startsWith("§1§2§6")) {
-                            multipleText = Utils.upMultiple(displayName.substring(6, 7));
-
-                            // 超过最大压缩次数
-                            if (multipleText.isEmpty()) {
-                                craftingInventory.setResult(null);
-                                return;
-                            }
-
-                            break;
+                        // 超过最大压缩次数
+                        if (multipleText == null) {
+                            craftingInventory.setResult(null);
+                            return;
                         }
+                    } else {
+                        multipleText = "一";
                     }
-
+                } else {
                     multipleText = "一";
                 }
 
@@ -94,18 +92,17 @@ public class Listeners implements Listener {
                     //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-
-                        if (itemMeta.hasDisplayName()) {
-                            final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
+                        final Component displayNameComponent = itemMeta.displayName();
+                        if (displayNameComponent != null) {
+                            final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
 
                             if (displayName.startsWith("§1§2§6")) {
                                 multipleText = Utils.downMultiple(displayName.substring(6, 7));
 
                                 // 解压成原版物品
-                                if (multipleText.isEmpty()) {
+                                if (multipleText == null) {
                                     return;
                                 }
-
                                 break;
                             }
                         }
@@ -140,9 +137,9 @@ public class Listeners implements Listener {
                     //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-
-                        if (itemMeta.hasDisplayName()) {
-                            final String displayName = PlainComponentSerializer.plain().serialize(Objects.requireNonNull(itemMeta.displayName()));
+                        final Component displayNameComponent = itemMeta.displayName();
+                        if (displayNameComponent != null) {
+                            final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
 
                             if (displayName.startsWith("§1§2§6")) {
                                 itemStackResult = new ItemStack(itemStack.getType(), 9);
@@ -150,11 +147,10 @@ public class Listeners implements Listener {
                                 multipleText = Utils.downMultiple(displayName.substring(6, 7));
 
                                 // 解压成原版物品
-                                if (multipleText.isEmpty()) {
+                                if (multipleText == null) {
                                     craftingInventory.setResult(itemStackResult);
                                     return;
                                 }
-
                                 break;
                             }
                         }

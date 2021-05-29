@@ -4,20 +4,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class CreateRecipe {
-    public CreateRecipe(final @NotNull ItemCompress itemCompress) {
+    public CreateRecipe() {
         // 存储能够压缩与解压的物品
         final List<Material> compressMaterial = new ArrayList<>(Arrays.asList(Material.values()));
-        // 存储合成配方中有且仅有单个物品的配方物品匹配表、所对应的成品
+        // 存储合成配方中仅有单个物品的配方物品匹配表、所对应的成品
+        // 配方物品匹配表 例如: 所有颜色的羊毛为羊毛类配方物品匹配表
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();
 
         // 胖次币功能需要
         compressMaterial.remove(Material.BARRIER);
-
         // 修复某些小问题
         compressMaterial.remove(Material.PLAYER_HEAD);
         compressMaterial.remove(Material.SPAWNER);
@@ -41,20 +40,16 @@ public class CreateRecipe {
 
                 // 如果配方是由9个物品合成
                 if (ingredientList.size() == 9) {
-                    final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
-
-                    for (final ItemStack ingredient : ingredientList) {
-                        ingredientEquals.put(ingredient, true);
-                    }
+                    final Set<ItemStack> ingredientEquals = new HashSet<>(ingredientList);
 
                     // 如果这9个物品相同
                     if (ingredientEquals.size() == 1) {
-                        for (final ItemStack ingredient : ingredientEquals.keySet()) {
+                        ingredientEquals.forEach(ingredient -> {
                             final Material material = ingredient.getType();
                             compressMaterial.remove(material);
 
                             // ItemCompress.instance.getLogger().info("忽略无序配方: " + material + " x9 -> " + recipe.getResult().getType() + " x" + recipe.getResult().getAmount());
-                        }
+                        });
                     }
                 }
                 continue;
@@ -65,20 +60,16 @@ public class CreateRecipe {
 
                 // 如果配方是由9个物品合成
                 if (ingredientMap.size() == 9) {
-                    final Map<ItemStack, Boolean> ingredientEquals = new HashMap<>();
-
-                    for (final ItemStack ingredient : ingredientMap.values()) {
-                        ingredientEquals.put(ingredient, true);
-                    }
+                    final Set<ItemStack> ingredientEquals = new HashSet<>(ingredientMap.values());
 
                     // 如果这9个物品相同
                     if (ingredientEquals.size() == 1) {
-                        for (final ItemStack ingredient : ingredientEquals.keySet()) {
+                        ingredientEquals.forEach(ingredient -> {
                             final Material material = ingredient.getType();
                             compressMaterial.remove(material);
 
                             // ItemCompress.instance.getLogger().info("忽略有序配方: " + material + " x9 -> " + recipe.getResult().getType() + " x" + recipe.getResult().getAmount());
-                        }
+                        });
                     }
                 }
             }
@@ -87,10 +78,10 @@ public class CreateRecipe {
         // 创建压缩与解压的物品配方
         for (final Material material : compressMaterial) {
             if (material.isItem() && !material.isAir() && material.getMaxStackSize() != 1) {
-                Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(itemCompress, "ItemCompress_" + material), new ItemStack(material))
+                Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(ItemCompress.instance, "ItemCompress_" + material), new ItemStack(material))
                                          .shape("aaa", "aaa", "aaa").setIngredient('a', material));
 
-                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(itemCompress, "ItemDecompress_" + material), new ItemStack(material, 9))
+                Bukkit.addRecipe(new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, "ItemDecompress_" + material), new ItemStack(material, 9))
                                          .addIngredient(1, material));
             }
         }
@@ -98,7 +89,7 @@ public class CreateRecipe {
         for (final Map.Entry<List<RecipeChoice>, ItemStack> entry : oneItemMaterial.entrySet()) {
             final String key = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) entry.getKey().get(0)).getItemStack().getType();
 
-            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(itemCompress, key), entry.getValue());
+            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, key), entry.getValue());
             for (final RecipeChoice recipeChoice : entry.getKey()) {
                 shapelessRecipe.addIngredient(recipeChoice);
             }
