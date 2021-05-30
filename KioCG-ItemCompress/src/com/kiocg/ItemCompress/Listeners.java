@@ -28,13 +28,14 @@ public class Listeners implements Listener {
             // 压缩物品
             if (((ShapedRecipe) recipe).getKey().getKey().startsWith("itemcompress_")) {
                 final CraftingInventory craftingInventory = e.getInventory();
-                final ItemStack[] matrixClone = craftingInventory.getMatrix().clone();
+                final ItemStack[] matrix = craftingInventory.getMatrix();
 
                 final Set<ItemStack> ingredientEquals = new HashSet<>();
 
-                for (final ItemStack itemStack : matrixClone) {
-                    itemStack.setAmount(1);
-                    ingredientEquals.add(itemStack);
+                for (final ItemStack itemStack : matrix) {
+                    final ItemStack itemStackClone = itemStack.clone();
+                    itemStackClone.setAmount(1);
+                    ingredientEquals.add(itemStackClone);
                 }
 
                 // 如果这9个物品有不同
@@ -46,7 +47,7 @@ public class Listeners implements Listener {
                 // 获取压缩次数
                 final String multipleText;
 
-                final ItemMeta itemMeta = matrixClone[0].getItemMeta();
+                final ItemMeta itemMeta = matrix[0].getItemMeta();
                 final Component displayNameComponent = itemMeta.displayName();
                 if (displayNameComponent != null) {
                     final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
