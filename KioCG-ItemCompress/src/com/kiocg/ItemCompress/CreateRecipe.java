@@ -10,7 +10,7 @@ import java.util.*;
 public class CreateRecipe {
     public CreateRecipe() {
         // 存储能够压缩与解压的物品
-        final Set<Material> compressMaterial = EnumSet.allOf(Material.class);
+        final Set<Material> compressMaterial = new HashSet<>(Arrays.asList(Material.values()));
         // 存储合成配方中仅有单个物品的配方物品匹配表、所对应的成品
         // 配方物品匹配表 例如: 所有颜色的羊毛为羊毛类配方物品匹配表
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();
@@ -86,11 +86,11 @@ public class CreateRecipe {
             }
         });
         // 创建覆盖解压的物品配方
-        oneItemMaterial.forEach((recipeChoices, result) -> {
-            final String namespacedKeyKey = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) recipeChoices.get(0)).getItemStack().getType();
+        oneItemMaterial.forEach((recipeChoiceList, result) -> {
+            final String namespacedKeyKey = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) recipeChoiceList.get(0)).getItemStack().getType();
 
             final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, namespacedKeyKey), result);
-            recipeChoices.forEach(shapelessRecipe::addIngredient);
+            recipeChoiceList.forEach(shapelessRecipe::addIngredient);
 
             Bukkit.addRecipe(shapelessRecipe);
         });
