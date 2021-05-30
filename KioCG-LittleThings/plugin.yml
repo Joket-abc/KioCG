@@ -3,7 +3,7 @@ main: com.kiocg.LittleThings.LittleThings
 version: 2021
 api-version: 1.16
 
-softdepend: [ "qqBot" ]
+softdepend: [ "KioCG-qqBot" ]
 
 permissions:
   kiocg.vanishingcurse.keep:
