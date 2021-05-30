@@ -47,10 +47,9 @@ public class InGame implements Listener {
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
-        final String playerName = player.getName();
-        if (!PlayerLinkUtils.hasPlayerLink(playerName)) {
+        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId().toString())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance,
-                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 请在群里输入 §e.link " + playerName + " §6来连接."), 5L);
+                                                             () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 请在群里输入 §e.link " + player.getName() + " §6来连接."), 5L);
         }
     }
 
@@ -58,10 +57,9 @@ public class InGame implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
         final Player player = e.getPlayer();
-        final String playerName = player.getName();
 
         //noinspection SpellCheckingInspection
-        if (!PlayerLinkUtils.hasPlayerLink(playerName) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
+        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId().toString()) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
             // 防止卡视角和卡空中
             final Location from = e.getFrom();
             final Location to = e.getTo();
@@ -69,7 +67,7 @@ public class InGame implements Listener {
                 return;
             }
 
-            player.sendMessage("§a[§b豆渣子§a] §6离线玩家须连接QQ号, 请在群里输入 §e.link " + playerName + " §6来连接.");
+            player.sendMessage("§a[§b豆渣子§a] §6离线玩家须连接QQ号, 请在群里输入 §e.link " + player.getName() + " §6来连接.");
             e.setCancelled(true);
         }
     }

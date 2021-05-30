@@ -15,9 +15,9 @@ public class Link implements CommandExecutor {
             return true;
         }
 
-        final String uuid = player.getUniqueId().toString();
+        final String uuidString = player.getUniqueId().toString();
 
-        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuid);
+        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuidString);
         if (qq != null) {
             player.sendMessage("§a[§b豆渣子§a] §6你已经连接了QQ号 " + qq + ".");
             return true;
@@ -44,7 +44,7 @@ public class Link implements CommandExecutor {
         }
 
         if (playerName.equals(PlayerLinkUtils.waitLinks.get(waitLinkQQ))) {
-            PlayerLinkUtils.addPlayerLink(uuid, waitLinkQQ);
+            PlayerLinkUtils.addPlayerLink(uuidString, waitLinkQQ);
             PlayerLinkUtils.waitLinks.remove(waitLinkQQ);
 
             player.sendMessage("§a[§b豆渣子§a] §2成功连接了QQ号 " + waitLinkQQ + ".");

@@ -12,13 +12,13 @@ public class Uuid {
             return;
         }
 
-        final String uuid = HttpsUtils.getPlayerUUIDFromApi(msg);
+        final String uuidFromApi = HttpsUtils.getPlayerUUIDFromApi(msg);
 
-        if (uuid == null) {
+        if (uuidFromApi == null) {
             contact.sendMessage("正版玩家不存在：" + msg);
             return;
         }
 
-        contact.sendMessage(" 正版玩家 " + msg + " 的UUID：\n" + uuid);
+        contact.sendMessage(" 正版玩家 " + msg + " 的UUID：\n" + uuidFromApi);
     }
 }

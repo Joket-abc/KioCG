@@ -22,16 +22,16 @@ public class PlayerLinkUtils {
         Objects.requireNonNull(configurationSection).getValues(false).forEach((uuid, qq) -> playerLinks.put(uuid, Long.valueOf(qq.toString())));
     }
 
-    public static @NotNull Boolean hasPlayerLink(final @NotNull String uuid) {
-        return playerLinks.containsKey(uuid);
+    public static @NotNull Boolean hasPlayerLink(final @NotNull String uuidString) {
+        return playerLinks.containsKey(uuidString);
     }
 
     public static @NotNull Boolean hasPlayerLink(final @NotNull Long qq) {
         return playerLinks.containsValue(qq);
     }
 
-    public static @Nullable Long getPlayerLinkQQ(final @NotNull String uuid) {
-        return playerLinks.get(uuid);
+    public static @Nullable Long getPlayerLinkQQ(final @NotNull String uuidString) {
+        return playerLinks.get(uuidString);
     }
 
     public static @Nullable String getPlayerLinkUUID(final @NotNull Long qq) {
@@ -51,10 +51,10 @@ public class PlayerLinkUtils {
         }
     }
 
-    public static void addPlayerLink(final @NotNull String uuid, final @NotNull Long qq) {
-        playerLinks.put(uuid, qq);
+    public static void addPlayerLink(final @NotNull String uuidString, final @NotNull Long qq) {
+        playerLinks.put(uuidString, qq);
 
-        BotExtend.playersFileConfiguration.set("links." + uuid, qq);
+        BotExtend.playersFileConfiguration.set("links." + uuidString, qq);
         BotExtend.instance.savePlayersFile();
     }
 }

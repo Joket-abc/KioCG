@@ -43,9 +43,9 @@ public class Listeners implements Listener {
             return;
         }
 
-        final String uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + Utils.splitPlayerName(playerAndPassword)).getBytes(Charsets.UTF_8)).toString();
+        final String uuidString = UUID.nameUUIDFromBytes(("OfflinePlayer:" + Utils.splitPlayerName(playerAndPassword)).getBytes(Charsets.UTF_8)).toString();
         //noinspection SpellCheckingInspection
-        pendingConnection.setUniqueId(UUID.fromString("ffffffff-ffff-ffff" + uuid.substring(18)));
+        pendingConnection.setUniqueId(UUID.fromString("ffffffff-ffff-ffff" + uuidString.substring(18)));
     }
 
     @EventHandler

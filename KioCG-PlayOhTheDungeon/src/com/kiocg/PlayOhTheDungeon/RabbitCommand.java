@@ -17,10 +17,10 @@ public class RabbitCommand implements CommandExecutor {
             return true;
         }
 
-        final String uuid = player.getUniqueId().toString();
-        if (args[0].equals(String.valueOf(Utils.playerRabbitConfirm.get(uuid)))) {
-            Utils.playerRabbitConfirm.remove(uuid);
-            Utils.playerRabbits.put(uuid, Utils.playerRabbits.get(uuid) + 1);
+        final String uuidString = player.getUniqueId().toString();
+        if (args[0].equals(String.valueOf(Utils.playerRabbitConfirm.get(uuidString)))) {
+            Utils.playerRabbitConfirm.remove(uuidString);
+            Utils.playerRabbits.put(uuidString, Utils.playerRabbits.get(uuidString) + 1);
 
             Utils.joinRabbit(player);
         }

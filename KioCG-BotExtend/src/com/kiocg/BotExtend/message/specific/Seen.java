@@ -30,34 +30,27 @@ public class Seen {
         final UUID uuid;
 
         if (offlinePlayer == null) {
-            final String uuidString = HttpsUtils.getPlayerUUIDFromApi(msg);
-            if (uuidString == null) {
+            final String uuidFromApi = HttpsUtils.getPlayerUUIDFromApi(msg);
+            if (uuidFromApi == null) {
                 contact.sendMessage("正版玩家不存在：" + msg);
                 return;
             }
-            uuid = UUID.fromString(uuidString);
+            uuid = UUID.fromString(uuidFromApi);
             offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
             if (!offlinePlayer.hasPlayedBefore()) {
-                contact.sendMessage("玩家 " + msg + " 从未出现过");
+                contact.sendMessage("正版玩家 " + msg + " 从未出现过");
                 return;
             }
         } else {
             uuid = offlinePlayer.getUniqueId();
         }
 
-        final String playerName = offlinePlayer.getName();
-
-        if (playerName == null) {
-            contact.sendMessage("玩家 " + msg + " 从未出现过");
-            return;
-        }
-
         final StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(RGBColor.matcher(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))).replaceAll(""))
                      .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")")
-                     .append("   QQ：").append(PlayerLinkUtils.getPlayerLinkQQ(playerName));
+                     .append("   QQ：").append(PlayerLinkUtils.getPlayerLinkQQ(uuid.toString()));
 
         stringBuilder.append("\nUUID：").append(uuid);
 

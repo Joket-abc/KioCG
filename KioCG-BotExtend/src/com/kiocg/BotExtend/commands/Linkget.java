@@ -1,12 +1,17 @@
 package com.kiocg.BotExtend.commands;
 
+import com.kiocg.BotExtend.utils.HttpsUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class Linkget implements CommandExecutor {
     @Override
@@ -35,7 +40,26 @@ public class Linkget implements CommandExecutor {
             return true;
         }
 
-        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(args[0]);
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(args[0]);
+        final String uuidString;
+
+        if (offlinePlayer == null) {
+            final String uuidFromApi = HttpsUtils.getPlayerUUIDFromApi(args[0]);
+            if (uuidFromApi == null) {
+                sender.sendMessage("正版玩家不存在：" + args[0]);
+                return true;
+            }
+            uuidString = uuidFromApi;
+
+            if (!Bukkit.getOfflinePlayer(UUID.fromString(uuidFromApi)).hasPlayedBefore()) {
+                sender.sendMessage("正版玩家 " + args[0] + " 从未出现过");
+                return true;
+            }
+        } else {
+            uuidString = offlinePlayer.getUniqueId().toString();
+        }
+
+        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuidString);
 
         if (qq == null) {
             sender.sendMessage("§a[§b豆渣子§a] §6玩家 " + args[0] + " 未连接QQ号.");

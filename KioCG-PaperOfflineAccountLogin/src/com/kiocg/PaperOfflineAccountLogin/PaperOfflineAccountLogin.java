@@ -31,9 +31,9 @@ public class PaperOfflineAccountLogin extends JavaPlugin {
                 final String username = gameProfiles.read(0).getName();
                 if (username.contains("-")) {
                     final String playerName = username.split("-")[0];
-                    final String uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString();
+                    final String uuidString = UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString();
                     //noinspection SpellCheckingInspection
-                    gameProfiles.write(0, new WrappedGameProfile(UUID.fromString("ffffffff-ffff-ffff" + uuid.substring(18)), playerName));
+                    gameProfiles.write(0, new WrappedGameProfile(UUID.fromString("ffffffff-ffff-ffff" + uuidString.substring(18)), playerName));
                 }
             }
         });

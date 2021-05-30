@@ -37,13 +37,13 @@ public class Listeners implements Listener {
         }
 
         final Player player = e.getPlayer();
-        final String uuid = player.getUniqueId().toString();
+        final String uuidString = player.getUniqueId().toString();
 
         final long blockKey = block.getBlockKey();
-        if (blockKey % (1000L + Utils.playerRabbits.get(uuid) * 1000L) == Utils.variable) {
+        if (blockKey % (1000L + Utils.playerRabbits.get(uuidString) * 1000L) == Utils.variable) {
             Utils.variable = System.currentTimeMillis() % 1000L;
 
-            Utils.playerRabbitConfirm.put(uuid, blockKey);
+            Utils.playerRabbitConfirm.put(uuidString, blockKey);
             player.sendMessage(Utils.getConfirmMessage(blockKey));
         }
     }
@@ -52,9 +52,9 @@ public class Listeners implements Listener {
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
 
-        final String uuid = player.getUniqueId().toString();
-        if (!Utils.playerRabbits.containsKey(uuid)) {
-            Utils.playerRabbits.put(uuid, 0);
+        final String uuidString = player.getUniqueId().toString();
+        if (!Utils.playerRabbits.containsKey(uuidString)) {
+            Utils.playerRabbits.put(uuidString, 0);
         }
 
         if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
