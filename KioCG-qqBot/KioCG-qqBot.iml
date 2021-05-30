@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="mirai-core-all-2.6.4-all" level="project" />
+    <orderEntry type="library" name="mirai-core-all-2.6.5-all" level="project" />
     <orderEntry type="library" name="paper-1.16.5" level="project" />
   </component>
 </module>
