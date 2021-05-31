@@ -96,7 +96,7 @@ public class Listeners implements Listener {
         });
 
         // 设置物品惩罚
-        if (!enchantResult.isEmpty()) {
+        if (!enchantResult.isEmpty() && item1.getType() == Material.ENCHANTED_BOOK) {
             ((Repairable) itemMeta3).setRepairCost((((Repairable) itemMeta3).getRepairCost() - 1) >> 1);
         }
 
