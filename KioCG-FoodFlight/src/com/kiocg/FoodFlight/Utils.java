@@ -25,13 +25,19 @@ public class Utils {
             for (final Player player : Utils.flightPlayers) {
                 final String worldName = player.getWorld().getName().toLowerCase();
 
-                if (player.hasPermission("kiocg.foodflight.free." + worldName) && Utils.isFoodFlight(player)) {
-                    Utils.removeFoodFlight(player);
-                    player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在无限飞行 ➹");
+                if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
+                    if (Utils.isFoodFlight(player)) {
+                        Utils.removeFoodFlight(player);
+                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在无限飞行 ➹");
+                    }
                     return;
-                } else if (player.hasPermission("kiocg.foodflight." + worldName) && !Utils.isFoodFlight(player)) {
-                    Utils.startFoodFlightTask(player);
-                    player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在饥饿飞行 ➹");
+                }
+
+                if (player.hasPermission("kiocg.foodflight." + worldName)) {
+                    if (!Utils.isFoodFlight(player)) {
+                        Utils.startFoodFlightTask(player);
+                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在饥饿飞行 ➹");
+                    }
                     return;
                 }
 

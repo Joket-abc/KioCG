@@ -25,7 +25,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
         final Location loc = e.getBlock().getLocation();
-        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;
         }
 
@@ -43,7 +43,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
         final Location loc = e.getBlock().getLocation();
-        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;
         }
 
@@ -68,7 +68,7 @@ public class Listeners implements Listener {
             }
 
             final Location loc = Objects.requireNonNull(block).getLocation();
-            if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
                 return;
             }
 
@@ -77,7 +77,7 @@ public class Listeners implements Listener {
             final Block block = e.getClickedBlock();
 
             final Location loc = Objects.requireNonNull(block).getLocation();
-            if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
                 return;
             }
 
@@ -113,7 +113,7 @@ public class Listeners implements Listener {
         }
 
         final Location loc = entity.getLocation();
-        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;
         }
 
@@ -129,7 +129,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelEntityExplode(final @NotNull EntityExplodeEvent e) {
         final Location loc = e.getLocation();
-        if (loc.distance(Utils.locSpawn) > 64.0 || !"KioCG_world".equals(loc.getWorld().getName())) {
+        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
             return;
         }
 
