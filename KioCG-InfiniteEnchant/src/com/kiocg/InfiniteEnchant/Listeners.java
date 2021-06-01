@@ -136,35 +136,20 @@ public class Listeners implements Listener {
             return;
         }
 
-        if (itemMaterial1 != Material.ENCHANTED_BOOK && itemMaterial1 == itemMaterial2 && !item1.getItemMeta().hasEnchants()) {
-            final int repairCost = ((Repairable) itemMeta3).getRepairCost();
-            if (repairCost < 3) {
-                e.setResult(null);
-                return;
-            }
-
-            ((Repairable) itemMeta3).setRepairCost((repairCost - 3) >> 2);
-
-            item3.setItemMeta(itemMeta3);
-            e.setResult(item3);
-        } else if (itemMaterial1 == Material.BOOK) {
-            final int repairCost = ((Repairable) itemMeta3).getRepairCost();
-            if (repairCost < 3) {
-                e.setResult(null);
-                return;
-            }
-
-            final ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
-            final ItemMeta enchantedBookMeta = enchantedBook.getItemMeta();
-
-            ((Repairable) enchantedBookMeta).setRepairCost((repairCost - 3) >> 2);
-
-            final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) enchantedBookMeta;
-            itemMeta3.getEnchants().forEach((enchantment, level) -> enchantmentStorageMeta.addStoredEnchant(enchantment, level, true));
-
-            enchantedBook.setItemMeta(enchantedBookMeta);
-            e.setResult(enchantedBook);
+        if (itemMaterial1 == Material.ENCHANTED_BOOK || itemMaterial1 != itemMaterial2 || item1.getItemMeta().hasEnchants()) {
+            return;
         }
+
+        final int repairCost = ((Repairable) itemMeta3).getRepairCost();
+        if (repairCost < 3) {
+            e.setResult(null);
+            return;
+        }
+
+        ((Repairable) itemMeta3).setRepairCost((repairCost - 3) >> 2);
+
+        item3.setItemMeta(itemMeta3);
+        e.setResult(item3);
     }
 
     //TODO 权限判断 kiocg.infiniteenchant.use
