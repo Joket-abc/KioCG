@@ -14,21 +14,29 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Listeners implements Listener {
     @EventHandler
     public void onPrepareAnvilBook(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();
-
-        if (item3 == null) {
+        final ItemMeta itemMeta3;
+        try {
+            itemMeta3 = Objects.requireNonNull(item3).getItemMeta();
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
         final AnvilInventory anvilInventory = e.getInventory();
+
         final ItemStack item1 = anvilInventory.getFirstItem();
         final ItemStack item2 = anvilInventory.getSecondItem();
-
-        if (item2 == null || item1 == null) {
+        final ItemMeta itemMeta1;
+        final ItemMeta itemMeta2;
+        try {
+            itemMeta1 = Objects.requireNonNull(item1).getItemMeta();
+            itemMeta2 = Objects.requireNonNull(item2).getItemMeta();
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
@@ -36,24 +44,20 @@ public class Listeners implements Listener {
         final Map<Enchantment, Integer> enchantments1;
         final Map<Enchantment, Integer> enchantments2;
 
-        final ItemMeta itemMeta1 = item1.getItemMeta();
-        final ItemMeta itemMeta2 = item2.getItemMeta();
-
         if (item1.getType() == Material.ENCHANTED_BOOK) {
             enchantments1 = ((EnchantmentStorageMeta) itemMeta1).getStoredEnchants();
         } else {
-            enchantments1 = item1.getEnchantments();
+            enchantments1 = itemMeta1.getEnchants();
         }
 
         if (item2.getType() == Material.ENCHANTED_BOOK) {
             enchantments2 = ((EnchantmentStorageMeta) itemMeta2).getStoredEnchants();
         } else {
-            enchantments2 = item2.getEnchantments();
+            enchantments2 = itemMeta2.getEnchants();
         }
 
         // 获取待合成物品上完全相同的附魔属性
         final Map<Enchantment, Integer> enchantEquals = new HashMap<>();
-
         // 获取待合成物品上所有的附魔属性, 并保留等级较大的
         final Map<Enchantment, Integer> enchantBigger = new HashMap<>(enchantments2);
 
@@ -61,22 +65,18 @@ public class Listeners implements Listener {
             if (enchantments2.containsKey(enchantment) && enchantments2.get(enchantment).equals(level)) {
                 enchantEquals.put(enchantment, level);
             }
-
             enchantBigger.merge(enchantment, level, Integer::max);
         });
 
         // 获取铁砧结果栏中物品的附魔属性
         final Map<Enchantment, Integer> enchantments3;
-
-        final ItemMeta itemMeta3 = item3.getItemMeta();
-
         final boolean item3IsBook;
 
         if (item3.getType() == Material.ENCHANTED_BOOK) {
             enchantments3 = ((EnchantmentStorageMeta) itemMeta3).getStoredEnchants();
             item3IsBook = true;
         } else {
-            enchantments3 = item3.getEnchantments();
+            enchantments3 = itemMeta3.getEnchants();
             item3IsBook = false;
         }
 
@@ -91,14 +91,8 @@ public class Listeners implements Listener {
             if (enchantments3.get(enchantmentEquals) <= levelEquals) {
                 enchantResult.put(enchantmentEquals, levelEquals < 9 ? ++levelEquals : 10);
             }
-
             enchantBigger.remove(enchantmentEquals);
         });
-
-        // 设置物品惩罚
-        if (!enchantResult.isEmpty() && item1.getType() == Material.ENCHANTED_BOOK) {
-            ((Repairable) itemMeta3).setRepairCost((((Repairable) itemMeta3).getRepairCost() - 1) >> 1);
-        }
 
         // 输出结果物品
         enchantResult.putAll(enchantBigger);
@@ -117,6 +111,60 @@ public class Listeners implements Listener {
 
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
+    }
+
+    @EventHandler
+    public void onReduceRepairCost(final @NotNull PrepareAnvilEvent e) {
+        final ItemStack item3 = e.getResult();
+        final ItemMeta itemMeta3;
+        try {
+            itemMeta3 = Objects.requireNonNull(item3).getItemMeta();
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
+        }
+
+        final AnvilInventory anvilInventory = e.getInventory();
+
+        final ItemStack item1 = anvilInventory.getFirstItem();
+        final ItemStack item2 = anvilInventory.getSecondItem();
+        final Material itemMaterial1;
+        final Material itemMaterial2;
+        try {
+            itemMaterial1 = Objects.requireNonNull(item1).getType();
+            itemMaterial2 = Objects.requireNonNull(item2).getType();
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
+        }
+
+        if (itemMaterial1 != Material.ENCHANTED_BOOK && itemMaterial1 == itemMaterial2 && !item1.getItemMeta().hasEnchants()) {
+            final int repairCost = ((Repairable) itemMeta3).getRepairCost();
+            if (repairCost < 3) {
+                e.setResult(null);
+                return;
+            }
+
+            ((Repairable) itemMeta3).setRepairCost((repairCost - 3) >> 2);
+
+            item3.setItemMeta(itemMeta3);
+            e.setResult(item3);
+        } else if (itemMaterial1 == Material.BOOK) {
+            final int repairCost = ((Repairable) itemMeta3).getRepairCost();
+            if (repairCost < 3) {
+                e.setResult(null);
+                return;
+            }
+
+            final ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
+            final ItemMeta enchantedBookMeta = enchantedBook.getItemMeta();
+
+            ((Repairable) enchantedBookMeta).setRepairCost((repairCost - 3) >> 2);
+
+            final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) enchantedBookMeta;
+            itemMeta3.getEnchants().forEach((enchantment, level) -> enchantmentStorageMeta.addStoredEnchant(enchantment, level, true));
+
+            enchantedBook.setItemMeta(enchantedBookMeta);
+            e.setResult(enchantedBook);
+        }
     }
 
     //TODO 权限判断 kiocg.infiniteenchant.use
