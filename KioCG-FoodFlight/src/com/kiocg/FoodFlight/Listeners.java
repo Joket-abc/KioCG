@@ -47,13 +47,19 @@ public class Listeners implements Listener {
 
         final String worldName = player.getWorld().getName().toLowerCase();
 
-        if (player.hasPermission("kiocg.foodflight.free." + worldName) && Utils.isFoodFlight(player)) {
-            Utils.removeFoodFlight(player);
-            player.sendMessage("§a[§b豆渣子§a] §2➹ 在这个世界可以无限飞行 ➹");
+        if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
+            if (Utils.isFoodFlight(player)) {
+                Utils.removeFoodFlight(player);
+                player.sendMessage("§a[§b豆渣子§a] §2➹ 在这个世界可以无限飞行 ➹");
+            }
             return;
-        } else if (player.hasPermission("kiocg.foodflight." + worldName) && !Utils.isFoodFlight(player)) {
-            Utils.startFoodFlightTask(player);
-            player.sendMessage("§a[§b豆渣子§a] §2➹ 在这个世界需要饥饿飞行 ➹");
+        }
+
+        if (player.hasPermission("kiocg.foodflight." + worldName)) {
+            if (!Utils.isFoodFlight(player)) {
+                Utils.startFoodFlightTask(player);
+                player.sendMessage("§a[§b豆渣子§a] §2➹ 在这个世界需要饥饿飞行 ➹");
+            }
             return;
         }
 
