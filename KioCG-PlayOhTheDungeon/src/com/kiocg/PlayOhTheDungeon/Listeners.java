@@ -28,6 +28,10 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
+        if (!"KioCG_world".equals(block.getWorld().getName())) {
+            return;
+        }
+
         // 拿着刷怪笼打破基岩可以触发兔子洞
         if (block.getType() == Material.BEDROCK) {
             final Player player = e.getPlayer();
