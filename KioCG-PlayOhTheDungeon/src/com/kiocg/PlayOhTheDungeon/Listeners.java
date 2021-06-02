@@ -1,5 +1,6 @@
 package com.kiocg.PlayOhTheDungeon;
 
+import com.destroystokyo.paper.MaterialTags;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
@@ -9,15 +10,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Listeners implements Listener {
@@ -81,8 +84,20 @@ public class Listeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerBedEnter(final @NotNull PlayerBedEnterEvent e) {
-        if ("KioCG_OhTheDungeon".equals(e.getPlayer().getWorld().getName())) {
+    public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        final Block block = e.getClickedBlock();
+
+        if (!"KioCG_OhTheDungeon".equals(Objects.requireNonNull(block).getWorld().getName())) {
+            return;
+        }
+
+        final Material material = block.getType();
+        if (MaterialTags.BEDS.isTagged(material) || material == Material.ENDER_CHEST) {
+            block.getLocation().createExplosion(5.0F, true, true);
             e.setCancelled(true);
         }
     }
