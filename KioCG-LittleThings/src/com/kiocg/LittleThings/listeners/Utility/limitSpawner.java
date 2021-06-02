@@ -1,6 +1,5 @@
-package com.kiocg.LittleThings.listeners;
+package com.kiocg.LittleThings.listeners.Utility;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,44 +10,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-import java.util.regex.Pattern;
-
-public class Utility implements Listener {
-    // 防止重命名成内部保留的物品前缀名
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
-        if (e.getResult() == null) {
-            return;
-        }
-
-        final String renameText = e.getInventory().getRenameText();
-
-        if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText) || Pattern.matches("^(&#[0-9a-zA-Z]{6}){3}.*$", renameText)) {
-            e.setResult(null);
-        }
-    }
-
-    // 无法放置
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
-        try {
-            for (final Component lore : Objects.requireNonNull(e.getItemInHand().lore())) {
-                if (lore.toString().contains("无法放置")) {
-                    e.setCancelled(true);
-                    return;
-                }
-            }
-        } catch (final @NotNull NullPointerException ignore) {
-        }
-    }
-
+public class limitSpawner implements Listener {
     // 限制刷怪笼
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onSpawnerPlace(final @NotNull BlockPlaceEvent e) {
+    public void limitSpawner(final @NotNull BlockPlaceEvent e) {
         final Player player = e.getPlayer();
 
         if (player.hasPermission("kiocg.spawnerlimit.bypass")) {
