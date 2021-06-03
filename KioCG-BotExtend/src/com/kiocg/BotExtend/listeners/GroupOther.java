@@ -1,7 +1,5 @@
 package com.kiocg.BotExtend.listeners;
 
-import com.kiocg.BotExtend.utils.PlayerLinkUtils;
-import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.events.AsyncABEvent;
 import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
 import net.mamoe.mirai.Mirai;
@@ -26,29 +24,21 @@ public class GroupOther implements Listener {
             return;
         }
 
-        switch (String.valueOf(Objects.requireNonNull(e.getGroup()).getId())) {
-            case "569696336":
-                final String message = e.getMessage();
-                final String answer = message.substring(message.lastIndexOf('：') + 1);
+        final String groupID = String.valueOf(Objects.requireNonNull(e.getGroup()).getId());
+        if ("569696336".equals(groupID) || "553171328".equals(groupID)) {
+            final String message = e.getMessage();
+            final String answer = message.substring(message.lastIndexOf('：') + 1);
 
-                if (Utils.isAnswerTrue(answer)) {
-                    // 低等级QQ号需要管理员审核
-                    if (Mirai.getInstance().queryProfile(e.getBot(), e.getFromId()).getQLevel() < 16) {
-                        break;
-                    }
+            if (answer.contains("梯") || answer.toLowerCase().contains("ti") || answer.toLowerCase().contains("ladder")) {
+                // 低等级QQ号需要管理员审核
+                if (Mirai.getInstance().queryProfile(e.getBot(), e.getFromId()).getQLevel() < 16) {
+                    return;
+                }
 
-                    e.accept();
-                } else {
-                    e.reject(false, "回答错误，请检查后再试~");
-                }
-                break;
-            case "553171328":
-                if (PlayerLinkUtils.hasPlayerLink(e.getFromId())) {
-                    e.accept();
-                } else {
-                    e.reject(false, "此群仅限服务器内玩家加入");
-                }
-                break;
+                e.accept();
+            } else {
+                e.reject(false, "回答错误，请检查后再试~");
+            }
         }
     }
 
@@ -62,27 +52,15 @@ public class GroupOther implements Listener {
         final NormalMember member = e.getMember();
 
         switch (String.valueOf(group.getId())) {
-            case "569696336" -> group.sendMessage(new MessageChainBuilder()
-                                                          .append(new At(member.getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
-                                                          .append("\n！请先仔细查看群公告！")
-                                                          .append("\n有关白名单请输入 .whitelist")
-                                                          .append("\n下载客户端请输入 .client")
-                                                          .append("\n查看备用IP请输入 .ip")
-                                                          .append("\n服务器含假矿+反作弊等安全插件")
-                                                          .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
-            case "553171328" -> member.setNameCard(Objects.requireNonNull(PlayerLinkUtils.getPlayerLinkName(member.getId())));
+            case "569696336", "553171328" -> group.sendMessage(new MessageChainBuilder()
+                                                                       .append(new At(member.getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                                                       .append("\n！请先仔细查看群公告！")
+                                                                       .append("\n有关白名单请输入 .whitelist")
+                                                                       .append("\n下载客户端请输入 .client")
+                                                                       .append("\n查看备用IP请输入 .ip")
+                                                                       .append("\n服务器含假矿+反作弊等安全插件")
+                                                                       .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
         }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onGroupBroadcast(final @NotNull AsyncGroupMessageEvent event) {
-        final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
-
-        if (e.getGroup().getId() != 553171328L || e.getSender().getId() != 1105919949L) {
-            return;
-        }
-
-        Objects.requireNonNull(e.getBot().getGroup(569696336L)).sendMessage(e.getMessage());
     }
 
     // 拦截所有XML消息
@@ -96,11 +74,12 @@ public class GroupOther implements Listener {
                 return;
             }
 
+            event.setCancelled(true);
+
             try {
                 MessageSource.recall(e.getSource());
             } catch (final @NotNull RuntimeException ignore) {
             }
-            event.setCancelled(true);
         }
     }
 }

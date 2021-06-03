@@ -10,7 +10,7 @@ import java.util.*;
 public class CreateRecipe {
     public CreateRecipe() {
         // 存储能够压缩与解压的物品
-        final Set<Material> compressMaterial = new HashSet<>(Arrays.asList(Material.values()));
+        @SuppressWarnings("SetReplaceableByEnumSet") final Set<Material> compressMaterial = new HashSet<>(Arrays.asList(Material.values()));
         // 存储合成配方中仅有单个物品的配方物品匹配表、所对应的成品
         // 配方物品匹配表 例如: 所有颜色的羊毛为羊毛类配方物品匹配表
         final Map<List<RecipeChoice>, ItemStack> oneItemMaterial = new HashMap<>();

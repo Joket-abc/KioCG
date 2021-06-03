@@ -6,12 +6,10 @@ import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.bot.KioCGBot;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class InGame implements Listener {
@@ -50,25 +48,6 @@ public class InGame implements Listener {
         if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId().toString())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance,
                                                              () -> player.sendMessage("§a[§b豆渣子§a] §6未连接QQ号, 请在群里输入 §e.link " + player.getName() + " §6来连接."), 5L);
-        }
-    }
-
-    // 离线玩家强制要求连接QQ号
-    @EventHandler(ignoreCancelled = true)
-    public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
-        final Player player = e.getPlayer();
-
-        //noinspection SpellCheckingInspection
-        if (!PlayerLinkUtils.hasPlayerLink(player.getUniqueId().toString()) && player.getUniqueId().toString().startsWith("ffffffff-ffff-ffff")) {
-            // 防止卡视角和卡空中
-            final Location from = e.getFrom();
-            final Location to = e.getTo();
-            if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
-                return;
-            }
-
-            player.sendMessage("§a[§b豆渣子§a] §6离线玩家须连接QQ号, 请在群里输入 §e.link " + player.getName() + " §6来连接.");
-            e.setCancelled(true);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.kiocg.BotExtend.message.specific;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.kiocg.BotExtend.BotExtend;
-import com.kiocg.BotExtend.utils.HttpsUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import net.mamoe.mirai.contact.Contact;
@@ -18,7 +17,8 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Seen {
-    private static final Pattern RGBColor = Pattern.compile("&#.{6}");
+    private final Pattern RGBColor = Pattern.compile("&#.{6}");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void seen(final @NotNull Contact contact, final @NotNull String msg) {
         if (!Utils.isLegalPlayerName(msg)) {
@@ -26,25 +26,14 @@ public class Seen {
             return;
         }
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
-        final UUID uuid;
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
 
         if (offlinePlayer == null) {
-            final String uuidFromApi = HttpsUtils.getPlayerUUIDFromApi(msg);
-            if (uuidFromApi == null) {
-                contact.sendMessage("正版玩家不存在：" + msg);
-                return;
-            }
-            uuid = UUID.fromString(uuidFromApi);
-            offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-
-            if (!offlinePlayer.hasPlayedBefore()) {
-                contact.sendMessage("正版玩家 " + msg + " 从未出现过");
-                return;
-            }
-        } else {
-            uuid = offlinePlayer.getUniqueId();
+            contact.sendMessage("无法找到玩家 " + msg + " 的缓存信息。");
+            return;
         }
+
+        final UUID uuid = offlinePlayer.getUniqueId();
 
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -54,7 +43,6 @@ public class Seen {
 
         stringBuilder.append("\nUUID：").append(uuid);
 
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         stringBuilder.append("\n初次进入时间：").append(simpleDateFormat.format(offlinePlayer.getFirstPlayed()))
                      .append("\n最后登录时间：").append(simpleDateFormat.format(offlinePlayer.getLastLogin()))
                      .append("\n最后存在时间：").append(simpleDateFormat.format(offlinePlayer.getLastSeen()));
@@ -65,12 +53,12 @@ public class Seen {
         try {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
         } catch (final @NotNull RuntimeException ignore) {
-            stringBuilder.append("NULL");
+            stringBuilder.append("null");
         }
         try {
             stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer));
         } catch (final @NotNull RuntimeException ignore) {
-            stringBuilder.append("NULL");
+            stringBuilder.append("null");
         }
 
         contact.sendMessage(stringBuilder.toString());

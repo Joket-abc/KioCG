@@ -66,8 +66,9 @@ public class Listeners implements Listener {
         }
 
         final Player player = e.getPlayer();
+        final BlockState lastBlockState = Utils.lastBlockState.get(player);
 
-        if (!Utils.lastBlockState.containsKey(player) || player.getGameMode() == GameMode.CREATIVE) {
+        if (lastBlockState == null || player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
@@ -75,7 +76,7 @@ public class Listeners implements Listener {
         final BlockState blockState = Objects.requireNonNull(block).getState();
 
         // 防止最后放置的方块一直被记录, 优化体验
-        if (!Utils.lastBlockState.get(player).equals(blockState)) {
+        if (!lastBlockState.equals(blockState)) {
             Utils.lastBlockState.remove(player);
             // 优化不需要的 Utils.lastBlockItemStack.remove(player);
             return;
@@ -94,7 +95,7 @@ public class Listeners implements Listener {
         Bukkit.getPluginManager().callEvent(event);
 
         // 如果事件被取消则玩家没有权限撤回方块. 并且其他插件可能会修改方块, 需要再次判断
-        if (event.isCancelled() || !Utils.lastBlockState.get(player).equals(blockState)) {
+        if (event.isCancelled() || !lastBlockState.equals(blockState)) {
             Utils.lastBlockState.remove(player);
             // 优化不需要的 Utils.lastBlockItemStack.remove(player);
             return;

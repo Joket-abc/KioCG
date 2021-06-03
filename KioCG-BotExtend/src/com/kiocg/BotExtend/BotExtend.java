@@ -1,7 +1,6 @@
 package com.kiocg.BotExtend;
 
 import com.kiocg.BotExtend.commands.Link;
-import com.kiocg.BotExtend.commands.Linkget;
 import com.kiocg.BotExtend.listeners.*;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
@@ -72,8 +71,8 @@ public class BotExtend extends JavaPlugin {
 
         // 注册事件监听器
         final PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new BotCommand(), this);
-        pluginManager.registerEvents(new BotMessage(), this);
+        pluginManager.registerEvents(new AdminCommand(), this);
+        pluginManager.registerEvents(new UserCommand(), this);
         pluginManager.registerEvents(new GroupOther(), this);
         pluginManager.registerEvents(new InGame(), this);
 
@@ -81,7 +80,6 @@ public class BotExtend extends JavaPlugin {
 
         // 注册指令
         Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new Link());
-        Objects.requireNonNull(getServer().getPluginCommand("linkget")).setExecutor(new Linkget());
     }
 
     public void savePlayersFile() {

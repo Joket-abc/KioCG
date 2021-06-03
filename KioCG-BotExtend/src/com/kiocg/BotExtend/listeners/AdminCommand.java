@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class BotCommand implements Listener {
+public class AdminCommand implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onGroupMessage(final @NotNull AsyncGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
@@ -67,15 +67,6 @@ public class BotCommand implements Listener {
                 group.sendMessage("错误的玩家名：" + playerName);
                 return;
             }
-
-            if (!Bukkit.getWhitelistedPlayers().contains(Bukkit.getOfflinePlayerIfCached(playerName))) {
-                group.sendMessage("玩家 " + playerName + " 可能不在白名单中.\n强制移除使用,WHITELIST remove");
-                return;
-            }
-
-            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
-
-            group.sendMessage("已将玩家 " + playerName + " 移除出白名单");
         } else {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
         }
