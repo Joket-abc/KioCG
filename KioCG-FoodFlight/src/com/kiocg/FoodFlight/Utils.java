@@ -42,7 +42,7 @@ public class Utils {
                 }
 
                 Utils.removeFlightList(player);
-                player.sendMessage("§a[§b豆渣子§a] §c➷ 飞行权限已改变 ➷");
+                player.sendMessage("§a[§b豆渣子§a] §c➷ 警告, 无法维持飞行升力 ➷");
             }
         }, 20L * 60L, 20L * 60L);
     }

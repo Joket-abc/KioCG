@@ -1,7 +1,6 @@
 package com.kiocg.ProtectSpawn;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
@@ -24,8 +23,11 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
-        final Location loc = e.getBlock().getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        try {
+            if (e.getBlock().getLocation().distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
+        } catch (final @NotNull IllegalArgumentException ignore) {
             return;
         }
 
@@ -42,8 +44,11 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
-        final Location loc = e.getBlock().getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        try {
+            if (e.getBlock().getLocation().distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
+        } catch (final @NotNull IllegalArgumentException ignore) {
             return;
         }
 
@@ -67,8 +72,11 @@ public class Listeners implements Listener {
                 return;
             }
 
-            final Location loc = Objects.requireNonNull(block).getLocation();
-            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            try {
+                if (block.getLocation().distance(Utils.locSpawn) > 64.0) {
+                    return;
+                }
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 return;
             }
 
@@ -76,8 +84,11 @@ public class Listeners implements Listener {
         } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             final Block block = e.getClickedBlock();
 
-            final Location loc = Objects.requireNonNull(block).getLocation();
-            if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+            try {
+                if (Objects.requireNonNull(block).getLocation().distance(Utils.locSpawn) > 64.0) {
+                    return;
+                }
+            } catch (final @NotNull IllegalArgumentException ignore) {
                 return;
             }
 
@@ -112,8 +123,11 @@ public class Listeners implements Listener {
             return;
         }
 
-        final Location loc = entity.getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        try {
+            if (entity.getLocation().distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
+        } catch (final @NotNull IllegalArgumentException ignore) {
             return;
         }
 
@@ -128,8 +142,11 @@ public class Listeners implements Listener {
     // 取消实体爆炸
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelEntityExplode(final @NotNull EntityExplodeEvent e) {
-        final Location loc = e.getLocation();
-        if (!"KioCG_world".equals(loc.getWorld().getName()) || loc.distance(Utils.locSpawn) > 64.0) {
+        try {
+            if (e.getLocation().distance(Utils.locSpawn) > 64.0) {
+                return;
+            }
+        } catch (final @NotNull IllegalArgumentException ignore) {
             return;
         }
 

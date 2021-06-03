@@ -83,11 +83,11 @@ public class Listeners implements Listener {
     public void onStructureGrow(final @NotNull StructureGrowEvent e) {
         final long blockKey = e.getLocation().toBlockKey();
 
-        if (!Utils.treeWools.containsKey(blockKey)) {
+        final List<Material> wools = Utils.treeWools.get(blockKey);
+
+        if (wools == null) {
             return;
         }
-
-        final List<Material> wools = Utils.treeWools.get(blockKey);
 
         final Random random = new Random();
         final int amount = wools.size();

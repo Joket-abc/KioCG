@@ -46,7 +46,7 @@ public class Listeners implements Listener {
         final BlockBreakEvent event = new BlockBreakEvent(block, player);
         Bukkit.getPluginManager().callEvent(event);
 
-        // 如果事件被取消则玩家没有权限撤回方块
+        // 如果事件被取消则玩家没有权限破坏屏障
         if (event.isCancelled()) {
             return;
         }
