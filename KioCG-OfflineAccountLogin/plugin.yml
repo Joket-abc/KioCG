@@ -1,0 +1,6 @@
+name: KioCG-OfflineAccountLogin
+main: com.kiocg.OfflineAccountLogin.OfflineAccountLogin
+version: 2021
+api-version: 1.16
+
+depend: [ "KioCG-BotExtend" ]
