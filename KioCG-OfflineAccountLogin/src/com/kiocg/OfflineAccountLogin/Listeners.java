@@ -19,7 +19,7 @@ public class Listeners implements Listener {
         final String uuidString = player.getUniqueId().toString();
 
         //noinspection SpellCheckingInspection
-        if (!uuidString.startsWith("ffffffff-ffff-ffff")) {
+        if (!uuidString.startsWith("ffffffff-ffff-ffff") || "ffffffff-ffff-ffff-94d3-0c5c65c18fe8".equals(uuidString)) {
             return;
         }
 
