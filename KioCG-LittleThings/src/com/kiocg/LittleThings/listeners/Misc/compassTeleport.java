@@ -1,6 +1,7 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -31,8 +32,9 @@ public class compassTeleport implements Listener {
             return;
         }
 
+        final Player player = e.getPlayer();
         try {
-            e.getPlayer().teleport(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation().add(0.0, 1.0, 0.0));
+            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation(), 0.0, 1.0, 0.0));
         } catch (final @NotNull NullPointerException ignore) {
         }
     }

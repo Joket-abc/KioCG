@@ -1,6 +1,5 @@
 package com.kiocg.ProtectSpawn;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,8 +8,18 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Utils {
-    // 存储主城原点坐标
-    public static final @NotNull Location locSpawn = new Location(Bukkit.getWorld("KioCG_world"), 187.5, 144.0, 209.5);
+    //TODO 大版本更新时的坐标修改
+    // 存储主城原点坐标 x、z
+    public static final int spawnX = 187;
+    public static final int spawnZ = 209;
     // 蛋糕是个谎言
     public static final Set<UUID> eatCake = new HashSet<>();
+
+    public static @NotNull Boolean inSpawn(final @NotNull Location location) {
+        if (!"KioCG_world".equals(location.getWorld().getName())) {
+            return false;
+        }
+
+        return Math.abs(spawnX - location.getBlockX()) < 99 || Math.abs(spawnZ - location.getBlockZ()) < 99;
+    }
 }

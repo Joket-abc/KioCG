@@ -28,6 +28,7 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
+        //TODO 大版本更新时的世界名修改
         if (!"KioCG_world".equals(block.getWorld().getName())) {
             return;
         }

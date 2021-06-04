@@ -25,11 +25,12 @@ public class originRespawn implements Listener {
 
         final Location loc = player.getLocation();
 
-        //TODO 1.17 Y坐标更改!
+        //TODO 1.18 Y坐标更改!
         if (loc.getY() < 0.0) {
             return;
         }
 
+        //TODO 大版本更新时的世界名修改
         final String worldName = loc.getWorld().getName();
         if (("KioCG_world_nether".equals(worldName) && loc.getY() > 127.0)
             || ("KioCG_world_the_end".equals(worldName) && loc.getBlock().getType() == Material.END_PORTAL)

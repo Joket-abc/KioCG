@@ -13,7 +13,9 @@ import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class MessagesCommand {
@@ -123,7 +125,7 @@ public class MessagesCommand {
                 final String msg = userCommand.substring(userCommand.indexOf(' ') + 1).trim();
 
                 if (userCommand.toLowerCase().startsWith("wiki ") || userCommand.startsWith("百科 ")) {
-                    contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/" + msg + "/");
+                    contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/" + URLEncoder.encode(msg, StandardCharsets.UTF_8));
                     break;
                 }
 

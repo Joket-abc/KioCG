@@ -38,8 +38,8 @@ public class limitSpawner implements Listener {
             for (int z = chunkZ - 1; z <= chunkZ + 1; ++z) {
                 for (final BlockState tileEntityState : world.getChunkAt(x, z).getTileEntities()) {
                     if (tileEntityState.getType() == Material.SPAWNER) {
-                        if (++count > 16) {
-                            player.sendMessage("§a[§b豆渣子§a] §6相邻3x3个区块内最多允许存在16个克隆箱.");
+                        if (++count > 9) {
+                            player.sendMessage("§a[§b豆渣子§a] §6相邻3x3个区块内最多允许存在9个克隆箱.");
 
                             e.setCancelled(true);
                             return;

@@ -18,6 +18,7 @@ public class FullMoon {
     private final @NotNull BossBar bossBar;
 
     public FullMoon() {
+        //TODO 大版本更新时的世界名修改
         world = Objects.requireNonNull(Bukkit.getWorld("KioCG_world"));
 
         bossBar = Bukkit.createBossBar("FullMoon", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);

@@ -23,11 +23,7 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockBreak(final @NotNull BlockBreakEvent e) {
-        try {
-            if (e.getBlock().getLocation().distance(Utils.locSpawn) > 64.0) {
-                return;
-            }
-        } catch (final @NotNull IllegalArgumentException ignore) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
             return;
         }
 
@@ -44,11 +40,7 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
-        try {
-            if (e.getBlock().getLocation().distance(Utils.locSpawn) > 64.0) {
-                return;
-            }
-        } catch (final @NotNull IllegalArgumentException ignore) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
             return;
         }
 
@@ -72,11 +64,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            try {
-                if (block.getLocation().distance(Utils.locSpawn) > 64.0) {
-                    return;
-                }
-            } catch (final @NotNull IllegalArgumentException ignore) {
+            if (!Utils.inSpawn(block.getLocation())) {
                 return;
             }
 
@@ -84,11 +72,7 @@ public class Listeners implements Listener {
         } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             final Block block = e.getClickedBlock();
 
-            try {
-                if (Objects.requireNonNull(block).getLocation().distance(Utils.locSpawn) > 64.0) {
-                    return;
-                }
-            } catch (final @NotNull IllegalArgumentException ignore) {
+            if (!Utils.inSpawn(Objects.requireNonNull(block).getLocation())) {
                 return;
             }
 
@@ -123,11 +107,7 @@ public class Listeners implements Listener {
             return;
         }
 
-        try {
-            if (entity.getLocation().distance(Utils.locSpawn) > 64.0) {
-                return;
-            }
-        } catch (final @NotNull IllegalArgumentException ignore) {
+        if (!Utils.inSpawn(entity.getLocation())) {
             return;
         }
 
@@ -142,14 +122,8 @@ public class Listeners implements Listener {
     // 取消实体爆炸
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelEntityExplode(final @NotNull EntityExplodeEvent e) {
-        try {
-            if (e.getLocation().distance(Utils.locSpawn) > 64.0) {
-                return;
-            }
-        } catch (final @NotNull IllegalArgumentException ignore) {
-            return;
+        if (Utils.inSpawn(e.getLocation())) {
+            e.setCancelled(true);
         }
-
-        e.setCancelled(true);
     }
 }

@@ -4,12 +4,23 @@ import net.mamoe.mirai.contact.Group;
 import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MessagesRemind {
-    private static long replyTime = System.currentTimeMillis();
+    private static final @NotNull Map<Long, Long> replyTime = new HashMap<>();
 
     @EventHandler
     public void onMessages(final @NotNull Group group, final @NotNull String msg) {
-        if (System.currentTimeMillis() - replyTime < 1000L * 60L * 10L) {
+        final Long groupID = group.getId();
+        final Long time = replyTime.get(groupID);
+
+        if (time == null) {
+            replyTime.put(groupID, System.currentTimeMillis());
+            return;
+        }
+
+        if (System.currentTimeMillis() - time < 1000L * 60L * 10L) {
             return;
         }
 
@@ -23,6 +34,6 @@ public class MessagesRemind {
             group.sendMessage("出于优化需要，所有实体的AI行为均与原版有所不同，有关实体的反馈将不受支持。");
         }
 
-        replyTime = System.currentTimeMillis();
+        replyTime.put(groupID, System.currentTimeMillis());
     }
 }

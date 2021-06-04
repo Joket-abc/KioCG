@@ -16,6 +16,7 @@ public class cancelDestroyByEntity implements Listener {
     public void cancelArmorStandDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
 
+        //TODO 大版本更新时的世界名修改
         if (!"KioCG_world".equals(entity.getWorld().getName())) {
             return;
         }
@@ -28,6 +29,7 @@ public class cancelDestroyByEntity implements Listener {
     // 实体和爆炸不破坏悬挂实体
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
+        //TODO 大版本更新时的世界名修改
         if (!"KioCG_world".equals(e.getEntity().getWorld().getName())) {
             return;
         }
