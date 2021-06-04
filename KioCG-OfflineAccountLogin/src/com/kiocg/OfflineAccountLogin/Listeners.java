@@ -57,11 +57,11 @@ public class Listeners implements Listener {
         final net.mamoe.mirai.event.events.GroupTempMessageEvent e = event.getEvent();
 
         final String msg = e.getMessage().contentToString().trim();
+        final NormalMember sender = e.getSender();
 
         for (final Map.Entry<String, String> entry : Utils.ipVerifyCode.entrySet()) {
             if (entry.getValue().equals(msg)) {
                 final String uuidString = Utils.ipVerifyUUID.get(entry.getKey());
-                final NormalMember sender = e.getSender();
 
                 final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuidString);
                 final Long senderID = sender.getId();
@@ -81,5 +81,7 @@ public class Listeners implements Listener {
                 return;
             }
         }
+
+        sender.sendMessage("无效的验证码");
     }
 }
