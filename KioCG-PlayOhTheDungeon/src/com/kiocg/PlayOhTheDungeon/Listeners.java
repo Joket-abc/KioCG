@@ -33,10 +33,10 @@ public class Listeners implements Listener {
             return;
         }
 
-        // 拿着刷怪笼打破基岩可以触发兔子洞
+        // 拿着石头打破基岩可以触发兔子洞
         if (block.getType() == Material.BEDROCK) {
             final Player player = e.getPlayer();
-            if (player.getInventory().getItemInMainHand().getType() == Material.SPAWNER) {
+            if (player.getInventory().getItemInMainHand().getType() == Material.STONE) {
                 final long blockKey = block.getBlockKey();
                 Utils.playerRabbitConfirm.put(player.getUniqueId().toString(), blockKey);
                 player.sendMessage(Utils.getConfirmMessage(blockKey));
@@ -101,8 +101,10 @@ public class Listeners implements Listener {
         }
 
         final Material material = block.getType();
-        if (MaterialTags.BEDS.isTagged(material) || material == Material.ENDER_CHEST) {
+        if (MaterialTags.BEDS.isTagged(material)) {
             block.getLocation().createExplosion(5.0F, true, true);
+            e.setCancelled(true);
+        } else if (material == Material.ENDER_CHEST || material == Material.LODESTONE) {
             e.setCancelled(true);
         }
     }
