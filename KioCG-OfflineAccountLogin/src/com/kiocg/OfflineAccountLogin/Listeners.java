@@ -2,12 +2,14 @@ package com.kiocg.OfflineAccountLogin;
 
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.qqBot.events.message.AsyncGroupTempMessageEvent;
+import net.mamoe.mirai.contact.NormalMember;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Listeners implements Listener {
@@ -15,8 +17,13 @@ public class Listeners implements Listener {
     public void onPlayerJoin(final @NotNull PlayerLoginEvent e) {
         final Player player = e.getPlayer();
         final String uuidString = player.getUniqueId().toString();
-        final String ip = e.getRealAddress().getHostAddress();
 
+        //noinspection SpellCheckingInspection
+        if (!uuidString.startsWith("ffffffff-ffff-ffff")) {
+            return;
+        }
+
+        final String ip = e.getRealAddress().getHostAddress();
         int reason = 0;
 
         if (PlayerLinkUtils.hasPlayerLink(uuidString)) {
@@ -26,18 +33,17 @@ public class Listeners implements Listener {
             if (securityIP != null) {
                 reason = 2;
 
-                if (!securityIP.equals(ip)) {
+                if (securityIP.equals(ip)) {
                     return;
                 }
             }
         }
 
         final String verifyUUID = Utils.ipVerifyUUID.get(ip);
-
         if (!uuidString.equals(verifyUUID)) {
             Utils.ipVerifyUUID.put(ip, uuidString);
 
-            final String verifyCode = Utils.getNewVerifyCode(player.getName());
+            final String verifyCode = Utils.getNewVerifyCode();
             Utils.ipVerifyCode.put(ip, verifyCode);
 
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Objects.requireNonNull(Utils.getVerifyMessage(reason, verifyCode)));
@@ -52,13 +58,28 @@ public class Listeners implements Listener {
 
         final String msg = e.getMessage().contentToString().trim();
 
-        Utils.ipVerifyCode.forEach((ip, verifyCode) -> {
-            if (verifyCode.equals(msg)) {
-                Utils.playerSecurityIP.put(Utils.ipVerifyUUID.get(ip), ip);
+        for (final Map.Entry<String, String> entry : Utils.ipVerifyCode.entrySet()) {
+            if (entry.getValue().equals(msg)) {
+                final String uuidString = Utils.ipVerifyUUID.get(entry.getKey());
+                final NormalMember sender = e.getSender();
 
-                Utils.ipVerifyUUID.remove(ip);
-                Utils.ipVerifyCode.remove(ip);
+                final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuidString);
+                final Long senderID = sender.getId();
+                if (qq == null) {
+                    PlayerLinkUtils.addPlayerLink(uuidString, senderID);
+                } else if (!qq.equals(senderID)) {
+                    sender.sendMessage("非连接的账号");
+                    return;
+                }
+
+                Utils.playerSecurityIP.put(uuidString, entry.getKey());
+
+                Utils.ipVerifyUUID.remove(entry.getKey());
+                Utils.ipVerifyCode.remove(entry.getKey());
+
+                sender.sendMessage("验证成功");
+                return;
             }
-        });
+        }
     }
 }
