@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="KioCG-BotExtend">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../KioCG-BotExtend.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../KioCG-BotExtend.jar!/" />
+    </SOURCES>
+  </library>
+</component>
