@@ -37,7 +37,7 @@ public class Utils {
         }
 
         return component.append(Component.text("\n \n"))
-                        .append(Component.text("请给群管理员豆渣子发送以下临时会话消息", NamedTextColor.GOLD))
+                        .append(Component.text("请给群管理员豆渣子发送临时会话消息: ", NamedTextColor.GOLD))
                         .append(Component.text(VerifyCode, NamedTextColor.YELLOW));
     }
 }
