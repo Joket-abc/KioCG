@@ -55,7 +55,7 @@ public class MessagesCommand {
             case ("qaq") -> contact.sendMessage("චᆽච");
 
             // 外部信息
-            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")"
+            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")\n"
                                                          + """
                                                            ①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。
                                                            ②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。
