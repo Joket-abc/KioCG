@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class Listeners implements Listener {
@@ -27,6 +28,7 @@ public class Listeners implements Listener {
 
         if (e.isFlying()) {
             if (player.getFoodLevel() <= 6) {
+                player.setVelocity(player.getVelocity().add(new Vector(0.0, -0.5, 0.0)));
                 e.setCancelled(true);
                 return;
             }
