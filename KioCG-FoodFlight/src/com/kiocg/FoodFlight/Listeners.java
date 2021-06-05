@@ -1,12 +1,12 @@
 package com.kiocg.FoodFlight;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class Listeners implements Listener {
@@ -28,7 +28,9 @@ public class Listeners implements Listener {
 
         if (e.isFlying()) {
             if (player.getFoodLevel() <= 6) {
-                player.setVelocity(player.getVelocity().add(new Vector(0.0, -0.5, 0.0)));
+                final Location location = player.getLocation();
+                location.setY(location.getBlockY());
+                player.teleport(location);
                 e.setCancelled(true);
                 return;
             }
