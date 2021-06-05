@@ -42,21 +42,14 @@ public class Utils {
 
     public static void joinRabbit(final @NotNull Player player) {
         new BukkitRunnable() {
-            int i;
+            int i = 1;
 
             @Override
             public void run() {
                 switch (i) {
-                    case 0 -> {
+                    case 1 -> {
                         player.sendMessage("§a[§b豆渣子§a] §2你发现兔子窝里有只兔女郎! 但是...");
                         player.sendTitle("", "§7... 你感到头晕目眩 ...", 10, 70, 20);
-                    }
-
-                    case 1 -> {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 99999, 9));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20 * 99999, 255));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20 * 99999, 9));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 99999, 0));
                     }
                     case 2 -> {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 99999, 9));
@@ -83,7 +76,7 @@ public class Utils {
 
                 ++i;
             }
-        }.runTaskTimer(PlayOhTheDungeon.instance, 0L, 10L);
+        }.runTaskTimer(PlayOhTheDungeon.instance, 7L, 7L);
     }
 
     public static void TeleportDungeon(final @NotNull Player player) {
