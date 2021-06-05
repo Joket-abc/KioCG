@@ -29,6 +29,7 @@ public class Listeners implements Listener {
         if (e.isFlying()) {
             if (player.getFoodLevel() <= 6) {
                 final Location location = player.getLocation();
+                //noinspection ImplicitNumericConversion
                 location.setY(location.getBlockY());
                 player.teleport(location);
                 e.setCancelled(true);
