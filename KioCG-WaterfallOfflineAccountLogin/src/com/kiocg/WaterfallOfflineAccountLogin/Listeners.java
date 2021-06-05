@@ -31,7 +31,6 @@ public class Listeners implements Listener {
         }
 
         final String uuidString = UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString();
-        //noinspection SpellCheckingInspection
         pendingConnection.setUniqueId(UUID.fromString("ffffffff-ffff-ffff" + uuidString.substring(18)));
     }
 }

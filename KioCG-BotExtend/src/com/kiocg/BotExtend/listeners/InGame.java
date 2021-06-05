@@ -1,6 +1,7 @@
 package com.kiocg.BotExtend.listeners;
 
 import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
@@ -12,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class InGame implements Listener {
     // 广播被白名单拦截的玩家
     @EventHandler
@@ -20,14 +23,20 @@ public class InGame implements Listener {
             return;
         }
 
-        final String playerName = e.getPlayerProfile().getName();
+        final PlayerProfile player = e.getPlayerProfile();
+        final String playerName = player.getName();
 
         if (Utils.kickWhitelistPlayer.contains(playerName)) {
             return;
         }
         Utils.kickWhitelistPlayer.add(playerName);
 
-        final String whitelistMsg = "不明生物 " + playerName + " 被白名单结界阻挡了.";
+        final String whitelistMsg;
+        if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
+            whitelistMsg = "不明生物 " + playerName + "[离线] 被白名单结界阻挡了.";
+        } else {
+            whitelistMsg = "不明生物 " + playerName + "[正版] 被白名单结界阻挡了.";
+        }
 
         // 提醒全体玩家
         Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage("§a[§b豆渣子§a] §c" + whitelistMsg));

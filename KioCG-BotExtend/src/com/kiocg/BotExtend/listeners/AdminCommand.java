@@ -1,8 +1,10 @@
 package com.kiocg.BotExtend.listeners;
 
+import com.google.common.base.Charsets;
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.ConsoleSender;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
+import com.kiocg.BotExtend.utils.HttpsUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
 import net.mamoe.mirai.contact.Group;
@@ -12,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class AdminCommand implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -53,6 +56,18 @@ public class AdminCommand implements Listener {
 
             if (!Utils.kickWhitelistPlayer.contains(playerName)) {
                 group.sendMessage("玩家 " + playerName + " 从未出现过");
+                return;
+            }
+
+            try {
+                if (Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(HttpsUtils.getPlayerUUIDFromApi(playerName)))).hasPlayedBefore()) {
+                    group.sendMessage("已有同名正版玩家 " + playerName);
+                    return;
+                }
+            } catch (final @NotNull NullPointerException ignore) {
+            }
+            if (Bukkit.getOfflinePlayer(UUID.fromString("ffffffff-ffff-ffff" + UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString().substring(18))).hasPlayedBefore()) {
+                group.sendMessage("已有同名离线玩家 " + playerName);
                 return;
             }
 

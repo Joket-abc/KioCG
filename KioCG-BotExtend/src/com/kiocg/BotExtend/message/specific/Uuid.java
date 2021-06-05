@@ -12,6 +12,6 @@ public class Uuid {
             return;
         }
 
-        contact.sendMessage("正版玩家 " + msg + " 的UUID：" + HttpsUtils.getPlayerUUIDFromApi(msg));
+        contact.sendMessage("调用API查询正版账号 " + msg + " 的UUID：" + HttpsUtils.getPlayerUUIDFromApi(msg));
     }
 }
