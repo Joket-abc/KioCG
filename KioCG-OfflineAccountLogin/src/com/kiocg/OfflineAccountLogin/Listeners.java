@@ -15,6 +15,10 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerLoginEvent e) {
+        if (e.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
+            return;
+        }
+
         final Player player = e.getPlayer();
         final String uuidString = player.getUniqueId().toString();
 
