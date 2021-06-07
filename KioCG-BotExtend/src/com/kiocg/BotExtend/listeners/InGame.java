@@ -37,10 +37,10 @@ public class InGame implements Listener {
 
         final String whitelistMsg;
         if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
-            whitelistMsg = "不明离线账号生物 " + playerName + " 被白名单结界阻挡了.";
+            whitelistMsg = "不明生物 " + playerName + " 被离线白名单结界阻挡了.";
             e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
         } else {
-            whitelistMsg = "不明正版账号生物 " + playerName + " 被白名单结界阻挡了.";
+            whitelistMsg = "不明生物 " + playerName + " 被正版白名单结界阻挡了.";
         }
 
         // 提醒全体玩家

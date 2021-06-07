@@ -71,7 +71,7 @@ public class AdminCommand implements Listener {
                 return;
             }
 
-            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add" + playerName));
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName));
 
             Utils.kickWhitelistPlayer.remove(playerName);
             group.sendMessage("已将玩家 " + playerName + " 添加至白名单");
@@ -83,7 +83,7 @@ public class AdminCommand implements Listener {
                 return;
             }
 
-            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove" + playerName));
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove " + playerName));
             group.sendMessage("已尝试将玩家 " + playerName + " 移除出白名单");
         } else {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
