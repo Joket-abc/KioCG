@@ -46,7 +46,7 @@ public class AdminCommand implements Listener {
         }
 
         // 拦截白名单提示
-        if (cmd.startsWith("whitelist add ")) {
+        if (cmd.toLowerCase().startsWith("whitelist add ")) {
             final String playerName = cmd.substring(14);
 
             if (!Utils.isLegalPlayerName(playerName)) {
@@ -71,17 +71,20 @@ public class AdminCommand implements Listener {
                 return;
             }
 
-            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd));
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add" + playerName));
 
             Utils.kickWhitelistPlayer.remove(playerName);
             group.sendMessage("已将玩家 " + playerName + " 添加至白名单");
-        } else if (cmd.startsWith("whitelist remove ")) {
+        } else if (cmd.toLowerCase().startsWith("whitelist remove ")) {
             final String playerName = cmd.substring(17);
 
             if (!Utils.isLegalPlayerName(playerName)) {
                 group.sendMessage("错误的玩家名：" + playerName);
                 return;
             }
+
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove" + playerName));
+            group.sendMessage("已尝试将玩家 " + playerName + " 移除出白名单");
         } else {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
         }

@@ -6,6 +6,7 @@ import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.bot.KioCGBot;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,9 +34,10 @@ public class InGame implements Listener {
 
         final String whitelistMsg;
         if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
-            whitelistMsg = "不明生物 " + playerName + "[离线] 被白名单结界阻挡了.";
+            whitelistMsg = "不明离线账号生物 " + playerName + " 被白名单结界阻挡了.";
+            e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n§f \n§8只要申请一定会通过的~"));
         } else {
-            whitelistMsg = "不明生物 " + playerName + "[正版] 被白名单结界阻挡了.";
+            whitelistMsg = "不明正版账号生物 " + playerName + " 被白名单结界阻挡了.";
         }
 
         // 提醒全体玩家

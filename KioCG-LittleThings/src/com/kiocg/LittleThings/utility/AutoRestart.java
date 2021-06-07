@@ -33,7 +33,7 @@ public class AutoRestart {
 
             if ("06:00:00".equals(date)) {
                 Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
-                    Bukkit.getOnlinePlayers().forEach(player -> player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)")));
+                    Bukkit.getOnlinePlayers().forEach(player -> player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("\n§7... §c少女祈祷中 §7...\n§f \n§8(AutoRestart)")));
                     Bukkit.shutdown();
                 });
                 return;

@@ -27,9 +27,9 @@ public class Utils {
         final Component component;
 
         switch (reason) {
-            case 0 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c离线账号尚未连接qq号 §7...");
-            case 1, 2 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c离线账号登录已失效 §7...");
-            default -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("§7... §c离线账号需要验证 §7...");
+            case 0 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n§7... §c离线账号尚未连接qq号 §7...");
+            case 1, 2 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n§7... §c离线账号登录已失效 §7...");
+            default -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n§7... §c离线账号需要验证 §7...");
         }
 
         return component.append(Component.text("\n \n"))
