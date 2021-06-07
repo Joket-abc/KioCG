@@ -28,6 +28,9 @@ public class InGame implements Listener {
         final String playerName = player.getName();
 
         if (Utils.kickWhitelistPlayer.contains(playerName)) {
+            if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
+                e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
+            }
             return;
         }
         Utils.kickWhitelistPlayer.add(playerName);
