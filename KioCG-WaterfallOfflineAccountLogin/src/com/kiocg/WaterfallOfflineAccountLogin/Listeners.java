@@ -18,7 +18,7 @@ public class Listeners implements Listener {
         final String playerName = pendingConnection.getName();
 
         if (!Pattern.matches("^[0-9a-zA-Z_]{3,16}$", playerName)) {
-            e.setCancelReason(new ComponentBuilder("\n... ").color(ChatColor.GRAY).append("名称只能由3-16位字母数字下划线组成").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
+            e.setCancelReason(new ComponentBuilder("\n\n\n\n... ").color(ChatColor.GRAY).append("名称只能由3-16位字母数字下划线组成").color(ChatColor.RED).append(" ...").color(ChatColor.GRAY).create());
             e.setCancelled(true);
             return;
         }
