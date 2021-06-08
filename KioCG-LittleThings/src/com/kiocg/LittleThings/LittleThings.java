@@ -7,7 +7,7 @@ import com.kiocg.LittleThings.listeners.Fun.skeletonPotion;
 import com.kiocg.LittleThings.listeners.Misc.*;
 import com.kiocg.LittleThings.listeners.Utility.cancelDestroyByEntity;
 import com.kiocg.LittleThings.listeners.Utility.cancelSomeRename;
-import com.kiocg.LittleThings.listeners.Utility.cancelSpawnerPlace;
+import com.kiocg.LittleThings.listeners.Utility.cancelSpawnerLegacy;
 import com.kiocg.LittleThings.listeners.Utility.fixVanishingCurse;
 import com.kiocg.LittleThings.scheduler.AutoRestart;
 import com.kiocg.LittleThings.scheduler.FullMoon;
@@ -37,7 +37,7 @@ public class LittleThings extends JavaPlugin {
         // Utility
         pluginManager.registerEvents(new cancelDestroyByEntity(), this);
         pluginManager.registerEvents(new cancelSomeRename(), this);
-        pluginManager.registerEvents(new cancelSpawnerPlace(), this);
+        pluginManager.registerEvents(new cancelSpawnerLegacy(), this);
         pluginManager.registerEvents(new fixVanishingCurse(), this);
 
         // 启动定时自动重启
