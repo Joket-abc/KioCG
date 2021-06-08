@@ -26,7 +26,6 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new skeletonPotion(), this);
         // Misc
         pluginManager.registerEvents(new atPlayer(), this);
-        pluginManager.registerEvents(new catchMonsters(), this);
         pluginManager.registerEvents(new compassTeleport(), this);
         pluginManager.registerEvents(new originRespawn(), this);
         pluginManager.registerEvents(new portableWorkbench(), this);
@@ -37,7 +36,7 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new cancelSomeRename(), this);
         pluginManager.registerEvents(new cancelSomeSpawnerSpawn(), this);
         pluginManager.registerEvents(new fixVanishingCurse(), this);
-        pluginManager.registerEvents(new limitSpawner(), this);
+        pluginManager.registerEvents(new cancelSpawnerPlace(), this);
 
         // 启动定时自动重启
         new AutoRestart();
