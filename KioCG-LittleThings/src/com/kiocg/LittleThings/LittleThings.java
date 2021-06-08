@@ -5,9 +5,12 @@ import com.kiocg.LittleThings.listeners.Fun.creeperFirework;
 import com.kiocg.LittleThings.listeners.Fun.dropItemSound;
 import com.kiocg.LittleThings.listeners.Fun.skeletonPotion;
 import com.kiocg.LittleThings.listeners.Misc.*;
-import com.kiocg.LittleThings.listeners.Utility.*;
-import com.kiocg.LittleThings.utility.AutoRestart;
-import com.kiocg.LittleThings.utility.FullMoon;
+import com.kiocg.LittleThings.listeners.Utility.cancelDestroyByEntity;
+import com.kiocg.LittleThings.listeners.Utility.cancelSomeRename;
+import com.kiocg.LittleThings.listeners.Utility.cancelSpawnerPlace;
+import com.kiocg.LittleThings.listeners.Utility.fixVanishingCurse;
+import com.kiocg.LittleThings.scheduler.AutoRestart;
+import com.kiocg.LittleThings.scheduler.FullMoon;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,9 +37,8 @@ public class LittleThings extends JavaPlugin {
         // Utility
         pluginManager.registerEvents(new cancelDestroyByEntity(), this);
         pluginManager.registerEvents(new cancelSomeRename(), this);
-        pluginManager.registerEvents(new cancelSomeSpawnerSpawn(), this);
-        pluginManager.registerEvents(new fixVanishingCurse(), this);
         pluginManager.registerEvents(new cancelSpawnerPlace(), this);
+        pluginManager.registerEvents(new fixVanishingCurse(), this);
 
         // 启动定时自动重启
         new AutoRestart();

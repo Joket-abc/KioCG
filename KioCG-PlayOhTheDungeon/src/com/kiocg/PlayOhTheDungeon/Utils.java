@@ -62,7 +62,7 @@ public class Utils {
                     case 7 -> player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 99999, 6));
                     case 8 -> player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 99999, 7));
 
-                    case 9 -> TeleportDungeon(player);
+                    case 9 -> teleportDungeon(player);
 
                     case 10 -> {
                         player.removePotionEffect(PotionEffectType.CONFUSION);
@@ -79,7 +79,7 @@ public class Utils {
         }.runTaskTimer(PlayOhTheDungeon.instance, 7L, 7L);
     }
 
-    public static void TeleportDungeon(final @NotNull Player player) {
+    public static void teleportDungeon(final @NotNull Player player) {
         final Random random = new Random();
         final int x = random.nextInt(9001) - 4500;
         final int z = random.nextInt(9001) - 4500;

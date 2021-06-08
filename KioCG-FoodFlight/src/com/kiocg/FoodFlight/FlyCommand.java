@@ -1,5 +1,6 @@
 package com.kiocg.FoodFlight;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,11 +28,12 @@ public class FlyCommand implements CommandExecutor {
         }
 
         // 玩家尝试开启飞行
-        final String worldName = player.getWorld().getName().toLowerCase();
+        final World world = player.getWorld();
+        final String worldName = world.getName().toLowerCase();
         if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
             Utils.addFlightList(player, false);
         } else if (player.hasPermission("kiocg.foodflight." + worldName)) {
-            if (player.getLocation().getBlockY() < 0) {
+            if (world.getEnvironment() == World.Environment.NORMAL && player.getLocation().getBlockY() < 48) {
                 player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
                 return true;
             }

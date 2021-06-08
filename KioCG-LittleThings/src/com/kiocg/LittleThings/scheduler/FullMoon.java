@@ -1,4 +1,4 @@
-package com.kiocg.LittleThings.utility;
+package com.kiocg.LittleThings.scheduler;
 
 import com.kiocg.LittleThings.LittleThings;
 import io.papermc.paper.world.MoonPhase;

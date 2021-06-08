@@ -44,7 +44,7 @@ public class Listeners implements Listener {
                         InsaneMonsters.giant.spawn(giantLoc);
                     }
                     case 1 -> {
-                        if (random.nextInt(100) < 97) {
+                        if (random.nextInt(100) < 99) {
                             return;
                         }
 
@@ -60,7 +60,7 @@ public class Listeners implements Listener {
                         InsaneMonsters.oreZombie.spawn(oreZombieLoc);
                     }
                     case 3 -> {
-                        if (random.nextInt(100) < 90) {
+                        if (random.nextInt(100) < 95) {
                             return;
                         }
 
@@ -69,14 +69,14 @@ public class Listeners implements Listener {
                 }
                 break;
             case SKELETON:
-                if (random.nextInt(100) < 97) {
+                if (random.nextInt(100) < 99) {
                     return;
                 }
 
                 InsaneMonsters.skeletonArcher.spawn(livingEntity.getLocation());
                 break;
             case WITHER_SKELETON:
-                if (random.nextInt(100) < 97) {
+                if (random.nextInt(100) < 99) {
                     return;
                 }
 

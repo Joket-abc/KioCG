@@ -6,7 +6,6 @@ import com.kiocg.BotExtend.message.specific.Seen;
 import com.kiocg.BotExtend.message.specific.Uuid;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.mamoe.mirai.contact.Contact;
-import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -23,15 +22,10 @@ public class MessagesCommand {
     public void onCommandsPublic(final @NotNull Contact contact, final @NotNull User user, final @NotNull String userCommand) {
         // 公共的指令
         switch (userCommand.toLowerCase()) {
-            case ("help") -> {
-                // 仅私聊可用
-                if (contact instanceof Group) {
-                    break;
-                }
-
+            /* case ("help") -> {
                 contact.sendMessage("""
                                     .info - 服务器介绍
-                                    .ip - 服务器IP地址
+                                    .ip [offline] - 服务器IP地址
                                     .client - 客户端下载地址
                                     .status - 服务器统计信息
                                     .map - 网页世界地图
@@ -50,7 +44,7 @@ public class MessagesCommand {
                                     .seen <玩家> - 查询玩家
                                     .at <玩家> [内容] - 提醒游戏内的玩家
                                     .uuid <玩家> - 调用API查询正版UUID""");
-            }
+            } */
 
             case ("qaq") -> contact.sendMessage("චᆽච");
 
@@ -60,12 +54,20 @@ public class MessagesCommand {
                                                            ①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。
                                                            ②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。
                                                            ③服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。""");
-            case ("ip"), ("地址") -> {
+            case ("ip"), ("ip online"), ("地址"), ("正版地址") -> {
                 try {
                     contact.sendMessage("正版限定，IP地址：play.kiocg.com"
                                         + "\n备用地址：" + InetAddress.getByName("play.kiocg.com").getHostAddress() + ":20302");
                 } catch (final @NotNull UnknownHostException ignore) {
                     contact.sendMessage("正版限定，IP地址：play.kiocg.com");
+                }
+            }
+            case ("ip offline"), ("离线地址") -> {
+                try {
+                    contact.sendMessage("离线账号，IP地址：offline.kiocg.com"
+                                        + "\n备用地址：" + InetAddress.getByName("offline.kiocg.com").getHostAddress() + ":21302");
+                } catch (final @NotNull UnknownHostException ignore) {
+                    contact.sendMessage("正版限定，IP地址：offline.kiocg.com");
                 }
             }
             case ("client"), ("客户端") -> contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com（客户端禁止转载、修改、再分发）");
@@ -85,7 +87,7 @@ public class MessagesCommand {
                                                             如需退款请联系群主QQ：1105919949，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。""");
             case ("offline"), ("离线"), ("盗版") -> contact.sendMessage("""
                                                                     离线模式适用范围：正版玩家想要带朋友一起游玩，但是对方没有正版。
-                                                                    或通过答题测试 http://test.kiocg.com 来申请白名单。""");
+                                                                    或承诺不是熊孩子并通过答题测试 http://test.kiocg.com 申请白名单。""");
 
             // 功能信息
             case ("prefix"), ("称号") -> contact.sendMessage("元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");

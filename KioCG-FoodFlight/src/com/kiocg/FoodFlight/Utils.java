@@ -3,6 +3,7 @@ package com.kiocg.FoodFlight;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -62,7 +63,8 @@ public class Utils {
                 final Location location = player.getLocation();
 
                 // 播放烟雾动画来区分可能作弊的玩家
-                player.getWorld().spawnParticle(Particle.ASH, location, 9);
+                final World world = player.getWorld();
+                world.spawnParticle(Particle.ASH, location, 9);
 
                 if (player.getFoodLevel() <= 6) {
                     player.setFlying(false);
@@ -73,7 +75,7 @@ public class Utils {
                     return;
                 }
 
-                if (location.getBlockY() < 0) {
+                if (world.getEnvironment() == World.Environment.NORMAL && location.getBlockY() < 48) {
                     player.setFlying(false);
 
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");

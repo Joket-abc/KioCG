@@ -58,15 +58,9 @@ public class Listeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
-        final Player player = e.getPlayer();
-
-        final String uuidString = player.getUniqueId().toString();
+        final String uuidString = e.getPlayer().getUniqueId().toString();
         if (!Utils.playerRabbits.containsKey(uuidString)) {
             Utils.playerRabbits.put(uuidString, 0);
-        }
-
-        if ("KioCG_OhTheDungeon".equals(player.getWorld().getName())) {
-            player.setHealth(0.0);
         }
     }
 
