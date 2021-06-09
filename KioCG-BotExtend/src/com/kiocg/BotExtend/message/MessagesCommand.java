@@ -79,7 +79,7 @@ public class MessagesCommand {
             // 内部信息
             case ("whitelist"), ("白名单") -> contact.sendMessage("""
                                                                白名单申请(仅限正版!)：请先连接一次服务器，然后需本人@任意昵称带前缀◈的管理员并报出你的ID。
-                                                               例如：@◈Admin I_am_player
+                                                               例如：@◈Admin IdIsPlayer
                                                                                                                               
                                                                审核需要一定的时间，在这之前记得查看群公告的《申请白名单须知》呐~""");
             case ("support"), ("赞助") -> contact.sendMessage("""
