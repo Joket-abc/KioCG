@@ -29,7 +29,7 @@ public class Listeners implements Listener {
         final Block block = e.getBlock();
 
         //TODO 大版本更新时的世界名修改
-        if (!"KioCG_world".equals(block.getWorld().getName())) {
+        if (!"KioCG_17world".equals(block.getWorld().getName())) {
             return;
         }
 

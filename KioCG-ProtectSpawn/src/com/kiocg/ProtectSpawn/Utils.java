@@ -10,8 +10,8 @@ import java.util.UUID;
 public class Utils {
     //TODO 大版本更新时的坐标修改
     // 存储主城原点坐标 x、z
-    public static final int spawnX = 187;
-    public static final int spawnZ = 209;
+    public static final int spawnX = 0;
+    public static final int spawnZ = 0;
     // 蛋糕是个谎言
     public static final Set<UUID> eatCake = new HashSet<>();
 

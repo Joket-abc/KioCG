@@ -17,7 +17,7 @@ public class cancelDestroyByEntity implements Listener {
         final Entity entity = e.getEntity();
 
         //TODO 大版本更新时的世界名修改
-        if (!"KioCG_world".equals(entity.getWorld().getName())) {
+        if (!"KioCG_17world".equals(entity.getWorld().getName())) {
             return;
         }
 
@@ -30,7 +30,7 @@ public class cancelDestroyByEntity implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
         //TODO 大版本更新时的世界名修改
-        if (!"KioCG_world".equals(e.getEntity().getWorld().getName())) {
+        if (!"KioCG_17world".equals(e.getEntity().getWorld().getName())) {
             return;
         }
 
