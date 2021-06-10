@@ -5,7 +5,18 @@ api-version: 1.16
 
 softdepend: [ "KioCG-qqBot" ]
 
+commands:
+  home:
+    description: "传送到床或已充能的重生锚."
+    permission: kiocg.command.home
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
+    usage: "用法: /<command> 传送到床或已充能的重生锚."
+
 permissions:
+  kiocg.command.home:
+    description: 传送到床或已充能的重生锚
+    default: true
+
   kiocg.vanishingcurse.keep:
     description: "死亡保留消失诅咒的物品"
     default: false
