@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KioCG-FixLegacyBirth:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_FixLegacyBirth_jar</output-path>
+    <root id="archive" name="KioCG-FixLegacyBirth.jar">
+      <element id="module-output" name="KioCG-FixLegacyBirth" />
+      <element id="module-source" name="KioCG-FixLegacyBirth" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-FixLegacyBirth/config.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-FixLegacyBirth/plugin.yml" />
+    </root>
+  </artifact>
+</component>
