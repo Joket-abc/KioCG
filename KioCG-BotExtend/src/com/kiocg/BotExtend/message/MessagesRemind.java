@@ -32,6 +32,8 @@ public class MessagesRemind {
             group.sendMessage("你不能向管理员索要物品、权限指令、世界种子，所有管理员同玩家均没有任何特权。");
         } else if ((msg.contains("村民") && !msg.contains("僵尸村民") && msg.contains("僵尸")) || (msg.contains("海龟蛋") && (msg.contains("僵尸") || msg.contains("猪人") || msg.contains("猪灵")))) {
             group.sendMessage("出于优化的需要，大部分实体的AI行为与原版有所不同，有关实体的反馈将不受支持。");
+        } else if (msg.contains("死亡掉落")) {
+            group.sendMessage("游戏内所有世界均不会有死亡掉落。");
         }
 
         replyTime.put(groupID, System.currentTimeMillis());
