@@ -20,6 +20,6 @@ public class Utils {
             return false;
         }
 
-        return Math.abs(spawnX - location.getBlockX()) < 99 || Math.abs(spawnZ - location.getBlockZ()) < 99;
+        return Math.abs(spawnX - location.getBlockX()) < 99 && Math.abs(spawnZ - location.getBlockZ()) < 99;
     }
 }
