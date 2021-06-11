@@ -16,7 +16,7 @@ public class Utils {
     public static final Set<UUID> eatCake = new HashSet<>();
 
     public static @NotNull Boolean inSpawn(final @NotNull Location location) {
-        if (!"KioCG_world".equals(location.getWorld().getName())) {
+        if (!"KioCG_17world".equals(location.getWorld().getName())) {
             return false;
         }
 
