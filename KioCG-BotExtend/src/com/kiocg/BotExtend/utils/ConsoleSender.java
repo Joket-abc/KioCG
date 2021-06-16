@@ -17,8 +17,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class ConsoleSender implements ConsoleCommandSender {
+    private final Pattern ip = Pattern.compile("(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)");
     private final @NotNull ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
 
@@ -39,7 +41,7 @@ public class ConsoleSender implements ConsoleCommandSender {
             output.forEach(string -> stringBuilder.append(ChatColor.stripColor(string)).append("\n"));
             output.clear();
 
-            final String message = stringBuilder.toString().trim();
+            final String message = ip.matcher(stringBuilder.toString().trim()).replaceAll("xxx.xxx.xxx.xxx");
             event.getGroup().sendMessage(message.isEmpty() ? "指令已成功发送，执行结果未知" : message);
         }, 4L);
     }
