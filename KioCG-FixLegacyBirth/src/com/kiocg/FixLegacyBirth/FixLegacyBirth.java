@@ -9,12 +9,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FixLegacyBirth extends JavaPlugin implements Listener {
-    private final Set<String> fixed = new HashSet<>();
+    private final List<String> fixed = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -31,7 +32,7 @@ public class FixLegacyBirth extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerJoin(final PlayerJoinEvent e) {
+    public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         final String uuidString = player.getUniqueId().toString();
 

@@ -65,9 +65,9 @@ public class MessagesCommand {
             case ("ip offline"), ("离线地址") -> {
                 try {
                     contact.sendMessage("离线账号，IP地址：offline.kiocg.com"
-                                        + "\n备用地址：" + InetAddress.getByName("offline.kiocg.com").getHostAddress() + ":21302");
+                                        + "\n备用地址：" + InetAddress.getByName("play.kiocg.com").getHostAddress() + ":21302");
                 } catch (final @NotNull UnknownHostException ignore) {
-                    contact.sendMessage("正版限定，IP地址：offline.kiocg.com");
+                    contact.sendMessage("离线账号，IP地址：offline.kiocg.com");
                 }
             }
             case ("client"), ("客户端") -> contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com（客户端禁止转载、修改、再分发）");
