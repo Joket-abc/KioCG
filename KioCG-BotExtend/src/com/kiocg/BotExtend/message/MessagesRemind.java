@@ -15,9 +15,7 @@ public class MessagesRemind {
         final Long groupID = group.getId();
         final Long time = replyTime.get(groupID);
 
-        if (time == null) {
-            replyTime.put(groupID, System.currentTimeMillis());
-        } else if (System.currentTimeMillis() - time < 1000L * 60L * 10L) {
+        if (time != null && System.currentTimeMillis() - time < 1000L * 60L * 10L) {
             return;
         }
 
