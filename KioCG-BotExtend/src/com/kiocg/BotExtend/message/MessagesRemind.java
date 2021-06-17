@@ -17,10 +17,7 @@ public class MessagesRemind {
 
         if (time == null) {
             replyTime.put(groupID, System.currentTimeMillis());
-            return;
-        }
-
-        if (System.currentTimeMillis() - time < 1000L * 60L * 10L) {
+        } else if (System.currentTimeMillis() - time < 1000L * 60L * 10L) {
             return;
         }
 
@@ -34,6 +31,8 @@ public class MessagesRemind {
             group.sendMessage("出于优化的需要，大部分实体的AI行为与原版有所不同，有关实体的反馈将不受支持。");
         } else if (msg.contains("死亡掉落")) {
             group.sendMessage("游戏内所有世界均不会有死亡掉落。");
+        } else {
+            return;
         }
 
         replyTime.put(groupID, System.currentTimeMillis());
