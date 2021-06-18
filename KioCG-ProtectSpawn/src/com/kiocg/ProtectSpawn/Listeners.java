@@ -6,6 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
+import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -88,7 +89,8 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (Objects.requireNonNull(block).getType() == Material.CAKE && player.getFoodLevel() != 20) {
+            final Material material = Objects.requireNonNull(block).getType();
+            if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
                     Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]"));
                     Utils.eatCake.add(player.getUniqueId());
@@ -103,7 +105,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelEntityDamage(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
-        if (entity instanceof Monster) {
+        if (entity instanceof Monster || entity instanceof Phantom) {
             return;
         }
 
