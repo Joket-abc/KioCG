@@ -102,7 +102,7 @@ public class MessagesCommand {
             // 功能信息
             case ("prefix"), ("称号") -> contact.sendMessage("元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats");
             case ("color"), ("rgb"), ("颜色") -> contact.sendMessage("RGB颜色对照表：https://tool.oschina.net/commons?type=3");
-            case ("wiki"), ("百科") -> contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc");
+            case ("wiki"), ("百科") -> contact.sendMessage("中文Minecraft Wiki镜像站：https://wiki.biligame.com/mc");
 
             // 连接账号
             case ("link"), ("连接") -> contact.sendMessage("输入 .link <mcID> 来连接账号");
@@ -139,7 +139,7 @@ public class MessagesCommand {
                 final String msg = userCommand.substring(userCommand.indexOf(' ') + 1).trim();
 
                 if (userCommand.toLowerCase().startsWith("wiki ") || userCommand.startsWith("百科 ")) {
-                    contact.sendMessage("中文Minecraft Wiki的镜像站：https://wiki.biligame.com/mc/" + URLEncoder.encode(msg, StandardCharsets.UTF_8));
+                    contact.sendMessage("中文Minecraft Wiki镜像站(" + msg + ")：https://wiki.biligame.com/mc/" + URLEncoder.encode(msg, StandardCharsets.UTF_8));
                     break;
                 }
 
