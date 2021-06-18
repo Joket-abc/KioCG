@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class Listeners implements Listener {
+    @EventHandler
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
+        final Player player = e.getPlayer();
+
+        try {
+            Utils.particleTasks.get(player).cancel();
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+
+        Utils.particleTasks.remove(player);
+    }
+
     // 破坏屏障
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
@@ -59,4 +72,6 @@ public class Listeners implements Listener {
         block.getWorld().dropItemNaturally(location, new ItemStack(Material.BARRIER));
         player.playSound(location, block.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
     }
+
+    //TODO 切换光源方块亮度等级
 }

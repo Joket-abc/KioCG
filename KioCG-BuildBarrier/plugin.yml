@@ -9,8 +9,16 @@ commands:
     permission: kiocg.command.barrier
     permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
     usage: "用法: /<command> 切换屏障观察模式."
+  light:
+    description: "切换光源方块观察模式."
+    permission: kiocg.command.light
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
+    usage: "用法: /<command> 切换光源方块观察模式."
 
 permissions:
   kiocg.command.barrier:
     description: 切换屏障观察模式
+    default: true
+  kiocg.command.light:
+    description: 切换光源方块观察模式
     default: true

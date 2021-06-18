@@ -1,5 +1,6 @@
-package com.kiocg.BuildBarrier;
+package com.kiocg.BuildBarrier.Commands;
 
+import com.kiocg.BuildBarrier.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ public class BarrierCommand implements CommandExecutor {
         }
 
         Utils.sendBarrierChange(player);
-        player.sendMessage("§a[§b豆渣子§a] §6已为你显示周围的屏障.");
+        player.sendMessage("§a[§b豆渣子§a] §6已为你显示周围的屏障30秒.");
 
         return true;
     }
