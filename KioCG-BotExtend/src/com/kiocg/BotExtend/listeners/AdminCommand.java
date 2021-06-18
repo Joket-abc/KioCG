@@ -55,7 +55,7 @@ public class AdminCommand implements Listener {
             }
 
             if (!Utils.kickWhitelistPlayer.contains(playerName)) {
-                group.sendMessage("玩家 " + playerName + " 从未出现过");
+                group.sendMessage("玩家 " + playerName + " 不在审核列表中，请上线后再试");
                 return;
             }
 
