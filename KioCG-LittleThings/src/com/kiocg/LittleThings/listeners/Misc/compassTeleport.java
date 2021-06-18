@@ -1,10 +1,13 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +38,34 @@ public class compassTeleport implements Listener {
         final Player player = e.getPlayer();
         try {
             player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation(), 0.0, 0.5, 0.0));
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+    }
+
+    // 展示框磁石指针传送
+    @EventHandler
+    public void compassItemFrameTeleport(final @NotNull PlayerInteractEntityEvent e) {
+        final Player player = e.getPlayer();
+
+        if (!player.isSneaking()) {
+            return;
+        }
+
+        final Entity entityClicked = e.getRightClicked();
+
+        if (!(entityClicked instanceof ItemFrame)) {
+            return;
+        }
+
+        final ItemStack itemStack = ((ItemFrame) entityClicked).getItem();
+
+        if (itemStack.getType() != Material.COMPASS) {
+            return;
+        }
+
+        try {
+            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation(), 0.0, 0.5, 0.0));
+            e.setCancelled(true);
         } catch (final @NotNull NullPointerException ignore) {
         }
     }

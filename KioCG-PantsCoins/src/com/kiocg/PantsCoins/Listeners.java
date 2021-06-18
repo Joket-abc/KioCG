@@ -43,7 +43,7 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
-        if (!MaterialTags.MUSHROOM_BLOCKS.isTagged(block.getType())) {
+        if (!MaterialTags.MUSHROOM_BLOCKS.isTagged(block)) {
             return;
         }
 

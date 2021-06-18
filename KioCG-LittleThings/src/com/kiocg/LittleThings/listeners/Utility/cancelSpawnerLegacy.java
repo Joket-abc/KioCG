@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class cancelSpawnerLegacy implements Listener {
+    /**
+     * 此类保险起见勿删!
+     */
+
     // 禁止放置刷怪笼
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelSpawnerPlace(final @NotNull BlockPlaceEvent e) {

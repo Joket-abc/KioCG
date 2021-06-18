@@ -37,7 +37,7 @@ public class Listeners implements Listener {
         final Player player = e.getPlayer();
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (!MaterialTags.DYES.isTagged(itemStack.getType())) {
+        if (!MaterialTags.DYES.isTagged(itemStack)) {
             return;
         }
 

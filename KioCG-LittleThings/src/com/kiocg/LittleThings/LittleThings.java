@@ -33,6 +33,7 @@ public class LittleThings extends JavaPlugin {
         // Misc
         pluginManager.registerEvents(new atPlayer(), this);
         pluginManager.registerEvents(new compassTeleport(), this);
+        pluginManager.registerEvents(new copySign(), this);
         pluginManager.registerEvents(new originRespawn(), this);
         pluginManager.registerEvents(new portableWorkbench(), this);
         pluginManager.registerEvents(new protectPlace(), this);
