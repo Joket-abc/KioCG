@@ -1,9 +1,6 @@
 package com.kiocg.BuildBarrier;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +18,7 @@ public class Utils {
                 for (int z = blockZ - 32; z <= blockZ + 32; ++z) {
                     final Location loc = new Location(world, x, y, z);
                     if (world.getBlockAt(loc).getType() == Material.BARRIER) {
-                        player.sendBlockChange(loc, Bukkit.createBlockData(Material.BEDROCK));
+                        player.spawnParticle(Particle.BARRIER, loc.toCenterLocation(), 1);
                     }
                 }
             }
