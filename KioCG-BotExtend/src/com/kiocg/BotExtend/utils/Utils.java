@@ -5,14 +5,14 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Utils {
-    // 存储被白名单阻挡的玩家列表
-    public static final Set<String> kickWhitelistPlayer = new HashSet<>();
+    // 存储被白名单阻挡的玩家、是否为正版
+    public static final Map<String, Boolean> kickWhitelistPlayer = new HashMap<>();
 
     // 返回是否为合法玩家名
     public static @NotNull Boolean isLegalPlayerName(final @NotNull String string) {

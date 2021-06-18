@@ -47,15 +47,42 @@ public class AdminCommand implements Listener {
 
         // 拦截白名单提示
         if (cmd.toLowerCase().startsWith("whitelist add ")) {
-            final String playerName = cmd.substring(14);
+            group.sendMessage("请使用以下指令给予白名单：\nwhitelist online <正版玩家>\nwhitelist offline <离线玩家>");
+            return;
+        } else if (cmd.toLowerCase().startsWith("whitelist online ")) {
+            final String playerName = cmd.substring(17);
 
             if (!Utils.isLegalPlayerName(playerName)) {
                 group.sendMessage("错误的玩家名：" + playerName);
                 return;
             }
 
-            if (!Utils.kickWhitelistPlayer.contains(playerName)) {
-                group.sendMessage("玩家 " + playerName + " 不在审核列表中，请上线后再试");
+            final Boolean onlineAccount = Utils.kickWhitelistPlayer.get(playerName);
+            if (onlineAccount == null || !onlineAccount) {
+                group.sendMessage("玩家 " + playerName + " 不在正版审核列表中");
+                return;
+            }
+
+            if (Bukkit.getOfflinePlayer(UUID.fromString("ffffffff-ffff-ffff" + UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString().substring(18))).hasPlayedBefore()) {
+                group.sendMessage("已有同名离线玩家 " + playerName);
+                return;
+            }
+
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName));
+
+            Utils.kickWhitelistPlayer.remove(playerName);
+            group.sendMessage("已将正版玩家 " + playerName + " 添加至白名单");
+        } else if (cmd.toLowerCase().startsWith("whitelist offline ")) {
+            final String playerName = cmd.substring(18);
+
+            if (!Utils.isLegalPlayerName(playerName)) {
+                group.sendMessage("错误的玩家名：" + playerName);
+                return;
+            }
+
+            final Boolean onlineAccount = Utils.kickWhitelistPlayer.get(playerName);
+            if (onlineAccount == null || onlineAccount) {
+                group.sendMessage("玩家 " + playerName + " 不在离线审核列表中");
                 return;
             }
 
@@ -66,15 +93,11 @@ public class AdminCommand implements Listener {
                 }
             } catch (final @NotNull NullPointerException ignore) {
             }
-            if (Bukkit.getOfflinePlayer(UUID.fromString("ffffffff-ffff-ffff" + UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(Charsets.UTF_8)).toString().substring(18))).hasPlayedBefore()) {
-                group.sendMessage("已有同名离线玩家 " + playerName);
-                return;
-            }
 
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName));
 
             Utils.kickWhitelistPlayer.remove(playerName);
-            group.sendMessage("已将玩家 " + playerName + " 添加至白名单");
+            group.sendMessage("已将离线玩家 " + playerName + " 添加至白名单");
         } else if (cmd.toLowerCase().startsWith("whitelist remove ")) {
             final String playerName = cmd.substring(17);
 
