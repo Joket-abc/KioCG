@@ -32,6 +32,7 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new skeletonPotion(), this);
         // Misc
         pluginManager.registerEvents(new atPlayer(), this);
+        pluginManager.registerEvents(new catchAnimals(), this);
         pluginManager.registerEvents(new compassTeleport(), this);
         pluginManager.registerEvents(new copySign(), this);
         pluginManager.registerEvents(new originRespawn(), this);
