@@ -21,6 +21,7 @@ public class FixLegacyBirth extends JavaPlugin implements Listener {
     public void onEnable() {
         if (getServer().createWorld(new WorldCreator("KioCG_world")) == null) {
             getLogger().warning("旧版本世界 KioCG_world 加载失败!");
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
 

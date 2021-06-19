@@ -21,6 +21,7 @@ public class PlayOhTheDungeon extends JavaPlugin {
 
         if (getServer().createWorld(new WorldCreator("KioCG_OhTheDungeon")) == null) {
             getLogger().warning("地牢世界 KioCG_OhTheDungeon 加载失败!");
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
