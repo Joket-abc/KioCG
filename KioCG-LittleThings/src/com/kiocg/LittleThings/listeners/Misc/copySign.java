@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockDataMeta;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -42,12 +42,13 @@ public class copySign implements Listener {
         if (inventory.firstEmpty() != -1) {
             itemStack.setAmount(itemStack.getAmount() - 1);
 
-            final ItemStack sign = itemStack.clone().asOne();
-            final BlockDataMeta signBlockDataMeta = (BlockDataMeta) sign.getItemMeta();
-            signBlockDataMeta.setBlockData(block.getBlockData());
-            sign.setItemMeta(signBlockDataMeta);
+            final ItemStack signStack = itemStack.clone().asOne();
 
-            inventory.addItem(sign);
+            final BlockStateMeta blockStateMeta = (BlockStateMeta) signStack.getItemMeta();
+            Objects.requireNonNull(blockStateMeta).setBlockState(block.getState());
+            signStack.setItemMeta(blockStateMeta);
+
+            inventory.addItem(signStack);
             e.setCancelled(true);
         }
     }
