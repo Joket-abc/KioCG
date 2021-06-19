@@ -37,8 +37,8 @@ public class atPlayer implements Listener {
                 final Player thePlayer = Bukkit.getPlayer(playerName);
                 Objects.requireNonNull(thePlayer).playSound(thePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
 
-                message = message.replaceText(TextReplacementConfig.builder().match("(?i)@ " + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build())
-                                 .replaceText(TextReplacementConfig.builder().match("(?i)@" + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build());
+                message = message.replaceText(TextReplacementConfig.builder().match("(?i)@" + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build())
+                                 .replaceText(TextReplacementConfig.builder().match("(?i)@ " + playerNameLowerCase).replacement("§9§o@§9§o" + playerName + "§r").build());
             }
         }
 
