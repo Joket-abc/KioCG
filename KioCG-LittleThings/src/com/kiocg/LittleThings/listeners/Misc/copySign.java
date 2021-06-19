@@ -30,7 +30,11 @@ public class copySign implements Listener {
 
         final ItemStack itemStack = e.getItem();
 
-        if (!MaterialTags.SIGNS.isTagged(Objects.requireNonNull(itemStack))) {
+        try {
+            if (!MaterialTags.SIGNS.isTagged(Objects.requireNonNull(itemStack))) {
+                return;
+            }
+        } catch (final NullPointerException ignore) {
             return;
         }
 
