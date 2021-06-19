@@ -6,10 +6,7 @@ import com.kiocg.LittleThings.listeners.Fun.creeperFirework;
 import com.kiocg.LittleThings.listeners.Fun.dropItemSound;
 import com.kiocg.LittleThings.listeners.Fun.skeletonPotion;
 import com.kiocg.LittleThings.listeners.Misc.*;
-import com.kiocg.LittleThings.listeners.Utility.cancelDestroyByEntity;
-import com.kiocg.LittleThings.listeners.Utility.cancelSomeRename;
-import com.kiocg.LittleThings.listeners.Utility.cancelSpawnerLegacy;
-import com.kiocg.LittleThings.listeners.Utility.fixVanishingCurse;
+import com.kiocg.LittleThings.listeners.Utility.*;
 import com.kiocg.LittleThings.scheduler.AutoRestart;
 import com.kiocg.LittleThings.scheduler.FullMoon;
 import org.bukkit.plugin.PluginManager;
@@ -43,6 +40,7 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new cancelDestroyByEntity(), this);
         pluginManager.registerEvents(new cancelSomeRename(), this);
         pluginManager.registerEvents(new cancelSpawnerLegacy(), this);
+        pluginManager.registerEvents(new fixLureEnchanting(), this);
         pluginManager.registerEvents(new fixVanishingCurse(), this);
 
         Objects.requireNonNull(getServer().getPluginCommand("home")).setExecutor(new HomeCommand());
