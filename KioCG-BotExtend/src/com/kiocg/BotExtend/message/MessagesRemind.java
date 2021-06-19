@@ -32,7 +32,7 @@ public class MessagesRemind {
             }
         } else if (msg.contains("死亡掉落")) {
             if (shouldReply(group.getId(), member.getId(), 5)) {
-                group.sendMessage("游戏内所有世界均不会有死亡掉落。");
+                group.sendMessage("游戏内所有世界均不会有死亡掉落");
             }
         }
     }
