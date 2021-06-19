@@ -111,6 +111,6 @@ public class Listeners implements Listener {
 
         final Location loc = block.getLocation();
         block.getWorld().dropItemNaturally(loc, Utils.lastBlockItemStack.get(player));
-        player.playSound(loc.toCenterLocation(), block.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
+        player.playSound(loc.toCenterLocation(), blockData.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
     }
 }
