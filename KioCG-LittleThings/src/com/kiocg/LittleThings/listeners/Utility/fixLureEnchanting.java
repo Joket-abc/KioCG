@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class fixLureEnchanting implements Listener {
     // 修复饵钓附魔
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fixVanishingCurse(final @NotNull PlayerFishEvent e) {
         if (e.getState() != PlayerFishEvent.State.FISHING) {
             return;
@@ -25,6 +25,7 @@ public class fixLureEnchanting implements Listener {
             itemStack.addUnsafeEnchantment(Enchantment.LURE, 5);
 
             player.sendMessage("§a[§b豆渣子§a] §6已修复你手中钓竿的饵钓附魔属性.");
+            e.setCancelled(true);
         }
     }
 }
