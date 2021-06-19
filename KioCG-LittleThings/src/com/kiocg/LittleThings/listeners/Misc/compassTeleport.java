@@ -37,7 +37,7 @@ public class compassTeleport implements Listener {
 
         final Player player = e.getPlayer();
         try {
-            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation(), 0.0, 0.5, 0.0));
+            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()), 0.5, 1.0, 0.5));
         } catch (final @NotNull NullPointerException ignore) {
         }
     }
@@ -64,7 +64,7 @@ public class compassTeleport implements Listener {
         }
 
         try {
-            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()).toCenterLocation(), 0.0, 0.5, 0.0));
+            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()), 0.5, 1.0, 0.5));
             e.setCancelled(true);
         } catch (final @NotNull NullPointerException ignore) {
         }
