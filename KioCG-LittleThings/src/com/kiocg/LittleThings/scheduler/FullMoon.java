@@ -27,7 +27,6 @@ public class FullMoon {
         this.FullMoonTask();
     }
 
-    //TODO paper
     // 满月特殊效果
     private void FullMoonTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.instance, () -> {

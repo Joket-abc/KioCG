@@ -131,13 +131,18 @@ public class MessagesCommand {
             }
             case ("plugin"), ("plugins"), ("插件") -> contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
             case ("tps"), ("mspt"), ("状态") -> {
-                //TODO paper
-                final double[] tps = Bukkit.getTPS();
-                contact.sendMessage("TPS(1m, 5m, 15m)："
-                                    + String.format("%.2f", tps[0]) + ", "
-                                    + String.format("%.2f", tps[1]) + ", "
-                                    + String.format("%.2f", tps[2])
-                                    + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
+                try {
+                    Class.forName("com.destroystokyo.paper.event.server.ServerTickStartEvent");
+
+                    final double[] tps = Bukkit.getTPS();
+                    contact.sendMessage("TPS(1m, 5m, 15m)："
+                                        + String.format("%.2f", tps[0]) + ", "
+                                        + String.format("%.2f", tps[1]) + ", "
+                                        + String.format("%.2f", tps[2])
+                                        + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
+                } catch (final @NotNull ClassNotFoundException ignore) {
+                    contact.sendMessage("获取TPS失败，请等待服务端升级");
+                }
             }
 
             // 功能信息

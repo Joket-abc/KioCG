@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
@@ -112,21 +111,6 @@ public class Listeners implements Listener {
 
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
-    }
-
-    //TODO paper
-    @EventHandler
-    public void onPrepareGrindstone(final @NotNull PrepareResultEvent e) {
-        if (e.getInventory().getType() != InventoryType.GRINDSTONE) {
-            return;
-        }
-
-        try {
-            if (Objects.requireNonNull(e.getResult()).getType() == Material.BOOK) {
-                e.setResult(new ItemStack(Material.ENCHANTED_BOOK));
-            }
-        } catch (final @NotNull NullPointerException ignore) {
-        }
     }
 
     @EventHandler

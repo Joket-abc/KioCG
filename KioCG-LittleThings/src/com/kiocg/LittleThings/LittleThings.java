@@ -11,6 +11,7 @@ import com.kiocg.LittleThings.scheduler.AutoRestart;
 import com.kiocg.LittleThings.scheduler.FullMoon;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -53,7 +54,7 @@ public class LittleThings extends JavaPlugin {
 
             // 满月特殊效果
             new FullMoon();
-        } catch (final ClassNotFoundException ignore) {
+        } catch (final @NotNull ClassNotFoundException ignore) {
         }
     }
 
