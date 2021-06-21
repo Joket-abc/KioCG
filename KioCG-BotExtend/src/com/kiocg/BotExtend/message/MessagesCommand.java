@@ -49,7 +49,7 @@ public class MessagesCommand {
             case ("qaq") -> contact.sendMessage("චᆽච");
 
             // 外部信息
-            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")\n"
+            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getBukkitVersion().split("-")[0] + ")\n"
                                                          + """
                                                            ①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。
                                                            ②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。
@@ -122,6 +122,7 @@ public class MessagesCommand {
             }
             case ("plugin"), ("plugins"), ("插件") -> contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
             case ("tps"), ("mspt"), ("状态") -> {
+                //TODO paper
                 final double[] tps = Bukkit.getTPS();
                 contact.sendMessage("TPS(1m, 5m, 15m)："
                                     + String.format("%.2f", tps[0]) + ", "

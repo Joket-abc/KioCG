@@ -5,7 +5,7 @@ import com.kiocg.BotExtend.utils.Utils;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Link {
@@ -15,28 +15,15 @@ public class Link {
             return;
         }
 
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
+        final Player player = Bukkit.getPlayer(msg);
 
-        if (offlinePlayer == null) {
-            contact.sendMessage("无法找到玩家 " + msg + "，请上线后再试");
-            return;
-        }
-
-        final String playerName = offlinePlayer.getName();
-
-        if (playerName == null) {
-            contact.sendMessage("无法找到玩家 " + msg + "，请上线后再试");
+        if (player == null) {
+            contact.sendMessage("玩家 " + msg + " 不在线");
             return;
         }
 
         final long qq = user.getId();
-
-        PlayerLinkUtils.waitLinks.put(qq, playerName);
-
-        if (!offlinePlayer.isOnline()) {
-            contact.sendMessage("请上线后再在游戏内输入 /link " + qq + " 来连接此QQ号");
-        } else {
-            contact.sendMessage("请再在游戏内输入 /link " + qq + " 来连接此QQ号");
-        }
+        PlayerLinkUtils.waitLinks.put(qq, player.getName());
+        contact.sendMessage("请再在游戏内输入 /link " + qq + " 来连接此QQ号");
     }
 }

@@ -1,17 +1,15 @@
 package com.kiocg.BotExtend.listeners;
 
-import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.bot.KioCGBot;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,26 +17,26 @@ import java.util.Objects;
 public class InGame implements Listener {
     // 广播被白名单拦截的玩家
     @EventHandler
-    public void onProfileWhitelistVerify(final @NotNull ProfileWhitelistVerifyEvent e) {
-        if (e.isWhitelisted() || !e.isWhitelistEnabled()) {
+    public void onProfileWhitelistVerify(final @NotNull PlayerLoginEvent e) {
+        if (e.getResult() != PlayerLoginEvent.Result.KICK_WHITELIST) {
             return;
         }
 
-        final PlayerProfile player = e.getPlayerProfile();
+        final Player player = e.getPlayer();
         final String playerName = player.getName();
 
         final Boolean onlineAccount = Utils.kickWhitelistPlayer.get(playerName);
         if (onlineAccount != null) {
             if (!onlineAccount) {
-                e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
+                e.setKickMessage("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~");
             }
             return;
         }
 
         final String whitelistMsg;
-        if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
+        if (Objects.requireNonNull(player.getUniqueId()).toString().startsWith("ffffffff-ffff-ffff")) {
             whitelistMsg = "不明生物 " + playerName + " 被离线白名单结界阻挡了.";
-            e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
+            e.setKickMessage("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~");
             Utils.kickWhitelistPlayer.put(playerName, false);
         } else {
             whitelistMsg = "不明生物 " + playerName + " 被正版白名单结界阻挡了.";
