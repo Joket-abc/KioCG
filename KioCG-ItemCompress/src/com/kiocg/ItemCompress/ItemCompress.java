@@ -9,6 +9,7 @@ public class ItemCompress extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        saveDefaultConfig();
         new CreateRecipe();
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);

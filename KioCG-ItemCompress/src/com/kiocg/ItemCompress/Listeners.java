@@ -1,10 +1,5 @@
 package com.kiocg.ItemCompress;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -48,9 +43,8 @@ public class Listeners implements Listener {
                 final String multipleText;
 
                 final ItemMeta itemMeta = matrix[0].getItemMeta();
-                final Component displayNameComponent = itemMeta.displayName();
-                if (displayNameComponent != null) {
-                    final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
+                if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                    final String displayName = itemMeta.getDisplayName();
 
                     if (displayName.startsWith("§1§2§6")) {
                         multipleText = Utils.upMultiple(displayName.substring(6, 7));
@@ -70,9 +64,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                    .decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
 
                 itemStackResult.setItemMeta(itemMetaResult);
             }
@@ -90,12 +82,10 @@ public class Listeners implements Listener {
                 String multipleText = "";
 
                 for (final ItemStack itemStack : craftingInventory.getMatrix()) {
-                    //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-                        final Component displayNameComponent = itemMeta.displayName();
-                        if (displayNameComponent != null) {
-                            final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
+                        if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                            final String displayName = itemMeta.getDisplayName();
 
                             if (displayName.startsWith("§1§2§6")) {
                                 multipleText = Utils.downMultiple(displayName.substring(6, 7));
@@ -117,9 +107,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                    .decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
 
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
@@ -135,12 +123,10 @@ public class Listeners implements Listener {
                 String multipleText = "";
 
                 for (final ItemStack itemStack : craftingInventory.getMatrix()) {
-                    //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-                        final Component displayNameComponent = itemMeta.displayName();
-                        if (displayNameComponent != null) {
-                            final String displayName = PlainComponentSerializer.plain().serialize(displayNameComponent);
+                        if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                            final String displayName = itemMeta.getDisplayName();
 
                             if (displayName.startsWith("§1§2§6")) {
                                 itemStackResult = new ItemStack(itemStack.getType(), 9);
@@ -162,9 +148,7 @@ public class Listeners implements Listener {
                 }
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                itemMetaResult.displayName(LegacyComponentSerializer.legacyAmpersand().deserialize("§1§2§6")
-                                                                    .append(Component.text(multipleText + "次压缩" + itemStackResult.getI18NDisplayName(), NamedTextColor.LIGHT_PURPLE))
-                                                                    .decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
 
                 itemStackResult.setItemMeta(itemMetaResult);
 
@@ -184,7 +168,7 @@ public class Listeners implements Listener {
 
         try {
             if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")
-                || PlainComponentSerializer.plain().serialize(Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getFirstItem()).getItemMeta().displayName())).startsWith("§1§2§6")) {
+                || Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getItem(0)).getItemMeta()).getDisplayName().startsWith("§1§2§6")) {
                 e.setResult(null);
             }
         } catch (final @NotNull NullPointerException ignore) {
@@ -195,7 +179,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlaceEvent(final @NotNull BlockPlaceEvent e) {
         try {
-            if (PlainComponentSerializer.plain().serialize(Objects.requireNonNull(e.getItemInHand().getItemMeta().displayName())).startsWith("§1§2§6")) {
+            if (Objects.requireNonNull(e.getItemInHand().getItemMeta()).getDisplayName().startsWith("§1§2§6")) {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {
