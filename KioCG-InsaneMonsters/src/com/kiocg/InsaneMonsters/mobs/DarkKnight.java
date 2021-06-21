@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class DarkKnight {
     public void spawn(final @NotNull Location location) {
-        final LivingEntity livingEntity = location.getWorld().spawn(location, WitherSkeleton.class);
+        final LivingEntity livingEntity = Objects.requireNonNull(location.getWorld()).spawn(location, WitherSkeleton.class);
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "DarkKnight");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));

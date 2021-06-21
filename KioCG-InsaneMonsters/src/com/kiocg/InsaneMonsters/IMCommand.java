@@ -34,7 +34,7 @@ public class IMCommand implements CommandExecutor {
             final Location location;
 
             try {
-                location = Objects.requireNonNull(player.getTargetBlock(64)).getLocation().add(0.5, 1.0, 0.5);
+                location = Objects.requireNonNull(player.getTargetBlockExact(64)).getLocation().add(0.5, 1.0, 0.5);
             } catch (final @NotNull NullPointerException ignore) {
                 player.sendMessage("§a[§b豆渣子§a] §c所指向的方块距离太远了.");
                 return true;

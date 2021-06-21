@@ -1,7 +1,5 @@
 package com.kiocg.InsaneMonsters;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -18,6 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Listeners implements Listener {
@@ -108,7 +107,7 @@ public class Listeners implements Listener {
                 final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStackG.getItemMeta();
                 final Enchantment[] enchantments = Enchantment.values();
                 final Enchantment randomEnchantment = enchantments[random.nextInt(enchantments.length)];
-                enchantmentStorageMeta.addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
+                Objects.requireNonNull(enchantmentStorageMeta).addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
 
                 itemStackG.setItemMeta(enchantmentStorageMeta);
 
@@ -120,7 +119,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackZW = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
 
                 final ItemMeta itemMetaZW = itemStackZW.getItemMeta();
-                itemMetaZW.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaZW).setDisplayName("§r铁币");
                 itemStackZW.setItemMeta(itemMetaZW);
 
                 drops.add(itemStackZW);
@@ -132,7 +131,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackSA = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
 
                 final ItemMeta itemMetaSA = itemStackSA.getItemMeta();
-                itemMetaSA.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaSA).setDisplayName("§r铁币");
                 itemStackSA.setItemMeta(itemMetaSA);
 
                 drops.add(itemStackSA);
@@ -144,7 +143,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackDK = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
 
                 final ItemMeta itemMetaDK = itemStackDK.getItemMeta();
-                itemMetaDK.displayName(Component.text("铁币").decoration(TextDecoration.ITALIC, false));
+                Objects.requireNonNull(itemMetaDK).setDisplayName("§r铁币");
                 itemStackDK.setItemMeta(itemMetaDK);
 
                 drops.add(itemStackDK);
