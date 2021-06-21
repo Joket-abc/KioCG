@@ -1,6 +1,5 @@
 package com.kiocg.PantsCoins;
 
-import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -24,7 +23,7 @@ public class Listeners implements Listener {
             final ItemMeta itemMeta = itemStack.getItemMeta();
 
             // 自定义方块
-            if (itemMeta.hasCustomModelData()) {
+            if (Objects.requireNonNull(itemMeta).hasCustomModelData()) {
                 final int customModelData = itemMeta.getCustomModelData();
                 if (1001 <= customModelData && customModelData != 1054 && customModelData <= 1160) {
                     BlockManager.setCustomBlock(e.getBlockPlaced(), customModelData);
@@ -43,7 +42,8 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
-        if (!MaterialTags.MUSHROOM_BLOCKS.isTagged(block)) {
+        final Material material = block.getType();
+        if (material != Material.BROWN_MUSHROOM_BLOCK && material != Material.RED_MUSHROOM_BLOCK && material != Material.MUSHROOM_STEM) {
             return;
         }
 

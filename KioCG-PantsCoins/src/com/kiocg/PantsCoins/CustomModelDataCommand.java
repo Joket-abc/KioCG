@@ -10,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class CustomModelDataCommand implements CommandExecutor {
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final String @NotNull [] args) {
@@ -30,7 +32,7 @@ public class CustomModelDataCommand implements CommandExecutor {
         }
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setCustomModelData(Integer.valueOf(args[0]));
+        Objects.requireNonNull(itemMeta).setCustomModelData(Integer.valueOf(args[0]));
         itemStack.setItemMeta(itemMeta);
         return true;
     }
