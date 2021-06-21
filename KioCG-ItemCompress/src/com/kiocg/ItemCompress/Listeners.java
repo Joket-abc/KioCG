@@ -46,8 +46,9 @@ public class Listeners implements Listener {
                 if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
                     final String displayName = itemMeta.getDisplayName();
 
-                    if (displayName.startsWith("§1§2§6")) {
-                        multipleText = Utils.upMultiple(displayName.substring(6, 7));
+                    final int index = displayName.indexOf("次压缩");
+                    if (index != -1) {
+                        multipleText = Utils.upMultiple(displayName.substring(index - 1, index));
 
                         // 超过最大压缩次数
                         if (multipleText == null) {
@@ -64,8 +65,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
-
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemStackResult.setItemMeta(itemMetaResult);
             }
             return;
@@ -87,8 +87,9 @@ public class Listeners implements Listener {
                         if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
                             final String displayName = itemMeta.getDisplayName();
 
-                            if (displayName.startsWith("§1§2§6")) {
-                                multipleText = Utils.downMultiple(displayName.substring(6, 7));
+                            final int index = displayName.indexOf("次压缩");
+                            if (index != -1) {
+                                multipleText = Utils.downMultiple(displayName.substring(index - 1, index));
 
                                 // 解压成原版物品
                                 if (multipleText == null) {
@@ -107,8 +108,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
-
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
             }
@@ -128,11 +128,11 @@ public class Listeners implements Listener {
                         if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
                             final String displayName = itemMeta.getDisplayName();
 
-                            if (displayName.startsWith("§1§2§6")) {
+                            final int index = displayName.indexOf("次压缩");
+                            if (index != -1) {
+                                multipleText = Utils.downMultiple(displayName.substring(index - 1, index));
+
                                 itemStackResult = new ItemStack(itemStack.getType(), 9);
-
-                                multipleText = Utils.downMultiple(displayName.substring(6, 7));
-
                                 // 解压成原版物品
                                 if (multipleText == null) {
                                     craftingInventory.setResult(itemStackResult);
@@ -148,8 +148,7 @@ public class Listeners implements Listener {
                 }
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§1§2§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
-
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemStackResult.setItemMeta(itemMetaResult);
 
                 craftingInventory.setResult(itemStackResult);
@@ -168,7 +167,7 @@ public class Listeners implements Listener {
 
         try {
             if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")
-                || Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getItem(0)).getItemMeta()).getDisplayName().startsWith("§1§2§6")) {
+                || Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getItem(0)).getItemMeta()).getDisplayName().contains("压缩")) {
                 e.setResult(null);
             }
         } catch (final @NotNull NullPointerException ignore) {
@@ -179,7 +178,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlaceEvent(final @NotNull BlockPlaceEvent e) {
         try {
-            if (Objects.requireNonNull(e.getItemInHand().getItemMeta()).getDisplayName().startsWith("§1§2§6")) {
+            if (Objects.requireNonNull(e.getItemInHand().getItemMeta()).getDisplayName().contains("压缩")) {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {
