@@ -144,7 +144,7 @@ public class Utils {
         }.runTaskLater(PlayOhTheDungeon.instance, 10L);
     }
 
-    public static long getBlockKey(final Location location) {
+    public static long getBlockKey(final @NotNull Location location) {
         //noinspection UnnecessaryExplicitNumericCast
         return (long) location.getBlockX() & 134217727L | ((long) location.getBlockZ() & 134217727L) << 27 | (long) location.getBlockY() << 54;
     }
