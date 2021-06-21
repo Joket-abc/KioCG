@@ -48,8 +48,13 @@ public class LittleThings extends JavaPlugin {
         // 启动定时自动重启
         new AutoRestart();
 
-        // 满月特殊效果
-        new FullMoon();
+        try {
+            Class.forName("io.papermc.paper.world.MoonPhase");
+
+            // 满月特殊效果
+            new FullMoon();
+        } catch (final ClassNotFoundException ignore) {
+        }
     }
 
     @Override
