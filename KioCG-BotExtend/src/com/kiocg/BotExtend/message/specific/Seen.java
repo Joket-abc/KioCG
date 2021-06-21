@@ -56,8 +56,10 @@ public class Seen {
 
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次");
         try {
+            Class.forName("com.gmail.nossr50.api.ExperienceAPI");
+
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
-        } catch (final @NotNull RuntimeException ignore) {
+        } catch (final @NotNull ClassNotFoundException ignore) {
             stringBuilder.append("null");
         }
         try {
