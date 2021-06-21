@@ -1,7 +1,5 @@
 package com.kiocg.WoolTree;
 
-import com.destroystokyo.paper.MaterialSetTag;
-import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -30,14 +28,22 @@ public class Listeners implements Listener {
 
         final Block block = e.getClickedBlock();
 
-        if (!MaterialSetTag.SAPLINGS.isTagged(Objects.requireNonNull(block).getType())) {
-            return;
+        switch (Objects.requireNonNull(block).getType()) {
+            case ACACIA_SAPLING:
+            case BIRCH_SAPLING:
+            case DARK_OAK_SAPLING:
+            case JUNGLE_SAPLING:
+            case OAK_SAPLING:
+            case SPRUCE_SAPLING:
+                break;
+            default:
+                return;
         }
 
         final Player player = e.getPlayer();
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (!MaterialTags.DYES.isTagged(itemStack)) {
+        if (!itemStack.getType().toString().endsWith("_DYE")) {
             return;
         }
 
@@ -50,14 +56,14 @@ public class Listeners implements Listener {
             itemStack.setAmount(itemStack.getAmount() - 1);
         }
 
-        final Location location = block.getLocation().toCenterLocation();
+        final Location location = block.getLocation().add(0.5, 0.5, 0.5);
         if (new Random().nextInt() * 100 >= 45) {
             block.getWorld().playSound(location, Sound.BLOCK_COMPOSTER_FILL, 1.0F, 1.0F);
             block.getWorld().playEffect(location.add(0.0, 1.0, 0.0), Effect.SMOKE, 0);
             return;
         }
 
-        final long blockKey = block.getBlockKey();
+        final long blockKey = Utils.getBlockKey(block.getLocation());
         if (Utils.treeWools.containsKey(blockKey)) {
             Utils.treeWools.get(blockKey).add(Utils.dye2Wool(itemStack.getType()));
         } else {
@@ -74,14 +80,14 @@ public class Listeners implements Listener {
     public void onBlockBreak(final @NotNull BlockBreakEvent e) {
         final Block block = e.getBlock();
 
-        if (MaterialSetTag.SAPLINGS.isTagged(Objects.requireNonNull(block).getType())) {
-            Utils.treeWools.remove(block.getBlockKey());
+        switch (Objects.requireNonNull(block).getType()) {
+            case ACACIA_SAPLING, BIRCH_SAPLING, DARK_OAK_SAPLING, JUNGLE_SAPLING, OAK_SAPLING, SPRUCE_SAPLING -> Utils.treeWools.remove(Utils.getBlockKey(block.getLocation()));
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onStructureGrow(final @NotNull StructureGrowEvent e) {
-        final long blockKey = e.getLocation().toBlockKey();
+        final long blockKey = Utils.getBlockKey(e.getLocation());
 
         final List<Material> wools = Utils.treeWools.get(blockKey);
 
@@ -92,7 +98,7 @@ public class Listeners implements Listener {
         final Random random = new Random();
         final int amount = wools.size();
         for (final BlockState blockState : e.getBlocks()) {
-            if (MaterialSetTag.LEAVES.isTagged(blockState.getType())) {
+            if (blockState.getType().toString().endsWith("_LEAVES")) {
                 blockState.setType(wools.get(random.nextInt(amount)));
             }
         }
