@@ -1,9 +1,7 @@
 package com.kiocg.PlayOhTheDungeon;
 
-import com.destroystokyo.paper.MaterialTags;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -37,9 +35,9 @@ public class Listeners implements Listener {
         if (block.getType() == Material.BEDROCK) {
             final Player player = e.getPlayer();
             if (player.getInventory().getItemInMainHand().getType() == Material.STONE) {
-                final long blockKey = block.getBlockKey();
+                final long blockKey = Utils.getBlockKey(block.getLocation());
                 Utils.playerRabbitConfirm.put(player.getUniqueId().toString(), blockKey);
-                player.sendMessage(Utils.getConfirmMessage(blockKey));
+                player.spigot().sendMessage(Utils.getConfirmMessage(blockKey));
                 return;
             }
         }
@@ -47,12 +45,12 @@ public class Listeners implements Listener {
         final Player player = e.getPlayer();
         final String uuidString = player.getUniqueId().toString();
 
-        final long blockKey = block.getBlockKey();
+        final long blockKey = Utils.getBlockKey(block.getLocation());
         if (blockKey % (1000L + Utils.playerRabbits.get(uuidString) * 1000L) == Utils.variable) {
             Utils.variable = System.currentTimeMillis() % 1000L;
 
             Utils.playerRabbitConfirm.put(uuidString, blockKey);
-            player.sendMessage(Utils.getConfirmMessage(blockKey));
+            player.spigot().sendMessage(Utils.getConfirmMessage(blockKey));
         }
     }
 
@@ -89,14 +87,15 @@ public class Listeners implements Listener {
         }
 
         final Block block = e.getClickedBlock();
+        final World world = Objects.requireNonNull(block).getWorld();
 
-        if (!"KioCG_OhTheDungeon".equals(Objects.requireNonNull(block).getWorld().getName())) {
+        if (!"KioCG_OhTheDungeon".equals(world.getName())) {
             return;
         }
 
         final Material material = block.getType();
-        if (MaterialTags.BEDS.isTagged(material)) {
-            block.getLocation().createExplosion(5.0F, true, true);
+        if (material.toString().endsWith("_BED")) {
+            world.createExplosion(block.getLocation(), 5.0F, true, true);
             e.setCancelled(true);
         } else if (material == Material.ENDER_CHEST || material == Material.LODESTONE) {
             e.setCancelled(true);
@@ -115,7 +114,7 @@ public class Listeners implements Listener {
         final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text("铜币").decoration(TextDecoration.ITALIC, false));
+        Objects.requireNonNull(itemMeta).setDisplayName("§r铜币");
         itemStack.setItemMeta(itemMeta);
 
         e.getDrops().add(itemStack);

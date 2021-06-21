@@ -1,11 +1,12 @@
 package com.kiocg.PlayOhTheDungeon;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -33,11 +34,11 @@ public class Utils {
     public static long variable = System.currentTimeMillis() % 1000L;
 
     // 获取确认提示信息
-    public static @NotNull Component getConfirmMessage(final long blockKey) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize("§7[§9豆渣子§7] ")
-                                        .append(Component.text("你在地上发现了一个兔子窝洞口. ", NamedTextColor.GRAY))
-                                        .append(Component.text("[钻进去看看]", NamedTextColor.GRAY, TextDecoration.BOLD)
-                                                         .clickEvent(ClickEvent.runCommand("/rabbit " + blockKey)));
+    public static BaseComponent[] getConfirmMessage(final long blockKey) {
+        return new ComponentBuilder(new TextComponent(TextComponent.fromLegacyText("§7[§9豆渣子§7] ")))
+                .append("你在地上发现了一个兔子窝洞口. ").color(ChatColor.GRAY)
+                .append("[钻进去看看]").color(ChatColor.BOLD).color(ChatColor.GRAY).event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/rabbit " + blockKey))
+                .create();
     }
 
     public static void joinRabbit(final @NotNull Player player) {
@@ -141,5 +142,10 @@ public class Utils {
                 }
             }
         }.runTaskLater(PlayOhTheDungeon.instance, 10L);
+    }
+
+    public static long getBlockKey(final Location location) {
+        //noinspection UnnecessaryExplicitNumericCast
+        return (long) location.getBlockX() & 134217727L | ((long) location.getBlockZ() & 134217727L) << 27 | (long) location.getBlockY() << 54;
     }
 }
