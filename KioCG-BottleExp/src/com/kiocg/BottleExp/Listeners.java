@@ -64,7 +64,7 @@ public class Listeners implements Listener {
                 world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
             }
 
-            Bukkit.getScheduler().runTask(BottleExp.instance, (Runnable) player::closeInventory);
+            Bukkit.getScheduler().runTask(BottleExp.instance, player::closeInventory);
         } else {
             player.giveExp(-10);
 
