@@ -36,15 +36,23 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
-        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
-            final Player player = e.getPlayer();
+        final CompassMeta compassMeta = ((CompassMeta) Objects.requireNonNull(itemStack.getItemMeta()));
+        final Location tpLocation;
 
-            final Location tpLocation = compassMeta.getLodestone();
-            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
-
-            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        try {
+            tpLocation = compassMeta.getLodestone();
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
         }
+
+        if (Objects.requireNonNull(tpLocation).getBlock().getType() != Material.LODESTONE) {
+            compassMeta.setLodestoneTracked(false);
+            return;
+        }
+
+        final Player player = e.getPlayer();
+        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
     }
 
     // 展示框磁石指针传送
@@ -68,12 +76,23 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
-        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
-            final Location tpLocation = compassMeta.getLodestone();
-            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        final CompassMeta compassMeta = ((CompassMeta) Objects.requireNonNull(itemStack.getItemMeta()));
+        final Location tpLocation;
 
-            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        try {
+            tpLocation = compassMeta.getLodestone();
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
         }
+
+        e.setCancelled(true);
+
+        if (Objects.requireNonNull(tpLocation).getBlock().getType() != Material.LODESTONE) {
+            compassMeta.setLodestoneTracked(false);
+            return;
+        }
+
+        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
     }
 }
