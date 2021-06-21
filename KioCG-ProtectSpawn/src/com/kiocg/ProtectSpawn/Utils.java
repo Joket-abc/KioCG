@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class Utils {
     public static final Set<UUID> eatCake = new HashSet<>();
 
     public static @NotNull Boolean inSpawn(final @NotNull Location location) {
-        if (!"KioCG_17world".equals(location.getWorld().getName())) {
+        if (!"KioCG_17world".equals(Objects.requireNonNull(location.getWorld()).getName())) {
             return false;
         }
 
