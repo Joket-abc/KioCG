@@ -51,7 +51,7 @@ public class Listeners implements Listener {
         }
 
         final ItemMeta offItemMeta = offItemStack.getItemMeta();
-        if (offItemMeta.hasDisplayName() || offItemMeta.hasCustomModelData()) {
+        if (Objects.requireNonNull(offItemMeta).hasDisplayName() || offItemMeta.hasCustomModelData()) {
             return;
         }
 
@@ -70,7 +70,7 @@ public class Listeners implements Listener {
 
         final Location location = block.getLocation();
         block.getWorld().dropItemNaturally(location, new ItemStack(Material.BARRIER));
-        player.playSound(location.toCenterLocation(), block.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
+        player.playSound(location.add(0.5, 0.5, 0.5), block.getBlockData().getSoundGroup().getBreakSound(), 1.0F, 1.0F);
     }
 
     //TODO 切换光源方块亮度等级
