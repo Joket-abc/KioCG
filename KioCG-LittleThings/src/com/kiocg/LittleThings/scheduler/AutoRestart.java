@@ -1,7 +1,6 @@
 package com.kiocg.LittleThings.scheduler;
 
 import com.kiocg.LittleThings.LittleThings;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ public class AutoRestart {
 
             if ("06:00:00".equals(date)) {
                 Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
-                    Bukkit.getOnlinePlayers().forEach(player -> player.kick(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c少女祈祷中 §7...\n\n\n\n\n\n\n\n\n\n\n§8(AutoRestart)")));
+                    Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer("\n\n\n\n§7... §c少女祈祷中 §7...\n\n\n\n\n\n\n\n\n\n\n§8(AutoRestart)"));
                     Bukkit.shutdown();
                 });
                 return;

@@ -1,6 +1,5 @@
 package com.kiocg.LittleThings.listeners.Utility;
 
-import com.destroystokyo.paper.MaterialTags;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,7 +34,7 @@ public class cancelSpawnerLegacy implements Listener {
         }
 
         try {
-            if (!MaterialTags.SPAWN_EGGS.isTagged(Objects.requireNonNull(e.getItem()))) {
+            if (!Objects.requireNonNull(e.getItem()).getType().toString().endsWith("_SPAWN_EGG")) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {

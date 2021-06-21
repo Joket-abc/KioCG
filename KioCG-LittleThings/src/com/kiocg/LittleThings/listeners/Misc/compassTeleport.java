@@ -1,5 +1,6 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -35,10 +36,14 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        final Player player = e.getPlayer();
-        try {
-            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()), 0.5, 1.0, 0.5));
-        } catch (final @NotNull NullPointerException ignore) {
+        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
+        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
+            final Player player = e.getPlayer();
+
+            final Location tpLocation = compassMeta.getLodestone();
+            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+
+            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
         }
     }
 
@@ -63,10 +68,12 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        try {
-            player.teleport(player.getLocation().add(Objects.requireNonNull(((CompassMeta) itemStack.getItemMeta()).getLodestone()), 0.5, 1.0, 0.5));
-            e.setCancelled(true);
-        } catch (final @NotNull NullPointerException ignore) {
+        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
+        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
+            final Location tpLocation = compassMeta.getLodestone();
+            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+
+            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
         }
     }
 }

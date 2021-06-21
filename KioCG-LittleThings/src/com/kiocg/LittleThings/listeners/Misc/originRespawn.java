@@ -13,6 +13,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class originRespawn implements Listener {
     // 死亡原地复活
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -31,7 +33,7 @@ public class originRespawn implements Listener {
         }
 
         //TODO 大版本更新时的世界名修改
-        final String worldName = loc.getWorld().getName();
+        final String worldName = Objects.requireNonNull(loc.getWorld()).getName();
         if (("KioCG_17world_nether".equals(worldName) && loc.getY() > 127.0)
             || ("KioCG_17world_the_end".equals(worldName) && loc.getBlock().getType() == Material.END_PORTAL)
             || "KioCG_OhTheDungeon".equals(worldName)) {
