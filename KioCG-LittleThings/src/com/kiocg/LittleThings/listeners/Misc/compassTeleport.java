@@ -37,14 +37,21 @@ public class compassTeleport implements Listener {
         }
 
         final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
-        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
-            final Player player = e.getPlayer();
+        final Location tpLocation = compassMeta.getLodestone();
 
-            final Location tpLocation = compassMeta.getLodestone();
-            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
-
-            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        if (tpLocation == null) {
+            return;
         }
+
+        if (tpLocation.getBlock().getType() != Material.LODESTONE) {
+            compassMeta.setLodestoneTracked(false);
+            itemStack.setItemMeta(compassMeta);
+            return;
+        }
+
+        final Player player = e.getPlayer();
+        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
     }
 
     // 展示框磁石指针传送
@@ -69,11 +76,21 @@ public class compassTeleport implements Listener {
         }
 
         final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
-        if (compassMeta.hasLodestone() && compassMeta.isLodestoneTracked()) {
-            final Location tpLocation = compassMeta.getLodestone();
-            Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        final Location tpLocation = compassMeta.getLodestone();
 
-            player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        if (tpLocation == null) {
+            return;
         }
+
+        e.setCancelled(true);
+
+        if (tpLocation.getBlock().getType() != Material.LODESTONE) {
+            compassMeta.setLodestoneTracked(false);
+            itemStack.setItemMeta(compassMeta);
+            return;
+        }
+
+        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
+        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
     }
 }
