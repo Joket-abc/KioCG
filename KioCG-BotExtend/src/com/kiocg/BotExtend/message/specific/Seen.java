@@ -26,15 +26,9 @@ public class Seen {
             return;
         }
 
-        OfflinePlayer offlinePlayer = null;
-        for (final OfflinePlayer getOfflinePlayer : Bukkit.getOnlinePlayers()) {
-            if (msg.equals(getOfflinePlayer.getName())) {
-                offlinePlayer = getOfflinePlayer;
-                break;
-            }
-        }
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
 
-        if (offlinePlayer == null) {
+        if (!offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
             contact.sendMessage("无法找到玩家 " + msg + " 的缓存信息");
             return;
         }

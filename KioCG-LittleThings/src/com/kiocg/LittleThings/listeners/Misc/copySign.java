@@ -45,8 +45,7 @@ public class copySign implements Listener {
         if (inventory.firstEmpty() != -1) {
             itemStack.setAmount(itemStack.getAmount() - 1);
 
-            final ItemStack signStack = itemStack.clone();
-            signStack.setAmount(1);
+            final ItemStack signStack = new ItemStack(itemStack.getType());
 
             final BlockStateMeta blockStateMeta = (BlockStateMeta) signStack.getItemMeta();
             Objects.requireNonNull(blockStateMeta).setBlockState(block.getState());

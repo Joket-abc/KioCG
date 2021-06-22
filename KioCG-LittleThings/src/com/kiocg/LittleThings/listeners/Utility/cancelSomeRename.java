@@ -18,6 +18,10 @@ public class cancelSomeRename implements Listener {
 
         final String renameText = e.getInventory().getRenameText();
 
+        if (renameText == null) {
+            return;
+        }
+
         if (Pattern.matches("^(&[0-9a-zA-Z]){3}.*$", renameText) || Pattern.matches("^(&#[0-9a-zA-Z]{6}){3}.*$", renameText)) {
             e.setResult(null);
         }
