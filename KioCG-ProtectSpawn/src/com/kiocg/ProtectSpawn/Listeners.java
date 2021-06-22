@@ -3,7 +3,6 @@ package com.kiocg.ProtectSpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.TileState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Phantom;
@@ -16,8 +15,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,40 +40,6 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelBlockPlace(final @NotNull BlockPlaceEvent e) {
-        if (!Utils.inSpawn(e.getBlock().getLocation())) {
-            return;
-        }
-
-        final Player player = e.getPlayer();
-
-        if (player.hasPermission("kiocg.protectspawn.bypass")) {
-            return;
-        }
-
-        player.damage(1.0);
-        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
-        e.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerBucketFill(final @NotNull PlayerBucketFillEvent e) {
-        if (!Utils.inSpawn(e.getBlock().getLocation())) {
-            return;
-        }
-
-        final Player player = e.getPlayer();
-
-        if (player.hasPermission("kiocg.protectspawn.bypass")) {
-            return;
-        }
-
-        player.damage(1.0);
-        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
-        e.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerBucketFill(final @NotNull PlayerBucketEmptyEvent e) {
         if (!Utils.inSpawn(e.getBlock().getLocation())) {
             return;
         }
@@ -119,11 +82,13 @@ public class Listeners implements Listener {
                 return;
             }
 
-            // 防止打开容器
-            if (block.getState() instanceof TileState) {
-                e.setCancelled(true);
-                return;
+            // 允许某些操作
+            switch (block.getType()) {
+                case ENDER_CHEST:
+                    return;
             }
+
+            e.setCancelled(true);
 
             final Material material = Objects.requireNonNull(block).getType();
             if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
@@ -133,7 +98,6 @@ public class Listeners implements Listener {
                 }
 
                 player.setHealth(0.0);
-                e.setCancelled(true);
             }
         }
     }
