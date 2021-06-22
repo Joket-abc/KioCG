@@ -43,13 +43,19 @@ public class copySign implements Listener {
 
         final Inventory inventory = e.getPlayer().getInventory();
         if (inventory.firstEmpty() != -1) {
-            itemStack.setAmount(itemStack.getAmount() - 1);
-
-            final ItemStack signStack = new ItemStack(itemStack.getType());
+            final ItemStack signStack = itemStack.clone();
+            signStack.setAmount(1);
 
             final BlockStateMeta blockStateMeta = (BlockStateMeta) signStack.getItemMeta();
+
+            if (blockStateMeta == null) {
+                return;
+            }
+
             Objects.requireNonNull(blockStateMeta).setBlockState(block.getState());
             signStack.setItemMeta(blockStateMeta);
+
+            itemStack.setAmount(itemStack.getAmount() - 1);
 
             inventory.addItem(signStack);
             e.setCancelled(true);
