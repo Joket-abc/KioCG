@@ -84,6 +84,7 @@ public class Listeners implements Listener {
 
             // 允许某些操作
             switch (block.getType()) {
+                case CRAFTING_TABLE:
                 case ENDER_CHEST:
                     return;
             }
