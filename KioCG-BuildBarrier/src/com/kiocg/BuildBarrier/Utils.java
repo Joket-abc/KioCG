@@ -23,7 +23,7 @@ public class Utils {
         } catch (final @NotNull NullPointerException ignore) {
         }
 
-        particleTasks.put(player, sendParticleTask(player, Particle.BARRIER));
+        particleTasks.put(player, sendParticleTask(player, Material.BARRIER, Particle.BARRIER));
     }
 
     public static void sendLightChange(final @NotNull Player player) {
@@ -33,11 +33,11 @@ public class Utils {
         }
 
         //TODO 修改为光源方块粒子
-        particleTasks.put(player, sendParticleTask(player, Particle.BARRIER));
+        particleTasks.put(player, sendParticleTask(player, Material.LIGHT, Particle.BARRIER));
     }
 
     @SuppressWarnings("ImplicitNumericConversion")
-    public static @NotNull BukkitTask sendParticleTask(final @NotNull Player player, final @NotNull Particle particle) {
+    public static @NotNull BukkitTask sendParticleTask(final @NotNull Player player, final @NotNull Material material, final @NotNull Particle particle) {
         return new BukkitRunnable() {
             int i;
 
@@ -53,7 +53,7 @@ public class Utils {
                     for (int y = blockY - 32; y <= blockY + 32; ++y) {
                         for (int z = blockZ - 32; z <= blockZ + 32; ++z) {
                             final Location loc = new Location(world, x, y, z);
-                            if (Objects.requireNonNull(world).getBlockAt(loc).getType() == Material.BARRIER) {
+                            if (Objects.requireNonNull(world).getBlockAt(loc).getType() == material) {
                                 player.spawnParticle(particle, loc.add(0.5, 0.5, 0.5), 1);
                             }
                         }
@@ -64,6 +64,6 @@ public class Utils {
                     cancel();
                 }
             }
-        }.runTaskTimer(BuildBarrier.instance, 0L, 100L);
+        }.runTaskTimer(BuildBarrier.instance, 0L, 60L);
     }
 }

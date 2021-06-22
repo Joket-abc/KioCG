@@ -83,15 +83,19 @@ public class Listeners implements Listener {
             }
 
             // 允许某些操作
-            switch (block.getType()) {
+            final Material material = block.getType();
+            switch (material) {
                 case CRAFTING_TABLE:
                 case ENDER_CHEST:
                     return;
             }
+            final String materialString = material.toString();
+            if (materialString.endsWith("_STAIRS") || materialString.endsWith("_SLAB")) {
+                return;
+            }
 
             e.setCancelled(true);
 
-            final Material material = Objects.requireNonNull(block).getType();
             if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
                     Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]"));
