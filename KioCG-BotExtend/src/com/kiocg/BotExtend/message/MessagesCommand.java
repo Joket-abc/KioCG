@@ -140,7 +140,7 @@ public class MessagesCommand {
                                         + String.format("%.2f", tps[1]) + ", "
                                         + String.format("%.2f", tps[2])
                                         + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
-                } catch (final ClassNotFoundException ignore) {
+                } catch (final @NotNull ClassNotFoundException ignore) {
                     contact.sendMessage("获取TPS失败，请等待服务端升级");
                 }
             }

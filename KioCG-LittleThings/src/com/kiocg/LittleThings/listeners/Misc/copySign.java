@@ -4,6 +4,7 @@ import com.kiocg.LittleThings.LittleThings;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -41,7 +42,12 @@ public class copySign implements Listener {
             return;
         }
 
-        final Inventory inventory = e.getPlayer().getInventory();
+        final Player player = e.getPlayer();
+        if (player.isSneaking()) {
+            return;
+        }
+
+        final Inventory inventory = player.getInventory();
         if (inventory.firstEmpty() != -1) {
             final ItemStack signStack = itemStack.clone();
             signStack.setAmount(1);
