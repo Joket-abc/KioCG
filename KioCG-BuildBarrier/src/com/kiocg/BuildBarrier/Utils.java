@@ -32,8 +32,7 @@ public class Utils {
         } catch (final @NotNull NullPointerException ignore) {
         }
 
-        //TODO 修改为光源方块粒子
-        particleTasks.put(player, sendParticleTask(player, Material.LIGHT, Particle.BARRIER));
+        particleTasks.put(player, sendParticleTask(player, Material.LIGHT, Particle.LIGHT));
     }
 
     @SuppressWarnings("ImplicitNumericConversion")

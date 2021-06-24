@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Light;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockDataMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +32,7 @@ public class Listeners implements Listener {
         Utils.particleTasks.remove(player);
     }
 
-    // 破坏屏障
+    // 破坏屏障与末地传送门框架
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (e.getAction() != Action.LEFT_CLICK_BLOCK) {
@@ -38,20 +40,29 @@ public class Listeners implements Listener {
         }
 
         final Block block = e.getClickedBlock();
+        final Material material = Objects.requireNonNull(block).getType();
+        final Player player;
 
-        if (Objects.requireNonNull(block).getType() != Material.BARRIER) {
-            return;
-        }
+        if (material == Material.BARRIER) {
+            player = e.getPlayer();
 
-        final Player player = e.getPlayer();
-        final ItemStack offItemStack = player.getInventory().getItemInOffHand();
+            final ItemStack offItemStack = player.getInventory().getItemInOffHand();
 
-        if (offItemStack.getType() != Material.BARRIER) {
-            return;
-        }
+            if (offItemStack.getType() != Material.BARRIER) {
+                return;
+            }
 
-        final ItemMeta offItemMeta = offItemStack.getItemMeta();
-        if (Objects.requireNonNull(offItemMeta).hasDisplayName() || offItemMeta.hasCustomModelData()) {
+            final ItemMeta offItemMeta = offItemStack.getItemMeta();
+            if (Objects.requireNonNull(offItemMeta).hasDisplayName() || offItemMeta.hasCustomModelData()) {
+                return;
+            }
+        } else if (material == Material.END_PORTAL_FRAME) {
+            player = e.getPlayer();
+
+            if (player.getInventory().getItemInOffHand().getType() != Material.END_PORTAL_FRAME) {
+                return;
+            }
+        } else {
             return;
         }
 
@@ -69,9 +80,36 @@ public class Listeners implements Listener {
         block.setType(Material.AIR);
 
         final Location location = block.getLocation();
-        block.getWorld().dropItemNaturally(location, new ItemStack(Material.BARRIER));
+        block.getWorld().dropItemNaturally(location, new ItemStack(material));
         player.playSound(location.add(0.5, 0.5, 0.5), block.getBlockData().getSoundGroup().getBreakSound(), 1.0F, 1.0F);
     }
 
-    //TODO 切换光源方块亮度等级
+    // 切换光源方块亮度等级
+    @EventHandler(ignoreCancelled = true)
+    public void onToggleLight(final @NotNull PlayerInteractEvent e) {
+        final Action action = e.getAction();
+        if (action != Action.LEFT_CLICK_BLOCK && action != Action.LEFT_CLICK_AIR) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (!player.isSneaking()) {
+            return;
+        }
+
+        final ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+        if (itemStack.getType() != Material.LIGHT) {
+            return;
+        }
+
+        final BlockDataMeta blockDataMeta = (BlockDataMeta) itemStack.getItemMeta();
+
+        final Light light = (Light) Objects.requireNonNull(blockDataMeta).getBlockData(Material.LIGHT);
+        light.setLevel((light.getLevel() + 1) % (light.getMaximumLevel() + 1));
+        blockDataMeta.setBlockData(light);
+
+        itemStack.setItemMeta(blockDataMeta);
+    }
 }
