@@ -75,7 +75,8 @@ public class Utils {
                     return;
                 }
 
-                if (world.getEnvironment() == World.Environment.NORMAL && location.getBlockY() < 48) {
+                final int BlockY = location.getBlockY();
+                if ((world.getEnvironment() == World.Environment.NORMAL && BlockY < 48) || BlockY > 128) {
                     player.setFlying(false);
 
                     player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");

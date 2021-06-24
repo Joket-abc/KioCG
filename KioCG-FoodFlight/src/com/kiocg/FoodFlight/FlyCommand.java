@@ -33,7 +33,8 @@ public class FlyCommand implements CommandExecutor {
         if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
             Utils.addFlightList(player, false);
         } else if (player.hasPermission("kiocg.foodflight." + worldName)) {
-            if (world.getEnvironment() == World.Environment.NORMAL && player.getLocation().getBlockY() < 48) {
+            final int blockY = player.getLocation().getBlockY();
+            if ((world.getEnvironment() == World.Environment.NORMAL && blockY < 48) || blockY > 128) {
                 player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
                 return true;
             }
