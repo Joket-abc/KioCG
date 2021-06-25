@@ -72,6 +72,17 @@ public class Utils {
                     // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
                     foodFlightTasks.put(player, null);
                     cancel();
+                    return;
+                }
+
+                if (location.getBlockY() > 128) {
+                    player.setFlying(false);
+
+                    player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
+
+                    // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
+                    foodFlightTasks.put(player, null);
+                    cancel();
                 }
             }
         }.runTaskTimer(FoodFlight.instance, 0L, 5L);
