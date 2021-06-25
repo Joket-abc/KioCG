@@ -85,7 +85,7 @@ public class Listeners implements Listener {
     }
 
     // 切换光源方块亮度等级
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onToggleLight(final @NotNull PlayerInteractEvent e) {
         final Action action = e.getAction();
         if (action != Action.LEFT_CLICK_BLOCK && action != Action.LEFT_CLICK_AIR) {
