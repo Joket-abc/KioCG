@@ -4,6 +4,7 @@ import com.kiocg.LittleThings.LittleThings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,8 +13,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class originRespawn implements Listener {
     // 死亡原地复活
@@ -26,15 +25,22 @@ public class originRespawn implements Listener {
         }
 
         final Location loc = player.getLocation();
+        final World world = loc.getWorld();
+        final double locationY = loc.getY();
 
-        //TODO 1.17 Y坐标更改!
-        if (loc.getY() < 0.0) {
-            return;
+        if (world.getEnvironment() == World.Environment.NORMAL) {
+            if (locationY < -64.0) {
+                return;
+            }
+        } else {
+            if (locationY < 0.0) {
+                return;
+            }
         }
 
         //TODO 大版本更新时的世界名修改
-        final String worldName = Objects.requireNonNull(loc.getWorld()).getName();
-        if (("KioCG_17world_nether".equals(worldName) && loc.getY() > 127.0)
+        final String worldName = world.getName();
+        if (("KioCG_17world_nether".equals(worldName) && locationY > 127.0)
             || ("KioCG_17world_the_end".equals(worldName) && loc.getBlock().getType() == Material.END_PORTAL)
             || "KioCG_OhTheDungeon".equals(worldName)) {
             return;

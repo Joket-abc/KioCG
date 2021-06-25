@@ -29,7 +29,7 @@ public class Utils {
                 if (player.hasPermission("kiocg.foodflight.free." + worldName)) {
                     if (Utils.isFoodFlight(player)) {
                         Utils.removeFoodFlight(player);
-                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在无限飞行 ➹");
+                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行状态已改变, 正在无限飞行 ➹");
                     }
                     return;
                 }
@@ -37,7 +37,7 @@ public class Utils {
                 if (player.hasPermission("kiocg.foodflight." + worldName)) {
                     if (!Utils.isFoodFlight(player)) {
                         Utils.startFoodFlightTask(player);
-                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行权限已改变, 正在饥饿飞行 ➹");
+                        player.sendMessage("§a[§b豆渣子§a] §2➹ 飞行状态已改变, 正在饥饿飞行 ➹");
                     }
                     return;
                 }
@@ -68,18 +68,6 @@ public class Utils {
 
                 if (player.getFoodLevel() <= 6) {
                     player.setFlying(false);
-
-                    // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
-                    foodFlightTasks.put(player, null);
-                    cancel();
-                    return;
-                }
-
-                final int BlockY = location.getBlockY();
-                if ((world.getEnvironment() == World.Environment.NORMAL && BlockY < 48) || BlockY > 128) {
-                    player.setFlying(false);
-
-                    player.sendMessage("§a[§b豆渣子§a] §c➷ 这里的空气太稀薄了 ➷");
 
                     // 不使用this.stopFoodFlightTask(Player), 以免任务在意外情况下无法被取消
                     foodFlightTasks.put(player, null);
