@@ -26,6 +26,13 @@ public class compassTeleport implements Listener {
             return;
         }
 
+        try {
+            if (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.LODESTONE) {
+                return;
+            }
+        } catch (final NullPointerException ignore) {
+        }
+
         final ItemStack itemStack = e.getItem();
 
         try {
