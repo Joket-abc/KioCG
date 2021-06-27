@@ -70,7 +70,7 @@ public class MessagesCommand {
                     contact.sendMessage("离线账号，IP地址：offline.kiocg.com");
                 }
             }
-            case ("client"), ("客户端") -> contact.sendMessage("正版限定，客户端下载：http://client.kiocg.com（客户端禁止转载、修改、再分发）");
+            case ("client"), ("客户端") -> contact.sendMessage("客户端下载：http://client.kiocg.com（客户端禁止转载、修改、再分发）");
             case ("status"), ("统计") -> contact.sendMessage("服务器统计信息：https://status.kiocg.com");
             case ("map"), ("地图") -> contact.sendMessage("网页世界地图：https://map.kiocg.com");
             case ("poster"), ("宣传帖") -> contact.sendMessage("服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html 记得去给个好评哟~");
