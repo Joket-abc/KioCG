@@ -128,6 +128,10 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
+        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
         if (Utils.inSpawn(e.getBlock().getLocation())) {
             e.setCancelled(true);
         }
@@ -135,6 +139,10 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerBucketFill(final @NotNull PlayerBucketFillEvent e) {
+        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
         if (Utils.inSpawn(e.getBlock().getLocation())) {
             e.setCancelled(true);
         }
@@ -142,6 +150,10 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
+        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
         if (Utils.inSpawn(e.getEntity().getLocation())) {
             e.setCancelled(true);
         }
