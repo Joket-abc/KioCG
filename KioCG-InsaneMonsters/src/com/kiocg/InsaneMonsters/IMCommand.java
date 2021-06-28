@@ -61,10 +61,6 @@ public class IMCommand implements CommandExecutor {
                     InsaneMonsters.oreZombie.spawn(location);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
                 }
-                case "blockzombie", "bz" -> {
-                    InsaneMonsters.blockZombie.spawn(location);
-                    player.sendMessage("§a[§b豆渣子§a] §6已生成方块僵尸.");
-                }
 
                 default -> player.sendMessage("§a[§b豆渣子§a] §c无效的疯狂怪物种类.");
             }

@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Utils {
-    private static final List<Material> allOverworldOre = new ArrayList<>() {{
+    private static final List<Material> allNormalOre = new ArrayList<>() {{
         add(Material.COAL_ORE);
+        add(Material.COPPER_ORE);
         add(Material.IRON_ORE);
         add(Material.GOLD_ORE);
         add(Material.REDSTONE_ORE);
@@ -17,7 +18,22 @@ public class Utils {
         add(Material.EMERALD_ORE);
     }};
 
-    public static Material getOverworldRandomOre() {
-        return allOverworldOre.get(new Random().nextInt(allOverworldOre.size()));
+    private static final List<Material> allDeepSlateOre = new ArrayList<>() {{
+        add(Material.DEEPSLATE_COAL_ORE);
+        add(Material.DEEPSLATE_COPPER_ORE);
+        add(Material.DEEPSLATE_IRON_ORE);
+        add(Material.DEEPSLATE_GOLD_ORE);
+        add(Material.DEEPSLATE_REDSTONE_ORE);
+        add(Material.DEEPSLATE_LAPIS_ORE);
+        add(Material.DEEPSLATE_DIAMOND_ORE);
+        add(Material.DEEPSLATE_EMERALD_ORE);
+    }};
+
+    public static Material getRandomNormalOre() {
+        return allNormalOre.get(new Random().nextInt(allNormalOre.size()));
+    }
+
+    public static Material getRandomDeepSlateOre() {
+        return allDeepSlateOre.get(new Random().nextInt(allDeepSlateOre.size()));
     }
 }

@@ -22,7 +22,11 @@ public class OreZombie {
         livingEntity.setRemoveWhenFarAway(true);
 
         final EntityEquipment equipment = livingEntity.getEquipment();
-        Objects.requireNonNull(equipment).setHelmet(new ItemStack(Utils.getOverworldRandomOre()));
+        if (location.getBlockY() >= 0) {
+            Objects.requireNonNull(equipment).setHelmet(new ItemStack(Utils.getRandomNormalOre()));
+        } else {
+            Objects.requireNonNull(equipment).setHelmet(new ItemStack(Utils.getRandomDeepSlateOre()));
+        }
         equipment.setHelmetDropChance(1.0F);
     }
 }

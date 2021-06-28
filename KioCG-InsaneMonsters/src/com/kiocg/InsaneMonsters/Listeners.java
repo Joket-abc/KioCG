@@ -58,13 +58,6 @@ public class Listeners implements Listener {
 
                         InsaneMonsters.oreZombie.spawn(oreZombieLoc);
                     }
-                    case 3 -> {
-                        if (random.nextInt(100) < 95) {
-                            return;
-                        }
-
-                        InsaneMonsters.blockZombie.spawn(livingEntity.getLocation());
-                    }
                 }
                 break;
             case SKELETON:
@@ -153,7 +146,6 @@ public class Listeners implements Listener {
                 }
                 break;
             case "OreZombie":
-            case "BlockZombie":
                 break;
         }
     }
