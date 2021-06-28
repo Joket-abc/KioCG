@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.Player;
@@ -24,8 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class Listeners implements Listener {
-    //TODO 水底放置双层方块(门、高花)后撤回可以刷物品的bug
-
     @EventHandler
     public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
@@ -43,8 +42,8 @@ public class Listeners implements Listener {
 
         final BlockState blockState = e.getBlockPlaced().getState();
 
-        // 容器容易出事情
-        if (blockState instanceof TileState) {
+        // 容器容易出事情, 修复双层方块BUG
+        if (blockState instanceof TileState || blockState.getBlockData() instanceof Bisected) {
             return;
         }
 

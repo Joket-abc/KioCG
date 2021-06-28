@@ -2,10 +2,7 @@ package com.kiocg.AntiCheatingClient;
 
 import com.kiocg.qqBot.bot.KioCGBot;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Statistic;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -133,6 +130,11 @@ public class Listeners implements Listener {
         if (playerVerifyMessage != null) {
             // 防止卡视角和卡空中
             final Location from = e.getFrom();
+
+            if (from.getBlock().getType() == Material.NETHER_PORTAL) {
+                return;
+            }
+
             final Location to = e.getTo();
             if (from.getBlockX() == Objects.requireNonNull(to).getBlockX() && from.getBlockZ() == to.getBlockZ()) {
                 return;
