@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Entity;
@@ -88,6 +89,7 @@ public class Listeners implements Listener {
                 return;
             }
 
+            // 蛋糕是个谎言
             final Material material = block.getType();
             if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
@@ -101,7 +103,13 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (block instanceof Container || block instanceof TrapDoor || block instanceof Bed) {
+            if (block.getState() instanceof Container) {
+                e.setCancelled(true);
+                return;
+            }
+
+            final BlockData blockData = block.getBlockData();
+            if (blockData instanceof TrapDoor || blockData instanceof Bed) {
                 e.setCancelled(true);
             }
         }
