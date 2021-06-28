@@ -85,8 +85,10 @@ public class Listeners implements Listener {
             // 允许某些操作
             final Material material = block.getType();
             switch (material) {
+                case LODESTONE:
                 case CRAFTING_TABLE:
                 case ENDER_CHEST:
+                case ENCHANTING_TABLE:
                     return;
             }
             final String materialString = material.toString();
