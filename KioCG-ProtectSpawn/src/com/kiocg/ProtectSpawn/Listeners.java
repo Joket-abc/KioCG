@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
-import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.Bed;
+import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Phantom;
@@ -98,7 +98,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (block instanceof Container || block instanceof Openable || block instanceof Bed) {
+            if (block instanceof Container || block instanceof TrapDoor || block instanceof Bed) {
                 e.setCancelled(true);
             }
         }
