@@ -3,6 +3,9 @@ package com.kiocg.ProtectSpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Container;
+import org.bukkit.block.data.Openable;
+import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Phantom;
@@ -82,22 +85,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            // 允许某些操作
             final Material material = block.getType();
-            switch (material) {
-                case LODESTONE:
-                case CRAFTING_TABLE:
-                case ENDER_CHEST:
-                case ENCHANTING_TABLE:
-                    return;
-            }
-            final String materialString = material.toString();
-            if (materialString.endsWith("_STAIRS") || materialString.endsWith("_SLAB")) {
-                return;
-            }
-
-            e.setCancelled(true);
-
             if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
                 if (!Utils.eatCake.contains(player.getUniqueId())) {
                     Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]"));
@@ -105,6 +93,13 @@ public class Listeners implements Listener {
                 }
 
                 player.setHealth(0.0);
+
+                e.setCancelled(true);
+                return;
+            }
+
+            if (block instanceof Container || block instanceof Openable || block instanceof Bed) {
+                e.setCancelled(true);
             }
         }
     }

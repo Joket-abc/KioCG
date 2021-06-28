@@ -42,7 +42,7 @@ public class Listeners implements Listener {
 
         final BlockState blockState = e.getBlockPlaced().getState();
 
-        // 容器容易出事情, 修复双层方块BUG
+        // 实体方块容易出事情, 修复双层方块BUG
         if (blockState instanceof TileState || blockState.getBlockData() instanceof Bisected) {
             return;
         }
