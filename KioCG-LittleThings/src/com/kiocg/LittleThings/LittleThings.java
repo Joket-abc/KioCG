@@ -1,6 +1,5 @@
 package com.kiocg.LittleThings;
 
-import com.kiocg.LittleThings.command.HomeCommand;
 import com.kiocg.LittleThings.listeners.Fun.boneMealPlayer;
 import com.kiocg.LittleThings.listeners.Fun.creeperFirework;
 import com.kiocg.LittleThings.listeners.Fun.dropItemSound;
@@ -12,8 +11,6 @@ import com.kiocg.LittleThings.scheduler.FullMoon;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class LittleThings extends JavaPlugin {
     public static LittleThings instance;
@@ -33,7 +30,6 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new catchAnimals(), this);
         pluginManager.registerEvents(new compassTeleport(), this);
         pluginManager.registerEvents(new copySign(), this);
-        pluginManager.registerEvents(new originRespawn(), this);
         pluginManager.registerEvents(new portableWorkbench(), this);
         pluginManager.registerEvents(new protectPlace(), this);
         pluginManager.registerEvents(new randomPlace(), this);
@@ -43,8 +39,6 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new cancelSpawnerLegacy(), this);
         pluginManager.registerEvents(new fixLureEnchanting(), this);
         pluginManager.registerEvents(new fixVanishingCurse(), this);
-
-        Objects.requireNonNull(getServer().getPluginCommand("home")).setExecutor(new HomeCommand());
 
         // 启动定时自动重启
         new AutoRestart();

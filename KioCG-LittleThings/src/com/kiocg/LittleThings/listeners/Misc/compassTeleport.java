@@ -27,38 +27,21 @@ public class compassTeleport implements Listener {
         }
 
         try {
-            if (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.LODESTONE) {
-                return;
-            }
-        } catch (final NullPointerException ignore) {
-        }
-
-        final ItemStack itemStack = e.getItem();
-
-        try {
-            if (Objects.requireNonNull(itemStack).getType() != Material.COMPASS) {
+            if (Objects.requireNonNull(e.getItem()).getType() != Material.COMPASS) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
-        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
-        final Location tpLocation = compassMeta.getLodestone();
-
-        if (tpLocation == null) {
-            return;
+        try {
+            if (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.LODESTONE) {
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
         }
 
-        if (tpLocation.getBlock().getType() != Material.LODESTONE) {
-            compassMeta.setLodestoneTracked(false);
-            itemStack.setItemMeta(compassMeta);
-            return;
-        }
-
-        final Player player = e.getPlayer();
-        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
-        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        e.getPlayer().sendMessage("§a[§b豆渣子§a] §6请将磁石指针放入展示框中, 对其潜行+右键即可快速传送.");
     }
 
     // 展示框磁石指针传送

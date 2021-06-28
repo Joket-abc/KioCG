@@ -6,15 +6,23 @@ api-version: 1.16
 softdepend: [ "KioCG-qqBot" ]
 
 commands:
-  home:
-    description: "传送到床或已充能的重生锚."
-    permission: kiocg.command.home
+  back:
+    description: "代替/back指令."
+    permission: kiocg.command.back
     permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
-    usage: "用法: /<command> 传送到床或已充能的重生锚."
+    usage: "§a[§b豆渣子§a] §6请使用磁石指针传送功能代替/back指令."
+  sethome:
+    description: "代替/sethome指令."
+    permission: kiocg.command.sethome
+    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
+    usage: "§a[§b豆渣子§a] §6请使用磁石指针传送功能代替/sethome指令."
 
 permissions:
-  kiocg.command.home:
-    description: 传送到床或已充能的重生锚
+  kiocg.command.back:
+    description: 代替/back指令
+    default: true
+  kiocg.command.sethome:
+    description: 代替/sethome指令
     default: true
 
   kiocg.vanishingcurse.keep:
