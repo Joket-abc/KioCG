@@ -18,6 +18,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketEntityEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -121,6 +124,27 @@ public class Listeners implements Listener {
         }
 
         e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
+        if (Utils.inSpawn(e.getBlock().getLocation())) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketFill(final @NotNull PlayerBucketFillEvent e) {
+        if (Utils.inSpawn(e.getBlock().getLocation())) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
+        if (Utils.inSpawn(e.getEntity().getLocation())) {
+            e.setCancelled(true);
+        }
     }
 
     // 取消实体爆炸
