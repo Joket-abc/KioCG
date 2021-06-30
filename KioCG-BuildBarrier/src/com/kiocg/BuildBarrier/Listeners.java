@@ -49,7 +49,7 @@ public class Listeners implements Listener {
         }
     }
 
-    // 破坏屏障与末地传送门框架
+    // 破坏并获得物品
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (e.getAction() != Action.LEFT_CLICK_BLOCK) {
@@ -71,6 +71,12 @@ public class Listeners implements Listener {
 
             final ItemMeta itemMeta = itemStack.getItemMeta();
             if (Objects.requireNonNull(itemMeta).hasDisplayName() || itemMeta.hasCustomModelData()) {
+                return;
+            }
+        } else if (material == Material.LIGHT) {
+            player = e.getPlayer();
+
+            if (player.getInventory().getItemInMainHand().getType() != Material.LIGHT) {
                 return;
             }
         } else if (material == Material.END_PORTAL_FRAME) {
