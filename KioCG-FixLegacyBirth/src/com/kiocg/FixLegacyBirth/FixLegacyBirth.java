@@ -19,6 +19,7 @@ public class FixLegacyBirth extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        //TODO 大版本更新时的世界名修改
         if (getServer().createWorld(new WorldCreator("KioCG_world")) == null) {
             getLogger().warning("旧版本世界 KioCG_world 加载失败!");
             getServer().getPluginManager().disablePlugin(this);

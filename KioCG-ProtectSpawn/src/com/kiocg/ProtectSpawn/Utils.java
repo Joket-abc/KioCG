@@ -16,6 +16,7 @@ public class Utils {
     public static final Set<UUID> eatCake = new HashSet<>();
 
     public static @NotNull Boolean inSpawn(final @NotNull Location location) {
+        //TODO 大版本更新时的世界名修改
         if (!"KioCG_17world".equals(Objects.requireNonNull(location.getWorld()).getName())) {
             return false;
         }
