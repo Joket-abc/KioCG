@@ -49,15 +49,13 @@ public class Seen {
         stringBuilder.append("\n累计在线时间：").append(Utils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.PLAY_ONE_MINUTE)));
 
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次");
-        try {
-            Class.forName("com.gmail.nossr50.api.ExperienceAPI");
-
+        if (Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
-        } catch (final @NotNull ClassNotFoundException ignore) {
+        } else {
             stringBuilder.append("null");
         }
         try {
-            stringBuilder.append("   胖次币：").append(Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer));
+            stringBuilder.append("   胖次币：").append(String.format("%.2f", Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer) + 0.005));
         } catch (final @NotNull RuntimeException ignore) {
             stringBuilder.append("null");
         }

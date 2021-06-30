@@ -3,7 +3,7 @@ package com.kiocg.ProtectSpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Container;
+import org.bukkit.block.TileState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.TrapDoor;
@@ -63,6 +63,57 @@ public class Listeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        player.damage(1.0);
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketFill(final @NotNull PlayerBucketFillEvent e) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        player.damage(1.0);
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
+        if (!Utils.inSpawn(e.getEntity().getLocation())) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (player.hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        player.damage(1.0);
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
         if (e.getAction() == Action.PHYSICAL) {
             final Block block = e.getClickedBlock();
@@ -103,7 +154,14 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (block.getState() instanceof Container) {
+            if (block.getState() instanceof TileState) {
+                switch (block.getType()) {
+                    case ENDER_CHEST:
+                    case ENCHANTING_TABLE:
+                    case BELL:
+                        return;
+                }
+
                 e.setCancelled(true);
                 return;
             }
@@ -132,39 +190,6 @@ public class Listeners implements Listener {
         }
 
         e.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
-        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
-            return;
-        }
-
-        if (Utils.inSpawn(e.getBlock().getLocation())) {
-            e.setCancelled(true);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerBucketFill(final @NotNull PlayerBucketFillEvent e) {
-        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
-            return;
-        }
-
-        if (Utils.inSpawn(e.getBlock().getLocation())) {
-            e.setCancelled(true);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
-        if (e.getPlayer().hasPermission("kiocg.protectspawn.bypass")) {
-            return;
-        }
-
-        if (Utils.inSpawn(e.getEntity().getLocation())) {
-            e.setCancelled(true);
-        }
     }
 
     // 取消实体爆炸
