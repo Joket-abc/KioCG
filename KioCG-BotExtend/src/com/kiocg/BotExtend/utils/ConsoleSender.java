@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class ConsoleSender implements ConsoleCommandSender {
-    private final Pattern ip = Pattern.compile("(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)");
+    private final Pattern ip = Pattern.compile("((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}");
     private final @NotNull ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
 

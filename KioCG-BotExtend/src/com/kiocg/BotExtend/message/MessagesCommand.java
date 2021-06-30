@@ -9,13 +9,14 @@ import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 public class MessagesCommand {
     @EventHandler
@@ -23,7 +24,7 @@ public class MessagesCommand {
         // 公共的指令
         switch (userCommand.toLowerCase()) {
             /* case ("help") -> {
-                contact.sendMessage("""
+                contact.sendMessage("""<> - 必要参数 [] - 可选参数
                                     .info - 服务器介绍
                                     .ip [offline] - 服务器IP地址
                                     .client - 客户端下载地址
@@ -70,10 +71,23 @@ public class MessagesCommand {
                     contact.sendMessage("离线账号，IP地址：offline.kiocg.com");
                 }
             }
-            case ("client"), ("客户端") -> contact.sendMessage("客户端下载：http://client.kiocg.com（客户端禁止转载、修改、再分发）");
-            case ("status"), ("统计") -> contact.sendMessage("服务器统计信息：https://status.kiocg.com");
-            case ("map"), ("地图") -> contact.sendMessage("网页世界地图：https://map.kiocg.com");
-            case ("poster"), ("宣传帖") -> contact.sendMessage("服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html 记得去给个好评哟~");
+            case ("client"), ("客户端") -> contact.sendMessage("客户端下载：http://client.kiocg.com");
+            case ("status"), ("统计") -> {
+                if (Bukkit.getPluginManager().isPluginEnabled("Plan")) {
+                    contact.sendMessage("服务器统计信息：https://status.kiocg.com");
+                } else {
+                    contact.sendMessage("服务器统计信息暂时下线");
+                }
+            }
+            case ("map"), ("地图") -> {
+                final PluginManager pluginManager = Bukkit.getPluginManager();
+                if (pluginManager.isPluginEnabled("dynmap") || pluginManager.isPluginEnabled("BlueMap")) {
+                    contact.sendMessage("网页世界地图：https://map.kiocg.com");
+                } else {
+                    contact.sendMessage("网页世界地图暂时下线");
+                }
+            }
+            case ("poster"), ("宣传帖") -> contact.sendMessage("服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html");
             case ("github"), ("开源") -> contact.sendMessage("插件项目开源：https://github.com/Joket-abc/KioCG");
 
             // 内部信息
@@ -81,12 +95,10 @@ public class MessagesCommand {
                                                                白名单申请(仅限正版!)：
                                                                仔细阅读以下内容，申请格式失败不会通过。
                                                                                                                               
-                                                               ①请先(必须)连接一次服务器；
-                                                               ②然后账号持有者本人
-                                                               ③   @任意昵称带前缀◈的管理员
-                                                               ④   并报出你的ID；
-                                                               ⑤   并加上"我已阅读并同意《申请白名单须知》和其他所有规定"。
-                                                               例如：@◈Admin 我的ID：Player 我已阅读并同意《申请白名单须知》和其他所有规定
+                                                               ①请先(必须)连接一次服务器，正版IP地址：play.kiocg.com；
+                                                               ②然后账号持有者本人 @昵称带前缀◈的管理员 并说出你的游戏ID，
+                                                               ③并在最后加上"我已阅读并同意《申请白名单须知》和其他所有规定"。
+                                                               例如：@◈某管理 我的ID：Player 我已阅读并同意《申请白名单须知》和其他所有规定
                                                                                                                               
                                                                审核需要一定的时间，如果超过一小时未回复，可能管理员没看到消息，请重新申请一遍。""");
             case ("whitelist offline"), ("离线白名单"), ("offline"), ("离线"), ("盗版") -> contact.sendMessage("""
@@ -94,15 +106,13 @@ public class MessagesCommand {
                                                                                                       仔细阅读以下内容，申请格式失败不会通过。
                                                                                                                                                                                                             
                                                                                                       ①请先前往 http://test.kiocg.com/ 参加入服资格测试，通过后截图成绩单(100分及以上)；
-                                                                                                      ②再(必须)连接一次服务器；
-                                                                                                      ③然后账号持有者本人
-                                                                                                      ④   @任意昵称带前缀◈的管理员
-                                                                                                      ⑤   并报出你的ID；
-                                                                                                      ⑥   并加上"我已阅读并同意《申请白名单须知》和其他所有规定"。
-                                                                                                      ⑦同时发送成绩截图。
+                                                                                                      ②再先(必须)连接一次服务器，离线IP地址：offline.kiocg.com；
+                                                                                                      ③然后账号持有者本人 @昵称带前缀◈的管理员 并说出你的游戏ID，
+                                                                                                      ④并在最后加上"我已阅读并同意《申请白名单须知》和其他所有规定"。
+                                                                                                      ⑤同时发送成绩截图。
                                                                                                       例如：@◈Admin 我的ID：Player 我已阅读并同意《申请白名单须知》和其他所有规定 [成绩截图]
                                                                                                                                                                                                             
-                                                                                                      白名单申请通过后请使用IP地址 offline.kiocg.com 加入游戏，并按照后续提示操作。
+                                                                                                      白名单申请通过后请使用 离线IP地址 加入游戏，并按照后续提示操作。
                                                                                                       审核需要一定的时间，如果超过一小时未回复，可能管理员没看到消息，请重新申请一遍。""");
             case ("support"), ("赞助") -> contact.sendMessage("""
                                                             请在加入游戏后再考虑自愿为本服打赏或捐助，赞助不会有任何实质上的奖励。
@@ -129,7 +139,14 @@ public class MessagesCommand {
                                         + stringBuilder.substring(0, stringBuilder.length() - 2));
                 }
             }
-            case ("plugin"), ("plugins"), ("插件") -> contact.sendMessage("服务端插件：" + Arrays.toString(Bukkit.getPluginManager().getPlugins()));
+            case ("plugin"), ("plugins"), ("插件") -> {
+                final StringBuilder stringBuilder = new StringBuilder();
+                for (final Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                    stringBuilder.append(plugin.getName()).append(", ");
+                }
+
+                contact.sendMessage("服务端插件：" + stringBuilder.substring(0, stringBuilder.length() - 2));
+            }
             case ("tps"), ("mspt"), ("状态") -> {
                 try {
                     Class.forName("com.destroystokyo.paper.event.server.ServerTickStartEvent");
