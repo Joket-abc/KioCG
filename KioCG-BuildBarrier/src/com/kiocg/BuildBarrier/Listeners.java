@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockDataMeta;
@@ -24,12 +25,27 @@ public class Listeners implements Listener {
     public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
 
+        Utils.cancelParticleTask(player);
+        Utils.particleTasks.remove(player);
+    }
+
+    @EventHandler
+    public void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent e) {
+        final Player player = e.getPlayer();
+        final Material material;
         try {
-            Utils.particleTasks.get(player).cancel();
+            material = Objects.requireNonNull(player.getInventory().getItem(e.getNewSlot())).getType();
         } catch (final @NotNull NullPointerException ignore) {
+            return;
         }
 
-        Utils.particleTasks.remove(player);
+        if (material == Material.BARRIER) {
+            Utils.sandBarrierTask(player);
+        } else if (material == Material.LIGHT) {
+            Utils.sandBarrierTask(player);
+        } else {
+            Utils.cancelParticleTask(player);
+        }
     }
 
     // 破坏屏障与末地传送门框架
@@ -46,20 +62,20 @@ public class Listeners implements Listener {
         if (material == Material.BARRIER) {
             player = e.getPlayer();
 
-            final ItemStack offItemStack = player.getInventory().getItemInOffHand();
+            final ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-            if (offItemStack.getType() != Material.BARRIER) {
+            if (itemStack.getType() != Material.BARRIER) {
                 return;
             }
 
-            final ItemMeta offItemMeta = offItemStack.getItemMeta();
-            if (Objects.requireNonNull(offItemMeta).hasDisplayName() || offItemMeta.hasCustomModelData()) {
+            final ItemMeta itemMeta = itemStack.getItemMeta();
+            if (Objects.requireNonNull(itemMeta).hasDisplayName() || itemMeta.hasCustomModelData()) {
                 return;
             }
         } else if (material == Material.END_PORTAL_FRAME) {
             player = e.getPlayer();
 
-            if (player.getInventory().getItemInOffHand().getType() != Material.END_PORTAL_FRAME) {
+            if (player.getInventory().getItemInMainHand().getType() != Material.END_PORTAL_FRAME) {
                 return;
             }
         } else {
@@ -102,6 +118,13 @@ public class Listeners implements Listener {
 
         if (itemStack.getType() != Material.LIGHT) {
             return;
+        }
+
+        try {
+            if (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.LIGHT) {
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
         }
 
         final BlockDataMeta blockDataMeta = (BlockDataMeta) itemStack.getItemMeta();
