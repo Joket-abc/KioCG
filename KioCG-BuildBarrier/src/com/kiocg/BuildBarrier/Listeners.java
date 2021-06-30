@@ -59,6 +59,7 @@ public class Listeners implements Listener {
         final Block block = e.getClickedBlock();
         final Material material = Objects.requireNonNull(block).getType();
         final Player player;
+        final ItemStack drop;
 
         if (material == Material.BARRIER) {
             player = e.getPlayer();
@@ -73,18 +74,35 @@ public class Listeners implements Listener {
             if (Objects.requireNonNull(itemMeta).hasDisplayName() || itemMeta.hasCustomModelData()) {
                 return;
             }
+
+            drop = new ItemStack(Material.BARRIER);
         } else if (material == Material.LIGHT) {
             player = e.getPlayer();
 
-            if (player.getInventory().getItemInMainHand().getType() != Material.LIGHT) {
+            final ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+            if (itemStack.getType() != Material.LIGHT) {
                 return;
             }
+
+            drop = itemStack.clone();
+            drop.setAmount(1);
+
+            final BlockDataMeta blockDataMeta = (BlockDataMeta) drop.getItemMeta();
+
+            final Light light = (Light) Objects.requireNonNull(blockDataMeta).getBlockData(Material.LIGHT);
+            light.setLevel(((Light) block.getBlockData()).getLevel());
+            blockDataMeta.setBlockData(light);
+
+            drop.setItemMeta(blockDataMeta);
         } else if (material == Material.END_PORTAL_FRAME) {
             player = e.getPlayer();
 
             if (player.getInventory().getItemInMainHand().getType() != Material.END_PORTAL_FRAME) {
                 return;
             }
+
+            drop = new ItemStack(Material.END_PORTAL_FRAME);
         } else {
             return;
         }
@@ -103,7 +121,7 @@ public class Listeners implements Listener {
         block.setType(Material.AIR);
 
         final Location location = block.getLocation();
-        block.getWorld().dropItemNaturally(location, new ItemStack(material));
+        block.getWorld().dropItemNaturally(location, drop);
         player.playSound(location.add(0.5, 0.5, 0.5), block.getBlockData().getSoundGroup().getBreakSound(), 1.0F, 1.0F);
     }
 
