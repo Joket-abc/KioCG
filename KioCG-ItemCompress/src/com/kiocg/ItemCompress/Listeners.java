@@ -3,9 +3,11 @@ package com.kiocg.ItemCompress;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -174,11 +176,34 @@ public class Listeners implements Listener {
         }
     }
 
-    // 防止放置压缩物品
+    // 防止压缩物品交互
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onBlockPlaceEvent(final @NotNull BlockPlaceEvent e) {
+    public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
+        final Action action = e.getAction();
+        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
         try {
-            if (Objects.requireNonNull(e.getItemInHand().getItemMeta()).getDisplayName().contains("压缩")) {
+            if (Objects.requireNonNull(Objects.requireNonNull(e.getItem()).getItemMeta()).getDisplayName().contains("压缩")) {
+                e.setCancelled(true);
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+    }
+
+    // 防止压缩物品交互
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPlayerInteractEntity(final @NotNull PlayerInteractEntityEvent e) {
+        final ItemStack itemStack;
+        if (e.getHand() == EquipmentSlot.HAND) {
+            itemStack = e.getPlayer().getInventory().getItemInMainHand();
+        } else {
+            itemStack = e.getPlayer().getInventory().getItemInOffHand();
+        }
+
+        try {
+            if (Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().contains("压缩")) {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {
