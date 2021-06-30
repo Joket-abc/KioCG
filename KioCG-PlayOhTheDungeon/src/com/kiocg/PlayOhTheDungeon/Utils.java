@@ -132,16 +132,13 @@ public class Utils {
         //noinspection ResultOfMethodCallIgnored
         playerFile.delete();
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (final ItemStack itemStack : contents) {
-                    if (itemStack != null) {
-                        player.getWorld().dropItem(player.getLocation(), itemStack);
-                    }
+        Bukkit.getScheduler().runTaskLater(PlayOhTheDungeon.instance, () -> {
+            for (final ItemStack itemStack : contents) {
+                if (itemStack != null) {
+                    player.getWorld().dropItem(player.getLocation(), itemStack);
                 }
             }
-        }.runTaskLater(PlayOhTheDungeon.instance, 10L);
+        }, 10L);
     }
 
     public static long getBlockKey(final @NotNull Location location) {
