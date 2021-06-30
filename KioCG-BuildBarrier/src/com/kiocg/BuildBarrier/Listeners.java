@@ -36,13 +36,14 @@ public class Listeners implements Listener {
         try {
             material = Objects.requireNonNull(player.getInventory().getItem(e.getNewSlot())).getType();
         } catch (final @NotNull NullPointerException ignore) {
+            Utils.cancelParticleTask(player);
             return;
         }
 
         if (material == Material.BARRIER) {
             Utils.sandBarrierTask(player);
         } else if (material == Material.LIGHT) {
-            Utils.sandBarrierTask(player);
+            Utils.sandLightTask(player);
         } else {
             Utils.cancelParticleTask(player);
         }
