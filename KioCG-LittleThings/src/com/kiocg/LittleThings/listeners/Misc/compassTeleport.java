@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class compassTeleport implements Listener {
-    // 磁石指针传送
+    // 磁石指针用法提示
     @EventHandler
     public void compassTeleport(final @NotNull PlayerInteractEvent e) {
         final Action action = e.getAction();
@@ -41,7 +41,7 @@ public class compassTeleport implements Listener {
         } catch (final @NotNull NullPointerException ignore) {
         }
 
-        e.getPlayer().sendMessage("§a[§b豆渣子§a] §6请将磁石指针放入展示框中, 对其潜行+右键即可快速传送.");
+        e.getPlayer().sendMessage("§a[§b豆渣子§a] §6请将磁石指针放入展示框中, 潜行对其右键即可快速传送.");
     }
 
     // 展示框磁石指针传送

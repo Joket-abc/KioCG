@@ -19,7 +19,7 @@ public class cancelSpawnerLegacy implements Listener {
     // 禁止放置刷怪笼
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void cancelSpawnerPlace(final @NotNull BlockPlaceEvent e) {
-        if (e.getBlockPlaced().getType() != Material.SPAWNER || e.getPlayer().hasPermission("kiocg.cancelspawnerplace.bypass")) {
+        if (e.getBlockPlaced().getType() != Material.SPAWNER || e.getPlayer().isOp()) {
             return;
         }
 

@@ -1,9 +1,6 @@
 package com.kiocg.LittleThings;
 
-import com.kiocg.LittleThings.listeners.Fun.boneMealPlayer;
-import com.kiocg.LittleThings.listeners.Fun.creeperFirework;
-import com.kiocg.LittleThings.listeners.Fun.dropItemSound;
-import com.kiocg.LittleThings.listeners.Fun.skeletonPotion;
+import com.kiocg.LittleThings.listeners.Fun.*;
 import com.kiocg.LittleThings.listeners.Misc.*;
 import com.kiocg.LittleThings.listeners.Utility.*;
 import com.kiocg.LittleThings.scheduler.AutoRestart;
@@ -23,6 +20,7 @@ public class LittleThings extends JavaPlugin {
         // Fun
         pluginManager.registerEvents(new boneMealPlayer(), this);
         pluginManager.registerEvents(new creeperFirework(), this);
+        pluginManager.registerEvents(new deathPenalty(), this);
         pluginManager.registerEvents(new dropItemSound(), this);
         pluginManager.registerEvents(new skeletonPotion(), this);
         // Misc

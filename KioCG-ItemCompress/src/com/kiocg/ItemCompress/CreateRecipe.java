@@ -87,9 +87,9 @@ public class CreateRecipe {
         });
         // 创建覆盖解压的物品配方
         oneItemMaterial.forEach((recipeChoiceList, result) -> {
-            final String namespacedKeyKey = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) recipeChoiceList.get(0)).getItemStack().getType();
+            final String typeKey = "ItemDecompressCover_" + ((RecipeChoice.MaterialChoice) recipeChoiceList.get(0)).getItemStack().getType();
 
-            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, namespacedKeyKey), result);
+            final ShapelessRecipe shapelessRecipe = new ShapelessRecipe(new NamespacedKey(ItemCompress.instance, typeKey), result);
             recipeChoiceList.forEach(shapelessRecipe::addIngredient);
 
             Bukkit.addRecipe(shapelessRecipe);

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AutoRestart {
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+
     public AutoRestart() {
         autoRestart(new HashMap<>() {{
             put("05:00:00", "1小时");
@@ -28,7 +30,7 @@ public class AutoRestart {
     // 自动重启
     private void autoRestart(final @NotNull Map<String, String> autoRestartMessage) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LittleThings.instance, () -> {
-            final String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
+            final String date = simpleDateFormat.format(new Date());
 
             if ("06:00:00".equals(date)) {
                 Bukkit.getScheduler().runTask(LittleThings.instance, () -> {
