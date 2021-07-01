@@ -6,30 +6,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class cancelDestroyByEntity implements Listener {
-    // 弹射物不伤害非生物实体
+    // 实体不破坏非生物实体
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelProjectileHit(final @NotNull ProjectileHitEvent e) {
-        final Entity hitEntity = e.getHitEntity();
-
-        if (hitEntity == null) {
-            return;
-        }
+    public void cancelEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
+        final Entity entity = e.getEntity();
 
         //TODO 大版本更新时的世界名修改
-        if (!"KioCG_17world".equals(hitEntity.getWorld().getName())) {
+        if (!"KioCG_17world".equals(entity.getWorld().getName())) {
             return;
         }
 
-        if (e.getEntity().getShooter() instanceof Player) {
-            return;
-        }
-
-        if (!(hitEntity instanceof Mob)) {
+        if (!(entity instanceof Mob) && !(e.getDamager() instanceof Player)) {
             e.setCancelled(true);
         }
     }

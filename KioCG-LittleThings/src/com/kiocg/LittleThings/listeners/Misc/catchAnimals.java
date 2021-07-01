@@ -7,9 +7,8 @@ import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.projectiles.ProjectileSource;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -18,49 +17,40 @@ import java.util.Random;
 public class catchAnimals implements Listener {
     // 鸡蛋捕捉动物(大师球)
     @EventHandler(ignoreCancelled = true)
-    public void catchAnimals(final @NotNull ProjectileHitEvent e) {
-        final Projectile projectile = e.getEntity();
-        if (!(projectile instanceof Egg)) {
+    public void catchAnimals(final @NotNull EntityDamageByEntityEvent e) {
+        final Entity damager = e.getDamager();
+        if (!(damager instanceof Egg)) {
             return;
         }
 
-        final ProjectileSource projectileSource = projectile.getShooter();
-        if (!(projectileSource instanceof Player)) {
-            return;
-        }
+        final Entity entity = e.getEntity();
 
-        if (!((Player) projectileSource).hasPermission("kiocg.catchmonsters.use")) {
-            return;
-        }
-
-        final Entity hitEntity = e.getHitEntity();
-
-        if (!(hitEntity instanceof Animals)) {
+        if (!(entity instanceof Animals)) {
             return;
         }
 
         // 防止捕捉被命名生物
-        if (hitEntity.getCustomName() != null) {
+        if (entity.getCustomName() != null) {
             return;
         }
 
         // 防止捕捉幼年生物
-        if (!((Ageable) hitEntity).isAdult()) {
+        if (!((Ageable) entity).isAdult()) {
             return;
         }
 
         // 防止捕捉被驯服生物
-        if (hitEntity instanceof Tameable && ((Tameable) hitEntity).isTamed()) {
+        if (entity instanceof Tameable && ((Tameable) entity).isTamed()) {
             return;
         }
 
         // 防止捕捉没羊毛的羊
-        if (hitEntity instanceof Sheep && ((Sheep) hitEntity).isSheared()) {
+        if (entity instanceof Sheep && ((Sheep) entity).isSheared()) {
             return;
         }
 
         // 防止捕捉有箱子的类马
-        if (hitEntity instanceof ChestedHorse && ((ChestedHorse) hitEntity).isCarryingChest()) {
+        if (entity instanceof ChestedHorse && ((ChestedHorse) entity).isCarryingChest()) {
             return;
         }
 
@@ -69,11 +59,11 @@ public class catchAnimals implements Listener {
             return;
         }
 
-        final World world = hitEntity.getWorld();
-        final Location location = hitEntity.getLocation();
+        final World world = entity.getWorld();
+        final Location location = entity.getLocation();
 
         try {
-            world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(hitEntity.getType() + "_SPAWN_EGG"))));
+            world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
         } catch (final @NotNull NullPointerException ignore) {
             for (final Entity toEntity : world.getNearbyEntities(location, 16.0, 8.0, 16.0)) {
                 if (toEntity instanceof Player) {
@@ -85,8 +75,8 @@ public class catchAnimals implements Listener {
 
         e.setCancelled(true);
 
-        projectile.remove();
-        hitEntity.remove();
+        damager.remove();
+        entity.remove();
 
         world.createExplosion(location, 0.0F);
         world.playEffect(location, Effect.SMOKE, 0);
