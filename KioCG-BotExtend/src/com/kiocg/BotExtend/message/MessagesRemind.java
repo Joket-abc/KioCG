@@ -16,7 +16,7 @@ public class MessagesRemind {
     public void onMessages(final @NotNull Group group, final @NotNull Member member, final @NotNull String msg) {
         if (msg.contains("模组") || msg.contains("mod") || msg.contains("领地") || msg.contains("圈地") || msg.contains("锁箱子") || msg.contains("地皮") || msg.contains("资源世界") || msg.contains("粘液科技")) {
             if (shouldReply(group.getId(), member.getId(), 1)) {
-                group.sendMessage("你不能使用如按键精灵、鼠标宏、连点器、自动钓鱼等自动操作程序，会被视为作弊。");
+                group.sendMessage("服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。");
             }
         } else if (msg.contains("按键精灵") || msg.contains("鼠标宏") || msg.contains("键盘宏") || msg.contains("连点") || msg.contains("自动钓鱼")) {
             if (shouldReply(group.getId(), member.getId(), 1)) {
