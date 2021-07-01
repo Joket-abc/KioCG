@@ -21,7 +21,7 @@ public class cancelDestroyByEntity implements Listener {
             return;
         }
 
-        if (!(entity instanceof Mob) && !(e.getDamager() instanceof Player)) {
+        if (!(entity instanceof Player) && !(entity instanceof Mob) && !(e.getDamager() instanceof Player)) {
             e.setCancelled(true);
         }
     }
