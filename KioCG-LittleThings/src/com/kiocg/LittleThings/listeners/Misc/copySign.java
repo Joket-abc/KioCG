@@ -3,6 +3,7 @@ package com.kiocg.LittleThings.listeners.Misc;
 import com.kiocg.LittleThings.LittleThings;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,6 +48,15 @@ public class copySign implements Listener {
             return;
         }
 
+        final BlockState blockState = block.getState();
+        for (final String string : ((Sign) blockState).getLines()) {
+            if (string.contains("[")) {
+                player.sendMessage("§a[§b豆渣子§a] §6告示牌包含特殊符号, 无法复制.");
+                e.setCancelled(true);
+                return;
+            }
+        }
+
         final Inventory inventory = player.getInventory();
         if (inventory.firstEmpty() != -1) {
             final ItemStack signStack = itemStack.clone();
@@ -58,7 +68,7 @@ public class copySign implements Listener {
                 return;
             }
 
-            Objects.requireNonNull(blockStateMeta).setBlockState(block.getState());
+            Objects.requireNonNull(blockStateMeta).setBlockState(blockState);
             signStack.setItemMeta(blockStateMeta);
 
             itemStack.setAmount(itemStack.getAmount() - 1);
