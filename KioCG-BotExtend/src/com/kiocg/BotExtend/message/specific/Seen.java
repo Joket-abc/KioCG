@@ -55,7 +55,7 @@ public class Seen {
             stringBuilder.append("null");
         }
         try {
-            stringBuilder.append("   胖次币：").append(String.format("%.2f", Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer) + 0.005));
+            stringBuilder.append("   胖次币：").append(String.format("%.2f", Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer) + 0.001));
         } catch (final @NotNull RuntimeException ignore) {
             stringBuilder.append("null");
         }
