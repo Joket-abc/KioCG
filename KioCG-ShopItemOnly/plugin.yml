@@ -1,0 +1,11 @@
+name: KioCG-ShopItemOnly
+main: com.kiocg.ShopItemOnly.ShopItemOnly
+version: 2021
+api-version: 1.16
+
+depend: [ "QuickShop" ]
+
+permissions:
+  kiocg.shopitemonly.bypass:
+    description: 绕过商店物品限制
+    default: op
