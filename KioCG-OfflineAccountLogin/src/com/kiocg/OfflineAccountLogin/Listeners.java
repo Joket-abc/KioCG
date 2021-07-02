@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Listeners implements Listener {
     @EventHandler
@@ -61,6 +62,10 @@ public class Listeners implements Listener {
 
         final String msg = e.getMessage().contentToString().trim();
         final NormalMember sender = e.getSender();
+
+        if (!Pattern.compile("[0-9]{6}").matcher(msg).matches()) {
+            return;
+        }
 
         for (final Map.Entry<String, String> entry : Utils.ipVerifyCode.entrySet()) {
             if (entry.getValue().equals(msg)) {
