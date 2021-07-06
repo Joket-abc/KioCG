@@ -154,6 +154,11 @@ public class Listeners implements Listener {
                 return;
             }
 
+            if (block.getType() == Material.ANVIL) {
+                e.setCancelled(true);
+                return;
+            }
+
             if (block.getState() instanceof TileState) {
                 switch (block.getType()) {
                     case ENDER_CHEST:
