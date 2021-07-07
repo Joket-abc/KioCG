@@ -45,7 +45,8 @@ public class Seen {
             stringBuilder.append("   QQ：null");
         } else {
             final String qqString = String.valueOf(qq);
-            stringBuilder.append("   QQ：").append(qqString, 0, qqString.length() - 5).append("*****");
+            final int length = qqString.length();
+            stringBuilder.append("   QQ：").append(qqString, 0, length - 4).append("***").append(qqString, length - 1, length);
         }
 
         stringBuilder.append("\nUUID：").append(uuid);
