@@ -138,7 +138,7 @@ public class Listeners implements Listener {
 
         final ItemMeta itemMeta1;
         try {
-            itemMeta1 = Objects.requireNonNull(Objects.requireNonNull(item1).getItemMeta());
+            itemMeta1 = Objects.requireNonNull(item1.getItemMeta());
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
@@ -155,13 +155,16 @@ public class Listeners implements Listener {
             return;
         }
 
-        final int repairCost = ((Repairable) itemMeta3).getRepairCost();
-        if (repairCost < 10) {
-            e.setResult(null);
+        try {
+            if (!((Repairable) Objects.requireNonNull(item2.getItemMeta())).hasRepairCost()) {
+                e.setResult(null);
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
-        ((Repairable) itemMeta3).setRepairCost((repairCost - 3) >> 2);
+        ((Repairable) itemMeta3).setRepairCost(0);
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
     }
