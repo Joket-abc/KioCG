@@ -38,8 +38,15 @@ public class Seen {
         final StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(RGBColor.matcher(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))).replaceAll(""))
-                     .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")")
-                     .append("   QQ：").append(PlayerLinkUtils.getPlayerLinkQQ(uuid.toString()));
+                     .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")");
+
+        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuid.toString());
+        if (qq == null) {
+            stringBuilder.append("   QQ：null");
+        } else {
+            final String qqString = String.valueOf(qq);
+            stringBuilder.append("   QQ：").append(qqString, 0, qqString.length() - 5).append("*****");
+        }
 
         stringBuilder.append("\nUUID：").append(uuid);
 
@@ -52,7 +59,7 @@ public class Seen {
         if (Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
             stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
         } else {
-            stringBuilder.append("null");
+            stringBuilder.append("   元気：null");
         }
         try {
             stringBuilder.append("   胖次币：").append(String.format("%.2f", Objects.requireNonNull(BotExtend.economy).getBalance(offlinePlayer) + 0.001));

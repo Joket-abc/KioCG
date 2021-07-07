@@ -14,7 +14,8 @@ public class MessagesRemind {
 
     @EventHandler
     public void onMessages(final @NotNull Group group, final @NotNull Member member, final @NotNull String msg) {
-        if (msg.contains("模组") || msg.contains("mod") || msg.contains("领地") || msg.contains("圈地") || msg.contains("锁箱子") || msg.contains("地皮") || msg.contains("资源世界") || msg.contains("粘液科技")) {
+        if ((msg.contains("服务器") && (msg.contains("模组") || msg.contains("mod")))
+            || msg.contains("领地") || msg.contains("圈地") || msg.contains("锁箱子") || msg.contains("地皮") || msg.contains("资源世界") || msg.contains("粘液科技")) {
             if (shouldReply(group.getId(), member.getId(), 1)) {
                 group.sendMessage("服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。");
             }
