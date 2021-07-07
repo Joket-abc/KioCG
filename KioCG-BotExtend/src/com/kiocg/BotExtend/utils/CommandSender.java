@@ -6,8 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.conversations.Conversation;
-import org.bukkit.conversations.ConversationAbandonedEvent;
+import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -19,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class ConsoleSender implements ConsoleCommandSender {
+public class CommandSender implements RemoteConsoleCommandSender {
     private final Pattern ip = Pattern.compile("((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}");
     private final @NotNull ConsoleCommandSender consoleCommandSender;
     private final GroupMessageEvent event;
@@ -27,7 +26,7 @@ public class ConsoleSender implements ConsoleCommandSender {
     private BukkitTask task;
     private final List<String> output = new ArrayList<>();
 
-    public ConsoleSender(final GroupMessageEvent event) {
+    public CommandSender(final GroupMessageEvent event) {
         consoleCommandSender = Bukkit.getConsoleSender();
         this.event = event;
 
@@ -85,41 +84,6 @@ public class ConsoleSender implements ConsoleCommandSender {
     @Override
     public @NotNull Spigot spigot() {
         return consoleCommandSender.spigot();
-    }
-
-    @Override
-    public boolean isConversing() {
-        return consoleCommandSender.isConversing();
-    }
-
-    @Override
-    public void acceptConversationInput(final @NotNull String string) {
-        consoleCommandSender.acceptConversationInput(string);
-    }
-
-    @Override
-    public boolean beginConversation(final @NotNull Conversation conversation) {
-        return consoleCommandSender.beginConversation(conversation);
-    }
-
-    @Override
-    public void abandonConversation(final @NotNull Conversation conversation) {
-        consoleCommandSender.abandonConversation(conversation);
-    }
-
-    @Override
-    public void abandonConversation(final @NotNull Conversation conversation, final @NotNull ConversationAbandonedEvent conversationAbandonedEvent) {
-        consoleCommandSender.abandonConversation(conversation, conversationAbandonedEvent);
-    }
-
-    @Override
-    public void sendRawMessage(final @NotNull String string) {
-        consoleCommandSender.sendRawMessage(string);
-    }
-
-    @Override
-    public void sendRawMessage(final @Nullable UUID uuid, final @NotNull String string) {
-        consoleCommandSender.sendRawMessage(uuid, string);
     }
 
     @Override

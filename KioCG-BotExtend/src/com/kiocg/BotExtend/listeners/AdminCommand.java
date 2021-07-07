@@ -2,7 +2,7 @@ package com.kiocg.BotExtend.listeners;
 
 import com.google.common.base.Charsets;
 import com.kiocg.BotExtend.BotExtend;
-import com.kiocg.BotExtend.utils.ConsoleSender;
+import com.kiocg.BotExtend.utils.CommandSender;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
 import com.kiocg.BotExtend.utils.HttpsUtils;
 import com.kiocg.BotExtend.utils.Utils;
@@ -109,7 +109,7 @@ public class AdminCommand implements Listener {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove " + playerName));
             group.sendMessage("已尝试将玩家 " + playerName + " 移除出白名单");
         } else {
-            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new ConsoleSender(e), cmd));
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new CommandSender(e), cmd));
         }
 
         BotExtend.instance.getLogger().info(GroupAdminUtils.logCommand.replace("&", "§")
