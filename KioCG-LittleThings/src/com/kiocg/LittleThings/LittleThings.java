@@ -28,6 +28,7 @@ public class LittleThings extends JavaPlugin {
         pluginManager.registerEvents(new catchAnimals(), this);
         pluginManager.registerEvents(new compassTeleport(), this);
         pluginManager.registerEvents(new copySign(), this);
+        pluginManager.registerEvents(new cropHoe(), this);
         pluginManager.registerEvents(new portableWorkbench(), this);
         pluginManager.registerEvents(new protectPlace(), this);
         pluginManager.registerEvents(new randomPlace(), this);
