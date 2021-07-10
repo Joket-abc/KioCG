@@ -16,6 +16,6 @@ public class BigSlime {
         slime.setCustomName("§7巨型史莱姆");
         slime.setRemoveWhenFarAway(true);
 
-        slime.setSize(8);
+        slime.setSize(16);
     }
 }

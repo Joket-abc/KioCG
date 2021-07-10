@@ -16,6 +16,6 @@ public class BigMagmaCube {
         magmaCube.setCustomName("§7巨型岩浆怪");
         magmaCube.setRemoveWhenFarAway(true);
 
-        magmaCube.setSize(8);
+        magmaCube.setSize(16);
     }
 }
