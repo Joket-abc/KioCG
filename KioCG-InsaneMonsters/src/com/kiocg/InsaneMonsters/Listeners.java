@@ -74,14 +74,14 @@ public class Listeners implements Listener {
                 InsaneMonsters.darkKnight.spawn(livingEntity.getLocation());
             }
             case SLIME -> {
-                if (random.nextInt(100) < 90) {
+                if (random.nextInt(100) < 95) {
                     return;
                 }
 
                 InsaneMonsters.bigSlime.spawn(livingEntity.getLocation());
             }
             case MAGMA_CUBE -> {
-                if (random.nextInt(100) < 90) {
+                if (random.nextInt(100) < 95) {
                     return;
                 }
 
