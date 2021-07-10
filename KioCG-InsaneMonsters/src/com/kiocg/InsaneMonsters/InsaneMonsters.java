@@ -19,6 +19,8 @@ public class InsaneMonsters extends JavaPlugin {
     public static DarkKnight darkKnight;
 
     public static OreZombie oreZombie;
+    public static BigSlime bigSlime;
+    public static BigMagmaCube bigMagmaCube;
 
     @Override
     public void onEnable() {
@@ -33,6 +35,8 @@ public class InsaneMonsters extends JavaPlugin {
         darkKnight = new DarkKnight();
 
         oreZombie = new OreZombie();
+        bigSlime = new BigSlime();
+        bigMagmaCube = new BigMagmaCube();
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
         Objects.requireNonNull(getServer().getPluginCommand("insanemonsters")).setExecutor(new IMCommand());

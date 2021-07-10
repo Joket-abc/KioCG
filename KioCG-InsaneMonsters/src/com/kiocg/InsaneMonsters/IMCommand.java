@@ -25,7 +25,8 @@ public class IMCommand implements CommandExecutor {
                                §4S§ckeleton§4A§crcher §6| 骷髅弓箭手
                                §4D§cark§4K§cnight §6| 黑暗骑士
                                §4O§cre§4Z§combie §6| 矿石僵尸
-                               §4B§clock§4Z§combie §6| 方块僵尸
+                               §4B§cig§4S§clime §6| 巨型史莱姆
+                               §4B§cig§4M§cagma§4C§cube §6| 巨型岩浆怪
                                §7/insanemonsters <mob> 来生成指定的疯狂怪物.""");
             return true;
         }
@@ -60,6 +61,14 @@ public class IMCommand implements CommandExecutor {
                 case "orezombie", "oz" -> {
                     InsaneMonsters.oreZombie.spawn(location);
                     player.sendMessage("§a[§b豆渣子§a] §6已生成矿石僵尸.");
+                }
+                case "bigslime", "bs" -> {
+                    InsaneMonsters.bigSlime.spawn(location);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成巨型史莱姆.");
+                }
+                case "bigmagmacube", "bmc" -> {
+                    InsaneMonsters.bigMagmaCube.spawn(location);
+                    player.sendMessage("§a[§b豆渣子§a] §6已生成巨型岩浆怪.");
                 }
 
                 default -> player.sendMessage("§a[§b豆渣子§a] §c无效的疯狂怪物种类.");

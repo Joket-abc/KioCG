@@ -11,7 +11,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +30,7 @@ public class Listeners implements Listener {
         final Random random = new Random();
 
         switch (livingEntity.getType()) {
-            case ZOMBIE:
+            case ZOMBIE -> {
                 switch (random.nextInt(4)) {
                     case 0 -> {
                         final Location giantLoc = livingEntity.getLocation();
@@ -59,23 +58,35 @@ public class Listeners implements Listener {
                         InsaneMonsters.oreZombie.spawn(oreZombieLoc);
                     }
                 }
-                break;
-            case SKELETON:
+            }
+            case SKELETON -> {
                 if (random.nextInt(100) < 99) {
                     return;
                 }
 
                 InsaneMonsters.skeletonArcher.spawn(livingEntity.getLocation());
-                break;
-            case WITHER_SKELETON:
+            }
+            case WITHER_SKELETON -> {
                 if (random.nextInt(100) < 99) {
                     return;
                 }
 
                 InsaneMonsters.darkKnight.spawn(livingEntity.getLocation());
-                break;
-            default:
-                return;
+            }
+            case SLIME -> {
+                if (random.nextInt(100) < 90) {
+                    return;
+                }
+
+                InsaneMonsters.bigSlime.spawn(livingEntity.getLocation());
+            }
+            case MAGMA_CUBE -> {
+                if (random.nextInt(100) < 90) {
+                    return;
+                }
+
+                InsaneMonsters.bigMagmaCube.spawn(livingEntity.getLocation());
+            }
         }
 
         e.setCancelled(true);
@@ -94,7 +105,7 @@ public class Listeners implements Listener {
         final Random random = new Random();
 
         switch (persistentData) {
-            case "Giant":
+            case "Giant" -> {
                 final ItemStack itemStackG = new ItemStack(Material.ENCHANTED_BOOK);
 
                 final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStackG.getItemMeta();
@@ -105,48 +116,24 @@ public class Listeners implements Listener {
                 itemStackG.setItemMeta(enchantmentStorageMeta);
 
                 drops.add(new ItemStack(itemStackG));
-                break;
-            case "ZombieWarrior":
+            }
+            case "ZombieWarrior" -> {
                 drops.clear();
-
-                final ItemStack itemStackZW = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
-
-                final ItemMeta itemMetaZW = itemStackZW.getItemMeta();
-                Objects.requireNonNull(itemMetaZW).setDisplayName("§r铁币");
-                itemStackZW.setItemMeta(itemMetaZW);
-
-                drops.add(itemStackZW);
+                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
                 drops.add(new ItemStack(Material.ROTTEN_FLESH, random.nextInt(3) + 1));
-                break;
-            case "SkeletonArcher":
+            }
+            case "SkeletonArcher" -> {
                 drops.clear();
-
-                final ItemStack itemStackSA = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
-
-                final ItemMeta itemMetaSA = itemStackSA.getItemMeta();
-                Objects.requireNonNull(itemMetaSA).setDisplayName("§r铁币");
-                itemStackSA.setItemMeta(itemMetaSA);
-
-                drops.add(itemStackSA);
+                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
                 drops.add(new ItemStack(Material.BONE, random.nextInt(3) + 1));
-                break;
-            case "DarkKnight":
+            }
+            case "DarkKnight" -> {
                 drops.clear();
-
-                final ItemStack itemStackDK = new ItemStack(Material.BARRIER, random.nextInt(5) + 1);
-
-                final ItemMeta itemMetaDK = itemStackDK.getItemMeta();
-                Objects.requireNonNull(itemMetaDK).setDisplayName("§r铁币");
-                itemStackDK.setItemMeta(itemMetaDK);
-
-                drops.add(itemStackDK);
-
+                drops.add(new ItemStack(Material.DIAMOND, random.nextInt(3) + 1));
                 if (random.nextInt(100) < 33) {
                     drops.add(new ItemStack(Material.NETHERITE_SCRAP));
                 }
-                break;
-            case "OreZombie":
-                break;
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ public class FlyCommand implements CommandExecutor {
         }
 
         // 玩家尝试关闭飞行
-        if (Utils.inFlightList(player)) {
+        if (Utils.inFlightList(player) && player.getAllowFlight()) {
             Utils.removeFlightList(player);
 
             player.sendMessage("§a[§b豆渣子§a] §6➷ 关掉关掉一定要关掉 ➷");
