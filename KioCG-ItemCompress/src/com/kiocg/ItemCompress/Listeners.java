@@ -68,7 +68,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
             }
@@ -112,7 +112,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
@@ -153,7 +153,7 @@ public class Listeners implements Listener {
                 }
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
 
