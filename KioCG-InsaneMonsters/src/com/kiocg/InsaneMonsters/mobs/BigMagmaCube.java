@@ -13,6 +13,7 @@ public class BigMagmaCube {
         final MagmaCube magmaCube = Objects.requireNonNull(location.getWorld()).spawn(location, MagmaCube.class);
 
         magmaCube.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BigMagmaCube");
+        magmaCube.setCustomName("§7巨型岩浆怪");
         magmaCube.setRemoveWhenFarAway(true);
 
         magmaCube.setSize(8);

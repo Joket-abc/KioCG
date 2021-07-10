@@ -13,6 +13,7 @@ public class BigSlime {
         final Slime slime = Objects.requireNonNull(location.getWorld()).spawn(location, org.bukkit.entity.Slime.class);
 
         slime.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BigSlime");
+        slime.setCustomName("§7巨型史莱姆");
         slime.setRemoveWhenFarAway(true);
 
         slime.setSize(8);
