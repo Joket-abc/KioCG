@@ -87,6 +87,9 @@ public class Listeners implements Listener {
 
                 InsaneMonsters.bigMagmaCube.spawn(livingEntity.getLocation());
             }
+            default -> {
+                return;
+            }
         }
 
         e.setCancelled(true);
