@@ -1,5 +1,6 @@
 package com.kiocg.ItemCompress;
 
+import org.bukkit.block.TileState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -68,6 +69,7 @@ public class Listeners implements Listener {
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
             }
             return;
@@ -111,6 +113,7 @@ public class Listeners implements Listener {
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
             }
@@ -151,6 +154,7 @@ public class Listeners implements Listener {
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
                 Objects.requireNonNull(itemMetaResult).setDisplayName("§5" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
 
                 craftingInventory.setResult(itemStackResult);
@@ -185,11 +189,21 @@ public class Listeners implements Listener {
         }
 
         try {
-            if (Objects.requireNonNull(Objects.requireNonNull(e.getItem()).getItemMeta()).getDisplayName().contains("压缩")) {
-                e.setCancelled(true);
+            if (!Objects.requireNonNull(Objects.requireNonNull(e.getItem()).getItemMeta()).getDisplayName().contains("压缩")) {
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
+        }
+
+        try {
+            if (Objects.requireNonNull(e.getClickedBlock()).getState() instanceof TileState) {
+                return;
             }
         } catch (final @NotNull NullPointerException ignore) {
         }
+
+        e.setCancelled(true);
     }
 
     // 防止压缩物品交互

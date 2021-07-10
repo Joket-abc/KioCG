@@ -20,7 +20,6 @@ public class Utils {
         add("七");
         add("八");
         add("九");
-        add("十");
     }};
 
     public void loadConfig() {
@@ -45,6 +44,10 @@ public class Utils {
         } catch (final @NotNull IndexOutOfBoundsException ignore) {
             return null;
         }
+    }
+
+    public static int getCustomModelData(final @NotNull String multiple) {
+        return multipleText.indexOf(multiple) + 1261;
     }
 
     public static @NotNull String getI18NDisplayName(final @NotNull String materialString) {
