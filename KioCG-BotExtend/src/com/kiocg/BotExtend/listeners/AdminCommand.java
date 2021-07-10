@@ -98,6 +98,16 @@ public class AdminCommand implements Listener {
 
             Utils.kickWhitelistPlayer.remove(playerName);
             group.sendMessage("已将离线玩家 " + playerName + " 添加至白名单");
+        } else if (cmd.toLowerCase().startsWith("whitelist remove ")) {
+            final String playerName = cmd.substring(17);
+
+            if (!Utils.isLegalPlayerName(playerName)) {
+                group.sendMessage("错误的玩家名：" + playerName);
+                return;
+            }
+
+            Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove " + playerName));
+            group.sendMessage("已尝试将玩家 " + playerName + " 移除出白名单");
         } else {
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(new CommandSender(e), cmd));
         }
