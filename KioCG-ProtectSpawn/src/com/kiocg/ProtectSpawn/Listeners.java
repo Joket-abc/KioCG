@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -54,6 +55,23 @@ public class Listeners implements Listener {
         final Player player = e.getPlayer();
 
         if (player.hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        player.damage(1.0);
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelEntityPlace(final @NotNull EntityPlaceEvent e) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (Objects.requireNonNull(player).hasPermission("kiocg.protectspawn.bypass")) {
             return;
         }
 

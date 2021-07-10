@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class fixLureEnchanting implements Listener {
     // 修复饵钓附魔
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void fixVanishingCurse(final @NotNull PlayerFishEvent e) {
+    public void fixLureEnchanting(final @NotNull PlayerFishEvent e) {
         if (e.getState() != PlayerFishEvent.State.FISHING) {
             return;
         }

@@ -36,7 +36,7 @@ public class Listeners implements Listener {
         }
 
         if (!quickShop.getItemMatcher().matches(shop.getItem(), itemStack)) {
-            e.getWhoClicked().sendMessage("§a[§b豆渣子§a] §6你只能在商店里操作商品或原石(用于填充).");
+            e.getWhoClicked().sendMessage("§a[§b豆渣子§a] §6你只能在商店里操作商品或原石(用于占位).");
             e.setCancelled(true);
         }
     }

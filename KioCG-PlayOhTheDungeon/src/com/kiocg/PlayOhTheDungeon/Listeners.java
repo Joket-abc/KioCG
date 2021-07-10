@@ -3,23 +3,18 @@ package com.kiocg.PlayOhTheDungeon;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -100,23 +95,5 @@ public class Listeners implements Listener {
         } else if (material == Material.ENDER_CHEST || material == Material.LODESTONE) {
             e.setCancelled(true);
         }
-    }
-
-    // 怪物掉落货币
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onEntityDeath(final @NotNull EntityDeathEvent e) {
-        final Entity entity = e.getEntity();
-
-        if (!"KioCG_OhTheDungeon".equals(entity.getWorld().getName()) || entity instanceof Player || new Random().nextInt(7) != 0) {
-            return;
-        }
-
-        final ItemStack itemStack = new ItemStack(Material.BARRIER, 1);
-
-        final ItemMeta itemMeta = itemStack.getItemMeta();
-        Objects.requireNonNull(itemMeta).setDisplayName("§r铜币");
-        itemStack.setItemMeta(itemMeta);
-
-        e.getDrops().add(itemStack);
     }
 }

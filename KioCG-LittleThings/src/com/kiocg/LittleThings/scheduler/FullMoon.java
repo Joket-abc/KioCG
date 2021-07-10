@@ -21,8 +21,7 @@ public class FullMoon {
         //TODO 大版本更新时的世界名修改
         world = Objects.requireNonNull(Bukkit.getWorld("KioCG_17world"));
 
-        bossBar = Bukkit.createBossBar("FullMoon", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
-        bossBar.setVisible(false);
+        bossBar = Bukkit.createBossBar("黑夜降临", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
 
         this.FullMoonTask();
     }
