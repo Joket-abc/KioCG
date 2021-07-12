@@ -102,5 +102,7 @@ public class Listeners implements Listener {
                 blockState.setType(wools.get(random.nextInt(amount)));
             }
         }
+
+        Utils.treeWools.remove(blockKey);
     }
 }
