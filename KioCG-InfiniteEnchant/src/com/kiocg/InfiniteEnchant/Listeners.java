@@ -2,7 +2,9 @@ package com.kiocg.InfiniteEnchant;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -18,7 +20,7 @@ import java.util.Objects;
 
 public class Listeners implements Listener {
     @EventHandler
-    public void onPrepareAnvilBook(final @NotNull PrepareAnvilEvent e) {
+    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();
         final ItemMeta itemMeta3;
         try {
@@ -167,6 +169,32 @@ public class Listeners implements Listener {
         ((Repairable) itemMeta3).setRepairCost(0);
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onTooExpensive(final @NotNull PrepareAnvilEvent e) {
+        final AnvilInventory anvilInventory = e.getInventory();
+
+        anvilInventory.setMaximumRepairCost(Integer.MAX_VALUE);
+
+        try {
+            if (Objects.requireNonNull(e.getResult()).getType() == Material.AIR) {
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+            return;
+        }
+
+        final int repairCost = anvilInventory.getRepairCost();
+        final Player player = (Player) anvilInventory.getViewers().get(0);
+
+        if (repairCost > 40) {
+            if (player.getLevel() < repairCost) {
+                player.sendMessage("§c附魔花费:" + repairCost);
+            } else {
+                player.sendMessage("§a附魔花费:" + repairCost);
+            }
+        }
     }
 
     //TODO 权限判断 kiocg.infiniteenchant.use
