@@ -6,7 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -19,6 +22,42 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Listeners implements Listener {
+    @EventHandler
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
+        Utils.removeBossBar(e.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onTooExpensive(final @NotNull PrepareAnvilEvent e) {
+        final AnvilInventory anvilInventory = e.getInventory();
+        anvilInventory.setMaximumRepairCost(Integer.MAX_VALUE);
+
+        final Player player = (Player) anvilInventory.getViewers().get(0);
+
+        try {
+            if (Objects.requireNonNull(e.getResult()).getType() == Material.AIR) {
+                Utils.removeBossBar(player);
+                return;
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+            Utils.removeBossBar(player);
+            return;
+        }
+
+        final int repairCost = anvilInventory.getRepairCost();
+
+        if (repairCost > 40) {
+            Utils.showBossBar(player, repairCost, player.getLevel() >= repairCost);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(final @NotNull InventoryCloseEvent e) {
+        if (e.getInventory().getType() == InventoryType.ANVIL) {
+            Utils.removeBossBar((Player) e.getPlayer());
+        }
+    }
+
     @EventHandler
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();
@@ -169,32 +208,6 @@ public class Listeners implements Listener {
         ((Repairable) itemMeta3).setRepairCost(0);
         item3.setItemMeta(itemMeta3);
         e.setResult(item3);
-    }
-
-    @EventHandler(priority = EventPriority.LOW)
-    public void onTooExpensive(final @NotNull PrepareAnvilEvent e) {
-        final AnvilInventory anvilInventory = e.getInventory();
-
-        anvilInventory.setMaximumRepairCost(Integer.MAX_VALUE);
-
-        try {
-            if (Objects.requireNonNull(e.getResult()).getType() == Material.AIR) {
-                return;
-            }
-        } catch (final @NotNull NullPointerException ignore) {
-            return;
-        }
-
-        final int repairCost = anvilInventory.getRepairCost();
-        final Player player = (Player) anvilInventory.getViewers().get(0);
-
-        if (repairCost > 40) {
-            if (player.getLevel() < repairCost) {
-                player.sendMessage("§c附魔花费:" + repairCost);
-            } else {
-                player.sendMessage("§a附魔花费:" + repairCost);
-            }
-        }
     }
 
     //TODO 权限判断 kiocg.infiniteenchant.use
