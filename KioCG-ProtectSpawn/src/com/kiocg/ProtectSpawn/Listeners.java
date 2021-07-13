@@ -20,6 +20,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPlaceEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -65,6 +67,23 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void cancelEntityPlace(final @NotNull EntityPlaceEvent e) {
+        if (!Utils.inSpawn(e.getBlock().getLocation())) {
+            return;
+        }
+
+        final Player player = e.getPlayer();
+
+        if (Objects.requireNonNull(player).hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        player.damage(1.0);
+        player.sendMessage("§a[§b豆渣子§a] §6接受惩罚吧~ 破坏主城的坏孩子!");
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelHangingPlace(final @NotNull HangingPlaceEvent e) {
         if (!Utils.inSpawn(e.getBlock().getLocation())) {
             return;
         }
@@ -197,7 +216,7 @@ public class Listeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void cancelEntityDamage(final @NotNull EntityDamageByEntityEvent e) {
+    public void cancelEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
         if (entity instanceof Monster || entity instanceof Phantom) {
             return;
@@ -209,6 +228,20 @@ public class Listeners implements Listener {
 
         final Entity damager = e.getDamager();
         if (!(damager instanceof Player) || damager.hasPermission("kiocg.protectspawn.bypass")) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void cancelHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
+        if (!Utils.inSpawn(e.getEntity().getLocation())) {
+            return;
+        }
+
+        final Entity remover = e.getRemover();
+        if (!(remover instanceof Player) || remover.hasPermission("kiocg.protectspawn.bypass")) {
             return;
         }
 
