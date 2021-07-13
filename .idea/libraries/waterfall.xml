@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="waterfall-1.17">
+  <library name="waterfall">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../waterfall-1.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../waterfall.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

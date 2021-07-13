@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spigot-1.17" level="project" />
     <orderEntry type="library" name="KioCG-BotExtend" level="project" />
     <orderEntry type="library" name="KioCG-qqBot" level="project" />
+    <orderEntry type="library" name="patched_1.17.1" level="project" />
   </component>
 </module>
