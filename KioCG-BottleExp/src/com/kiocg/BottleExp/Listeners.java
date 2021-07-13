@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Listeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent e) {
-        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || Objects.requireNonNull(e.getHand()) != EquipmentSlot.HAND
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getHand() != EquipmentSlot.HAND
             || Objects.requireNonNull(e.getClickedBlock()).getType() != Material.ENCHANTING_TABLE) {
             return;
         }
@@ -64,7 +64,7 @@ public class Listeners implements Listener {
                 world.dropItem(location, new ItemStack(Material.EXPERIENCE_BOTTLE, enough));
             }
 
-            Bukkit.getScheduler().runTask(BottleExp.instance, player::closeInventory);
+            Bukkit.getScheduler().runTask(BottleExp.instance, (Runnable) player::closeInventory);
         } else {
             player.giveExp(-10);
 

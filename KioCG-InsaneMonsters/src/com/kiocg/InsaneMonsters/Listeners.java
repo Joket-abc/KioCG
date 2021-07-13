@@ -15,7 +15,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class Listeners implements Listener {
@@ -114,7 +113,7 @@ public class Listeners implements Listener {
                 final EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) itemStackG.getItemMeta();
                 final Enchantment[] enchantments = Enchantment.values();
                 final Enchantment randomEnchantment = enchantments[random.nextInt(enchantments.length)];
-                Objects.requireNonNull(enchantmentStorageMeta).addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
+                enchantmentStorageMeta.addStoredEnchant(randomEnchantment, randomEnchantment.getMaxLevel(), false);
 
                 itemStackG.setItemMeta(enchantmentStorageMeta);
 

@@ -26,9 +26,9 @@ public class Seen {
             return;
         }
 
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
 
-        if (!offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
+        if (offlinePlayer == null) {
             contact.sendMessage("无法找到玩家 " + msg + " 的缓存信息");
             return;
         }
@@ -46,13 +46,14 @@ public class Seen {
         } else {
             final String qqString = String.valueOf(qq);
             final int length = qqString.length();
-            stringBuilder.append("   QQ：").append(qqString, 0, length - 4).append("***").append(qqString, length - 1, length);
+            stringBuilder.append("   QQ：").append(qqString, 0, length - 5).append("****").append(qqString, length - 1, length);
         }
 
         stringBuilder.append("\nUUID：").append(uuid);
 
         stringBuilder.append("\n初次进入时间：").append(simpleDateFormat.format(offlinePlayer.getFirstPlayed()))
-                     .append("\n最后上线时间：").append(simpleDateFormat.format(offlinePlayer.getLastPlayed()));
+                     .append("\n最后登录时间：").append(simpleDateFormat.format(offlinePlayer.getLastLogin()))
+                     .append("\n最后存在时间：").append(simpleDateFormat.format(offlinePlayer.getLastSeen()));
 
         stringBuilder.append("\n累计在线时间：").append(Utils.ticksToDHMS(offlinePlayer.getStatistic(Statistic.PLAY_ONE_MINUTE)));
 

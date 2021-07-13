@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class OreZombie {
     public void spawn(final @NotNull Location location) {
-        final LivingEntity livingEntity = Objects.requireNonNull(location.getWorld()).spawn(location, Zombie.class);
+        final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "OreZombie");
         livingEntity.setCustomName("§7矿石僵尸");

@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Utils {
     // 存储开启观察模式的玩家、粒子发送任务
@@ -45,7 +44,7 @@ public class Utils {
                 for (int y = blockY - 32; y <= blockY + 32; ++y) {
                     for (int z = blockZ - 32; z <= blockZ + 32; ++z) {
                         final Location loc = new Location(world, x, y, z);
-                        if (Objects.requireNonNull(world).getBlockAt(loc).getType() == material) {
+                        if (world.getBlockAt(loc).getType() == material) {
                             player.spawnParticle(particle, loc.add(0.5, 0.5, 0.5), 1);
                         }
                     }

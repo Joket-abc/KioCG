@@ -65,10 +65,8 @@ public class catchAnimals implements Listener {
         try {
             world.dropItem(location, new ItemStack(Objects.requireNonNull(Material.getMaterial(entity.getType() + "_SPAWN_EGG"))));
         } catch (final @NotNull NullPointerException ignore) {
-            for (final Entity toEntity : world.getNearbyEntities(location, 16.0, 8.0, 16.0)) {
-                if (toEntity instanceof Player) {
-                    toEntity.sendMessage("§a[§b豆渣子§a] §4捕捉生物失败, 发生内部错误, 请联系管理员!");
-                }
+            for (final Player player : location.getNearbyEntitiesByType(Player.class, 16.0)) {
+                player.sendMessage("§a[§b豆渣子§a] §4捕捉生物失败, 发生内部错误, 请联系管理员!");
             }
             return;
         }

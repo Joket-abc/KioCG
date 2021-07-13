@@ -46,11 +46,7 @@ public class FlyCommand implements CommandExecutor {
         }
 
         player.setAllowFlight(true);
-        try {
-            Class.forName("net.pl3x.purpur.event.ExecuteCommandEvent");
-            player.setFlyingFallDamage(true);
-        } catch (final @NotNull ClassNotFoundException ignore) {
-        }
+        player.setFlyingFallDamage(true);
 
         player.sendMessage("§a[§b豆渣子§a] §2➹ 呼呼, 可以飞了呢 ➹");
         return true;

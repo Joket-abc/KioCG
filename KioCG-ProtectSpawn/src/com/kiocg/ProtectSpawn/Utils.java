@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,7 +16,7 @@ public class Utils {
 
     public static @NotNull Boolean inSpawn(final @NotNull Location location) {
         //TODO 大版本更新时的世界名修改
-        if (!"KioCG_17world".equals(Objects.requireNonNull(location.getWorld()).getName())) {
+        if (!"KioCG_17world".equals(location.getWorld().getName())) {
             return false;
         }
 

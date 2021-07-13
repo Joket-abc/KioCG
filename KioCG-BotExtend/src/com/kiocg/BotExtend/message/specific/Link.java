@@ -15,7 +15,7 @@ public class Link {
             return;
         }
 
-        final Player player = Bukkit.getPlayer(msg);
+        final Player player = Bukkit.getPlayerExact(msg);
 
         if (player == null) {
             contact.sendMessage("玩家 " + msg + " 不在线");

@@ -7,7 +7,6 @@ import com.kiocg.LittleThings.scheduler.AutoRestart;
 import com.kiocg.LittleThings.scheduler.FullMoon;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 public class LittleThings extends JavaPlugin {
     public static LittleThings instance;
@@ -35,20 +34,15 @@ public class LittleThings extends JavaPlugin {
         // Utility
         pluginManager.registerEvents(new cancelDestroyByEntity(), this);
         pluginManager.registerEvents(new cancelSomeRename(), this);
-        pluginManager.registerEvents(new cancelSpawnerLegacy(), this);
+        pluginManager.registerEvents(new cancelSpawnerPlace(), this);
         pluginManager.registerEvents(new fixLureEnchanting(), this);
         pluginManager.registerEvents(new fixVanishingCurse(), this);
 
         // 启动定时自动重启
         new AutoRestart();
 
-        try {
-            Class.forName("io.papermc.paper.world.MoonPhase");
-
-            // 满月特殊效果
-            pluginManager.registerEvents(new FullMoon(), this);
-        } catch (final @NotNull ClassNotFoundException ignore) {
-        }
+        // 满月特殊效果
+        pluginManager.registerEvents(new FullMoon(), this);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class At {
             return;
         }
 
-        final Player player = Bukkit.getPlayer(playerName);
+        final Player player = Bukkit.getPlayerExact(playerName);
 
         if (player == null) {
             contact.sendMessage("玩家 " + playerName + " 不在线");

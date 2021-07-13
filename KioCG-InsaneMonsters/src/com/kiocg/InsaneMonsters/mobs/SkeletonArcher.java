@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class SkeletonArcher {
     public void spawn(final @NotNull Location location) {
-        final LivingEntity livingEntity = Objects.requireNonNull(location.getWorld()).spawn(location, Skeleton.class);
+        final LivingEntity livingEntity = location.getWorld().spawn(location, Skeleton.class);
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "SkeletonArcher");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));

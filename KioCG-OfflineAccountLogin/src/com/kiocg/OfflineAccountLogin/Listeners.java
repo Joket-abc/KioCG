@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Listeners implements Listener {
@@ -50,9 +49,9 @@ public class Listeners implements Listener {
             final String verifyCode = Utils.getNewVerifyCode();
             Utils.ipVerifyCode.put(ip, verifyCode);
 
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Objects.requireNonNull(Utils.getVerifyMessage(reason, verifyCode)));
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Utils.getVerifyMessage(reason, verifyCode));
         } else {
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Objects.requireNonNull(Utils.getVerifyMessage(reason, Utils.ipVerifyCode.get(ip))));
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Utils.getVerifyMessage(reason, Utils.ipVerifyCode.get(ip)));
         }
     }
 

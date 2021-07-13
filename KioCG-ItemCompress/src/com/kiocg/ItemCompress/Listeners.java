@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@SuppressWarnings("deprecation")
 public class Listeners implements Listener {
     @EventHandler
     public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent e) {
@@ -46,7 +47,7 @@ public class Listeners implements Listener {
                 final String multipleText;
 
                 final ItemMeta itemMeta = matrix[0].getItemMeta();
-                if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                if (itemMeta.hasDisplayName()) {
                     final String displayName = itemMeta.getDisplayName();
 
                     final int index = displayName.indexOf("次压缩");
@@ -68,7 +69,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
             }
@@ -86,9 +87,10 @@ public class Listeners implements Listener {
                 String multipleText = "";
 
                 for (final ItemStack itemStack : craftingInventory.getMatrix()) {
+                    //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-                        if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                        if (itemMeta.hasDisplayName()) {
                             final String displayName = itemMeta.getDisplayName();
 
                             final int index = displayName.indexOf("次压缩");
@@ -112,7 +114,7 @@ public class Listeners implements Listener {
                 final ItemStack itemStackResult = craftingInventory.getResult();
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
                 return;
@@ -128,9 +130,10 @@ public class Listeners implements Listener {
                 String multipleText = "";
 
                 for (final ItemStack itemStack : craftingInventory.getMatrix()) {
+                    //noinspection ConstantConditions
                     if (itemStack != null) {
                         final ItemMeta itemMeta = itemStack.getItemMeta();
-                        if (Objects.requireNonNull(itemMeta).hasDisplayName()) {
+                        if (itemMeta.hasDisplayName()) {
                             final String displayName = itemMeta.getDisplayName();
 
                             final int index = displayName.indexOf("次压缩");
@@ -153,7 +156,7 @@ public class Listeners implements Listener {
                 }
 
                 final ItemMeta itemMetaResult = Objects.requireNonNull(itemStackResult).getItemMeta();
-                Objects.requireNonNull(itemMetaResult).setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
+                itemMetaResult.setDisplayName("§6" + multipleText + "次压缩" + Utils.getI18NDisplayName(itemStackResult.getType().toString()));
                 itemMetaResult.setCustomModelData(Utils.getCustomModelData(multipleText));
                 itemStackResult.setItemMeta(itemMetaResult);
 
@@ -173,7 +176,7 @@ public class Listeners implements Listener {
 
         try {
             if (Objects.requireNonNull(anvilInventory.getRenameText()).contains("压缩")
-                || Objects.requireNonNull(Objects.requireNonNull(anvilInventory.getItem(0)).getItemMeta()).getDisplayName().contains("压缩")) {
+                || Objects.requireNonNull(anvilInventory.getFirstItem()).getItemMeta().getDisplayName().contains("压缩")) {
                 e.setResult(null);
             }
         } catch (final @NotNull NullPointerException ignore) {
@@ -189,7 +192,7 @@ public class Listeners implements Listener {
         }
 
         try {
-            if (!Objects.requireNonNull(Objects.requireNonNull(e.getItem()).getItemMeta()).getDisplayName().contains("压缩")) {
+            if (!Objects.requireNonNull(e.getItem()).getItemMeta().getDisplayName().contains("压缩")) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {
@@ -217,7 +220,7 @@ public class Listeners implements Listener {
         }
 
         try {
-            if (Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().contains("压缩")) {
+            if (itemStack.getItemMeta().getDisplayName().contains("压缩")) {
                 e.setCancelled(true);
             }
         } catch (final @NotNull NullPointerException ignore) {

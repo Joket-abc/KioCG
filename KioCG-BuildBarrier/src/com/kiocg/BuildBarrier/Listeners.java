@@ -71,7 +71,7 @@ public class Listeners implements Listener {
             }
 
             final ItemMeta itemMeta = itemStack.getItemMeta();
-            if (Objects.requireNonNull(itemMeta).hasDisplayName() || itemMeta.hasCustomModelData()) {
+            if (itemMeta.hasDisplayName() || itemMeta.hasCustomModelData()) {
                 return;
             }
 
@@ -90,7 +90,7 @@ public class Listeners implements Listener {
 
             final BlockDataMeta blockDataMeta = (BlockDataMeta) drop.getItemMeta();
 
-            final Light light = (Light) Objects.requireNonNull(blockDataMeta).getBlockData(Material.LIGHT);
+            final Light light = (Light) blockDataMeta.getBlockData(Material.LIGHT);
             light.setLevel(((Light) block.getBlockData()).getLevel());
             blockDataMeta.setBlockData(light);
 
@@ -154,7 +154,7 @@ public class Listeners implements Listener {
 
         final BlockDataMeta blockDataMeta = (BlockDataMeta) itemStack.getItemMeta();
 
-        final Light light = (Light) Objects.requireNonNull(blockDataMeta).getBlockData(Material.LIGHT);
+        final Light light = (Light) blockDataMeta.getBlockData(Material.LIGHT);
         light.setLevel((light.getLevel() + 1) % (light.getMaximumLevel() + 1));
         blockDataMeta.setBlockData(light);
 

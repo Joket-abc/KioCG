@@ -1,6 +1,8 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
+import com.destroystokyo.paper.MaterialTags;
 import com.kiocg.LittleThings.LittleThings;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -17,26 +19,27 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 public class copySign implements Listener {
     // 拷贝告示牌
     @EventHandler
     public void copySign(final @NotNull PlayerInteractEvent e) {
-        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || Objects.requireNonNull(e.getHand()) != EquipmentSlot.HAND) {
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getHand() != EquipmentSlot.HAND) {
             return;
         }
 
         final Block block = e.getClickedBlock();
 
-        if (!Objects.requireNonNull(block).getType().toString().endsWith("_SIGN")) {
+        if (!MaterialTags.SIGNS.isTagged(Objects.requireNonNull(block))) {
             return;
         }
 
         final ItemStack itemStack = e.getItem();
 
         try {
-            if (!Objects.requireNonNull(itemStack).getType().toString().endsWith("_SIGN")) {
+            if (!MaterialTags.SIGNS.isTagged(Objects.requireNonNull(itemStack))) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {
@@ -49,8 +52,8 @@ public class copySign implements Listener {
         }
 
         final BlockState blockState = block.getState();
-        for (final String string : ((Sign) blockState).getLines()) {
-            if (string.contains("[")) {
+        for (final Component component : ((Sign) blockState).lines()) {
+            if (component.toString().contains("[")) {
                 player.sendMessage("§a[§b豆渣子§a] §6告示牌包含特殊符号, 无法复制.");
                 e.setCancelled(true);
                 return;
@@ -59,8 +62,7 @@ public class copySign implements Listener {
 
         final Inventory inventory = player.getInventory();
         if (inventory.firstEmpty() != -1) {
-            final ItemStack signStack = itemStack.clone();
-            signStack.setAmount(1);
+            final ItemStack signStack = itemStack.clone().asOne();
 
             final BlockStateMeta blockStateMeta = (BlockStateMeta) signStack.getItemMeta();
 
@@ -68,7 +70,7 @@ public class copySign implements Listener {
                 return;
             }
 
-            Objects.requireNonNull(blockStateMeta).setBlockState(blockState);
+            blockStateMeta.setBlockState(blockState);
             signStack.setItemMeta(blockStateMeta);
 
             itemStack.setAmount(itemStack.getAmount() - 1);
@@ -82,21 +84,21 @@ public class copySign implements Listener {
     public void onBlockPlace(final @NotNull BlockPlaceEvent e) {
         final ItemStack itemStack = e.getItemInHand();
 
-        if (!Objects.requireNonNull(itemStack).getType().toString().endsWith("_SIGN")) {
+        if (!MaterialTags.SIGNS.isTagged(itemStack)) {
             return;
         }
 
-        final String[] lines = ((Sign) ((BlockStateMeta) Objects.requireNonNull(itemStack.getItemMeta())).getBlockState()).getLines();
+        final List<Component> lines = ((Sign) ((BlockStateMeta) itemStack.getItemMeta()).getBlockState()).lines();
 
-        if (lines[0].isEmpty() && lines[1].isEmpty() && lines[2].isEmpty() && lines[3].isEmpty()) {
+        if (lines.get(0).toString().isEmpty() && lines.get(1).toString().isEmpty() && lines.get(2).toString().isEmpty() && lines.get(3).toString().isEmpty()) {
             return;
         }
 
         final Sign signBlock = (Sign) e.getBlockPlaced().getState();
-        signBlock.setLine(0, lines[0]);
-        signBlock.setLine(1, lines[1]);
-        signBlock.setLine(2, lines[2]);
-        signBlock.setLine(3, lines[3]);
+        signBlock.line(0, lines.get(0));
+        signBlock.line(1, lines.get(0));
+        signBlock.line(2, lines.get(0));
+        signBlock.line(3, lines.get(0));
         signBlock.update();
 
         Bukkit.getScheduler().runTask(LittleThings.instance, () -> e.getPlayer().closeInventory());

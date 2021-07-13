@@ -1,8 +1,13 @@
 package com.kiocg.AntiCheatingClient;
 
 import com.kiocg.qqBot.bot.KioCGBot;
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.*;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +18,6 @@ import org.bukkit.event.player.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.Objects;
 
 public class Listeners implements Listener {
     @EventHandler
@@ -25,13 +29,13 @@ public class Listeners implements Listener {
         }
 
         final String verifyCode = Utils.getNewVerifyCode();
-        final BaseComponent[] verifyMessage = Utils.getVerifyMessage(verifyCode);
+        final Component verifyMessage = Utils.getVerifyMessage(verifyCode);
 
         Utils.playerVerifyCode.put(player, verifyCode);
         Utils.playerVerifyMessage.put(player, verifyMessage);
 
         // 延迟10tick防止信息被忽视
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AntiCheatingClient.instance, () -> player.spigot().sendMessage(verifyMessage), 10L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AntiCheatingClient.instance, () -> player.sendMessage(verifyMessage), 10L);
     }
 
     @EventHandler
@@ -42,8 +46,8 @@ public class Listeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerVerify(final @NotNull AsyncPlayerChatEvent e) {
-        final String message = e.getMessage();
+    public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
+        final String message = PlainComponentSerializer.plain().serialize(e.message());
 
         // 可能未使用作弊端
         if (message.startsWith(".say AntiCheatingCheck___")) {
@@ -84,16 +88,10 @@ public class Listeners implements Listener {
                 // 临时封禁非萌新玩家24小时
                 final Date date = new Date();
                 date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
-                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> {
-                    Bukkit.getBanList(BanList.Type.NAME).addBan(String.valueOf(player.getUniqueId()), "\n\n\n\n§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date, null);
-                    player.kickPlayer("\n\n\n\n§7... §c快关掉快关掉 作弊可不是好孩子 §7...");
-                });
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
             } else {
                 // 永久封禁萌新玩家
-                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> {
-                    Bukkit.getBanList(BanList.Type.NAME).addBan(String.valueOf(player.getUniqueId()), "\n\n\n\n§7... §c尝试作弊而被永久封禁 §7...", null, null);
-                    player.kickPlayer("\n\n\n\n§7... §c尝试作弊而被永久封禁 §7...");
-                });
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c尝试作弊而被永久封禁 §7..."));
             }
 
             final String banMsg = "邪恶生物 " + player.getName() + " 被安全检查拦截了.";
@@ -114,10 +112,10 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerCommandPreprocess(final @NotNull PlayerCommandPreprocessEvent e) {
         final Player player = e.getPlayer();
-        final BaseComponent[] playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
         if (playerVerifyMessage != null) {
-            player.spigot().sendMessage(playerVerifyMessage);
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -125,7 +123,7 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerMove(final @NotNull PlayerMoveEvent e) {
         final Player player = e.getPlayer();
-        final BaseComponent[] playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
         if (playerVerifyMessage != null) {
             // 防止卡视角和卡空中
@@ -136,11 +134,11 @@ public class Listeners implements Listener {
             }
 
             final Location to = e.getTo();
-            if (from.getBlockX() == Objects.requireNonNull(to).getBlockX() && from.getBlockZ() == to.getBlockZ()) {
+            if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
                 return;
             }
 
-            player.spigot().sendMessage(playerVerifyMessage);
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -148,10 +146,10 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerInteract(final @NotNull PlayerInteractEvent e) {
         final Player player = e.getPlayer();
-        final BaseComponent[] playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
         if (playerVerifyMessage != null) {
-            player.spigot().sendMessage(playerVerifyMessage);
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }
@@ -159,10 +157,10 @@ public class Listeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelPlayerDropItem(final @NotNull PlayerDropItemEvent e) {
         final Player player = e.getPlayer();
-        final BaseComponent[] playerVerifyMessage = Utils.playerVerifyMessage.get(player);
+        final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
         if (playerVerifyMessage != null) {
-            player.spigot().sendMessage(playerVerifyMessage);
+            player.sendMessage(playerVerifyMessage);
             e.setCancelled(true);
         }
     }

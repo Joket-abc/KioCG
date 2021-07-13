@@ -1,5 +1,6 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -13,8 +14,8 @@ public class protectPlace implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void protectPlace(final @NotNull BlockPlaceEvent e) {
         try {
-            for (final String lore : Objects.requireNonNull(Objects.requireNonNull(e.getItemInHand().getItemMeta()).getLore())) {
-                if (lore.contains("无法放置")) {
+            for (final Component lore : Objects.requireNonNull(e.getItemInHand().lore())) {
+                if (lore.toString().contains("无法放置")) {
                     e.setCancelled(true);
                     return;
                 }

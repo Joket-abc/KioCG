@@ -6,11 +6,9 @@ import org.bukkit.entity.MagmaCube;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class BigMagmaCube {
     public void spawn(final @NotNull Location location) {
-        final MagmaCube magmaCube = Objects.requireNonNull(location.getWorld()).spawn(location, MagmaCube.class);
+        final MagmaCube magmaCube = location.getWorld().spawn(location, MagmaCube.class);
 
         magmaCube.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "BigMagmaCube");
         magmaCube.setCustomName("§7巨型岩浆怪");

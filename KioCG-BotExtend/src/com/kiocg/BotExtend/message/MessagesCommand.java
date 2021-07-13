@@ -50,7 +50,7 @@ public class MessagesCommand {
             case ("qaq") -> contact.sendMessage("චᆽච");
 
             // 外部信息
-            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getBukkitVersion().split("-")[0] + ")\n"
+            case ("info"), ("介绍") -> contact.sendMessage("[公益、正版、原版] (当前版本" + Bukkit.getMinecraftVersion() + ")\n"
                                                          + """
                                                            ①服务器里不会有任何付费内容，将来可能转型非公益后也不会有任何仅限付费内容。
                                                            ②服务器启用正版+白名单模式，最大程度减少熊孩子，并对所有恶意行为零容忍。
@@ -149,18 +149,12 @@ public class MessagesCommand {
                 contact.sendMessage("服务端插件：" + stringBuilder.substring(0, stringBuilder.length() - 2));
             }
             case ("tps"), ("mspt"), ("状态") -> {
-                try {
-                    Class.forName("com.destroystokyo.paper.event.server.ServerTickStartEvent");
-
-                    final double[] tps = Bukkit.getTPS();
-                    contact.sendMessage("TPS(1m, 5m, 15m)："
-                                        + String.format("%.2f", tps[0]) + ", "
-                                        + String.format("%.2f", tps[1]) + ", "
-                                        + String.format("%.2f", tps[2])
-                                        + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
-                } catch (final @NotNull ClassNotFoundException ignore) {
-                    contact.sendMessage("获取TPS失败，请等待服务端升级");
-                }
+                final double[] tps = Bukkit.getTPS();
+                contact.sendMessage("TPS(1m, 5m, 15m)："
+                                    + String.format("%.2f", tps[0]) + ", "
+                                    + String.format("%.2f", tps[1]) + ", "
+                                    + String.format("%.2f", tps[2])
+                                    + "\nMSPT(average): " + String.format("%.5f", Bukkit.getAverageTickTime()));
             }
 
             // 功能信息

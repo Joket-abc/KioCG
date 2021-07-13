@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class ZombieWarrior {
     public void spawn(final @NotNull Location location) {
-        final LivingEntity livingEntity = Objects.requireNonNull(location.getWorld()).spawn(location, Zombie.class);
+        final LivingEntity livingEntity = location.getWorld().spawn(location, Zombie.class);
 
         livingEntity.getPersistentDataContainer().set(InsaneMonsters.namespacedKey, PersistentDataType.STRING, "ZombieWarrior");
         livingEntity.setCustomName("§cSCP-" + String.format("%03d", new Random().nextInt(6000)));

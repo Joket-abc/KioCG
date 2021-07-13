@@ -22,7 +22,7 @@ public class compassTeleport implements Listener {
     @EventHandler
     public void compassTeleport(final @NotNull PlayerInteractEvent e) {
         final Action action = e.getAction();
-        if ((action != Action.RIGHT_CLICK_BLOCK && action != Action.RIGHT_CLICK_AIR) || Objects.requireNonNull(e.getHand()) != EquipmentSlot.HAND) {
+        if ((action != Action.RIGHT_CLICK_BLOCK && action != Action.RIGHT_CLICK_AIR) || e.getHand() != EquipmentSlot.HAND) {
             return;
         }
 
@@ -65,7 +65,7 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        final CompassMeta compassMeta = (CompassMeta) Objects.requireNonNull(itemStack.getItemMeta());
+        final CompassMeta compassMeta = (CompassMeta) itemStack.getItemMeta();
         final Location tpLocation = compassMeta.getLodestone();
 
         if (tpLocation == null) {
@@ -80,7 +80,6 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        Objects.requireNonNull(tpLocation).setDirection(player.getLocation().getDirection());
-        player.teleport(tpLocation.add(0.5, 1.0, 0.5));
+        player.teleport(player.getLocation().add(tpLocation, 0.5, 1.0, 0.5));
     }
 }

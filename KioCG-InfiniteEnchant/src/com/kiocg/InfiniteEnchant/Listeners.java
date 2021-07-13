@@ -1,5 +1,6 @@
 package com.kiocg.InfiniteEnchant;
 
+import com.destroystokyo.paper.event.inventory.PrepareResultEvent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -63,20 +64,20 @@ public class Listeners implements Listener {
         final ItemStack item3 = e.getResult();
         final ItemMeta itemMeta3;
         try {
-            itemMeta3 = Objects.requireNonNull(Objects.requireNonNull(item3).getItemMeta());
+            itemMeta3 = Objects.requireNonNull(item3).getItemMeta();
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
         final AnvilInventory anvilInventory = e.getInventory();
 
-        final ItemStack item1 = anvilInventory.getItem(0);
-        final ItemStack item2 = anvilInventory.getItem(1);
+        final ItemStack item1 = anvilInventory.getFirstItem();
+        final ItemStack item2 = anvilInventory.getSecondItem();
         final ItemMeta itemMeta1;
         final ItemMeta itemMeta2;
         try {
-            itemMeta1 = Objects.requireNonNull(Objects.requireNonNull(item1).getItemMeta());
-            itemMeta2 = Objects.requireNonNull(Objects.requireNonNull(item2).getItemMeta());
+            itemMeta1 = Objects.requireNonNull(item1).getItemMeta();
+            itemMeta2 = Objects.requireNonNull(item2).getItemMeta();
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
@@ -155,19 +156,33 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
+    public void onPrepareGrindstone(final @NotNull PrepareResultEvent e) {
+        if (e.getInventory().getType() != InventoryType.GRINDSTONE) {
+            return;
+        }
+
+        try {
+            if (Objects.requireNonNull(e.getResult()).getType() == Material.BOOK) {
+                e.setResult(new ItemStack(Material.ENCHANTED_BOOK));
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+        }
+    }
+
+    @EventHandler
     public void onReduceRepairCost(final @NotNull PrepareAnvilEvent e) {
         final ItemStack item3 = e.getResult();
         final ItemMeta itemMeta3;
         try {
-            itemMeta3 = Objects.requireNonNull(Objects.requireNonNull(item3).getItemMeta());
+            itemMeta3 = Objects.requireNonNull(item3).getItemMeta();
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
 
         final AnvilInventory anvilInventory = e.getInventory();
 
-        final ItemStack item1 = anvilInventory.getItem(0);
-        final ItemStack item2 = anvilInventory.getItem(1);
+        final ItemStack item1 = anvilInventory.getFirstItem();
+        final ItemStack item2 = anvilInventory.getSecondItem();
         final Material itemMaterial1;
         final Material itemMaterial2;
         try {
@@ -177,31 +192,20 @@ public class Listeners implements Listener {
             return;
         }
 
-        final ItemMeta itemMeta1;
-        try {
-            itemMeta1 = Objects.requireNonNull(item1.getItemMeta());
-        } catch (final @NotNull NullPointerException ignore) {
-            return;
-        }
-
         if (itemMaterial1 == Material.ENCHANTED_BOOK) {
-            if (((EnchantmentStorageMeta) itemMeta1).hasStoredEnchants()) {
+            if (((EnchantmentStorageMeta) item1.getItemMeta()).hasStoredEnchants()) {
                 return;
             }
 
             final Map<Enchantment, Integer> enchantments = itemMeta3.getEnchants();
             enchantments.keySet().forEach(itemMeta3::removeEnchant);
             enchantments.forEach((enchantment, level) -> ((EnchantmentStorageMeta) itemMeta3).addStoredEnchant(enchantment, level, true));
-        } else if (itemMaterial1 != itemMaterial2 || itemMeta1.hasEnchants()) {
+        } else if (itemMaterial1 != itemMaterial2 || item1.getItemMeta().hasEnchants()) {
             return;
         }
 
-        try {
-            if (!((Repairable) Objects.requireNonNull(item2.getItemMeta())).hasRepairCost()) {
-                e.setResult(null);
-                return;
-            }
-        } catch (final @NotNull NullPointerException ignore) {
+        if (!((Repairable) item2.getItemMeta()).hasRepairCost()) {
+            e.setResult(null);
             return;
         }
 
