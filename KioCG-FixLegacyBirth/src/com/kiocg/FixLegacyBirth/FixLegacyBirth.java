@@ -56,8 +56,8 @@ public class FixLegacyBirth extends JavaPlugin implements Listener {
         }
 
         if ("KioCG_world".equals(player.getWorld().getName())) {
-            player.sendMessage("§a[§b豆渣子§a] §4注意: 你当前所处的旧生存世界, 将在不久后停止支持.");
-            player.sendMessage("§a[§b豆渣子§a] §4请移居前往新生存世界, §a输入 /spawn 来到主城§4.");
+            player.sendMessage("§a[§b豆渣子§a] §4注意: §c你当前所处的旧生存世界, 将在不久后停止支持.");
+            player.sendMessage("§a[§b豆渣子§a] §c请移居前往新生存世界, 输入 /spawn 来到主城.");
         }
     }
 }
