@@ -8,11 +8,14 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class FullMoon {
+public class FullMoon implements Listener {
     private final World world;
 
     private final @NotNull BossBar bossBar;
@@ -36,5 +39,12 @@ public class FullMoon {
 
             bossBar.removeAll();
         }, 20L * 10L, 20L * 10L);
+    }
+
+    @EventHandler
+    public void cancelEntityDamageByEntity(final @NotNull PlayerJoinEvent e) {
+        if (world.getMoonPhase() == MoonPhase.NEW_MOON) {
+            bossBar.addPlayer(e.getPlayer());
+        }
     }
 }

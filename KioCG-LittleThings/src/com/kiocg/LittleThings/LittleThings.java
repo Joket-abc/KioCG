@@ -46,7 +46,7 @@ public class LittleThings extends JavaPlugin {
             Class.forName("io.papermc.paper.world.MoonPhase");
 
             // 满月特殊效果
-            new FullMoon();
+            pluginManager.registerEvents(new FullMoon(), this);
         } catch (final @NotNull ClassNotFoundException ignore) {
         }
     }
