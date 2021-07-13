@@ -38,6 +38,8 @@ public class MessagesRemind {
             if (shouldReply(group.getId(), member.getId(), 4)) {
                 group.sendMessage("出于优化的需要，大部分实体的AI行为与原版有所不同，有关实体的反馈将不受支持。");
             }
+        } else if (msg.contains("基岩版")) {
+            group.sendMessage("服务器不会添加基岩版兼容的功能，请不要在群里询问为什么不加。");
         } else if (msg.contains("死亡") && msg.contains("掉")) {
             if (shouldReply(group.getId(), member.getId(), 5)) {
                 group.sendMessage("游戏内所有世界均不会有死亡掉落");
