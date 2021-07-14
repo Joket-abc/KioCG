@@ -180,9 +180,10 @@ public class Listeners implements Listener {
             // 蛋糕是个谎言
             final Material material = block.getType();
             if ((material == Material.CAKE || material.toString().endsWith("_CAKE")) && player.getFoodLevel() != 20) {
-                if (!Utils.eatCake.contains(player.getUniqueId())) {
+                final String uuidString = player.getUniqueId().toString();
+                if (!Utils.eatCake.contains(uuidString)) {
                     Bukkit.getOnlinePlayers().forEach(toPlayer -> toPlayer.sendMessage(player.getName() + "获得成就§a[蛋糕是个谎言]"));
-                    Utils.eatCake.add(player.getUniqueId());
+                    Utils.eatCake.add(uuidString);
                 }
 
                 player.setHealth(0.0);

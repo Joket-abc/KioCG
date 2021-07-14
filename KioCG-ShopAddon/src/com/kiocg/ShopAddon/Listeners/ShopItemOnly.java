@@ -1,4 +1,4 @@
-package com.kiocg.ShopItemOnly;
+package com.kiocg.ShopAddon.Listeners;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import org.maxgamer.quickshop.shop.Shop;
 
 import java.util.Objects;
 
-public class Listeners implements Listener {
+public class ShopItemOnly implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInventoryClick(final @NotNull InventoryClickEvent e) {
         final ItemStack itemStack = e.getCurrentItem();
@@ -24,6 +24,7 @@ public class Listeners implements Listener {
         } catch (final @NotNull NullPointerException ignore) {
             return;
         }
+
         if (material == Material.AIR || material == Material.COBBLESTONE) {
             return;
         }
@@ -35,7 +36,7 @@ public class Listeners implements Listener {
             return;
         }
 
-        if (!quickShop.getItemMatcher().matches(shop.getItem(), itemStack)) {
+        if (!shop.matches(itemStack)) {
             e.getWhoClicked().sendMessage("§a[§b豆渣子§a] §6你只能在商店里操作商品或原石(用于占位).");
             e.setCancelled(true);
         }
@@ -50,7 +51,7 @@ public class Listeners implements Listener {
             return;
         }
 
-        if (!quickShop.getItemMatcher().matches(shop.getItem(), e.getItem())) {
+        if (!shop.matches(e.getItem())) {
             e.setCancelled(true);
         }
     }
