@@ -96,9 +96,9 @@ public class copySign implements Listener {
 
         final Sign signBlock = (Sign) e.getBlockPlaced().getState();
         signBlock.line(0, lines.get(0));
-        signBlock.line(1, lines.get(0));
-        signBlock.line(2, lines.get(0));
-        signBlock.line(3, lines.get(0));
+        signBlock.line(1, lines.get(1));
+        signBlock.line(2, lines.get(2));
+        signBlock.line(3, lines.get(3));
         signBlock.update();
 
         Bukkit.getScheduler().runTask(LittleThings.instance, () -> e.getPlayer().closeInventory());
