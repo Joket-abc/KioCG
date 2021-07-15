@@ -1,5 +1,6 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
+import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,7 +16,7 @@ public class protectPlace implements Listener {
     public void protectPlace(final @NotNull BlockPlaceEvent e) {
         try {
             for (final Component lore : Objects.requireNonNull(e.getItemInHand().lore())) {
-                if (lore.toString().contains("无法放置")) {
+                if (PaperComponents.plainSerializer().serialize(lore).contains("无法放置")) {
                     e.setCancelled(true);
                     return;
                 }

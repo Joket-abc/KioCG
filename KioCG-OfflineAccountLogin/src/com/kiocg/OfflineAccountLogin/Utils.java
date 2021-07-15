@@ -1,8 +1,8 @@
 package com.kiocg.OfflineAccountLogin;
 
+import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,9 +27,9 @@ public class Utils {
         final Component component;
 
         switch (reason) {
-            case 0 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c离线账号尚未连接qq号 §7...");
-            case 1, 2 -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c离线账号登录已失效 §7...");
-            default -> component = LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c离线账号需要验证 §7...");
+            case 0 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号尚未连接qq号 §7...");
+            case 1, 2 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号登录已失效 §7...");
+            default -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号需要验证 §7...");
         }
 
         return component.append(Component.text("\n请给群管理员豆渣子发送临时会话消息: ", NamedTextColor.GOLD))

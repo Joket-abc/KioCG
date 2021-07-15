@@ -1,6 +1,7 @@
 package com.kiocg.LittleThings.listeners.Misc;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.Bukkit;
@@ -19,7 +20,7 @@ public class atPlayer implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void atPlayer(final @NotNull AsyncChatEvent e) {
         Component message = e.message();
-        final String messageString = message.toString();
+        final String messageString = PaperComponents.plainSerializer().serialize(message);
 
         if (!messageString.contains("@") || !e.getPlayer().hasPermission("kiocg.littlethings.at")) {
             return;

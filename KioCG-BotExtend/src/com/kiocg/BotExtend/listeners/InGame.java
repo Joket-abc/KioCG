@@ -6,7 +6,7 @@ import com.kiocg.BotExtend.BotExtend;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import com.kiocg.BotExtend.utils.Utils;
 import com.kiocg.qqBot.bot.KioCGBot;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import io.papermc.paper.text.PaperComponents;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +30,7 @@ public class InGame implements Listener {
         final Boolean onlineAccount = Utils.kickWhitelistPlayer.get(playerName);
         if (onlineAccount != null) {
             if (!onlineAccount) {
-                e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
+                e.kickMessage(PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
             }
             return;
         }
@@ -38,7 +38,7 @@ public class InGame implements Listener {
         final String whitelistMsg;
         if (Objects.requireNonNull(player.getId()).toString().startsWith("ffffffff-ffff-ffff")) {
             whitelistMsg = "不明生物 " + playerName + " 被离线白名单结界阻挡了.";
-            e.kickMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
+            e.kickMessage(PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c请加群 569696336 申请白名单 §7...\n§6正版账号请使用 play.kiocg.com 登入服务器\n\n\n\n\n\n\n\n\n\n§8只要申请一定会通过的~"));
             Utils.kickWhitelistPlayer.put(playerName, false);
         } else {
             whitelistMsg = "不明生物 " + playerName + " 被正版白名单结界阻挡了.";

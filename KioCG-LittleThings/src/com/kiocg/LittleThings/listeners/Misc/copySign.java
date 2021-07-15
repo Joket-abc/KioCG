@@ -2,6 +2,7 @@ package com.kiocg.LittleThings.listeners.Misc;
 
 import com.destroystokyo.paper.MaterialTags;
 import com.kiocg.LittleThings.LittleThings;
+import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -53,7 +54,7 @@ public class copySign implements Listener {
 
         final BlockState blockState = block.getState();
         for (final Component component : ((Sign) blockState).lines()) {
-            if (component.toString().contains("[")) {
+            if (PaperComponents.plainSerializer().serialize(component).contains("[")) {
                 player.sendMessage("§a[§b豆渣子§a] §6告示牌包含特殊符号, 无法复制.");
                 e.setCancelled(true);
                 return;
@@ -90,7 +91,10 @@ public class copySign implements Listener {
 
         final List<Component> lines = ((Sign) ((BlockStateMeta) itemStack.getItemMeta()).getBlockState()).lines();
 
-        if (lines.get(0).toString().isEmpty() && lines.get(1).toString().isEmpty() && lines.get(2).toString().isEmpty() && lines.get(3).toString().isEmpty()) {
+        if (PaperComponents.plainSerializer().serialize(lines.get(0)).isEmpty()
+            && PaperComponents.plainSerializer().serialize(lines.get(1)).isEmpty()
+            && PaperComponents.plainSerializer().serialize(lines.get(2)).isEmpty()
+            && PaperComponents.plainSerializer().serialize(lines.get(3)).isEmpty()) {
             return;
         }
 

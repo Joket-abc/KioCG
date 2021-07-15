@@ -2,8 +2,8 @@ package com.kiocg.AntiCheatingClient;
 
 import com.kiocg.qqBot.bot.KioCGBot;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,7 +47,7 @@ public class Listeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
-        final String message = PlainComponentSerializer.plain().serialize(e.message());
+        final String message = PaperComponents.plainSerializer().serialize(e.message());
 
         // 可能未使用作弊端
         if (message.startsWith(".say AntiCheatingCheck___")) {
