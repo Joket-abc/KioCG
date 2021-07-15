@@ -80,6 +80,6 @@ public class compassTeleport implements Listener {
             return;
         }
 
-        player.teleport(player.getLocation().add(tpLocation, 0.5, 1.0, 0.5));
+        player.teleport(tpLocation.add(player.getLocation(), 0.5, 1.0, 0.5));
     }
 }
