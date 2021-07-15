@@ -26,10 +26,10 @@ public class Seen {
             return;
         }
 
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayerIfCached(msg);
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
 
-        if (offlinePlayer == null) {
-            contact.sendMessage("无法找到玩家 " + msg + " 的缓存信息");
+        if (!offlinePlayer.hasPlayedBefore()) {
+            contact.sendMessage("玩家 " + msg + " 不存在");
             return;
         }
 
