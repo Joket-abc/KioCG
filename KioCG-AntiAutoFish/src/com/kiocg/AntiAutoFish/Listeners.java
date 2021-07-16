@@ -23,6 +23,10 @@ public class Listeners implements Listener {
         final PlayerFishEvent.State state = e.getState();
         if (state == PlayerFishEvent.State.BITE) {
             Utils.playerBiteTime.put(player, System.currentTimeMillis());
+
+            if (!Utils.playerAutoCount.containsKey(player)) {
+                Utils.playerAutoCount.put(player, 0);
+            }
         } else if (state == PlayerFishEvent.State.CAUGHT_FISH) {
             final int count = Utils.playerAutoCount.get(player);
 
