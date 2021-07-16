@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/KioCG.iml" filepath="$PROJECT_DIR$/KioCG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KioCG-AntiAutoFish/KioCG-AntiAutoFish.iml" filepath="$PROJECT_DIR$/KioCG-AntiAutoFish/KioCG-AntiAutoFish.iml" />
       <module fileurl="file://$PROJECT_DIR$/KioCG-AntiCheatingClient/KioCG-AntiCheatingClient.iml" filepath="$PROJECT_DIR$/KioCG-AntiCheatingClient/KioCG-AntiCheatingClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/KioCG-BlockRecall/KioCG-BlockRecall.iml" filepath="$PROJECT_DIR$/KioCG-BlockRecall/KioCG-BlockRecall.iml" />
       <module fileurl="file://$PROJECT_DIR$/KioCG-BotExtend/KioCG-BotExtend.iml" filepath="$PROJECT_DIR$/KioCG-BotExtend/KioCG-BotExtend.iml" />

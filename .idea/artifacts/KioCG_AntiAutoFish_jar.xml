@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KioCG-AntiAutoFish:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KioCG_AntiAutoFish_jar</output-path>
+    <root id="archive" name="KioCG-AntiAutoFish.jar">
+      <element id="module-output" name="KioCG-AntiAutoFish" />
+      <element id="module-source" name="KioCG-AntiAutoFish" />
+      <element id="file-copy" path="$PROJECT_DIR$/KioCG-AntiAutoFish/plugin.yml" />
+    </root>
+  </artifact>
+</component>

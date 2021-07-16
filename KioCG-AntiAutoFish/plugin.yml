@@ -1,0 +1,4 @@
+name: KioCG-AntiAutoFish
+main: com.kiocg.AntiAutoFish.AntiAutoFish
+version: 2021
+api-version: 1.16

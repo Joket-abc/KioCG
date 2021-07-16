@@ -88,10 +88,10 @@ public class Listeners implements Listener {
                 // 临时封禁非萌新玩家24小时
                 final Date date = new Date();
                 date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
-                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c快关掉快关掉 作弊可不是好孩子 §7...", date));
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c快关掉快关掉 作弊可不是好孩子 §7...\n\n\n\n\n\n\n\n\n\n\n§8(AntiCheatingClient)", date));
             } else {
                 // 永久封禁萌新玩家
-                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c尝试作弊而被永久封禁 §7..."));
+                Bukkit.getScheduler().runTask(AntiCheatingClient.instance, () -> player.banPlayer("\n\n\n\n§7... §c尝试作弊而被永久封禁 §7...\n\n\n\n\n\n\n\n\n\n\n§8(AntiCheatingClient)"));
             }
 
             final String banMsg = "邪恶生物 " + player.getName() + " 被安全检查拦截了.";
