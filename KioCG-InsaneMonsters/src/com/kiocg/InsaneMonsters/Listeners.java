@@ -73,18 +73,22 @@ public class Listeners implements Listener {
                 InsaneMonsters.darkKnight.spawn(livingEntity.getLocation());
             }
             case SLIME -> {
-                if (random.nextInt(100) < 95) {
+                final Location bigSlimeLoc = livingEntity.getLocation();
+
+                if (bigSlimeLoc.getBlock().getType() == Material.CAVE_AIR || random.nextInt(100) < 95) {
                     return;
                 }
 
-                InsaneMonsters.bigSlime.spawn(livingEntity.getLocation());
+                InsaneMonsters.bigSlime.spawn(bigSlimeLoc);
             }
             case MAGMA_CUBE -> {
-                if (random.nextInt(100) < 95) {
+                final Location bigMagmaLoc = livingEntity.getLocation();
+
+                if (bigMagmaLoc.getBlock().getType() == Material.CAVE_AIR || random.nextInt(100) < 95) {
                     return;
                 }
 
-                InsaneMonsters.bigMagmaCube.spawn(livingEntity.getLocation());
+                InsaneMonsters.bigMagmaCube.spawn(bigMagmaLoc);
             }
             default -> {
                 return;

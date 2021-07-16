@@ -2,6 +2,7 @@ package com.kiocg.BotExtend;
 
 import com.kiocg.BotExtend.commands.Link;
 import com.kiocg.BotExtend.listeners.*;
+import com.kiocg.BotExtend.utils.AMsg;
 import com.kiocg.BotExtend.utils.GroupAdminUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.milkbowl.vault.chat.Chat;
@@ -68,6 +69,9 @@ public class BotExtend extends JavaPlugin {
 
         // 加载玩家连接QQ的数据
         new PlayerLinkUtils().loadPlayers();
+
+        // 加载回复关键词
+        new AMsg().setMsg();
 
         // 注册事件监听器
         final PluginManager pluginManager = getServer().getPluginManager();

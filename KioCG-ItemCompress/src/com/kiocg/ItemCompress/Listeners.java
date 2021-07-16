@@ -1,5 +1,7 @@
 package com.kiocg.ItemCompress;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -199,8 +201,10 @@ public class Listeners implements Listener {
             return;
         }
 
+        final Block block = e.getClickedBlock();
         try {
-            if (Objects.requireNonNull(e.getClickedBlock()).getState() instanceof TileState) {
+            if (Objects.requireNonNull(block).getState() instanceof TileState
+                || block.getType() == Material.CRAFTING_TABLE) {
                 return;
             }
         } catch (final @NotNull NullPointerException ignore) {

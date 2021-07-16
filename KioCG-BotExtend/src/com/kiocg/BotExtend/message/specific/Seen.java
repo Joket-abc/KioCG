@@ -26,7 +26,7 @@ public class Seen {
             return;
         }
 
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
+        @SuppressWarnings("deprecation") final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
 
         if (!offlinePlayer.hasPlayedBefore()) {
             contact.sendMessage("玩家 " + msg + " 不存在");

@@ -4,7 +4,6 @@ import com.kiocg.qqBot.events.AsyncABEvent;
 import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.contact.Group;
-import net.mamoe.mirai.contact.NormalMember;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.message.data.At;
@@ -49,17 +48,17 @@ public class GroupOther implements Listener {
         }
 
         final Group group = e.getGroup();
-        final NormalMember member = e.getMember();
+        final String groupID = String.valueOf(group.getId());
 
-        switch (String.valueOf(group.getId())) {
-            case "569696336", "553171328" -> group.sendMessage(new MessageChainBuilder()
-                                                                       .append(new At(member.getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
-                                                                       .append("\n！请先仔细查看群公告！")
-                                                                       .append("\n有关白名单请输入 .whitelist")
-                                                                       .append("\n下载客户端请输入 .client")
-                                                                       .append("\n查看备用IP请输入 .ip")
-                                                                       .append("\n服务器含假矿+反作弊等安全插件")
-                                                                       .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
+        if ("569696336".equals(groupID) || "553171328".equals(groupID)) {
+            group.sendMessage(new MessageChainBuilder()
+                                      .append(new At(e.getMember().getId())).append(" 欢迎萌新(๑˃̵ᴗ˂̵)و ")
+                                      .append("\n！请先仔细查看群公告！")
+                                      .append("\n有关白名单请输入 .whitelist")
+                                      .append("\n下载客户端请输入 .client")
+                                      .append("\n查看备用IP请输入 .ip")
+                                      .append("\n服务器含假矿+反作弊等安全插件")
+                                      .append("\n这里不欢迎熊孩子，请友好相处。呐。").build());
         }
     }
 
