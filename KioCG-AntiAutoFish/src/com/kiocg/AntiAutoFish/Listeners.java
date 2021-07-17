@@ -36,7 +36,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (Utils.playerBiteTime.get(player) - System.currentTimeMillis() < 300L) {
+            if (System.currentTimeMillis() - Utils.playerBiteTime.get(player) < 300L) {
                 Utils.playerAutoCount.put(player, count + 1);
             } else if (count > 0) {
                 Utils.playerAutoCount.put(player, count - 1);
