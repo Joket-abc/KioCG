@@ -13,7 +13,7 @@ public class cropHoe implements Listener {
     @EventHandler
     public void cropHoe(final @NotNull BlockDropItemEvent e) {
         if (!MaterialSetTag.CROPS.isTagged(e.getBlockState().getType())
-            || !MaterialTags.HOES.isTagged(e.getPlayer().getInventory().getItemInMainHand())) {
+            || MaterialTags.HOES.isTagged(e.getPlayer().getInventory().getItemInMainHand())) {
             return;
         }
 
