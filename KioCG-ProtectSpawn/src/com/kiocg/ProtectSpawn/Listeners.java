@@ -1,5 +1,6 @@
 package com.kiocg.ProtectSpawn;
 
+import com.destroystokyo.paper.MaterialSetTag;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -192,7 +193,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (block.getType() == Material.ANVIL) {
+            if (material == Material.ANVIL || MaterialSetTag.FLOWER_POTS.isTagged(material)) {
                 e.setCancelled(true);
                 return;
             }
