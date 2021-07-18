@@ -21,6 +21,3 @@ permissions:
   kiocg.foodflight.free.world_name:
     description: 允许在指定世界无限飞行
     default: op
-  kiocg.foodflight.free:
-    description: 允许在所有世界无限飞行
-    default: op
