@@ -59,7 +59,11 @@ public class Seen {
 
         stringBuilder.append("\n死亡次数：").append(offlinePlayer.getStatistic(Statistic.DEATHS)).append("次");
         if (Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
-            stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
+            try {
+                stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
+            } catch (final RuntimeException ignore) {
+                stringBuilder.append("null");
+            }
         } else {
             stringBuilder.append("   元気：null");
         }
