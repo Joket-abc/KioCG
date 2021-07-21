@@ -61,7 +61,7 @@ public class Seen {
         if (Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
             try {
                 stringBuilder.append("   元気：").append(ExperienceAPI.getPowerLevelOffline(uuid));
-            } catch (final RuntimeException ignore) {
+            } catch (final @NotNull RuntimeException ignore) {
                 stringBuilder.append("null");
             }
         } else {
