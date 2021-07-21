@@ -27,12 +27,12 @@ public class Utils {
         final Component component;
 
         switch (reason) {
-            case 0 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号尚未连接qq号 §7...\n\n\n\n\n\n\n\n\n\n\n§8(reason 0)");
-            case 1, 2 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号登录已失效 §7...\n\n\n\n\n\n\n\n\n\n\n§8(reason 1,2)");
-            default -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号需要验证 §7...\n\n\n\n\n\n\n\n\n\n\n§8(reason other)");
+            case 0 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号尚未连接qq号 (请按下方提示操作) §7...\n\n\n\n\n\n\n\n\n\n\n");
+            case 1, 2 -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号登录已失效 (请按下方提示操作) §7...\n\n\n\n\n\n\n\n\n\n\n");
+            default -> component = PaperComponents.legacySectionSerializer().deserialize("\n\n\n\n§7... §c离线账号需要验证 (请按下方提示操作) §7...\n\n\n\n\n\n\n\n\n\n\n");
         }
 
-        return component.append(Component.text("\n请给群管理员豆渣子发送临时会话消息: ", NamedTextColor.GOLD))
+        return component.append(Component.text("请给群管理员豆渣子发送临时会话消息: ", NamedTextColor.GOLD))
                         .append(Component.text(VerifyCode, NamedTextColor.WHITE));
     }
 }
