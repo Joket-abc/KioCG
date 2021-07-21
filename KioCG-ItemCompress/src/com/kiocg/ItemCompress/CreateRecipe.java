@@ -20,6 +20,7 @@ public class CreateRecipe {
         // 修复某些小问题
         compressMaterial.remove(Material.PLAYER_HEAD);
         compressMaterial.remove(Material.SPAWNER);
+        compressMaterial.remove(Material.DRAGON_BREATH);
 
         // 防止覆盖已有的配方
         final Iterator<Recipe> iterator = Bukkit.recipeIterator();
