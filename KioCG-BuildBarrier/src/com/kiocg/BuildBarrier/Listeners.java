@@ -103,6 +103,25 @@ public class Listeners implements Listener {
             }
 
             drop = new ItemStack(Material.END_PORTAL_FRAME);
+
+            // 同时去除末地传送门
+            final Location location = block.getLocation();
+            final int[] x = {1, -1, 0, 0};
+            final int[] z = {0, 0, 1, -1};
+            for (int i = 0; i < 4; ++i) {
+                @SuppressWarnings("ImplicitNumericConversion") final Location portalLoc = location.clone().add(x[i], 0.0, z[i]);
+                if (portalLoc.getBlock().getType() == Material.END_PORTAL) {
+                    for (int xi = -2; xi <= 2; ++xi) {
+                        for (int zi = -2; zi <= 2; ++zi) {
+                            @SuppressWarnings("ImplicitNumericConversion") final Block portalBlock = portalLoc.clone().add(xi, 0.0, zi).getBlock();
+                            if (portalBlock.getType() == Material.END_PORTAL) {
+                                portalBlock.setType(Material.AIR);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
         } else {
             return;
         }
