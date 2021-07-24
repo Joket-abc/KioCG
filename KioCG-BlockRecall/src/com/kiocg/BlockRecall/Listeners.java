@@ -1,9 +1,6 @@
 package com.kiocg.BlockRecall;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
@@ -42,7 +39,7 @@ public class Listeners implements Listener {
 
         final BlockState blockState = e.getBlockPlaced().getState();
 
-        // 实体方块容易出事情, 修复双层方块BUG
+        // 实体方块容易出事情, 修复双层方块BUG (eg.门、高花)
         if (blockState instanceof TileState || blockState.getBlockData() instanceof Bisected) {
             return;
         }
@@ -55,8 +52,6 @@ public class Listeners implements Listener {
         }
 
         Utils.lastBlockState.put(player, blockState);
-
-        itemStackClone.setAmount(1);
         Utils.lastBlockItemStack.put(player, itemStackClone);
     }
 
@@ -84,7 +79,7 @@ public class Listeners implements Listener {
         }
 
         // 台阶问题修复
-        final BlockData blockData = blockState.getBlockData();
+        final BlockData blockData = block.getBlockData();
         if (blockData instanceof Slab && ((Slab) blockData).getType() == Slab.Type.DOUBLE) {
             Utils.lastBlockState.remove(player);
             // 优化不需要的 Utils.lastBlockItemStack.remove(player);
@@ -109,7 +104,11 @@ public class Listeners implements Listener {
         block.setType(Material.AIR);
 
         final Location loc = block.getLocation();
-        block.getWorld().dropItemNaturally(loc, Utils.lastBlockItemStack.get(player));
-        player.playSound(loc.toCenterLocation(), blockData.getSoundGroup().getBreakSound(), 1.0F, 1.0F);
+        final World world = loc.getWorld();
+
+        world.dropItemNaturally(loc, Utils.lastBlockItemStack.get(player).asOne());
+
+        final SoundGroup soundGroup = blockData.getSoundGroup();
+        world.playSound(loc.toCenterLocation(), soundGroup.getBreakSound(), soundGroup.getVolume(), soundGroup.getPitch());
     }
 }
