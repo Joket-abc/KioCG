@@ -1,7 +1,7 @@
 name: KioCG-AntiCheatingClient
 main: com.kiocg.AntiCheatingClient.AntiCheatingClient
 version: 2021
-api-version: 1.16
+api-version: 1.17
 
 softdepend: [ "KioCG-qqBot" ]
 

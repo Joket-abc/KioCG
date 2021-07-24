@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class Listeners implements Listener {
     @EventHandler
-    public void startPlayerVerify(final @NotNull PlayerJoinEvent e) {
+    public void onPlayerJoin(final @NotNull PlayerJoinEvent e) {
         final Player player = e.getPlayer();
 
         if (player.hasPermission("kiocg.anticheatingclient.bypass")) {
@@ -39,14 +39,14 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void removePlayerVerify(final @NotNull PlayerQuitEvent e) {
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent e) {
         final Player player = e.getPlayer();
         Utils.playerVerifyCode.remove(player);
         Utils.playerVerifyMessage.remove(player);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerVerify(final @NotNull AsyncChatEvent e) {
+    public void onAsyncChat(final @NotNull AsyncChatEvent e) {
         final String message = PaperComponents.plainSerializer().serialize(e.message());
 
         // 可能未使用作弊端
@@ -62,7 +62,7 @@ public class Listeners implements Listener {
             }
 
             if (message.equals(playerVerifyCode)) {
-                player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始异世界的探险了~");
+                player.sendMessage("§a[§b豆渣子§a] §2你好像很健康呐, 可以开始豆渣星球的探险了~");
 
                 Utils.playerVerifyCode.remove(player);
                 Utils.playerVerifyMessage.remove(player);
@@ -84,7 +84,7 @@ public class Listeners implements Listener {
                 return;
             }
 
-            if (player.getStatistic(Statistic.PLAY_ONE_MINUTE) > 20 * 60 * 60 * 12) {
+            if (player.getStatistic(Statistic.PLAY_ONE_MINUTE) > 20 * 60 * 60 * 24) {
                 // 临时封禁非萌新玩家24小时
                 final Date date = new Date();
                 date.setTime(date.getTime() + 1000L * 60L * 60L * 24L);
@@ -126,13 +126,14 @@ public class Listeners implements Listener {
         final Component playerVerifyMessage = Utils.playerVerifyMessage.get(player);
 
         if (playerVerifyMessage != null) {
-            // 防止卡视角和卡空中
             final Location from = e.getFrom();
 
+            // 防止卡下界传送门
             if (from.getBlock().getType() == Material.NETHER_PORTAL) {
                 return;
             }
 
+            // 防止卡视角和卡空中
             final Location to = e.getTo();
             if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
                 return;
@@ -167,7 +168,7 @@ public class Listeners implements Listener {
 
     // 防止玩家在反作弊验证过程中被攻击
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void cancelPlayerDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
+    public void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent e) {
         final Entity entity = e.getEntity();
         if (entity instanceof Player && Utils.playerVerifyCode.containsKey((Player) entity)) {
             e.setCancelled(true);
