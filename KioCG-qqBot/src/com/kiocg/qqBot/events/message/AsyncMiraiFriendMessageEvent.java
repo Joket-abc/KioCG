@@ -1,21 +1,19 @@
 package com.kiocg.qqBot.events.message;
 
-import com.kiocg.qqBot.events.AsyncABEvent;
-import net.mamoe.mirai.event.events.MessageEvent;
-import org.bukkit.event.Cancellable;
+import net.mamoe.mirai.event.events.FriendMessageEvent;
 
-public class AsyncMessageEvent extends AsyncABEvent implements Cancellable {
-    private final MessageEvent event;
+public class AsyncMiraiFriendMessageEvent extends AsyncMiraiMessageEvent {
+    private final FriendMessageEvent event;
 
     private boolean cancelledFlag;
 
-    public AsyncMessageEvent(final MessageEvent event) {
+    public AsyncMiraiFriendMessageEvent(final FriendMessageEvent event) {
         super(event);
         this.event = event;
     }
 
     @Override
-    public MessageEvent getEvent() {
+    public FriendMessageEvent getEvent() {
         return event;
     }
 

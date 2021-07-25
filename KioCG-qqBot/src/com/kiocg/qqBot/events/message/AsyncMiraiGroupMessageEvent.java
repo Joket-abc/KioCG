@@ -1,19 +1,19 @@
 package com.kiocg.qqBot.events.message;
 
-import net.mamoe.mirai.event.events.FriendMessageEvent;
+import net.mamoe.mirai.event.events.GroupMessageEvent;
 
-public class AsyncFriendMessageEvent extends AsyncMessageEvent {
-    private final FriendMessageEvent event;
+public class AsyncMiraiGroupMessageEvent extends AsyncMiraiMessageEvent {
+    private final GroupMessageEvent event;
 
     private boolean cancelledFlag;
 
-    public AsyncFriendMessageEvent(final FriendMessageEvent event) {
+    public AsyncMiraiGroupMessageEvent(final GroupMessageEvent event) {
         super(event);
         this.event = event;
     }
 
     @Override
-    public FriendMessageEvent getEvent() {
+    public GroupMessageEvent getEvent() {
         return event;
     }
 

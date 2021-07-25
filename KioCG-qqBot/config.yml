@@ -5,4 +5,5 @@ bot:
   # ANDROID_PHONE 手机. 所有功能都支持.
   # ANDROID_WATCH 手表.
   protocol: ANDROID_PAD
+  cache: true
   debug: false

@@ -1,19 +1,21 @@
 package com.kiocg.qqBot.events.message;
 
-import net.mamoe.mirai.event.events.GroupMessageEvent;
+import com.kiocg.qqBot.events.AsyncMiraiEvent;
+import net.mamoe.mirai.event.events.MessageEvent;
+import org.bukkit.event.Cancellable;
 
-public class AsyncGroupMessageEvent extends AsyncMessageEvent {
-    private final GroupMessageEvent event;
+public class AsyncMiraiMessageEvent extends AsyncMiraiEvent implements Cancellable {
+    private final MessageEvent event;
 
     private boolean cancelledFlag;
 
-    public AsyncGroupMessageEvent(final GroupMessageEvent event) {
+    public AsyncMiraiMessageEvent(final MessageEvent event) {
         super(event);
         this.event = event;
     }
 
     @Override
-    public GroupMessageEvent getEvent() {
+    public MessageEvent getEvent() {
         return event;
     }
 

@@ -2,12 +2,12 @@ package com.kiocg.qqBot.events.message;
 
 import net.mamoe.mirai.event.events.GroupTempMessageEvent;
 
-public class AsyncGroupTempMessageEvent extends AsyncMessageEvent {
+public class AsyncMiraiGroupTempMessageEvent extends AsyncMiraiMessageEvent {
     private final GroupTempMessageEvent event;
 
     private boolean cancelledFlag;
 
-    public AsyncGroupTempMessageEvent(final GroupTempMessageEvent event) {
+    public AsyncMiraiGroupTempMessageEvent(final GroupTempMessageEvent event) {
         super(event);
         this.event = event;
     }

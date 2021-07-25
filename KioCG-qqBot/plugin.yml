@@ -1,7 +1,7 @@
 name: KioCG-qqBot
 main: com.kiocg.qqBot.qqBot
 version: 2021
-api-version: 1.16
+api-version: 1.17
 
 commands:
   qqbot:

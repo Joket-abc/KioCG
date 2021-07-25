@@ -1,6 +1,5 @@
 package com.kiocg.qqBot;
 
-import com.kiocg.qqBot.bot.KioCGBot;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,7 +28,7 @@ public class qqBot extends JavaPlugin {
 
         new KioCGBot().restart();
 
-        sender.sendMessage("§a[§b豆渣子§a] §6成功重载插件.");
+        sender.sendMessage("§a[§b豆渣子§a] §6插件重载成功.");
         return true;
     }
 }
