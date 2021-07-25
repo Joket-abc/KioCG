@@ -1,6 +1,6 @@
 package com.kiocg.AntiCheatingClient;
 
-import com.kiocg.qqBot.bot.KioCGBot;
+import com.kiocg.qqBot.KioCGBot;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
