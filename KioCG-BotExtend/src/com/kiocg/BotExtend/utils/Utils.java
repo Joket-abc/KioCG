@@ -5,14 +5,14 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Utils {
-    // 存储被白名单阻挡的玩家、是否为正版
-    public static final Map<String, Boolean> kickWhitelistPlayer = new HashMap<>();
+    // 存储被白名单阻挡的玩家名
+    public static final List<String> kickWhitelistPlayer = new ArrayList<>();
 
     // 返回是否为合法玩家名
     public static @NotNull Boolean isLegalPlayerName(final @NotNull String string) {
@@ -52,14 +52,15 @@ public class Utils {
 
     // 返回去除指令前缀的用户指令
     public static @Nullable String getUserCommand(final @NotNull String msg) {
-        try {
-            if ((msg.charAt(0) != '.' && msg.charAt(0) != '。') || msg.charAt(1) == '.' || msg.charAt(1) == '。') {
+        for (final char label : new char[]{'.', '。'}) {
+            if (msg.charAt(0) == label) {
+                if (msg.charAt(1) != label) {
+                    return msg.substring(1);
+                }
                 return null;
             }
-        } catch (final @NotNull IndexOutOfBoundsException ignore) {
-            return null;
         }
 
-        return msg.substring(1).trim();
+        return null;
     }
 }

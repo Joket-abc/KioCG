@@ -1,9 +1,8 @@
 package com.kiocg.BotExtend;
 
-import com.kiocg.BotExtend.commands.Link;
 import com.kiocg.BotExtend.listeners.*;
-import com.kiocg.BotExtend.utils.AMsg;
-import com.kiocg.BotExtend.utils.GroupAdminUtils;
+import com.kiocg.BotExtend.utils.BotAdminUtils;
+import com.kiocg.BotExtend.utils.NormalReplyUtils;
 import com.kiocg.BotExtend.utils.PlayerLinkUtils;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -27,8 +26,6 @@ public class BotExtend extends JavaPlugin {
     // Vault消息模块
     public static @Nullable Chat chat;
 
-    // 玩家连接QQ的数据文件
-    private static File playersFile;
     // 玩家连接QQ的数据配置文件
     public static FileConfiguration playersFileConfiguration;
 
@@ -51,27 +48,34 @@ public class BotExtend extends JavaPlugin {
         }
 
         saveDefaultConfig();
-        new GroupAdminUtils().loadConfig();
+        // 加载机器人管理
+        new BotAdminUtils().loadConfig(getConfig());
+
+        // 加载回复关键词
+        final File messagesFile = new File(getDataFolder(), "normalReply.yml");
+        try {
+            if (!messagesFile.exists()) {
+                saveResource("normalReply.yml", false);
+            }
+        } catch (final @NotNull NullPointerException ignore) {
+            saveResource("normalReply.yml", false);
+        }
+        new NormalReplyUtils().loadConfig(YamlConfiguration.loadConfiguration(messagesFile));
 
         // 加载玩家连接QQ的数据文件
+        final File playersFile = new File(getDataFolder(), "players.yml");
         try {
-            playersFile = new File(getDataFolder(), "players.yml");
             if (!playersFile.exists()) {
                 saveResource("players.yml", false);
-                playersFile = new File(getDataFolder(), "players.yml");
             }
         } catch (final @NotNull NullPointerException ignore) {
             saveResource("players.yml", false);
-            playersFile = new File(getDataFolder(), "players.yml");
         }
         // 加载玩家连接QQ的数据配置文件
         playersFileConfiguration = YamlConfiguration.loadConfiguration(playersFile);
 
         // 加载玩家连接QQ的数据
-        new PlayerLinkUtils().loadPlayers();
-
-        // 加载回复关键词
-        new AMsg().setMsg();
+        new PlayerLinkUtils().loadPlayers(playersFileConfiguration);
 
         // 注册事件监听器
         final PluginManager pluginManager = getServer().getPluginManager();
@@ -81,17 +85,14 @@ public class BotExtend extends JavaPlugin {
         pluginManager.registerEvents(new InGame(), this);
 
         pluginManager.registerEvents(new Test(), this);
-
-        // 注册指令
-        Objects.requireNonNull(getServer().getPluginCommand("link")).setExecutor(new Link());
     }
 
     public void savePlayersFile() {
         try {
-            playersFileConfiguration.save(playersFile);
-        } catch (final @NotNull IOException e) {
+            playersFileConfiguration.save(new File(getDataFolder(), "players.yml"));
+        } catch (final @NotNull IOException ex) {
             getLogger().warning("保存玩家连接QQ的数据文件失败！");
-            e.printStackTrace();
+            ex.printStackTrace();
         }
     }
 }

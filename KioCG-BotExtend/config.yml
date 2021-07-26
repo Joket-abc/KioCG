@@ -1,14 +1,2 @@
-owners:
-  - 456
-
-groups:
-  '123456789':
-    labels:
-      - "/"
-      - ","
-      - "，"
-    admins:
-      - 789
-
-messages:
-  logCommand: "&cQQ用户 %user% 执行了指令: %cmd%"
+#只要机器人是群管理员(群主), 就会监听所有群管理员(群主)执行指令
+logCommand: "&cQQ用户 %user% 执行了指令: %cmd%"

@@ -1,6 +1,6 @@
 package com.kiocg.BotExtend.listeners;
 
-import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
+import com.kiocg.qqBot.events.message.AsyncMiraiGroupMessageEvent;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.data.MessageChain;
 import org.bukkit.event.EventHandler;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Test implements Listener {
     @EventHandler
-    public void onGroupMessage(final @NotNull AsyncGroupMessageEvent event) {
+    public void onGroupMessage(final @NotNull AsyncMiraiGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         final Group group = e.getGroup();

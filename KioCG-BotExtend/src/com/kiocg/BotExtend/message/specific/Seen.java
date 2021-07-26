@@ -20,16 +20,16 @@ public class Seen {
     private final Pattern RGBColor = Pattern.compile("&#.{6}");
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public void seen(final @NotNull Contact contact, final @NotNull String msg) {
-        if (!Utils.isLegalPlayerName(msg)) {
-            contact.sendMessage("错误的玩家名：" + msg);
+    public void seen(final @NotNull Contact contact, final @NotNull String playerName) {
+        if (!Utils.isLegalPlayerName(playerName)) {
+            contact.sendMessage("错误的玩家名：" + playerName);
             return;
         }
 
-        @SuppressWarnings("deprecation") final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(msg);
+        @SuppressWarnings("deprecation") final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            contact.sendMessage("玩家 " + msg + " 不存在");
+            contact.sendMessage("玩家 " + playerName + " 不存在");
             return;
         }
 
@@ -40,7 +40,7 @@ public class Seen {
         stringBuilder.append(RGBColor.matcher(Objects.requireNonNull(ChatColor.stripColor(Utils.getPlayerDisplayName(offlinePlayer)))).replaceAll(""))
                      .append(" (").append(offlinePlayer.isBanned() ? "已封禁" : offlinePlayer.isOnline() ? "在线" : "离线").append(")");
 
-        final Long qq = PlayerLinkUtils.getPlayerLinkQQ(uuid.toString());
+        final Long qq = PlayerLinkUtils.getPlayerLink(uuid.toString());
         if (qq == null) {
             stringBuilder.append("   QQ：null");
         } else {

@@ -1,0 +1,103 @@
+# 任意(不重复)
+help:
+  # 指令
+  keyword:
+    - help
+    - 帮助
+  # 回复
+  message: |-
+    <> - 必要参数   [] - 可选参数
+    .info - 服务器介绍
+    .ip - 服务器IP地址
+    .client - 客户端下载地址
+    .status - 服务器统计信息
+    .map - 网页世界地图
+    .poster - 服务器宣传贴
+    .github - 插件项目开源
+    .whitelist - 白名单申请方法
+    .support - 赞助服务器说明
+    .prefix - 自定义称号说明
+    .color - RGB颜色对照表
+    .wiki [词条] - 中文MC Wiki镜像站
+    .list - 当前在线玩家
+    .plugin - 服务端插件
+    .tps - 服务端TPS
+    .seen <玩家> - 查询玩家
+
+qaq:
+  keyword:
+    - qaq
+  message: "චᆽච"
+
+# 外部信息
+client:
+  keyword:
+    - client
+    - 客户端
+  message: "客户端下载：http://client.kiocg.com"
+
+poster:
+  keyword:
+    - poster
+    - 宣传帖
+  message: "服务器宣传帖：https://www.mcbbs.net/thread-1173769-1-1.html"
+
+github:
+  keyword:
+    - github
+    - 开源
+    - 源码
+  message: "插件项目开源：https://github.com/Joket-abc/KioCG"
+
+# 内部信息
+whitelist:
+  keyword:
+    - whitelist
+    - 白名单
+  message: |-
+    白名单申请(仅限正版!)：
+    仔细阅读以下内容，申请格式失败不会通过。
+
+    ①请先(必须)连接一次服务器，正版IP地址：play.kiocg.com；
+    ②然后账号持有者本人 @昵称带前缀◈的管理员 并说出你的游戏ID，
+    ③并在最后加上"我已阅读并同意《申请白名单须知》和其他所有规定"。
+    例如：@◈特定管理 我的ID：Player 我已阅读并同意《申请白名单须知》和其他所有规定
+
+    审核需要一定的时间，如果超过一小时未回复，可能管理员没看到消息，请重新申请一遍。
+
+support:
+  keyword:
+    - support
+    - 赞助
+    - 打赏
+  message: |-
+    请在加入游戏后再考虑自愿为本服/群打赏或捐助。
+    赞助服务器不会有任何实质上的奖励。如需退款请联系群主，退款没有有效期，只需要提供带有付款单号的截图和同平台同账号的收款二维码即可（不是二维码名片）。
+    赞助交流群可申领自定义群头衔，每1个字(中英文数字符号)10R，每1个emoji表情100R。无法退款。
+
+# 功能信息
+prefix:
+  keyword:
+    - prefix
+    - 称号
+  message: "元気达到1000即可申请4字及以内的自定义称号，查看元気请在游戏内输入/mcstats"
+
+color:
+  keyword:
+    - color
+    - rgb
+    - 颜色
+  message: "Web安全色：https://tool.chinaz.com/tools/web"
+
+wiki:
+  keyword:
+    - wiki
+    - 百科
+  message: "中文Minecraft Wiki镜像站：https://wiki.biligame.com/mc"
+
+# 功能信息
+seen:
+  keyword:
+    - seen
+    - 查询
+  message: ".seen <玩家> - 查询玩家"

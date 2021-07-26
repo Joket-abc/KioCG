@@ -15,7 +15,8 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class CommandSender implements RemoteConsoleCommandSender {
@@ -24,7 +25,8 @@ public class CommandSender implements RemoteConsoleCommandSender {
     private final GroupMessageEvent event;
 
     private BukkitTask task;
-    private final List<String> output = new ArrayList<>();
+    @SuppressWarnings("StringBufferField")
+    private final StringBuilder output = new StringBuilder();
 
     public CommandSender(final GroupMessageEvent event) {
         consoleCommandSender = Bukkit.getConsoleSender();
@@ -35,26 +37,27 @@ public class CommandSender implements RemoteConsoleCommandSender {
 
     private @NotNull BukkitTask newTask() {
         return Bukkit.getScheduler().runTaskLaterAsynchronously(BotExtend.instance, () -> {
-            final StringBuilder stringBuilder = new StringBuilder();
-
-            output.forEach(string -> stringBuilder.append(ChatColor.stripColor(string)).append("\n"));
-            output.clear();
-
-            final String message = ip.matcher(stringBuilder.toString().trim()).replaceAll("xxx.xxx.xxx.xxx");
+            // 输出结果并隐藏IP地址
+            final String message = ip.matcher(output.toString()).replaceAll("xxx.xxx.xxx.xxx");
             event.getGroup().sendMessage(message.isEmpty() ? "指令已成功发送，执行结果未知" : message);
-        }, 4L);
+
+            // 清空已被发送的消息
+            output.delete(0, output.length());
+        }, 20L);
     }
 
     @Override
     public void sendMessage(final @NotNull String string) {
-        output.add(string);
+        output.append(ChatColor.stripColor(string)).append("\n");
         task.cancel();
         task = newTask();
     }
 
     @Override
-    public void sendMessage(final @NotNull String[] strings) {
-        output.addAll(Arrays.asList(strings));
+    public void sendMessage(final @NotNull String @NotNull [] strings) {
+        for (final String string : strings) {
+            output.append(ChatColor.stripColor(string)).append("\n");
+        }
         task.cancel();
         task = newTask();
     }

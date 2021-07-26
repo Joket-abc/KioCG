@@ -1,22 +1,7 @@
 name: KioCG-BotExtend
 main: com.kiocg.BotExtend.BotExtend
 version: 2021
-api-version: 1.16
+api-version: 1.17
 
 depend: [ "KioCG-qqBot" ]
 softdepend: [ "Vault","mcMMO" ]
-
-commands:
-  link:
-    description: "连接账号."
-    usage: "用法: /<command> 连接账号."
-  linkget:
-    description: "获取玩家连接的账号."
-    permission: kiocg.command.linkget
-    permission-message: "§a[§b豆渣子§a] §c这个指令不可以喔 qaq"
-    usage: "用法: /<command> <mcID/qqID> 获取连接的账号."
-
-permissions:
-  kiocg.command.linkget:
-    description: 获取玩家连接的账号
-    default: op

@@ -1,7 +1,7 @@
 package com.kiocg.BotExtend.listeners;
 
-import com.kiocg.qqBot.events.AsyncABEvent;
-import com.kiocg.qqBot.events.message.AsyncGroupMessageEvent;
+import com.kiocg.qqBot.events.AsyncMiraiEvent;
+import com.kiocg.qqBot.events.message.AsyncMiraiGroupMessageEvent;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.MemberJoinEvent;
@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class GroupOther implements Listener {
     @EventHandler
-    public void onMemberJoinRequest(final @NotNull AsyncABEvent event) {
+    public void onMemberJoinRequest(final @NotNull AsyncMiraiEvent event) {
         if (!(event.getEvent() instanceof final @NotNull MemberJoinRequestEvent e)) {
             return;
         }
@@ -42,7 +42,7 @@ public class GroupOther implements Listener {
     }
 
     @EventHandler
-    public void onMemberJoin(final @NotNull AsyncABEvent event) {
+    public void onMemberJoin(final @NotNull AsyncMiraiEvent event) {
         if (!(event.getEvent() instanceof final @NotNull MemberJoinEvent e)) {
             return;
         }
@@ -64,7 +64,7 @@ public class GroupOther implements Listener {
 
     // 拦截所有XML消息
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onPreventXML(final @NotNull AsyncGroupMessageEvent event) {
+    public void onPreventXML(final @NotNull AsyncMiraiGroupMessageEvent event) {
         final net.mamoe.mirai.event.events.GroupMessageEvent e = event.getEvent();
 
         final String message = e.getMessage().contentToString();

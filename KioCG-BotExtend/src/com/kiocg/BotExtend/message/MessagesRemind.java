@@ -19,29 +19,31 @@ public class MessagesRemind {
             if (shouldReply(group.getId(), member.getId(), 1)) {
                 group.sendMessage("服务器不会添加任何模组、保护插件(领地锁箱子)、另类世界插件(地皮资源世界)、粘液科技。");
             }
+        } else if (msg.contains("基岩版")) {
+            if (shouldReply(group.getId(), member.getId(), 2)) {
+                group.sendMessage("服务器不会添加基岩版兼容的功能。");
+            }
         } else if (msg.contains("按键精灵") || msg.contains("鼠标宏") || msg.contains("键盘宏") || msg.contains("连点") || msg.contains("自动钓鱼")) {
-            if (shouldReply(group.getId(), member.getId(), 1)) {
+            if (shouldReply(group.getId(), member.getId(), 3)) {
                 group.sendMessage("你不能使用如按键精灵、鼠标宏、连点器、自动钓鱼等自动操作程序，会被视为作弊。");
             }
         } else if (((msg.contains("刷") || msg.contains("复制")) && (msg.contains("沙子") || msg.contains("tnt") || msg.contains("地毯") || msg.contains("铁轨")))
                    || (msg.contains("基岩") && (msg.contains("卡") || msg.contains("破")))
                    || msg.contains("地狱顶")) {
-            if (shouldReply(group.getId(), member.getId(), 2)) {
+            if (shouldReply(group.getId(), member.getId(), 4)) {
                 group.sendMessage("你不能利用BUG刷物品、刷数据、卡基岩、卡地狱(下届)顶等，发现BUG应向群主反馈。");
             }
         } else if (msg.contains("种子") && (msg.contains("服务器") || msg.contains("世界") || msg.contains("地图"))) {
-            if (shouldReply(group.getId(), member.getId(), 3)) {
+            if (shouldReply(group.getId(), member.getId(), 5)) {
                 group.sendMessage("你不能向管理员索要物品、权限指令、世界种子，所有管理员同玩家均没有任何特权。");
             }
         } else if ((msg.contains("村民") && msg.contains("僵尸") && !msg.contains("僵尸村民"))
                    || (msg.contains("海龟蛋") && (msg.contains("僵尸") || msg.contains("猪人") || msg.contains("猪灵")))) {
-            if (shouldReply(group.getId(), member.getId(), 4)) {
+            if (shouldReply(group.getId(), member.getId(), 6)) {
                 group.sendMessage("出于优化的需要，大部分实体的AI行为与原版有所不同，有关实体的反馈将不受支持。");
             }
-        } else if (msg.contains("基岩版")) {
-            group.sendMessage("服务器不会添加基岩版兼容的功能，请不要在群里询问为什么不加。");
         } else if (msg.contains("死亡") && msg.contains("掉")) {
-            if (shouldReply(group.getId(), member.getId(), 5)) {
+            if (shouldReply(group.getId(), member.getId(), 7)) {
                 group.sendMessage("游戏内所有世界均不会有死亡掉落");
             }
         }
