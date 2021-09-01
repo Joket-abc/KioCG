@@ -22,7 +22,7 @@ public class UserCommand implements Listener {
 
         final String userCommand = Utils.getUserCommand(msg);
         if (userCommand != null && !userCommand.isEmpty()) {
-            new MessagesCommand().onCommandsPublic(e.getGroup(), e.getSender(), userCommand);
+            new MessagesCommand().onCommandsPublic(e.getGroup(), userCommand);
         } else {
             new MessagesRemind().onMessages(e.getGroup(), e.getSender(), msg.toLowerCase());
         }

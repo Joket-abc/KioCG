@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import com.kiocg.BotExtend.message.specific.Seen;
 import com.kiocg.BotExtend.utils.NormalReplyUtils;
 import net.mamoe.mirai.contact.Contact;
-import net.mamoe.mirai.contact.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.Plugin;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class MessagesCommand {
     @EventHandler
-    public void onCommandsPublic(final @NotNull Contact contact, final @NotNull User user, final @NotNull String userCommand) {
+    public void onCommandsPublic(final @NotNull Contact contact, final @NotNull String userCommand) {
         final String userCommandLower = userCommand.toLowerCase();
 
         final String reply = NormalReplyUtils.getNormalReply(userCommandLower);

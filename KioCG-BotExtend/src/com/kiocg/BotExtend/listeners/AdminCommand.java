@@ -74,6 +74,7 @@ public class AdminCommand implements Listener {
             }
 
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName));
+            //noinspection deprecation
             PlayerLinkUtils.addPlayerLink(Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(), qq);
 
             Utils.kickWhitelistPlayer.remove(playerName);
@@ -92,6 +93,7 @@ public class AdminCommand implements Listener {
             }
 
             Bukkit.getScheduler().runTask(BotExtend.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove " + playerName));
+            //noinspection deprecation
             PlayerLinkUtils.removePlayerLink(Bukkit.getOfflinePlayer(playerName).getUniqueId().toString());
 
             group.sendMessage("已将玩家 " + playerName + " 移除出白名单并断开与qq的连接");
