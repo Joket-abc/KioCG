@@ -48,7 +48,7 @@ public class MessagesCommand {
             }
             case ("status"), ("统计") -> {
                 if (Bukkit.getPluginManager().isPluginEnabled("Plan")) {
-                    contact.sendMessage("服务器统计信息：https://status.kiocg.com");
+                    contact.sendMessage("服务器统计信息：https://status.kiocg.com:21302");
                 } else {
                     contact.sendMessage("服务器统计信息暂时下线");
                 }
@@ -56,7 +56,7 @@ public class MessagesCommand {
             case ("map"), ("地图") -> {
                 final PluginManager pluginManager = Bukkit.getPluginManager();
                 if (pluginManager.isPluginEnabled("dynmap") || pluginManager.isPluginEnabled("BlueMap")) {
-                    contact.sendMessage("网页世界地图：https://map.kiocg.com");
+                    contact.sendMessage("网页世界地图：https://map.kiocg.com:21302");
                 } else {
                     contact.sendMessage("网页世界地图暂时下线");
                 }
